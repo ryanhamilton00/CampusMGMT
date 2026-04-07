@@ -1,0 +1,88 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "Create Start Date for PV DPA",
+    "Globals": {
+      "SchoolStartDateName": "AOSEffDateStartDateName",
+      "SchoolStartDateCode": "AOSEDSD",
+      "ProgramVersionCode": "AOSEDPV"
+    },
+    "Apis": [
+      {
+        "RequestId": "9ae1205a-3194-4827-a121-a4b69e4fb0bb",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "55135c87-7e11-4186-9cf0-c118ff125e0e",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/SchoolStartDate/Create",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": {
+          "payload": {},
+          "notifications": [],
+          "hasError": false,
+          "hasFault": false,
+          "hasWarning": false,
+          "hasValidationError": false,
+          "hasValidationWarning": false,
+          "hasValidationInformation": false,
+          "hasSecurityError": false
+        }
+      },
+      {
+        "RequestId": "f2e68098-28cf-47a9-921c-af7e7a4dbad5",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Shifts?$select=Code,Id,Name&$format=json&$count=true&$filter=IsActive eq true&$orderby=Name",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "ad1d3c6d-9369-4982-bf30-b2c49962eb68",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/ProgramVersions?$filter= Code eq '{{gProgramVersionCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "2adf5788-78d0-4c99-9cde-b992f8ed8a10",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/SchoolStartDate/SaveNew",
+        "RequestBody": {
+          "payload": {
+            "code": "{{gSchoolStartDateCode}}",
+            "expectedGradDate": "@DateNow(+180)",
+            "maxGradDate": "@DateNow(+90)",
+            "midPointDate": "@DateNow(+30)",
+            "name": "{{gSchoolStartDateName}}",
+            "startDate": "@DateNow(-90)"
+          }
+        },
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": {
+          "payload": {},
+          "notifications": [],
+          "hasError": false,
+          "hasFault": false,
+          "hasWarning": false,
+          "hasValidationError": false,
+          "hasValidationWarning": false,
+          "hasValidationInformation": false,
+          "hasSecurityError": false
+        }
+      }
+    ]
+  }
+]

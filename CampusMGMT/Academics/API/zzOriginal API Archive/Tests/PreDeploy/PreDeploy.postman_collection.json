@@ -1,0 +1,70 @@
+{
+	"info": {
+		"_postman_id": "8eb9ef22-2f49-45f9-8018-53f62406eb9f",
+		"name": "PreDeploy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "PreDeploy - Get user operation permissions",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a6528f01-a0a8-4900-a9d1-8686581fc5a4",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"PreDeploy - Get user operation permissions\", function() {",
+							"    pm.response.to.be.ok;",
+							"});",
+							""
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d4bfa411-0dea-40d7-a1d3-784f3bde199d",
+						"type": "text/javascript",
+						"exec": [
+							"pm.globals.set('gAuthorizationValue','Basic ' + btoa(pm.environment.get('envUser') + \":\" + pm.environment.get('envPassword'))); ",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{gAuthorizationValue}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{}"
+				},
+				"url": {
+					"raw": "http://{{envWebHost}}/api/commands/Common/SecurityContext/GetAll",
+					"protocol": "http",
+					"host": [
+						"{{envWebHost}}"
+					],
+					"path": [
+						"api",
+						"commands",
+						"Common",
+						"SecurityContext",
+						"GetAll"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

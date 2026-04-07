@@ -1,0 +1,56 @@
+[{
+	"Type": "AdvancedDataFile",
+	"Version": "2.0",
+	"TestDescription": "This API will Add a College Transcript  for a student in Contact Manager",
+	"Globals": {
+		"StudentSsn": "111-33-0066"
+	},
+	"Apis": [{
+			"RequestId": "00000000-0000-0000-0000-000000000000",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000001",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gStudentSsn}}'",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000002",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/TranscriptRequests?$expand=College($select=IsActive,Code,Id,Name),Student($select=FirstName,Id,LastName;$expand=Person($select=FullName,Id))&$format=json&$count=true&$filter=Student/Id eq {{gStudentId}} and TranscriptType eq 'O'",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000008",
+			"TypeDescription": "Get  College transcript",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Crm/TranscriptRequest/Get",
+			"RequestBody": {"payload": {}},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {"payload": {}}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000005",
+			"TypeDescription": "Delete College transcript",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Crm/TranscriptRequest/Delete",
+			"RequestBody": {"payload": {}},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {"payload": {"deleted": true}}
+		}
+	]
+}]

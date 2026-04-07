@@ -1,0 +1,114 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "Unregister Student using Unregistration Process",
+    "Globals": {
+      "StaffName": "Staff, Automated01",
+      "TermCode": "Ter001",
+      "BatchName": "@StringRandom( 3 )"
+    },
+    "Apis": [
+      {
+        "RequestId": "1e41b0a8-5ce4-489b-a11d-1ba277615afc",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "68862782-e182-4ee4-bfcb-f112434afdef",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentCourseStatusChangeReasons?$filter=IsForUnregister eq true and IsActive eq true and CampusGroup/CampusList/any(c: c/CampusId eq {{gCampusId}})&$select=Name,Code,Id,IsActive",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "0b1027c7-e376-4f33-a613-a0214cb79004",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Terms/CampusNexus.GetTermsForCampus(campusId={{gCampusId}},isForRegistrationTermGroup=true,termId=0)?$select=Name,Code,StartDate,EndDate,Id&$filter=Code eq '{{gTermCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "ec741d93-0c49-4a73-8118-d777f90e35e2",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Instructors/CampusNexus.GetInstructorsListForCampus(campusId={{gCampusId}})?$select=Name,Code,InstructorId&$filter=Name eq '{{gStaffName}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "d328f7ad-93aa-4d5e-9178-3424b71bbdff",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentCourses/CampusNexus.GetCoursesStudentsList(campusId={{gCampusId}},instructorId={{gInstructorId}},startDate='',endDate='',termId={{gTermId}},studentGroupId=0,isScheduledCoursesIncluded=true,isCurrentCoursesIncluded=true)",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "084968ab-b07e-492c-bd76-bc51a83697ab",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/BackgroundProcessing/Job/Submit",
+        "RequestBody": {
+							"payload": {
+								"batchType": "Cmc.Nexus.Academics.Jobs.BatchUnregister, Cmc.Nexus.Academics",
+								"parameters": {
+									"numberOfStudents": 1,
+									"BatchUnregisterStudentCourseDetailList": [{
+										"IsSelected": true,
+										"StartDate": null
+									}],
+									"registrationType": "Unregister"
+								},
+								"description": "Batch Unregister - {{gBatchName}}",
+								"notificationOption": "Always",
+								"submitAsync": true
+							}
+						},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {
+							"payload": {},
+							"notifications": [],
+							"hasError": false,
+							"hasFault": false,
+							"hasWarning": false,
+							"hasValidationError": false,
+							"hasSecurityError": false
+						} 
+      },
+      {
+        "RequestId": "6def3729-79fb-4081-bd4c-15f64fb57d1e",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Terms/CampusNexus.GetRegistrationBatchResults(registrationTypes=['Cmc.Nexus.Academics.Jobs.TermRegistration, Cmc.Nexus.Academics','Cmc.Nexus.Academics.Jobs.TrackRegistration, Cmc.Nexus.Academics','Cmc.Nexus.Academics.Jobs.BatchUnregister, Cmc.Nexus.Academics'])?$format=json&$orderby=CreatedDateTime desc&$filter=Description eq 'Batch Unregister - {{gBatchName}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "9df34f13-a71d-483f-a408-385198f05575",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Terms/CampusNexus.GetBatchUnregistrationResultHistory(registrationBatchIdentifier='{{gBatchIdentifier}}')?$expand=BatchResultHistoryConflicts&$filter = StudentId eq {{gStudentId}}",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {
+							"value": [{
+								"Status": "Succeeded",
+								"RegistrationStatus": "Unregistered"
+							}]
+						}
+      }
+    ]
+  }
+]

@@ -1,0 +1,231 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "Enter test description here",
+    "Globals": {
+	"StudentName"  : "LE BARON, JOSH",
+	"StaffCode" : "!PSACHAN",
+	"ContactFirstName" : "aaaaa",
+	"ContactLastName" : "aaaa",
+	"IncidentTypeCode" : "CR-BURGL",
+	"TaskTypeCode" : "NIRU6",
+	"IncidentTitle" : "@StringRandom(5,Auto)",
+	"IncidentDate" : "2020/05/05 00:00:00"
+	},
+    "Apis": [
+      {
+        "RequestId": "a0265483-e7c1-4e65-99bc-396c472eff2c",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/IncidentTypes?$filter=Code eq '{{gIncidentTypeCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": { "value" : [] } 
+      },
+      {
+        "RequestId": "f7c3d744-a919-4b63-b3ae-ab89522d42f9",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Incidents/CampusNexus.GetTaskType(incidentTypeId={{gIncidentTypeId}})?$select=Id,Code,Name,IncidentTypeId,IncidentLocationFlag&$filter=Code eq '{{gTaskTypeCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": { "value" : [] } 
+      },
+      {
+        "RequestId": "135a9665-765b-469b-9f71-c16ca06b8fc0",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/SyOrganizationContacts?Id,Title,FirstName,LastName,City,State,IsActive,IdentifierDetails&$expand=OrganizationContactType($select=Name),Person($select=FullName)&$filter=FirstName eq '{{gContactFirstName}}' and LastName eq '{{gContactLastName}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": { "value" : [] } 
+      },
+      {
+        "RequestId": "cc7310c0-d43b-4bff-abb9-0b6722a15cc0",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff?$select=Id,Code&$expand=Person($select=LastName,FirstName,FullName)&$filter=Code eq '{{gStaffCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": { "value" : [] } 
+      },
+      {
+        "RequestId": "28682185-46c4-4ac1-bb5a-01d4c5af435c",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Students?$select=Id,LastName,FirstName,StudentNumber,FullName,IsActive&$expand=SchoolStatus($select=Name),Campus($select=Id,Name)&$filter=FullName eq '{{gStudentName}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": { "value" : [] } 
+	  },
+      {
+        "RequestId": "d87b1017-dcaa-44a1-91d7-31f54599a753",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Crm/Incident/Create",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {
+			"notifications": [],
+			"hasError": false,
+			"hasFault": false,
+			"hasWarning": false,
+			"hasValidationError": false,
+			"hasValidationWarning": false,
+			"hasValidationInformation": false,
+			"hasSecurityError": false
+		}
+      },
+      {
+        "RequestId": "e4473e06-7cc9-4502-9559-54b5e79b26c3",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Crm/Incident/SaveNew",
+        "RequestBody": {
+			"payload": {
+				"additionalDetails": [],
+				"comments": null,
+				"id": -1,
+				"campusId": 85,
+				"createdDateTime": "2020/05/20 20:36:23",
+				"description": "",
+				"housingBuildingId": null,
+				"incidentDate": "{{gIncidentDate}}",
+				"incidentTime": null,
+				"incidentTitle": "{{gIncidentTitle}}",
+				"isActive": true,
+				"lastModifiedDateTime": "2020/05/20 20:36:23",
+				"lastModifiedUserId": 2,
+				"location": "",
+				"locationType": 2,
+				"rowVersion": null,
+				"studentServicesLocationId": null,
+				"incidentStudents": [
+					{
+						"isSelected": true,
+						"createdDateTime": "2020/05/20 00:00:00",
+						"lastModifiedDateTime": "2020/05/20 00:00:00",
+						"lastModifiedUserId": "2",
+						"incidentId": -1,
+						"entityState": 0,
+						"Id": -1
+					}
+				],
+				"incidentStaffPersons": [
+					{
+						"isSelected": true,
+						"createdDateTime": "2020/05/20 10:08:00",
+						"lastModifiedDateTime": "2020/05/20 10:08:00",
+						"lastModifiedUserId": "2",
+						"incidentId": -1,
+						"entityState": 0,
+						"Id": -1
+					}
+				],
+				"incidentGeneralPublicPersons": [
+					{
+						"isSelected": true,
+						"lastModifiedUserId": "2",
+						"createdDateTime": "2020/05/20 10:07:38",
+						"lastModifiedDateTime": "2020/05/20 10:07:38",
+						"incidentId": -1,
+						"entityState": 0,
+						"Id": -1
+					}
+				],
+				"incidentAdditionalDetails": [],
+				"originalState": "H4sIAAAAAAAEALWSQWvCQBCF/4rs3UystxADRS+lige19DokkziQ3ZWZkTT99dUt9KYIxes83ve+w5SvIjhu23caP7A/07ZVEw4dhnE/nmjy5fugC3c0OxUAWh/Jo2aea4kaW8vq6OElz+cwy2FHwtjzNxrHAAms7pdQ8B9jGIZsmGdRumtxBp+b9S5hpxzUMNTkqvKGTgqqNaptYsMtU3NQkremhOu9TJUJF4H7hTM5k4MqRTdZj42s0GjPnp4w8xT3pdDF+J/acP8zqh9MEFNEOgIAAA==",
+				"secureState": "H4sIAAAAAAAEAD3MQQrCMBAAwK9I7mZTeysqeFbpoSJel5C0C01Ssisxvl6s4ANm9qecsfb+7Ood56frPUumOGKst7q4zSvMkQ9qElk6ALaTC8g6kM2JkxdtU4CdMS00BgaXCWd6o1CKsMasfkNH/6OUokurUx6/sIHH9TKs7ZYiC0brFBw/juQnSpcAAAA=",
+				"extendedProperties": [],
+				"entityState": 0
+			}
+		},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {
+			"notifications": [],
+			"hasError": false,
+			"hasFault": false,
+			"hasWarning": false,
+			"hasValidationError": false,
+			"hasValidationWarning": false,
+			"hasValidationInformation": false,
+			"hasSecurityError": false
+		}
+      },
+      {
+        "RequestId": "fac3ccbb-9b8f-49d9-aee2-f7fde4045087",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Crm/Incident/Get",
+        "RequestBody": {"payload" : {}},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {
+			"notifications": [],
+			"hasError": false,
+			"hasFault": false,
+			"hasWarning": false,
+			"hasValidationError": false,
+			"hasValidationWarning": false,
+			"hasValidationInformation": false,
+			"hasSecurityError": false
+		}
+      },
+      {
+        "RequestId": "b9f51166-871c-4011-bc35-672d75703984",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Crm/Incident/Save",
+        "RequestBody": {"payload" : {"incidentTitle" : "@StringRandom(5,Auto_Save_)",
+		"comments" : "@StringRandom(5,Comment_)" }},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {
+			"notifications": [],
+			"hasError": false,
+			"hasFault": false,
+			"hasWarning": false,
+			"hasValidationError": false,
+			"hasValidationWarning": false,
+			"hasValidationInformation": false,
+			"hasSecurityError": false
+		}
+      },
+      {
+        "RequestId": "00171282-8917-4d00-bc2e-38d29bc01a7f",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Crm/Incident/Get",
+        "RequestBody": {"payload" : {}},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {
+			"notifications": [],
+			"hasError": false,
+			"hasFault": false,
+			"hasWarning": false,
+			"hasValidationError": false,
+			"hasValidationWarning": false,
+			"hasValidationInformation": false,
+			"hasSecurityError": false
+		}
+      },
+      {
+        "RequestId": "56c2a72a-b5c0-4857-b6f5-e18918dbd371",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Crm/Incident/Delete",
+        "RequestBody": {"payload" : {}},
+        "ResponseStatus": 400,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {
+			"notifications": [],
+			"hasError": false,
+			"hasFault": false,
+			"hasWarning": false,
+			"hasValidationError": true,
+			"hasValidationWarning": false,
+			"hasValidationInformation": false,
+			"hasSecurityError": false
+		}
+      }
+    ]
+  }
+]

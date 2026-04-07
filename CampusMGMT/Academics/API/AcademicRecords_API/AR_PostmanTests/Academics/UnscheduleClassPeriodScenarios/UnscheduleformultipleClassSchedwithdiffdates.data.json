@@ -1,0 +1,172 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "UnscheduleformultipleClassSchedwithdiffdates",
+    "Globals": {
+      "TermCode1": "Ter001",
+      "TermCode2": "Ter005",
+      "CourseCode1": "Cou005",
+      "CourseCode2": "Cou005",
+      "SectionCode1": "",
+      "SectionCode2": ""
+    },
+    "Apis": [
+      {
+        "RequestId": "4dc23388-c96d-4707-b342-0ce8b1fdec35",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {"value":[]}
+      },
+      {
+        "RequestId": "071e5b4b-cad6-40ae-b55c-2f38a14a23c0",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Terms?$select=Id,StartDate,EndDate,Name,IsActive&$filter=Code eq '{{gTermCode1}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {"value":[]}
+      },
+      {
+        "RequestId": "071e5b4b-cad6-40ae-b55c-2f38a14a23c3",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Terms?$select=Id,StartDate,EndDate,Name,IsActive&$filter=Code eq '{{gTermCode2}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {"value":[]}
+      },
+      {
+        "RequestId": "071e5b4b-cad6-40ae-b55c-2f38a14a23c1",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Courses?$select=Id,Name,Code,IsActive,EnrollStatusCredits,EnrollStatusHours,IsDependent,CreditHours,ClockHours,AllowOverride,MatchOverrideCredits,MinimumCredits,MaximumCredits&$filter=Code eq '{{gCourseCode1}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {"value":[]}
+      },
+	  {
+        "RequestId": "071e5b4b-cad6-40ae-b55c-2f38a14a23c2",
+        "RequestMethod": "GET",	
+        "RequestUrl": "/ds/campusnexus/Courses?$select=Id,Name,Code,IsActive,EnrollStatusCredits,EnrollStatusHours,IsDependent,CreditHours,ClockHours,AllowOverride,MatchOverrideCredits,MinimumCredits,MaximumCredits&$filter=Code eq '{{gCourseCode2}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {"value":[]}
+      },
+      {
+        "RequestId": "98059e63-baf6-40d0-93a9-43df60460be6",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/ClassSections/CampusNexus.GetDailyClassScheduleMainList(campusId={{gCampusId}},termIds=[{{gTermId1}}],courseId={{gCourseId1}},instructorId=0,classSectionStartDateFrom='',classSectionStartDateTo='',courseOffering=1,isInProgress=false,departmentIds=[],isFutureTerm=false)?$filter=SectionCode eq '{{gSectionCode1}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {"value":[]}
+      },
+      {
+        "RequestId": "98059e63-baf6-40d0-93a9-43df60460be7",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/ClassSections/CampusNexus.GetDailyClassScheduleMainList(campusId={{gCampusId}},termIds=[{{gTermId2}}],courseId={{gCourseId2}},instructorId=0,classSectionStartDateFrom='',classSectionStartDateTo='',courseOffering=1,isInProgress=false,departmentIds=[],isFutureTerm=false)?$filter=SectionCode eq '{{gSectionCode2}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {"value":[]}
+      },
+      {
+        "RequestId": "f8947d1e-bd08-4e2c-9378-6d20476efda6",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/ClassSectionMeetingSchedules/CampusNexus.GetClassSectionMeetingScheduleDay(classSectionId={{gClassSectionId1}},meetingDate='{{gMeetingDate1}}')",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {
+							"value": [{
+								"Status": "S",
+								"Note": null
+							}]
+						}
+      },
+	  {
+        "RequestId": "f8947d1e-bd08-4e2c-9378-6d20476efda7",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/ClassSectionMeetingSchedules/CampusNexus.GetClassSectionMeetingScheduleDay(classSectionId={{gClassSectionId2}},meetingDate='{{gMeetingDate2}}')",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {
+							"value": [{
+								"Status": "S",
+								"Note": null
+							}]
+						}
+      },
+      {
+        "RequestId": "045bec59-d09c-43ce-b6df-0a0f1ba493ee",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/ClassSection/UnscheduleClassSection",
+        "RequestBody": {
+          "payload": {
+            "IsContinue": false,
+            "entityState": 2,
+            "Date": "{{gUnscheduleDate1}}"
+          }
+					},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {}
+      },
+	  {
+        "RequestId": "045bec59-d09c-43ce-b6df-0a0f1ba493ef",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/ClassSection/UnscheduleClassSection",
+        "RequestBody": {
+          "payload": {
+            "IsContinue": false,
+            "entityState": 2,
+            "Date": "{{gUnscheduleDate2}}"
+          }
+					},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {
+						"payload": {},
+						"notifications": [{
+							"message": "The following classes were not unscheduled: \\nCourse: Cou005 Sec:  Term: Ter001."
+						}]
+					}
+      },
+      {
+        "RequestId": "f8947d1e-bd08-4e2c-9378-6d20476efda8",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/odata/ClassSectionMeetingDates?$filter=MeetingDate eq {{gMeetingDate1}} and (ClassSection/Course/Code eq '{{gCourseCode1}}' or ClassSection/Course/Code eq '{{gCourseCode2}}')&$expand=ClassSection($expand=Course($select=Code))",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {
+							"value": [{
+								"Status": "C"
+							},
+							{
+								"Status": "C"
+							}]
+						}
+      },
+	  {
+        "RequestId": "f8947d1e-bd08-4e2c-9378-6d20476efda9",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/odata/ClassSectionMeetingDates?$filter=MeetingDate eq {{gMeetingDate2}} and (ClassSection/Course/Code eq '{{gCourseCode1}}' or ClassSection/Course/Code eq '{{gCourseCode2}}')&$expand=ClassSection($expand=Course($select=Code))",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {
+							"value": [{
+								"Status": "C"
+							}]
+						}
+      }
+    ]
+  }
+]

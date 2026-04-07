@@ -1,0 +1,86 @@
+[
+	{
+		"Type": "AdvancedDataFile",
+		"Version": "2.0",
+		"TestDescription": "Delete Term",
+		"Globals": {
+			"TermCode": "SSTerCode1",
+			"Updateto": "@StringRandom(5)"
+		},
+		"Apis": [
+			{
+				"RequestId": "4dc23388-c96d-4707-b342-0ce8b1fdec35",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 15000,
+				"ResponseBody": { "value": [] }
+			},
+			{
+				"RequestId": "0932ba9e-a0ef-49c1-aebb-1e1d13dd05c7",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/Terms?$expand=CampusGroup($select=Id;$expand=CampusList($select=Id;$expand=Campus($select=Id,Name))),Shift($select=Id,Code,Name)&$select=Id,Code,Name,StartDate,EndDate,IsActive&$format=json&$filter=Code eq '{{gTermCode}}'",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 15000,
+				"ResponseBody": { "value": [] }
+			},
+			{
+				"RequestId": "ef26e6fe-d557-4168-a93e-77fcf04cac5b",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/Academics/Term/Get",
+				"RequestBody": "{\"payload\":{}}",
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 15000,
+				"ResponseBody": {
+					"payload": {},
+					"notifications": [],
+					"hasError": false,
+					"hasFault": false,
+					"hasWarning": false,
+					"hasValidationError": false,
+					"hasValidationWarning": false,
+					"hasValidationInformation": false,
+					"hasSecurityError": false
+				}
+			},
+			{
+				"RequestId": "e0da3b27-2e3a-4447-9489-53f4fcb7358d",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/Academics/Term/Delete",
+				"RequestBody": "{\"payload\":{}}",
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 25000,
+				"ResponseBody": {
+					"payload": {
+						"deleted": true
+					},
+					"notifications": [],
+					"hasError": false,
+					"hasFault": false,
+					"hasWarning": false,
+					"hasValidationError": false,
+					"hasValidationWarning": false,
+					"hasValidationInformation": false,
+					"hasSecurityError": false
+				}
+			},
+			{
+				"RequestId": "54333026-17ba-441f-a87a-425a05b2c64d",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/Academics/Term/Save",
+				"RequestBody": {
+					"payload": {
+						"code": "{{gUpdateto}}",
+						"name": "{{gUpdateto}}",
+						"campusGroup": null
+					}
+				},
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 25000,
+				"ResponseBody": {}
+			}
+		]
+	}
+]

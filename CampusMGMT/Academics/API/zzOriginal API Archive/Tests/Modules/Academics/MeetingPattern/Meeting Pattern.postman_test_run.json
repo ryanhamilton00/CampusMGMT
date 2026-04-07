@@ -1,0 +1,376 @@
+{
+	"id": "34e4a947-1d4f-4e1e-82fd-f1890d05732e",
+	"name": "Meeting Pattern",
+	"allTests": [],
+	"timestamp": "2018-08-02T05:55:11.410Z",
+	"collection_id": "62abab8b-9baf-45c8-9903-c0003251d46c",
+	"folder_id": 0,
+	"target_type": "collection",
+	"environment_id": "7170dba9-606e-4b1a-94cb-8cd9ab12704f",
+	"data": [],
+	"delay": 0,
+	"count": 1,
+	"collection": {
+		"id": "62abab8b-9baf-45c8-9903-c0003251d46c",
+		"name": "Meeting Pattern",
+		"description": null,
+		"auth": null,
+		"events": null,
+		"variables": null,
+		"order": [
+			"2af49226-5368-42f8-b043-3fd9004b2434",
+			"855743f6-1028-4fad-bb78-d6add4c4dc4e",
+			"9490f8e0-670d-4425-8912-5e7b6a649f57",
+			"1de571ac-817d-4a35-be3b-48c573c6e29b",
+			"ceda757b-a41e-4c49-ad61-b26f846ed81b",
+			"94dbfea4-1a0a-421d-b988-9f025011c5b5",
+			"982caee6-9551-4fbb-b1d2-e47b30634a60"
+		],
+		"folders_order": [],
+		"owner": "0",
+		"permissions": {},
+		"favorite": false,
+		"shared": false,
+		"type": "collection",
+		"depth": 0
+	},
+	"folder": null,
+	"environment": null,
+	"globals": [
+		{
+			"key": "gCmcUtility",
+			"value": "var cmcUtility = (function() {\n    // Private section.\n\tisRealValue = function (obj) {\n\t\tif(obj && obj !== 'null' && obj !== 'undefined') { return true; }\n\t\telse { return false; }\n\t};\n\n\t// Public section.\n\treturn {\n\t    // Check basic authentication settings\n\t\tisAuth: function(user, pwd) {\n\t\t\treturn (isRealValue(user) && isRealValue(pwd));\n\t\t},\n\t\t// Check API key\n\t\tisApiKey: function(apikey) {\n\t\t\treturn isRealValue(apikey);\n\t\t},\n\t\t// Check cookie\n\t\tisCookie: function(cookie) {\n\t\t\treturn isRealValue(cookie);\n\t\t},\n\t\t// Make authorization header based on data file API key or user/password or environment user/password\n\t\tmakeAuthorization: function(dataApiKey, dataUser, dataPassword, envUser, envPassword) {\n\t\t    var authHeaderKey = '';\n\t\t    var authHeaderValue = '';\n\t\t\tif(this.isApiKey(dataApiKey)) {\n\t\t\t\tauthHeaderKey = 'ApiKey';\n\t\t\t\tauthHeaderValue = dataApiKey;\n\t\t\t} else if (this.isAuth(dataUser, dataPassword)) {\n\t\t\t\tauthHeaderKey = 'Authorization';\n\t\t\t\tauthHeaderValue = 'Basic ' + btoa(dataUser + ':' + dataPassword);\n\t\t\t} else if (this.isAuth(envUser, envPassword)) {\n\t\t\t\tauthHeaderKey = 'Authorization';\n\t\t\t\tauthHeaderValue = 'Basic ' + btoa(envUser + ':' + envPassword);\n\t\t\t} else {\n\t\t\t\tauthHeaderKey = '';\n\t\t\t\tauthHeaderValue = '';\n\t\t\t}\n\t\t\treturn { 'key' : authHeaderKey, 'value' : authHeaderValue };\n\t\t},\n\t\t\n\t\t// Make URL based on entity and operation\n\t\tmakeEntityOperationUrl: function(envWebHost, dataEntityUrl, operation) {\n\t\t    var url = 'http://' + envWebHost + dataEntityUrl + '/' + operation;\n\t\t    return url;\n\t\t},\n\t\t\n\t\t// Make request body from data file request.\n\t\tmakeRequestBody : function(dataRequest) {\n\t\t    // if null return empty payload.\n\t\t    if(!isRealValue(dataRequest)) {\n\t\t        return \"{}\";\n\t\t    }\n\t\t    // convert based on type\n            var reqBody = null;\n            switch (typeof dataRequest) {\n                case 'object':\n                    reqBody = JSON.stringify(dataRequest);\n                    break;\n                case 'string':\n                    reqBody = dataRequest;\n                    break;\n                default:\n                    reqBody = dataRequest.toString();\n                    break;\n            }\n            return reqBody;\n\t\t},\n        \n        // Make request body by merging full request (e.g. saved chaining response), with\n        // changes (e.g. changes in data file).\n\t\tmakeMergedRequestBody : function(req, changes) {\n\t\t    // if no changes, return the request.\n\t\t    if(!isReal(changes)) {\n\t\t        this.makeRequestBody(req);\n\t\t    }\n\t\t    \n\t\t    // if no request, return changes.\n\t\t    if(!isReal(req)) {\n\t\t        this.makeRequestBody(changes);\n\t\t    }\n\t\t    \n\t\t    // convert request and changes to JSON object before merging\n\t\t    \n\t\t    // for every property in changes\n\t\t        // if property exists in req, update it\n\t\t        // else add property to request\n\t\t    \n            var reqBody = null;\n            switch (typeof dataRequest) {\n                case 'object':\n                     reqBody = JSON.stringify(dataRequest);\n                     break;\n                case 'string':\n                     reqBody = dataRequest;\n                     break;\n                default:\n                     reqBody = dataRequest.toString();\n                     break;\n            }\n            return reqBody;\n\t\t},\n\n        // Verify response matches expected response.\n\t\tverifyResponse: function(expectedResponse, responseBody) {\n\t\t    // if expected response is not real (null or undefined) return true if response body is not real\n\t\t    // else return false if response body is not real\n    \t\tif(!isRealValue(expectedResponse)) {\n    \t\t    return (!isRealValue(responseBody) ? true : false);\n    \t\t} else {\n    \t\t    if(!isRealValue(responseBody)) {\n    \t\t        return false;\n    \t\t    }\n    \t\t}\n\t\t    // for each property\n\t\t    var matches = true;\n            for (var p in expectedResponse) {\n                // skip if not object's own property or property that is not compared.\n                if(!expectedResponse.hasOwnProperty(p) || p === 'originalState' \n                        || p === 'secureState' || p === 'extendedProperties' || p === 'originalValues'\n                            || p === 'entityState' || p === 'modifiedProperties' || p ==='secureValues') { \n                    continue;\n                }\n                // if property is object, call recusively this function\n                // else compare key values.\n                if(isRealValue(expectedResponse[p]) && typeof expectedResponse[p] === 'object') {\n                    matches = this.verifyResponse(expectedResponse[p], responseBody[p]);                        \n                } else {\n    \t\t\t\tmatches = expectedResponse[p] === responseBody[p];\n                }\n                // if does not match break out of the loop\n                if(matches === false) { break;  }\n            }\n    \t\treturn matches;\n\t\t}\n\t};\n})();\n",
+			"enabled": true,
+			"type": "text"
+		},
+		{
+			"key": "gAuthHeaderKey",
+			"value": "Authorization",
+			"enabled": true,
+			"type": "text"
+		},
+		{
+			"key": "gAuthHeaderValue",
+			"value": "Basic YWRtaW5pc3RyYXRvcjp0ZXN0aW5n",
+			"enabled": true,
+			"type": "text"
+		},
+		{
+			"key": "gUrl",
+			"value": "http://btpcminexus05.campusmgmt.comundefined/create",
+			"enabled": true,
+			"type": "text"
+		},
+		{
+			"key": "gCreateRequestBody",
+			"value": "{}",
+			"enabled": true,
+			"type": "text"
+		},
+		{
+			"key": "gAuthorizationValue",
+			"value": "Basic YWRtaW5pc3RyYXRvcjp0ZXN0aW5n",
+			"enabled": true,
+			"type": "text"
+		}
+	],
+	"results": [
+		{
+			"name": "Create",
+			"id": "2af49226-5368-42f8-b043-3fd9004b2434",
+			"url": "http://btpcminexus05.campusmgmt.com/api/commands/Academics/MeetingPattern/create",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"name": "Verify response status is 200",
+				"status": "pass",
+				"Verify response time is below 500": true
+			},
+			"testPassFailCounts": {
+				"Verify response status is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verify response time is below 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"280"
+			],
+			"allTests": [
+				{
+					"Verify response status is 200": true,
+					"Verify response time is below 500": true
+				}
+			],
+			"time": "280",
+			"totalRequestTime": "280",
+			"iterationResults": {}
+		},
+		{
+			"name": "SaveNew",
+			"id": "855743f6-1028-4fad-bb78-d6add4c4dc4e",
+			"url": "http://btpcminexus05.campusmgmt.com/api/commands/Academics/MeetingPattern/saveNew",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"name": "Verify response status is 200",
+				"status": "pass",
+				"Verify response time is below 500": true,
+				"Verify response body matches expected response": false
+			},
+			"testPassFailCounts": {
+				"Verify response status is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verify response time is below 500": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verify response body matches expected response": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"229"
+			],
+			"allTests": [
+				{
+					"Verify response status is 200": true,
+					"Verify response time is below 500": true,
+					"Verify response body matches expected response": false
+				}
+			],
+			"time": "229",
+			"totalRequestTime": "229",
+			"iterationResults": {}
+		},
+		{
+			"name": "Get After SaveNew",
+			"id": "9490f8e0-670d-4425-8912-5e7b6a649f57",
+			"url": "http://btpcminexus05.campusmgmt.com/api/commands/Academics/MeetingPattern/get",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"name": "Verify response status is 200",
+				"status": "pass",
+				"Verify response time is below 500": true,
+				"Verify response body matches expected response": false
+			},
+			"testPassFailCounts": {
+				"Verify response status is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verify response time is below 500": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verify response body matches expected response": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"170"
+			],
+			"allTests": [
+				{
+					"Verify response status is 200": true,
+					"Verify response time is below 500": true,
+					"Verify response body matches expected response": false
+				}
+			],
+			"time": "170",
+			"totalRequestTime": "170",
+			"iterationResults": {}
+		},
+		{
+			"name": "Save",
+			"id": "1de571ac-817d-4a35-be3b-48c573c6e29b",
+			"url": "http://btpcminexus05.campusmgmt.com/api/commands/Academics/MeetingPattern/save",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"tests": {
+				"name": "Verify response status is 200",
+				"status": "fail",
+				"Verify response time is below 500": true,
+				"Verify response body matches expected response": false
+			},
+			"testPassFailCounts": {
+				"Verify response status is 200": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Verify response time is below 500": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verify response body matches expected response": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"169"
+			],
+			"allTests": [
+				{
+					"Verify response status is 200": false,
+					"Verify response time is below 500": true,
+					"Verify response body matches expected response": false
+				}
+			],
+			"time": "169",
+			"totalRequestTime": "169",
+			"iterationResults": {}
+		}
+	],
+	"totalPass": 7,
+	"totalFail": 4,
+	"totalTime": 848,
+	"lifecycle": "done",
+	"requests": [
+		{
+			"name": "Create",
+			"id": "2af49226-5368-42f8-b043-3fd9004b2434",
+			"url": "http://btpcminexus05.campusmgmt.com/api/commands/Academics/MeetingPattern/create",
+			"time": "2018-08-02T05:55:11.410Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Verify response status is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verify response time is below 500": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "SaveNew",
+			"id": "855743f6-1028-4fad-bb78-d6add4c4dc4e",
+			"url": "http://btpcminexus05.campusmgmt.com/api/commands/Academics/MeetingPattern/saveNew",
+			"time": "2018-08-02T05:55:11.410Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Verify response status is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verify response time is below 500": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verify response body matches expected response": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "Get After SaveNew",
+			"id": "9490f8e0-670d-4425-8912-5e7b6a649f57",
+			"url": "http://btpcminexus05.campusmgmt.com/api/commands/Academics/MeetingPattern/get",
+			"time": "2018-08-02T05:55:11.410Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"Verify response status is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verify response time is below 500": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verify response body matches expected response": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "Save",
+			"id": "1de571ac-817d-4a35-be3b-48c573c6e29b",
+			"url": "http://btpcminexus05.campusmgmt.com/api/commands/Academics/MeetingPattern/save",
+			"time": "2018-08-02T05:55:11.410Z",
+			"responseCode": {
+				"code": 500,
+				"name": "Internal Server Error",
+				"detail": {
+					"name": "Internal Server Error",
+					"detail": "A generic error message, given when no more specific message is suitable."
+				}
+			},
+			"testPassFailCounts": {
+				"Verify response status is 200": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Verify response time is below 500": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verify response body matches expected response": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		}
+	],
+	"synced": false
+}

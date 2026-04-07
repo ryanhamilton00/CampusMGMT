@@ -1,0 +1,102 @@
+[{
+	"Type": "AdvancedDataFile",
+	"Version": "2.0",
+	"TestDescription": "This API will create an Skill (Config-CS-Career Field)",
+	"Globals": {
+		"Name": "CareerFieldName",
+		"Code": "CFCODE"
+	},
+	"Apis": [
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000006",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/CareerFields?$filter=Name eq '{{gName}}'",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000000",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000001",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/CareerServices/CareerField/Create",
+			"RequestBody": "{}",
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {
+				"payload": {}
+			}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000002",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/CareerServices/CareerField/SaveNew",
+			"RequestBody": {
+				"payload": {
+					"code": "{{gCode}}",
+					"name": "{{gName}}",
+					"createdDateTime": "@DateNow",
+					"isActive": true
+				}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000003",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/CareerServices/CareerField/Get",
+			"RequestBody": {
+				"payload": {
+				}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000004",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/CareerFieldProgramVersions/CampusNexus.GetProgramVersionListForCareerFields(campusGroupId={{gCampusGroupId}},programVersionChildParentValue=0,careerFieldId={{gCareerId}})?$expand=CampusGroup($select=Id;$expand=CampusList($select=Id;$expand=Campus($select=Id,Code)))&$format=json&$top=50&$orderby=ProgramCode,ProgramVersionCode&$count=true",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000005",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/CareerServices/CareerFieldProgramVersion/SaveNew",
+			"RequestBody": {
+				"payload": {
+					"id": -1
+				}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000011",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/CareerServices/CareerField/Get",
+			"RequestBody": {
+				"payload": {
+				}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {}
+		}
+	]
+}]

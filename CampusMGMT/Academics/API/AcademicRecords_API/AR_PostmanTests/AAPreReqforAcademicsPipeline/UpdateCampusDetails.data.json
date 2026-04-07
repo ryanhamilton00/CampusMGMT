@@ -1,0 +1,142 @@
+[
+	{
+		"Type": "AdvancedDataFile",
+		"Version": "2.0",
+		"TestDescription": "Update Campus Details",
+		"Globals": {
+			"CampusName": "#{CampusName}#"
+		},
+		"Apis": [
+			{
+				"RequestId": "0511cc30-5cf6-4a08-8298-19fbd1cb17cb",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 15000,
+				"ResponseBody": { "value": [] }
+			},
+			{
+				"RequestId": "0511cc30-5cf6-4a08-8298-19fbd1cb17cc",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/TaskTemplates/CampusNexus.GetTaskTemplatesForWaitList?$select=Id,Name,Code&$filter=(TaskType/Code eq 'wlemail' or TaskType/Code eq 'wlwebalt') and CampusGroup/CampusList/any(x:x/CampusId eq {{gCampusId}})",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 15000,
+				"ResponseBody": { "value": [] }
+			},
+			{
+				"RequestId": "6eb2fd5f-fd80-4e88-a93f-9de8b1157668",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/Academics/ClassSectionAutoAddSetting/GetCampusSchedulingAndAttendance",
+				"RequestBody": "{\"payload\":{}}",
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 25000,
+				"ResponseBody": {
+					"payload": {
+						"data": {
+						}
+					},
+					"notifications": [],
+					"hasError": false,
+					"hasFault": false,
+					"hasWarning": false,
+					"hasValidationError": false,
+					"hasValidationWarning": false,
+					"hasValidationInformation": false,
+					"hasSecurityError": false
+				}
+			},
+
+			{
+				"RequestId": "e70e2f3d-7a44-4831-a6bb-05e5cc984230",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/Academics/ClassSectionAutoAddSetting/SaveCampusSchedulingAndAttendance",
+				"RequestBody": {
+					"payload": {
+						"campus": {
+							"isWaitListAllowed": true,
+							"waitlistMaxNumberOfSeats": 16,
+							"maxWaitlistTermCredits": 222,
+							"isCashieringUsed": true,
+							"isMakeupHoursAllowed": true
+						}
+					}
+				},
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 25000,
+				"ResponseBody": {
+					"payload": {
+						"data": {
+
+						}
+					},
+					"notifications": [],
+					"hasError": false,
+					"hasFault": false,
+					"hasWarning": false,
+					"hasValidationError": false,
+					"hasValidationWarning": false,
+					"hasValidationInformation": false,
+					"hasSecurityError": false
+				}
+			},
+			{
+				"RequestId": "e821fd1b-88cb-452b-badb-c7809783323b",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/Common/Campus/Get",
+				"RequestBody": {},
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 25000,
+				"ResponseBody": {
+					"payload": {
+						"data": {
+						}
+					},
+					"notifications": [],
+					"hasError": false,
+					"hasFault": false,
+					"hasWarning": false,
+					"hasValidationError": false,
+					"hasValidationWarning": false,
+					"hasValidationInformation": false,
+					"hasSecurityError": false
+				}
+			},
+			{
+				"RequestId": "2fe4a202-db5c-48b2-ad7d-305a807e9361",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/Common/Campus/SaveCampusAcademicDetails",
+				"RequestBody": {
+					"payload": {
+						"Campus": {
+							"isFloatingTermUsed": false,
+							"addDropDateEnforcementFlag": "T"
+						},
+						"IsAddDropFlagModified": true,
+						"IsAddDropFlagRemoved": true,
+						"IsAfterLDWGradeExists": true,
+						"IsCampusCatalogsExists": true,
+						"IsCourseComparisonUpdate": true
+					}
+				},
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 50000,
+				"ResponseBody": {
+					"payload": {
+						"data": {
+						}
+					},
+					"notifications": [],
+					"hasError": false,
+					"hasFault": false,
+					"hasWarning": false,
+					"hasValidationError": false,
+					"hasValidationWarning": false,
+					"hasValidationInformation": false,
+					"hasSecurityError": false
+				}
+			}
+		]
+	}
+]

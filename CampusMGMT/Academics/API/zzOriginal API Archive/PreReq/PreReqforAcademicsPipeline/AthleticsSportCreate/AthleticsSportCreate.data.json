@@ -1,0 +1,67 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "Enter test description here",
+    "Globals": {
+		"SportName": "AaSportName",
+		"SportCode": "SportCod"
+				},
+    "Apis": [
+	{
+        "RequestId": "d3ab99c4-21b9-441a-8625-abc4417c8d6e",
+		"TypeDescription": "Get Campus info by User",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "bb63a141-3279-4d47-8844-c62c1d011c6a",
+		"TypeDescription": "Create Sport",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/Sport/Create",
+        "RequestBody": "{}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {"payload": {}}
+      },
+      {
+        "RequestId": "f04fda8a-dd82-4875-bae1-d34978ab3378",
+		"TypeDescription": "Save Sport",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/Sport/SaveNew",
+        "RequestBody": {
+						"payload": {
+							"code": "{{gSportCode}}",
+							"name": "{{gSportName}}",
+							"isActive": true,
+							"createdDateTime": "@DateNow",
+								"campusGroup": {
+									"campusList": [
+										{
+											
+										}
+													]										
+												}								
+									}
+						},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {}
+      },
+	  {
+        "RequestId": "cf406926-0aa6-4432-844b-10a6c0708270",
+		"TypeDescription": "Get Created Sport",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Sports?$select Id,Name,Code&$filter= Code eq '{{gSportCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      }
+    ]
+  }
+]

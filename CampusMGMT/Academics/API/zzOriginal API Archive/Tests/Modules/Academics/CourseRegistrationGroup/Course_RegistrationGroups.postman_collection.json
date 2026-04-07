@@ -1,0 +1,603 @@
+{
+	"info": {
+		"_postman_id": "72107bb7-c736-41fa-871e-f3573aa9e6a3",
+		"name": "Course_RegistrationGroups",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Initialize",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "9f83bad1-8346-4a23-a5e4-b7c37259df6b",
+						"exec": [
+							"/********************DO NOT MODIFY THIS CODE********************/",
+							"pm.globals.unset(\"gApiUtility\");",
+							"pm.globals.unset(\"gApiUrl\");",
+							"pm.globals.unset(\"gAuthHeaderKey\");",
+							"pm.globals.unset(\"gAuthHeaderValue\");",
+							"pm.globals.unset(\"gUrl\");",
+							"pm.globals.unset(\"gRequestBody\");",
+							"pm.globals.unset(\"gIndex\");",
+							"pm.globals.set(\"gIndex\", 0);",
+							"",
+							"// Setup URL, if web host is not set in the environment use default",
+							"var apiUtilityHost = \"\";",
+							"if (!pm.environment.has(\"envApiUtilityHost\")) {",
+							"     apiUtilityHost = \"hdev22.dev.int:9000\";",
+							"} else {",
+							"     apiUtilityHost = pm.environment.get(\"envApiUtilityHost\");",
+							"}",
+							"var requestUrl = \"http://\" + apiUtilityHost + \"/automation/apiUtility.js\";",
+							"pm.globals.set(\"gUrl\", requestUrl);",
+							"//console.log(pm.globals.get(\"gUrl\"));",
+							"/*****************END DO NOT MODIFY THIS CODE*******************/"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "b6b6d4f8-ab93-472a-b090-e82ce63e39f1",
+						"exec": [
+							"/********************CHAIN DEFINITION***************************/",
+							"let chainDefinitionArray = [",
+							"    {",
+							"         \"RequestId\"     : \"89abf148-d393-452f-a5c1-cd358db8e905\",",
+							"         \"RequestMethod\" : \"GET\",",
+							"         \"RequestUrl\"    : \"/ds/campusnexus/Students?$filter=Ssn eq '{{gstudentssn}}'\",",
+							"         \"ChainSource\"   : [",
+							"               \"response.value[0].Id\",",
+							"               \"response.value[0].Veteran\"",
+							"         ],",
+							"         \"Chain\"         : [",
+							"         ]",
+							"    },",
+							"    {",
+							"         \"RequestId\"     : \"6a42bd5c-d996-42d0-8a9e-be274d368af4\",",
+							"         \"RequestMethod\" : \"GET\",",
+							"         \"RequestUrl\"    : \"/ds/campusnexus/Students/CampusNexus.GetStudentSummaryInfo(studentId= {{gstudentid}})?$expand=Campus($select=Id,Name,IsInternationalStudentEnabled;$expand=CampusDetails($select=Id,IsUsingMultipleInquiry,IsAthleticAssociationMember)),LastModifiedUser($select=Id;$expand=Person($select=FullName)),SchoolStatus($select=Id,Name;$expand=SystemSchoolStatus),EnrollmentPeriods($select=Id,EnrollmentNumber,ProgramId,ProgramVersionName,ProgramVersionId,EnrollmentStatusId,ExpectedStartDate,Lda,CampusId,IsApplicant,BillingMethodId;$expand=SchoolStatus($select=Id,Name),BillingMethod($select=Id,Frequency),EnrollmentStatus($select=Id,Name),ProgramVersion($select=Id,RevenuePeriod,IsIncrementalBillEarn,Name)),StudentEthnicities($select=Id,EthnicityId;$expand=Ethnicity($select=Name)),Agency($select=Name),ExtraCurricularActivities($select=Id,ExtraCurricularActivityId;$expand=ExtraCurricularActivity($select=Name)),SmsServiceProvider($select=Name),County($select=Name),Country($select=Name),LeadType($select=Name),LeadSources($select=Name),AssignedAdmissionsRep($select=StaffName),ProgramGroup($select=Name),Programs($select=Name),Shift($select=Name)\",",
+							"         \"ChainSource\"   : [",
+							"               \"response.value[0].CurrentEnrollmentId\"",
+							"         ],",
+							"         \"Chain\"         : [",
+							"              {",
+							"                   \"SourceApiKey\" : \"89abf148-d393-452f-a5c1-cd358db8e905\",",
+							"                   \"SourcePath\"   : \"response.value[0].Id\",",
+							"                   \"TargetPath\"   : \"globals.gstudentid\"",
+							"              },",
+							"              {",
+							"                   \"SourceApiKey\" : \"89abf148-d393-452f-a5c1-cd358db8e905\",",
+							"                   \"SourcePath\"   : \"response.value[0].Veteran\",",
+							"                   \"TargetPath\"   : \"globals.gVeteran\"",
+							"              }",
+							"         ]",
+							"    },",
+							"    {",
+							"         \"RequestId\"     : \"14e99e5f-381b-4953-9470-ab011fbe969e\",",
+							"         \"RequestMethod\" : \"GET\",",
+							"         \"RequestUrl\"    : \"/ds/campusnexus/StudentEnrollmentPeriodRegistrationTerms/CampusNexus.GetStudentEnrollmentPeriodRegistrationTermList(studentEnrollmentPeriodId={{genrollmentid}})\",",
+							"         \"ChainSource\"   : [",
+							"         ],",
+							"         \"Chain\"         : [",
+							"              {",
+							"                   \"SourceApiKey\" : \"6a42bd5c-d996-42d0-8a9e-be274d368af4\",",
+							"                   \"SourcePath\"   : \"response.value[0].CurrentEnrollmentId\",",
+							"                   \"TargetPath\"   : \"globals.genrollmentid\"",
+							"              }",
+							"         ]",
+							"    }",
+							"];",
+							"/********************END CHAIN DEFINITION***********************/",
+							"/********************DO NOT MODIFY THIS CODE********************/",
+							"// Verify status.",
+							"pm.test(\"Verify response status is \" + 200, function() {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"",
+							"// Load utility code framework",
+							"pm.globals.set(\"gApiUtility\", responseBody);",
+							"try {",
+							"    eval(pm.globals.get(\"gApiUtility\"));",
+							"    pm.test(\"Load framework\", function() {",
+							"        pm.expect(typeof apiUtility).to.be.equal('object');",
+							"    });",
+							"} catch(e) { ",
+							"    pm.test(\"Load framework - eval\", function() { pm.expect.fail() });",
+							"}",
+							"",
+							"// Resolve global macros",
+							"apiUtility.resolveMacros(data.Globals);",
+							"",
+							"// Read the data file globals section, and setup postman globals.",
+							"for(var p in data.Globals) {",
+							"  // If Globals own property, set global variable",
+							"  if(data.Globals.hasOwnProperty(p)) { ",
+							"    var gName = \"g\" + p;",
+							"    pm.globals.set(gName, data.Globals[p]);",
+							"    //console.log('setting global ' + gName);",
+							"  }",
+							"}",
+							"",
+							"// Save data file globals in postman global for chaining purposes.",
+							"if(Object.entries(data.Globals).length > 0) {",
+							"    let str = \"dataGlobals\";",
+							"    apiUtility.globalStoreWrite(str, data.Globals); ",
+							"}",
+							"",
+							"// Validate chain and Api configuration.",
+							"let validationStatus = apiUtility.validateChain(data.Globals, data.Apis, chainDefinitionArray);",
+							"if(!validationStatus.isValid) {",
+							"    let FailFunction = function() { pm.expect.fail() };",
+							"    for(let index = 0; index < validationStatus.msgs.length; ++ index) {",
+							"        pm.test(\"Chain validation - \" + validationStatus.msgs[index], FailFunction);",
+							"    }",
+							"}",
+							"",
+							"// Merge data file API section with chain definition, and setup postman global",
+							"if(validationStatus.isValid) {",
+							"    let apis  = {};",
+							"    for(let index = 0; index < data.Apis.length; ++index) {",
+							"        apis[data.Apis[index].RequestId] = data.Apis[index];",
+							"    }",
+							"    for(let index = 0; index < chainDefinitionArray.length; ++index) {",
+							"        apis[chainDefinitionArray[index].RequestId].RequestUrl = chainDefinitionArray[index].RequestUrl;",
+							"        apis[chainDefinitionArray[index].RequestId].ChainSource = chainDefinitionArray[index].ChainSource;",
+							"        apis[chainDefinitionArray[index].RequestId].Chain = chainDefinitionArray[index].Chain;",
+							"        apis[chainDefinitionArray[index].RequestId].Index = index;",
+							"    }",
+							"    pm.globals.set(\"gApis\", apis);",
+							"    //console.log(pm.globals.get(\"gApis\"));",
+							"}",
+							"",
+							"// If chainging is not valid end the collection.",
+							"if(!validationStatus.isValid) {",
+							"    console.log(\"Chaining is invalid, terminating the test collection\");",
+							"    for(let index = 0; index < validationStatus.msgs.length; ++ index) {",
+							"        console.log(\"Chain validation - \" + validationStatus.msgs[index]);",
+							"    }",
+							"    postman.setNextRequest(null);",
+							"}",
+							"/*****************END DO NOT MODIFY THIS CODE*******************/",
+							"",
+							"console.log(\"--------------------------------------------------------------------------------------\");",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{gUrl}}",
+					"host": [
+						"{{gUrl}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/ds/campusnexus/Students?$top=50&filter%5Blogic%5D=and&%24filter=1%20eq%202&%24orderby=LastName%2CFirstName%2CId&%24select=Id%2CFirstName%2CLastName%2CStudentNumber",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c7524494-918d-4fe8-b5d3-bf6d2de8b9fa",
+						"exec": [
+							"",
+							"/********************DO NOT MODIFY THIS CODE********************/",
+							"// Load API utility code",
+							"eval(postman.getGlobalVariable(\"gApiUtility\"));",
+							"",
+							"// Get API settings",
+							"let apiId = \"89abf148-d393-452f-a5c1-cd358db8e905\";",
+							"let reqIndex = pm.globals.get(\"gIndex\");",
+							"let API = pm.globals.get(\"gApis\")[apiId];",
+							"if (API === undefined || API.Index !== reqIndex) {",
+							"    console.log(\"ERROR - API not found for the specified apiId, \" + apiId);",
+							"    pm.globals.set(\"gReqApi\", null);",
+							"} else {",
+							"    pm.globals.set(\"gReqApi\", API);",
+							"    pm.globals.set(\"gIndex\", Number(pm.globals.get(\"gIndex\")) + 1);",
+							"}",
+							"//console.log(API);",
+							"",
+							"// Make authorization header",
+							"var hdr = apiUtility.makeAuthorization(null, null, null,  pm.environment.get(\"envApiKey\"), ",
+							"                                           pm.environment.get(\"envAuthUser\"), pm.environment.get(\"envAuthPassword\"));",
+							"pm.globals.set(\"gAuthHeaderKey\", hdr.key);",
+							"pm.globals.set(\"gAuthHeaderValue\", hdr.value);",
+							"//console.log(pm.globals.get(\"gAuthHeaderKey\"));",
+							"//console.log(pm.globals.get(\"gAuthHeaderValue\"));",
+							"",
+							"// Make request body by combining chained properties and data file request body",
+							"if (API !== undefined) {",
+							"    var request = { };",
+							"    apiUtility.setChainProps(API.Chain, request);",
+							"    var req = apiUtility.mergeRequestBody(request, API.RequestBody);",
+							"    pm.globals.set(\"gRequestBody\", JSON.stringify(req));",
+							"    //console.log(pm.globals.get(\"gRequestBody\"));",
+							"}",
+							"",
+							"// Make URL",
+							"if(API !== undefined) {",
+							"    pm.globals.set(\"gUrl\", apiUtility.makeUrl(pm.environment.get(\"envWebScheme\"), pm.environment.get(\"envWebHost\"), API.RequestUrl));",
+							"} else {",
+							"    pm.globals.set(\"gUrl\", \"http://127.0.0.1\");",
+							"}",
+							"//console.log(pm.globals.get(\"gUrl\"));",
+							"/*****************END DO NOT MODIFY THIS CODE*******************/"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "6af77f3f-96da-4bf3-bc6e-b927f6cc0e33",
+						"exec": [
+							"/********************DO NOT MODIFY THIS CODE********************/",
+							"// Load API utility code",
+							"eval(postman.getGlobalVariable(\"gApiUtility\"));",
+							"",
+							"// Get API settings",
+							"let API = pm.globals.get(\"gReqApi\");",
+							"if (API === null) {",
+							"    postman.setNextRequest(null);",
+							"    pm.test(\"API not found for the Request ID, using fallback URL and ending the test\", function() { pm.expect.fail() });",
+							"    return;",
+							"}",
+							"//console.log(API);",
+							"",
+							"// Save properties for chaining, ignore exceptions because the test will fail later anyways",
+							"try {",
+							"   var rb = pm.response.json();",
+							"   if (API.ChainSource.length > 0) {",
+							"      let str = API.RequestId + \".response\";",
+							"      apiUtility.globalStoreWrite(str, rb);",
+							"   }",
+							"} catch(e) { console.log(\"Exception was raised during chainging, Msg -\" + e); }",
+							"/*****************END DO NOT MODIFY THIS CODE*******************/",
+							"",
+							"// --- TEST VERIFICATIONS ---",
+							"// --- Add your custom tests in this block ---",
+							"pm.test(\"Verify response status is \" + API.ResponseStatus, function() { ",
+							"     pm.expect(pm.response.code).to.equal(API.ResponseStatus);",
+							"});",
+							"pm.test(\"Verify response time is less than \" + API.ResponseTimeMs, function() { ",
+							"     pm.expect(pm.response.responseTime).to.be.below(API.ResponseTimeMs);",
+							"});",
+							"pm.test(\"Verify response body matches expected response \", function() { ",
+							"     pm.expect(apiUtility.verifyResponse(API.ResponseBody, pm.response.json())).to.be.true;",
+							"});",
+							"pm.test(\"Verify value length > 0\", function()",
+							"{",
+							"    pm.expect(pm.response.json().value.length).to.be.above(0);",
+							"})",
+							"// --- END TEST VERIFICATIONS ---",
+							"console.log(\"--------------------------------------------------------------------------------------\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "{{gAuthHeaderKey}}",
+						"value": "{{gAuthHeaderValue}}"
+					}
+				],
+				"url": {
+					"raw": "{{gUrl}}",
+					"host": [
+						"{{gUrl}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/ds/campusnexus/Students/CampusNexus.GetStudentSummaryInfo(studentId=663)?$expand=Campus($select=Id,Name,IsInternationalStudentEnabled;$expand=CampusDetails($select=Id,IsUsingMultipleInquiry,IsAthleticAssociationMember)),LastModifiedUser($select=Id;$expand=Person($select=FullName)),SchoolStatus($select=Id,Name;$expand=SystemSchoolStatus),EnrollmentPeriods($select=Id,EnrollmentNumber,ProgramId,ProgramVersionName,ProgramVersionId,EnrollmentStatusId,ExpectedStartDate,Lda,CampusId,IsApplicant,BillingMethodId;$expand=SchoolStatus($select=Id,Name),BillingMethod($select=Id,Frequency),EnrollmentStatus($select=Id,Name),ProgramVersion($select=Id,RevenuePeriod,IsIncrementalBillEarn,Name)),StudentEthnicities($select=Id,EthnicityId;$expand=Ethnicity($select=Name)),Agency($select=Name),ExtraCurricularActivities($select=Id,ExtraCurricularActivityId;$expand=ExtraCurricularActivity($select=Name)),SmsServiceProvider($select=Name),County($select=Name),Country($select=Name),LeadType($select=Name),LeadSources($select=Name),AssignedAdmissionsRep($select=StaffName),ProgramGroup($select=Name),Programs($select=Name),Shift($select=Name)",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "61a11d58-9eed-430c-9c4d-3281657a9673",
+						"exec": [
+							"",
+							"/********************DO NOT MODIFY THIS CODE********************/",
+							"// Load API utility code",
+							"eval(postman.getGlobalVariable(\"gApiUtility\"));",
+							"",
+							"// Get API settings",
+							"let apiId = \"6a42bd5c-d996-42d0-8a9e-be274d368af4\";",
+							"let reqIndex = pm.globals.get(\"gIndex\");",
+							"let API = pm.globals.get(\"gApis\")[apiId];",
+							"if (API === undefined || API.Index !== reqIndex) {",
+							"    console.log(\"ERROR - API not found for the specified apiId, \" + apiId);",
+							"    pm.globals.set(\"gReqApi\", null);",
+							"} else {",
+							"    pm.globals.set(\"gReqApi\", API);",
+							"    pm.globals.set(\"gIndex\", Number(pm.globals.get(\"gIndex\")) + 1);",
+							"}",
+							"//console.log(API);",
+							"",
+							"// Make authorization header",
+							"var hdr = apiUtility.makeAuthorization(null, null, null,  pm.environment.get(\"envApiKey\"), ",
+							"                                           pm.environment.get(\"envAuthUser\"), pm.environment.get(\"envAuthPassword\"));",
+							"pm.globals.set(\"gAuthHeaderKey\", hdr.key);",
+							"pm.globals.set(\"gAuthHeaderValue\", hdr.value);",
+							"//console.log(pm.globals.get(\"gAuthHeaderKey\"));",
+							"//console.log(pm.globals.get(\"gAuthHeaderValue\"));",
+							"",
+							"// Make request body by combining chained properties and data file request body",
+							"if (API !== undefined) {",
+							"    var request = { };",
+							"    apiUtility.setChainProps(API.Chain, request);",
+							"    var req = apiUtility.mergeRequestBody(request, API.RequestBody);",
+							"    pm.globals.set(\"gRequestBody\", JSON.stringify(req));",
+							"    //console.log(pm.globals.get(\"gRequestBody\"));",
+							"}",
+							"",
+							"// Make URL",
+							"if(API !== undefined) {",
+							"    pm.globals.set(\"gUrl\", apiUtility.makeUrl(pm.environment.get(\"envWebScheme\"), pm.environment.get(\"envWebHost\"), API.RequestUrl));",
+							"} else {",
+							"    pm.globals.set(\"gUrl\", \"http://127.0.0.1\");",
+							"}",
+							"//console.log(pm.globals.get(\"gUrl\"));",
+							"/*****************END DO NOT MODIFY THIS CODE*******************/"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "b183da8a-e0ab-4717-89ba-6fac7f11b480",
+						"exec": [
+							"/********************DO NOT MODIFY THIS CODE********************/",
+							"// Load API utility code",
+							"eval(postman.getGlobalVariable(\"gApiUtility\"));",
+							"",
+							"// Get API settings",
+							"let API = pm.globals.get(\"gReqApi\");",
+							"if (API === null) {",
+							"    postman.setNextRequest(null);",
+							"    pm.test(\"API not found for the Request ID, using fallback URL and ending the test\", function() { pm.expect.fail() });",
+							"    return;",
+							"}",
+							"//console.log(API);",
+							"",
+							"// Save properties for chaining, ignore exceptions because the test will fail later anyways",
+							"try {",
+							"   var rb = pm.response.json();",
+							"   if (API.ChainSource.length > 0) {",
+							"      let str = API.RequestId + \".response\";",
+							"      apiUtility.globalStoreWrite(str, rb);",
+							"   }",
+							"} catch(e) { console.log(\"Exception was raised during chainging, Msg -\" + e); }",
+							"/*****************END DO NOT MODIFY THIS CODE*******************/",
+							"",
+							"// --- TEST VERIFICATIONS ---",
+							"// --- Add your custom tests in this block ---",
+							"pm.test(\"Verify response status is \" + API.ResponseStatus, function() { ",
+							"     pm.expect(pm.response.code).to.equal(API.ResponseStatus);",
+							"});",
+							"pm.test(\"Verify response time is less than \" + API.ResponseTimeMs, function() { ",
+							"     pm.expect(pm.response.responseTime).to.be.below(API.ResponseTimeMs);",
+							"});",
+							"pm.test(\"Verify response body matches expected response \", function() { ",
+							"     pm.expect(apiUtility.verifyResponse(API.ResponseBody, pm.response.json())).to.be.true;",
+							"});",
+							"pm.test(\"Verify value length > 0\", function()",
+							"{",
+							"    pm.expect(pm.response.json().value.length).to.be.above(0);",
+							"})",
+							"// --- END TEST VERIFICATIONS ---",
+							"console.log(\"--------------------------------------------------------------------------------------\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "{{gAuthHeaderKey}}",
+						"value": "{{gAuthHeaderValue}}"
+					}
+				],
+				"url": {
+					"raw": "{{gUrl}}",
+					"host": [
+						"{{gUrl}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/ds/campusnexus/StudentEnrollmentPeriods/CampusNexus.GetStudentEnrollmentTermSummaryDetails(studentEnrollmentPeriodId=18334,IsAggregate=1)?$select=ParentTermId",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "9f2b71e5-6fd6-410f-9b97-c1436f676d8a",
+						"exec": [
+							"",
+							"/********************DO NOT MODIFY THIS CODE********************/",
+							"// Load API utility code",
+							"eval(postman.getGlobalVariable(\"gApiUtility\"));",
+							"",
+							"// Get API settings",
+							"let apiId = \"14e99e5f-381b-4953-9470-ab011fbe969e\";",
+							"let reqIndex = pm.globals.get(\"gIndex\");",
+							"let API = pm.globals.get(\"gApis\")[apiId];",
+							"if (API === undefined || API.Index !== reqIndex) {",
+							"    console.log(\"ERROR - API not found for the specified apiId, \" + apiId);",
+							"    pm.globals.set(\"gReqApi\", null);",
+							"} else {",
+							"    pm.globals.set(\"gReqApi\", API);",
+							"    pm.globals.set(\"gIndex\", Number(pm.globals.get(\"gIndex\")) + 1);",
+							"}",
+							"//console.log(API);",
+							"",
+							"// Make authorization header",
+							"var hdr = apiUtility.makeAuthorization(null, null, null,  pm.environment.get(\"envApiKey\"), ",
+							"                                           pm.environment.get(\"envAuthUser\"), pm.environment.get(\"envAuthPassword\"));",
+							"pm.globals.set(\"gAuthHeaderKey\", hdr.key);",
+							"pm.globals.set(\"gAuthHeaderValue\", hdr.value);",
+							"//console.log(pm.globals.get(\"gAuthHeaderKey\"));",
+							"//console.log(pm.globals.get(\"gAuthHeaderValue\"));",
+							"",
+							"// Make request body by combining chained properties and data file request body",
+							"if (API !== undefined) {",
+							"    var request = { };",
+							"    apiUtility.setChainProps(API.Chain, request);",
+							"    var req = apiUtility.mergeRequestBody(request, API.RequestBody);",
+							"    pm.globals.set(\"gRequestBody\", JSON.stringify(req));",
+							"    //console.log(pm.globals.get(\"gRequestBody\"));",
+							"}",
+							"",
+							"// Make URL",
+							"if(API !== undefined) {",
+							"    pm.globals.set(\"gUrl\", apiUtility.makeUrl(pm.environment.get(\"envWebScheme\"), pm.environment.get(\"envWebHost\"), API.RequestUrl));",
+							"} else {",
+							"    pm.globals.set(\"gUrl\", \"http://127.0.0.1\");",
+							"}",
+							"//console.log(pm.globals.get(\"gUrl\"));",
+							"/*****************END DO NOT MODIFY THIS CODE*******************/"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "9d174c9b-ce06-46df-a4f2-72de827698f1",
+						"exec": [
+							"/********************DO NOT MODIFY THIS CODE********************/",
+							"// Load API utility code",
+							"eval(postman.getGlobalVariable(\"gApiUtility\"));",
+							"",
+							"// Get API settings",
+							"let API = pm.globals.get(\"gReqApi\");",
+							"if (API === null) {",
+							"    postman.setNextRequest(null);",
+							"    pm.test(\"API not found for the Request ID, using fallback URL and ending the test\", function() { pm.expect.fail() });",
+							"    return;",
+							"}",
+							"//console.log(API);",
+							"",
+							"// Save properties for chaining, ignore exceptions because the test will fail later anyways",
+							"try {",
+							"   var rb = pm.response.json();",
+							"   if (API.ChainSource.length > 0) {",
+							"      let str = API.RequestId + \".response\";",
+							"      apiUtility.globalStoreWrite(str, rb);",
+							"   }",
+							"} catch(e) { console.log(\"Exception was raised during chainging, Msg -\" + e); }",
+							"/*****************END DO NOT MODIFY THIS CODE*******************/",
+							"",
+							"// --- TEST VERIFICATIONS ---",
+							"// --- Add your custom tests in this block ---",
+							"pm.test(\"Verify response status is \" + API.ResponseStatus, function() { ",
+							"     pm.expect(pm.response.code).to.equal(API.ResponseStatus);",
+							"});",
+							"pm.test(\"Verify response time is less than \" + API.ResponseTimeMs, function() { ",
+							"     pm.expect(pm.response.responseTime).to.be.below(API.ResponseTimeMs);",
+							"});",
+							"pm.test(\"Verify response body matches expected response \", function() { ",
+							"     pm.expect(apiUtility.verifyResponse(API.ResponseBody, pm.response.json())).to.be.true;",
+							"});",
+							"// --- END TEST VERIFICATIONS ---",
+							"",
+							"",
+							"let groups = pm.response.json().value;",
+							"if(groups.length > 0) {",
+							"    if(pm.globals.get(\"gVeteran\") == \"Y\") {",
+							"        for(let i =0 ; i < groups.length; i++) {",
+							"            if(groups[i].RegistrationGroupName == pm.globals.get(\"gGroupName\")) {",
+							"                pm.test(\"Verify that the group name matches\", function() {",
+							"                    pm.expect(pm.response.json().value[0].RegistrationGroupName).to.equals(pm.globals.get(\"gGroupName\"));",
+							"                });",
+							"                break;",
+							"            }",
+							"        }",
+							"    }",
+							"    else //student is not a veteran",
+							"     {",
+							"        for(let i =0 ; i < groups.length; i++) {",
+							"            if(groups[i].RegistrationGroupName == (pm.globals.get(\"gGroupName\"))) {",
+							"                pm.test(\"student is not a veteran but group name \"+ pm.globals.get(\"gGroupName\")+ \" found\" , function() { pm.expect.fail() });",
+							"            }",
+							"        }",
+							"    }",
+							"        ",
+							"}",
+							"",
+							"console.log(\"--------------------------------------------------------------------------------------\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "{{gAuthHeaderKey}}",
+						"value": "{{gAuthHeaderValue}}"
+					}
+				],
+				"url": {
+					"raw": "{{gUrl}}",
+					"host": [
+						"{{gUrl}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

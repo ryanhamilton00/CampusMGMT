@@ -1,0 +1,49 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "Delete the View under MyViews",
+    "Globals": {
+      "ViewName": "ListofStudentwithFirstNameSearch",
+      "DataQueryGroup": "Common"
+	  },
+    "Apis": [
+      {
+        "RequestId": "cd47f2e6-1d88-4efd-9ba3-68c3892acbab",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=PersonId",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+	 	  {
+        "RequestId": "199eddb9-73cc-4141-9a3e-7a46e822e6f8",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/views/DataQueryGroups?$select=Id,Name&$filter=Name eq '{{gDataQueryGroup}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "d78dd099-6263-4fb5-a04e-c9e294e776d4",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/views/DataQueryGroups?$select=Id,Name,IsShared,SortOrder&$filter=IsHidden ne true and DataQueries/any(x:x/DataQueryGroupId eq {{gDataQueryGroupId}})&$expand=DataQueries($filter=Name eq '{{gViewName}}';$select=Id,Name,IsPinned,IsCampusQuery,Query,CreatedUserId,DynamicEmployerGroupId,DynamicStudentGroupId)",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+	  {
+        "RequestId": "770d7f82-2756-4bef-8c18-a17bf2981bbc",
+        "RequestMethod": "DELETE",
+        "RequestUrl": "/ds/views/DataQueries({{gViewId}})",
+        "RequestBody": null,
+        "ResponseStatus": 202,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": null
+      }
+    ]
+  }
+]

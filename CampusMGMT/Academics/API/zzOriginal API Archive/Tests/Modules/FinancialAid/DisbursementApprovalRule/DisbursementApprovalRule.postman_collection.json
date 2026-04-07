@@ -1,0 +1,826 @@
+{
+	"info": {
+		"_postman_id": "49bf89e4-d511-4e98-a937-75ba12e61b35",
+		"name": "DisbursementApprovalRule",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "3217b765-dc65-430e-8c12-de97374fb3b3",
+						"type": "text/javascript",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gCmcUtility\"));",
+							"",
+							"// This is the first request in the collection, clear the global variables",
+							"// used in the CRUD collection.   Do not do a clear all globals using pm.globals.clear",
+							"// because that will remove the common code global variable gCmcUtility.",
+							"pm.globals.unset('gAuthHeaderKey');",
+							"pm.globals.unset('gAuthHeaderValue');",
+							"pm.globals.unset('gUrl');",
+							"pm.globals.unset('gId');",
+							"pm.globals.unset('gRowVersion');",
+							"pm.globals.unset('gCreateRequestBody');",
+							"pm.globals.unset('gCreateResponseBody');",
+							"pm.globals.unset('gSaveRequestBody');",
+							"pm.globals.unset('gSaveResponseBody');",
+							"pm.globals.unset('gGetRequestBody');",
+							"pm.globals.unset('gGetResponseBody');",
+							"",
+							"// Make authorization header using basic auth or API key settings in the data file.",
+							"// If data file does not autornization info, use environment variable if available.",
+							"var hdr = cmcUtility.makeAuthorization(data.dUser, data.dPassword, data.dApiKey, pm.environment.get('envAuthUser'), pm.environment.get('envAuthPassword'));",
+							"pm.globals.set('gAuthHeaderKey', hdr.key);",
+							"pm.globals.set('gAuthHeaderValue', hdr.value);",
+							"//console.log(pm.globals.get('gAuthHeaderKey'));",
+							"//console.log(pm.globals.get('gAuthHeaderValue'));",
+							"",
+							"// Make URL",
+							"pm.globals.set('gUrl', cmcUtility.makeEntityOperationUrl(\"https\", pm.environment.get('envWebHost'), data.dEntityUrl, 'create'));",
+							"//console.log(pm.globals.get('gUrl'));",
+							"",
+							"// Make request body.",
+							"pm.globals.set('gCreateRequestBody', cmcUtility.makeRequestBody(data.dCreateRequest));",
+							"//console.log(pm.globals.get('gCreateRequestBody'));",
+							"",
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "fff156e8-3fcb-40be-8ebb-33f8598933c4",
+						"type": "text/javascript",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gCmcUtility\"));",
+							"",
+							"// Tests",
+							"pm.test(\"Verify response status is \" + data.dCreateResponseStatus, function() {",
+							"    pm.expect(pm.response.code).to.equal(data.dCreateResponseStatus);",
+							"});",
+							"pm.test(\"Verify response time is below \" + data.dCreateResponseTime, function() {",
+							"    pm.expect(pm.response.responseTime).to.be.below(data.dCreateResponseTime);",
+							"});",
+							"pm.test(\"Verify response body matches expected response\", function() {",
+							"    pm.expect(cmcUtility.verifyResponse(data.dCreateResponse,pm.response.json())).to.be.true;",
+							"});",
+							"",
+							"// If status is OK do chaining, else terminate workflow",
+							"if(pm.response.code === 200) {",
+							"    pm.globals.set('gCreateResponseBody', pm.response.json());",
+							"    //console.log(pm.globals.get('gCreateResponseBody'));",
+							"} else {",
+							"    postman.setNextRequest(null);",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "{{gAuthHeaderKey}}",
+						"value": "{{gAuthHeaderValue}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{{gCreateRequestBody}}"
+				},
+				"url": {
+					"raw": "{{gUrl}}",
+					"host": [
+						"{{gUrl}}"
+					]
+				},
+				"description": "CRUD create operation"
+			},
+			"response": []
+		},
+		{
+			"name": "SaveNew",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "4b659f04-e270-413c-826c-51ed640a08ab",
+						"type": "text/javascript",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gCmcUtility\"));",
+							"",
+							"// Make authorization header using basic auth or API key settings in the data file.",
+							"// If data file does not autornization info, use environment variable if available.",
+							"var hdr = cmcUtility.makeAuthorization(data.dUser, data.dPassword, data.dApiKey, pm.environment.get('envAuthUser'), pm.environment.get('envAuthPassword'));",
+							"pm.globals.set('gAuthHeaderKey', hdr.key);",
+							"pm.globals.set('gAuthHeaderValue', hdr.value);",
+							"",
+							"",
+							"// Make URL",
+							"pm.globals.set('gUrl', cmcUtility.makeEntityOperationUrl(\"https\", pm.environment.get('envWebHost'), data.dEntityUrl, 'saveNew'));",
+							"//console.log(pm.globals.get('gUrl'));",
+							"",
+							"// Make request body.",
+							"pm.globals.set('gSaveRequestBody', cmcUtility.makeRequestBody(data.dSaveNewRequest));",
+							"//console.log(pm.globals.get('gSaveRequestBody'));",
+							"",
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "833a1e2e-4eba-4de2-9f8a-f03b628b49b4",
+						"type": "text/javascript",
+						"exec": [
+							"",
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gCmcUtility\"));",
+							"",
+							"// Tests",
+							"pm.test(\"Verify response status is \" + data.dSaveNewResponseStatus, function() {",
+							"    pm.expect(pm.response.code).to.equal(data.dSaveNewResponseStatus);",
+							"});",
+							"pm.test(\"Verify response time is below \" + data.dSaveNewResponseTime, function() {",
+							"    pm.expect(pm.response.responseTime).to.be.below(data.dSaveNewResponseTime);",
+							"});",
+							"pm.test(\"Verify response body matches expected response\", function() {",
+							"    pm.expect(cmcUtility.verifyResponse(data.dSaveNewResponse,pm.response.json())).to.be.true;",
+							"});",
+							"",
+							"// If status is OK do chaining, else terminate workflow",
+							"if(pm.response.code === 200) {",
+							"    // Chaining",
+							"    // Save ID & response to global variable for Get",
+							"    var rb = pm.response.json();",
+							"    pm.globals.set('gId', rb.payload.data.id);",
+							"    pm.globals.set('gRowVersion', rb.payload.data.rowVersion);",
+							"    pm.globals.set('gSaveResponseBody', rb);",
+							" ",
+							"} else {",
+							"    postman.setNextRequest(null);",
+							"}",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "{{gAuthHeaderKey}}",
+						"value": "{{gAuthHeaderValue}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{{gSaveRequestBody}}"
+				},
+				"url": {
+					"raw": "{{gUrl}}",
+					"host": [
+						"{{gUrl}}"
+					]
+				},
+				"description": "CRUD create operation"
+			},
+			"response": []
+		},
+		{
+			"name": "Get After SaveNew",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "f09da91a-e3b9-4d15-adec-52edab40a28b",
+						"type": "text/javascript",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gCmcUtility\"));",
+							"",
+							"// Make authorization header using basic auth or API key settings in the data file.",
+							"// If data file does not autornization info, use environment variable if available.",
+							"var hdr = cmcUtility.makeAuthorization(data.dUser, data.dPassword, data.dApiKey, pm.environment.get('envAuthUser'), pm.environment.get('envAuthPassword'));",
+							"pm.globals.set('gAuthHeaderKey', hdr.key);",
+							"pm.globals.set('gAuthHeaderValue', hdr.value);",
+							"//console.log(pm.globals.get('gAuthHeaderKey'));",
+							"//console.log(pm.globals.get('gAuthHeaderValue'));",
+							"",
+							"// Make URL",
+							"pm.globals.set('gUrl', cmcUtility.makeEntityOperationUrl(\"https\", pm.environment.get('envWebHost'), data.dEntityUrl, 'get'));",
+							"//console.log(pm.globals.get('gUrl'));",
+							"",
+							"// Make request body.",
+							"if(pm.globals.has('gId')) {",
+							"    pm.globals.set('gGetRequestBody', '{ \"payload\": { \"id\" : ' + pm.globals.get('gId') + ' }}' );     ",
+							"} else {",
+							"    pm.globals.set('gGetRequestBody', '{ \"payload\": {}}');",
+							"}",
+							"",
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "3a603950-a769-47fe-a9cd-c5adbbeb34e1",
+						"type": "text/javascript",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gCmcUtility\"));",
+							"",
+							"",
+							"// Tests",
+							"pm.test(\"Verify response status is \" + data.dSaveNewResponseStatus, function() {",
+							"    pm.expect(pm.response.code).to.equal(data.dSaveNewResponseStatus);",
+							"});",
+							"pm.test(\"Verify response time is below \" + data.dSaveNewResponseTime, function() {",
+							"    pm.expect(pm.response.responseTime).to.be.below(data.dSaveNewResponseTime);",
+							"});",
+							"pm.test(\"Verify response body matches expected response\", function() {",
+							"    pm.expect(cmcUtility.verifyResponse(pm.globals.get('gSaveResponseBody').payload.data,pm.response.json().payload.data)).to.be.true;",
+							"});",
+							"",
+							"// If status is OK do chaining, else terminate workflow",
+							"if(pm.response.code === 200) {",
+							"    var rb = pm.response.json();",
+							"    pm.globals.set('DacId', rb.payload.data.id);",
+							"    pm.globals.set('DacRowVersion', rb.payload.data.rowVersion);",
+							"    ",
+							"    pm.globals.set('MultipleDacId', rb.payload.data.disbursementApprovalRuleMultipleDisbursement[0].id);",
+							"    pm.globals.set('MultipleDacRowVersion', rb.payload.data.disbursementApprovalRuleMultipleDisbursement[0].rowVersion);",
+							"    ",
+							"    pm.globals.set('gGetResponseBody', rb);",
+							"",
+							"} else {",
+							"    postman.setNextRequest(null);",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "{{gAuthHeaderKey}}",
+						"value": "{{gAuthHeaderValue}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{{gGetRequestBody}}"
+				},
+				"url": {
+					"raw": "{{gUrl}}",
+					"host": [
+						"{{gUrl}}"
+					]
+				},
+				"description": "CRUD create operation"
+			},
+			"response": []
+		},
+		{
+			"name": "Save",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "389ad2a8-0116-458b-b646-c9aeb9bfc784",
+						"type": "text/javascript",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gCmcUtility\"));",
+							"   var DocumentApprovalId = [];",
+							"          var DocumentRowVersion = [];",
+							"          ",
+							"           var schoolApprovalId = [];",
+							"          var schoolRowVersion = [];",
+							"",
+							"// Make authorization header using basic auth or API key settings in the data file.",
+							"// If data file does not autornization info, use environment variable if available.",
+							"var hdr = cmcUtility.makeAuthorization(data.dUser, data.dPassword, data.dApiKey, pm.environment.get('envAuthUser'), pm.environment.get('envAuthPassword'));",
+							"pm.globals.set('gAuthHeaderKey', hdr.key);",
+							"pm.globals.set('gAuthHeaderValue', hdr.value);",
+							"",
+							"",
+							"// Make URL",
+							"pm.globals.set('gUrl', cmcUtility.makeEntityOperationUrl(\"https\", pm.environment.get('envWebHost'), data.dEntityUrl, 'save'));",
+							"",
+							"",
+							"// Getting the DAC id and Rowversion for each entity",
+							"var getresbody=pm.globals.get('gGetResponseBody');",
+							"var req = JSON.parse(cmcUtility.makeRequestBody(data.dSaveRequest));",
+							"req.payload.id = pm.globals.get('DacId');",
+							"req.payload.rowVersion= pm.globals.get('DacRowVersion');",
+							"",
+							"req.payload.disbursementApprovalRuleMultipleDisbursement[0].id = pm.globals.get('MultipleDacId');",
+							"req.payload.disbursementApprovalRuleMultipleDisbursement[0].rowVersion= pm.globals.get('MultipleDacRowVersion');",
+							"",
+							"//Document entity id and rowversion",
+							"",
+							" pm.globals.set('len',getresbody.payload.data.documentTypes.length);",
+							"var i;",
+							"     ",
+							"for (i = 0; i < pm.globals.get('len'); i++) { ",
+							"    DocumentApprovalId[i]=getresbody.payload.data.documentTypes[i].disbursementApprovalRuleId;",
+							"    DocumentRowVersion[i]=getresbody.payload.data.documentTypes[i].rowVersion;",
+							"    ",
+							"    ",
+							"}",
+							"",
+							"//Overriding the requests id and rowversion ",
+							"",
+							"   pm.globals.set('doclen',req.payload.documentTypes.length);",
+							"       ",
+							"        var i;",
+							"        var reqDocumentApprovalId = [];",
+							"          var reqDocumentRowVersion = [];",
+							"for (i = 0; i < pm.globals.get('len'); i++) { ",
+							"    req.payload.documentTypes[i].disbursementApprovalRuleId=DocumentApprovalId[i];",
+							"    req.payload.documentTypes[i].rowVersion=DocumentRowVersion[i];",
+							"   ",
+							"}",
+							"//Fetching the rowversion and id of the school status",
+							"  ",
+							"   pm.globals.set('len',getresbody.payload.data.schoolStatuses.length);",
+							"        console.log(pm.globals.get('schoollen'));",
+							"        var i;",
+							"     ",
+							"for (i = 0; i < pm.globals.get('schoollen'); i++) { ",
+							"    schoolApprovalId[i]=getresbody.payload.data.schoolStatuses[i].disbursementApprovalRuleId;",
+							"    schoolRowVersion[i]=getresbody.payload.data.schoolStatuses[i].rowVersion;",
+							"    ",
+							"    ",
+							"}",
+							"    ",
+							"//Assigning the rowv ersion and id of the delete request",
+							"",
+							"   pm.globals.set('doclen',req.payload.schoolStatuses.length);",
+							"        ",
+							"        var i;",
+							"        var reqschoolstatusesApprovalId = [];",
+							"          var reqschoolstatusRowVersion = [];",
+							"for (i = 0; i < pm.globals.get('schoollen'); i++) { ",
+							"    req.payload.schoolStatuses[i].disbursementApprovalRuleId=schoolApprovalId[i];",
+							"    req.payload.schoolStatuses[i].rowVersion=schoolRowVersion[i];",
+							"   ",
+							"}",
+							"  ",
+							"",
+							"     ",
+							" ",
+							"    ",
+							"    ",
+							"pm.globals.set('gSaveRequestBody', JSON.stringify(req));",
+							"//console.log(pm.globals.get('gSaveRequestBody'));",
+							"",
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "e628d9b9-e661-41de-bf2a-591759fcc399",
+						"type": "text/javascript",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gCmcUtility\"));",
+							"",
+							"// Tests",
+							"pm.test(\"Verify response status is \" + data.dSaveNewResponseStatus, function() {",
+							"    pm.expect(pm.response.code).to.equal(data.dSaveNewResponseStatus);",
+							"});",
+							"pm.test(\"Verify response time is below \" + data.dSaveNewResponseTime, function() {",
+							"    pm.expect(pm.response.responseTime).to.be.below(data.dSaveNewResponseTime);",
+							"});",
+							"pm.test(\"Verify response body matches expected response\", function() {",
+							"    pm.expect(cmcUtility.verifyResponse(data.dSaveResponse,pm.response.json())).to.be.true;",
+							"});",
+							"",
+							"// If status is OK do chaining, else terminate workflow",
+							"if(pm.response.code === 200) {",
+							"    var rb = pm.response.json();",
+							"    pm.globals.set('gId', rb.payload.data.id);",
+							"    pm.globals.set('gRowVersion', rb.payload.data.rowVersion);",
+							"    pm.globals.set('gSaveResponseBody', rb);",
+							"",
+							"} else {",
+							"    postman.setNextRequest(null);",
+							"}",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "{{gAuthHeaderKey}}",
+						"value": "{{gAuthHeaderValue}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{{gSaveRequestBody}}"
+				},
+				"url": {
+					"raw": "{{gUrl}}",
+					"host": [
+						"{{gUrl}}"
+					]
+				},
+				"description": "CRUD create operation"
+			},
+			"response": []
+		},
+		{
+			"name": "Get After Save",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "9b4fb984-7ead-4c32-90dd-0b8212b12b95",
+						"type": "text/javascript",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gCmcUtility\"));",
+							"",
+							"// Make authorization header using basic auth or API key settings in the data file.",
+							"// If data file does not autornization info, use environment variable if available.",
+							"var hdr = cmcUtility.makeAuthorization(data.dUser, data.dPassword, data.dApiKey, pm.environment.get('envAuthUser'), pm.environment.get('envAuthPassword'));",
+							"pm.globals.set('gAuthHeaderKey', hdr.key);",
+							"pm.globals.set('gAuthHeaderValue', hdr.value);",
+							"//console.log(pm.globals.get('gAuthHeaderKey'));",
+							"//console.log(pm.globals.get('gAuthHeaderValue'));",
+							"",
+							"// Make URL",
+							"pm.globals.set('gUrl', cmcUtility.makeEntityOperationUrl(\"https\", pm.environment.get('envWebHost'), data.dEntityUrl, 'get'));",
+							"",
+							"",
+							"// Make request body.",
+							"if(pm.globals.has('gId')) {",
+							"    pm.globals.set('gGetRequestBody', '{ \"payload\": { \"id\" : ' + pm.globals.get('gId') + ' }}' );     ",
+							"} else {",
+							"    pm.globals.set('gGetRequestBody', '{ \"payload\": {}}');",
+							"}",
+							"",
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "507f22d2-7869-4ed7-9a80-9ea0862313f5",
+						"type": "text/javascript",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gCmcUtility\"));",
+							"",
+							"// Tests",
+							"pm.test(\"Verify response status is \" + data.dSaveNewResponseStatus, function() {",
+							"    pm.expect(pm.response.code).to.equal(data.dSaveNewResponseStatus);",
+							"});",
+							"pm.test(\"Verify response time is below \" + data.dSaveNewResponseTime, function() {",
+							"    pm.expect(pm.response.responseTime).to.be.below(data.dSaveNewResponseTime);",
+							"});",
+							"pm.test(\"Verify response body matches expected response\", function() {",
+							"    pm.expect(cmcUtility.verifyResponse(pm.globals.get('gSaveResponseBody').payload.data,pm.response.json().payload.data)).to.be.true;",
+							"});",
+							"",
+							"// If status is OK do chaining, else terminate workflow",
+							"if(pm.response.code === 200) {",
+							"    var rb = pm.response.json();",
+							"   pm.globals.set('DacId', rb.payload.data.id);",
+							"   pm.globals.set('DacRowVersion', rb.payload.data.rowVersion);",
+							"      pm.globals.set('MultipleDacId', rb.payload.data.disbursementApprovalRuleMultipleDisbursement[0].id);",
+							"   pm.globals.set('MultipleDacRowVersion', rb.payload.data.disbursementApprovalRuleMultipleDisbursement[0].rowVersion);",
+							"        pm.globals.set('gGetResponseBody', rb);",
+							"    ",
+							"} else {",
+							"    postman.setNextRequest(null);",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "{{gAuthHeaderKey}}",
+						"value": "{{gAuthHeaderValue}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{{gGetRequestBody}}"
+				},
+				"url": {
+					"raw": "{{gUrl}}",
+					"host": [
+						"{{gUrl}}"
+					]
+				},
+				"description": "CRUD create operation"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "4a4fbb74-abac-424b-8c98-3d73128e253c",
+						"type": "text/javascript",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gCmcUtility\"));",
+							"",
+							"  var DocumentApprovalId=[];",
+							"    var DocumentRowVersion=[];",
+							"    ",
+							"      var schoolApprovalId=[];",
+							"    var schoolRowVersion=[];",
+							"",
+							"// Make authorization header using basic auth or API key settings in the data file.",
+							"// If data file does not autornization info, use environment variable if available.",
+							"var hdr = cmcUtility.makeAuthorization(data.dUser, data.dPassword, data.dApiKey, pm.environment.get('envAuthUser'), pm.environment.get('envAuthPassword'));",
+							"pm.globals.set('gAuthHeaderKey', hdr.key);",
+							"pm.globals.set('gAuthHeaderValue', hdr.value);",
+							"//console.log(pm.globals.get('gAuthHeaderKey'));",
+							"//console.log(pm.globals.get('gAuthHeaderValue'));",
+							"",
+							"// Make URL",
+							"pm.globals.set('gUrl', cmcUtility.makeEntityOperationUrl(\"https\", pm.environment.get('envWebHost'), data.dEntityUrl, 'delete'));",
+							"//console.log(pm.globals.get('gUrl'));",
+							"",
+							"// Make request body.",
+							"// Check request body type, if object convert to string, else leave as string.",
+							"// This allows specifying invalid JSON request body.",
+							"//pm.globals.set('gDeleteRequestBody', cmcUtility.makeRequestBody(data.dDeleteRequest));",
+							"//console.log(pm.globals.get('gSaveNewRequestBody'));",
+							"",
+							"",
+							"var getresbody=pm.globals.get('gGetResponseBody');",
+							"var req = JSON.parse(cmcUtility.makeRequestBody(data.dDeleteRequest));",
+							"req.payload.id = pm.globals.get('DacId');",
+							"req.payload.rowVersion= pm.globals.get('DacRowVersion');",
+							"",
+							"req.payload.disbursementApprovalRuleMultipleDisbursement[0].id = pm.globals.get('MultipleDacId');",
+							"req.payload.disbursementApprovalRuleMultipleDisbursement[0].rowVersion= pm.globals.get('MultipleDacRowVersion');",
+							"",
+							" pm.globals.set('len',getresbody.payload.data.documentTypes.length);",
+							"        console.log(pm.globals.get('len'));",
+							"        var i;",
+							"     ",
+							"for (i = 0; i < pm.globals.get('len'); i++) { ",
+							"    DocumentApprovalId[i]=getresbody.payload.data.documentTypes[i].disbursementApprovalRuleId;",
+							"    DocumentRowVersion[i]=getresbody.payload.data.documentTypes[i].rowVersion;",
+							"    ",
+							"    ",
+							"}",
+							"   ",
+							"   //pm.globals.set('doclen',req.payload.documentTypes.length);",
+							"        ",
+							"        var i;",
+							"        var reqDocumentApprovalId = [];",
+							"          var reqDocumentRowVersion = [];",
+							"for (i = 0; i < pm.globals.get('len'); i++) { ",
+							"    req.payload.documentTypes[i].disbursementApprovalRuleId=DocumentApprovalId[i];",
+							"    req.payload.documentTypes[i].rowVersion=DocumentRowVersion[i];",
+							"   ",
+							"}",
+							"  //statuses",
+							"  ",
+							"   pm.globals.set('schoollen',getresbody.payload.data.schoolStatuses.length);",
+							"        console.log(pm.globals.get('schoollen'));",
+							"        var i;",
+							"     ",
+							"for (i = 0; i < pm.globals.get('schoollen'); i++) { ",
+							"    schoolApprovalId[i]=getresbody.payload.data.schoolStatuses[i].disbursementApprovalRuleId;",
+							"    schoolRowVersion[i]=getresbody.payload.data.schoolStatuses[i].rowVersion;",
+							"    ",
+							"    ",
+							"}",
+							"     pm.globals.set('doclen',req.payload.schoolStatuses.length);",
+							"      ",
+							"        var i;",
+							"        var reqschoolstatusesApprovalId = [];",
+							"          var reqschoolstatusRowVersion = [];",
+							"for (i = 0; i < pm.globals.get('schoollen'); i++) { ",
+							"    req.payload.schoolStatuses[i].disbursementApprovalRuleId=schoolApprovalId[i];",
+							"    req.payload.schoolStatuses[i].rowVersion=schoolRowVersion[i];",
+							"   ",
+							"}",
+							"  req.payload.entityState=1;",
+							"pm.globals.set('gSaveRequestBody', JSON.stringify(req));",
+							"",
+							"",
+							"",
+							"",
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "d21ab12a-33b0-4fda-a5dd-d77f75dd6d46",
+						"type": "text/javascript",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gCmcUtility\"));",
+							"",
+							"// Tests",
+							"pm.test(\"Verify response status is \" + data.dDeleteResponseStatus, function() {",
+							"    pm.expect(pm.response.code).to.equal(data.dDeleteResponseStatus);",
+							"});",
+							"pm.test(\"Verify response time is below \" + data.dDeleteResponseTime, function() {",
+							"    pm.expect(pm.response.responseTime).to.be.below(data.dDeleteResponseTime);",
+							"});",
+							"pm.test(\"Verify response body matches expected response\", function() {",
+							"    pm.expect(cmcUtility.verifyResponse(data.dDeleteResponse,pm.response.json())).to.be.true;",
+							"});",
+							"",
+							"// Chaining",
+							"// Save ID & response to global variable for Get",
+							"//pm.globals.set('gId', pm.response.json().Id);",
+							"//console.log(pm.globals.get('gId'));",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "{{gAuthHeaderKey}}",
+						"value": "{{gAuthHeaderValue}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{{gSaveRequestBody}}"
+				},
+				"url": {
+					"raw": "{{gUrl}}",
+					"host": [
+						"{{gUrl}}"
+					]
+				},
+				"description": "CRUD create operation"
+			},
+			"response": []
+		},
+		{
+			"name": "Get After Delete",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "9eea67df-5639-4018-9338-ad2667291eb7",
+						"type": "text/javascript",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gCmcUtility\"));",
+							"",
+							"// Make authorization header using basic auth or API key settings in the data file.",
+							"// If data file does not autornization info, use environment variable if available.",
+							"var hdr = cmcUtility.makeAuthorization(data.dUser, data.dPassword, data.dApiKey, pm.environment.get('envAuthUser'), pm.environment.get('envAuthPassword'));",
+							"pm.globals.set('gAuthHeaderKey', hdr.key);",
+							"pm.globals.set('gAuthHeaderValue', hdr.value);",
+							"//console.log(pm.globals.get('gAuthHeaderKey'));",
+							"//console.log(pm.globals.get('gAuthHeaderValue'));",
+							"",
+							"// Make URL",
+							"pm.globals.set('gUrl', cmcUtility.makeEntityOperationUrl(\"https\", pm.environment.get('envWebHost'), data.dEntityUrl, 'get'));",
+							"//console.log(pm.globals.get('gUrl'));",
+							"",
+							"// Make request body.",
+							"if(pm.globals.has('gId')) {",
+							"    pm.globals.set('gGetRequestBody', '{ \"payload\": { \"id\" : ' + pm.globals.get('gId') + ' }}' );     ",
+							"} else {",
+							"    pm.globals.set('gGetRequestBody', '{ \"payload\": {}}');",
+							"}",
+							"",
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "ac3faa76-d310-4259-9514-d551c2b55f46",
+						"type": "text/javascript",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gCmcUtility\"));",
+							"",
+							"// Tests",
+							"pm.test(\"Verify response status is \" + data.dSaveNewResponseStatus, function() {",
+							"    pm.expect(pm.response.code).to.equal(data.dSaveNewResponseStatus);",
+							"});",
+							"pm.test(\"Verify response time is below \" + data.dSaveNewResponseTime, function() {",
+							"    pm.expect(pm.response.responseTime).to.be.below(data.dSaveNewResponseTime);",
+							"});",
+							"pm.test(\"Verify that there is no data because id does not exist\", function() {",
+							"    console.log(pm.response.json().payload.count);",
+							"    pm.expect(pm.response.json().payload.count).to.equal(0);",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "{{gAuthHeaderKey}}",
+						"value": "{{gAuthHeaderValue}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{{gGetRequestBody}}"
+				},
+				"url": {
+					"raw": "{{gUrl}}",
+					"host": [
+						"{{gUrl}}"
+					]
+				},
+				"description": "CRUD create operation"
+			},
+			"response": []
+		}
+	]
+}

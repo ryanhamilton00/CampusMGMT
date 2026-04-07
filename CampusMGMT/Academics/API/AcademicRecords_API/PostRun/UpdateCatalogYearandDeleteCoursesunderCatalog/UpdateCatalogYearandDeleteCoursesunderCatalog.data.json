@@ -1,0 +1,94 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "Update Catalog Year and Delete Courses under Catalog Year",
+    "Globals": {
+      "CatalogYearCode": "CatCode",
+      "Updateto": "@StringRandom(5)"
+    },
+    "Apis": [
+      {
+        "RequestId": "0d54d777-76b5-4e51-b3d6-780da85baf51",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/CatalogYears?$filter=Code eq '{{gCatalogYearCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": { "value": [] }
+      },
+      {
+        "RequestId": "e511a338-ad52-4e19-a007-69e33104dec8",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/CatalogYear/Get",
+        "RequestBody": { "payload": {} },
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {
+          "notifications": [],
+          "hasError": false,
+          "hasFault": false,
+          "hasWarning": false,
+          "hasValidationError": false,
+          "hasValidationWarning": false,
+          "hasValidationInformation": false,
+          "hasSecurityError": false
+        }
+      },
+      {
+        "RequestId": "43cd665b-e910-47a6-bb76-4c0909755654",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/CatalogYearCourses/CampusNexus.GetCatalogCourseList(courseCatalogId={{gCatalogYearId}},isAssociatedCourse=true,isActive=true)?$select=Code,Name,IsActive,CourseId,CampusGroupId,CampusGroupName",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": { "value": [] }
+      },
+      {
+        "RequestId": "eff3d454-f49d-4889-bead-b8bb0e56b615",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/CatalogYearCourse/SaveNew",
+        "RequestBody": {
+          "payload": {
+            "CourseIdList": []
+          }
+        },
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {
+          "notifications": [],
+          "hasError": false,
+          "hasFault": false,
+          "hasWarning": false,
+          "hasValidationError": false,
+          "hasValidationWarning": false,
+          "hasValidationInformation": false,
+          "hasSecurityError": false
+        }
+      },
+      {
+        "RequestId": "8d1d9383-11be-4071-9abe-6856f4b5d952",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/CatalogYear/Save",
+        "RequestBody": {
+          "payload": {
+            "code": "{{gUpdateto}}",
+            "name": "{{gUpdateto}}"
+          }
+        },
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {
+          "notifications": [],
+          "hasError": false,
+          "hasFault": false,
+          "hasWarning": false,
+          "hasValidationError": false,
+          "hasValidationWarning": false,
+          "hasValidationInformation": false,
+          "hasSecurityError": false
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,94 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "This API will perform CRUD commands in Status Changes",
+    "Globals": {"Code" : "TestAPI",
+				"Name" : "Status Change API",
+				"StatusName" : "Attending",
+				"NameUpdate": "API Test Name Update",
+				"NSLDS" : "In School",
+				"SchoolStatus" : "Placed",
+				"CampusCode" : "ALL"
+				},
+    "Apis": [
+      {
+        "RequestId": "38f5f7aa-f523-4302-af56-033aab837f75",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Common/SchoolStatus/Create",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"payload\":{}}"
+      },
+      {
+        "RequestId": "50a520da-bf3e-4009-99ac-d4071af6e1e1",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/SystemSchoolStatuses?$filter=Name eq '{{gStatusName}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "455633c6-1a11-48be-ab73-9bd7c216bec8",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/PropertyEnumValues?$select=Id,Code,ValueDescription,TableName&$filter=ValueDescription eq '{{gNSLDS}}' and TableName eq 'SySchoolStatus'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "80d16980-77aa-4126-bbae-5b0ad35bb56b",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/CampusGroups?$select=Id,Code,Name,CreatedDateTime,IsSystemCode&$filter = Code eq '{{gCampusCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "a473e9ca-36cf-4518-a344-c38ba6cff618",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Common/SchoolStatus/SaveNew",
+        "RequestBody": {
+			"payload": {
+				"code": "{{gCode}}",
+				"name": "{{gName}}"
+						}
+		},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {}	
+	},
+    {
+        "RequestId": "0f2f2f61-98cd-4b94-87e8-5dd7233f6b20",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Common/SchoolStatus/get",
+        "RequestBody": "{\"payload\":{}}"	,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {}
+      },
+
+      {
+        "RequestId": "c4a7e0c2-4c92-4d9d-b356-bd860f0a7a20",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Common/SchoolStatus/Save",
+        "RequestBody": {
+			"payload": {
+				"name": "{{gNameUpdate}}"}
+		},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {
+					"payload":{
+            "data": {
+              "name": "API Test Name Update"
+            }}
+						}
+      }
+    ]
+  }
+]

@@ -1,0 +1,55 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "Update Housing Application",
+    "Globals": {
+		"HouseAppCode": "HouCode",
+		"Updateto": "@StringRandom(5)"
+	},
+    "Apis": [
+	 {
+        "RequestId": "43ea4f08-e1c2-41f3-b5a0-6264165d74e4",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "abf74952-2143-45e3-9459-781aced0fa57",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/HousingApplications?$expand=CampusGroup($select = Id; $expand = CampusList($select = Id; $expand = Campus($select = Id, Name)))&$orderby=Name&$filter=Code eq '{{gHouseAppCode}}' and CampusGroup/CampusList/any(l:l/CampusId eq {{gCampusId}})",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "e99276dc-e514-4f87-b2a9-d13ca9e2925c",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/HousingApplication/Get",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {}
+      },
+      {
+        "RequestId": "9f9a2090-9f75-44ca-abf9-c352bfd63728",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/HousingApplication/Save",
+        "RequestBody": {
+						"payload": {
+							"code": "{{gUpdateto}}",
+							"isActive": false,
+							"name": "{{gUpdateto}}"
+						}
+					},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {}
+      }
+    ]
+  }
+]

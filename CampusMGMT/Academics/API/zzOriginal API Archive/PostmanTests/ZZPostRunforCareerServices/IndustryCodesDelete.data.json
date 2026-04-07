@@ -1,0 +1,85 @@
+[{
+	"Type": "AdvancedDataFile",
+	"Version": "2.0",
+	"TestDescription": "This API will create an Skill (Config-CS-Skill)",
+	"Globals": {
+		"Name": "IndustryName",
+		"Code": "IndCode",
+		"UpdatedName": "IndustryNameUpdate"
+	},
+	"Apis": [{
+			"RequestId": "00000000-0000-0000-0000-000000000000",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000011",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Industries/CampusNexus.GetIndustriesWithSICCodeDetail()?$select=Id,Name,Code,IsActive,CampusGroupId,SicCode,SicName&$expand=CampusGroup($select=Id;$expand=CampusList($select=Id;$expand=Campus($select=Id,Name)))&$filter=Name eq '{{gName}}'",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000003",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Common/Industry/Get",
+			"RequestBody": {
+				"payload": {}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000008",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/IndustryProgramVersions/CampusNexus.GetIndustriesProgramVersionDetail(industryId={{gIndustryId}})?$select=Id,Code,Name,IsActive&$top=10&orderby=Name",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000012",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/CareerServices/IndustryProgramVersion/SaveNew",
+			"RequestBody": {
+				"payload": {
+						"ProgramVersionIdList": []
+				}},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000013",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Common/Industry/Get",
+			"RequestBody": {
+				"payload": {}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {}
+		}, 
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000010",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Common/Industry/Delete",
+			"RequestBody": {},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {
+				"payload": {
+					"deleted": true
+				}
+			}
+		}
+	]
+}]

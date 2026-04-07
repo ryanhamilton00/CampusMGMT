@@ -1,0 +1,95 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "Resgister Course to Stundet for DPA Courses",
+    "Globals": {
+      "StudentSsn": "222-22-0011",
+      "EPName": "EPPool1",
+      "ProgramVersionName": "Audit Program Version 01"
+    },
+    "Apis": [
+      {
+        "RequestId": "a89a78ae-ffaa-479a-8c2d-1685e73055c0",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gStudentSsn}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": { "value": [] }
+      },
+      {
+        "RequestId": "05febb5e-f716-4402-9b26-6a4adecf5fba",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentEnrollmentPeriodDetails/CampusNexus.GetStudentEnrollmentPeriodList(studentId={{gStudentId}})?$select=Id,ProgramVersionId,ProgramId,ProgramVersionName&$filter = ProgramVersionName eq '{{gProgramVersionName}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": { "value": [] }
+      },
+      {
+        "RequestId": "4489a281-ef1b-4a73-ab00-7548125daeab",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/DegreeProgressAudit/getDegreeProgressAudit",
+        "RequestBody": {
+          "payload": {
+            "degreeProgressAuditRequestor": 1,
+            "isHypothetical": false
+          }
+        },
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{}"
+      },
+      {
+        "RequestId": "05febb5e-f716-4402-9b26-6a4adecf5fbb",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentEnrollmentDpaCourses?$filter=Id eq {{gCourseListRequirementId}}&$expand=StudentEnrollmentDpaCourseCategory",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": { "value": [] }
+      },
+      {
+        "RequestId": "05febb5e-f716-4402-9b26-6a4adecf5fbc",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/RequiredCourseElectivePools/CampusNexus.GetRequiredCourseElectivePoolCourseListForCatalog(requiredCourseId={{gRequiredCourseId}},studentEnrollmentPeriodId={{gStudentEnrollmentPeriodId}})",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": { "value": [] }
+      },
+      {
+        "RequestId": "4489a281-ef1b-4a73-ab00-7548125daeac",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/StudentEnrollmentDpaFulfillment/SaveStudentEnrollmentDpaFulfillment",
+        "RequestBody": {
+          "payload": {
+            "StudentEnrollmentDpaSelectedCourseDetail": {
+              "CourseId": 999999999,
+              "IsSubstituteAllowed": false
+            },
+            "IsSubstituteCourse": true,
+            "StudentEnrollmentSubstitutedCourseDetail": {
+              "Note": ""
+            },
+            "IsPostAsTransfer": false,
+            "StudentTransferCreditDpaFulfillment": {
+              "Id": 0
+            },
+            "StudentEnrollmentDpaFulfillment": {
+              "Id": 0,
+              "StudentCourseId": 0,
+              "Note": ""
+            },
+            "EntityState": 0,
+            "IsUndoEelctive": false
+          }
+        },
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{}"
+      }
+    ]
+  }
+]

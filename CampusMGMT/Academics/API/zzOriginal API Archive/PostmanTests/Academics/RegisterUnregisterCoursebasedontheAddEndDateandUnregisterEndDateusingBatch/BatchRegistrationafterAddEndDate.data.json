@@ -1,0 +1,120 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "Register Student using Registration Process",
+    "Globals": {
+      "BatchName": "@StringRandom( 3 )",
+      "StudentSsn": "111-22-0011",
+      "CourseCode": "Cou001",
+      "TermCode": "Ter001",
+      "StaffName": "Staff, Automated01"
+    },
+    "Apis": [
+      {
+        "RequestId": "38d97b50-d348-468d-b4dd-62d2b23fab35",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "38d97b50-d348-468d-b4dd-62d2b23fab36",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetStaffPasswordRuleProfile()?$filter=contains(FullName,'{{gStaffName}}')",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "81141f2a-83c4-4381-b7c4-97bab6cea504",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Terms/CampusNexus.GetTermsForBatchRegistration(campusId={{gCampusId}})?$select=Id,Code,Name,StartDate,EndDate,IsActive&$filter=Code eq '{{gTermCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "0a3fbd33-43c7-4c10-a22a-57e618c4ff11",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/ClassSections/CampusNexus.GetBatchRegistrationClassSections(campusId={{gCampusId}},termId = {{gTermId}})",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "36392874-10c4-47b0-90cc-2788767c6db4",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentCourses/CampusNexus.GetStudentListByStaffAndTerm(studentGroupId=0,campusId={{gCampusId}},termId={{gTermId}},classSectionId={{gClassSectionId}},courseId={{gCourseId}},parentCourseList='',shiftId=0,userId={{gStaffId}})?$filter=Ssn eq '{{gStudentSsn}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "12819a12-b6a9-4c1e-9df1-c5462ef9917e",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/BackgroundProcessing/Job/Submit",
+        "RequestBody": {
+          "payload": {
+            "batchType": "Cmc.Nexus.Academics.Jobs.TermRegistration, Cmc.Nexus.Academics",
+            "parameters": {
+              "parentTermId": "",
+              "numberOfStudents": 1,
+              "students": [
+                {
+                  "IsOverrideConflicts": true
+                }
+              ],
+              "registrationType": "Term"
+            },
+            "description": "Batch Term Registration - {{gBatchName}}",
+            "notificationOption": "Always",
+            "submitAsync": true
+          }
+        },
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {
+          "payload": {},
+          "notifications": [],
+          "hasError": false,
+          "hasFault": false,
+          "hasWarning": false,
+          "hasValidationError": false,
+          "hasSecurityError": false
+        }
+      },
+      {
+        "RequestId": "36392874-10c4-47b0-90cc-2788767c6db5",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Terms/CampusNexus.GetRegistrationBatchResults(registrationTypes=['Cmc.Nexus.Academics.Jobs.TermRegistration, Cmc.Nexus.Academics','Cmc.Nexus.Academics.Jobs.TrackRegistration, Cmc.Nexus.Academics','Cmc.Nexus.Academics.Jobs.BatchUnregister, Cmc.Nexus.Academics'])?$format=json&$orderby=CreatedDateTime desc&$filter=Description eq 'Batch Term Registration - {{gBatchName}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "36392874-10c4-47b0-90cc-2788767c6db6",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Terms/CampusNexus.GetRegistrationBatchResultHistory(registrationBatchId='{{gBatchIdentifier}}')?$expand=BatchResultHistoryConflicts&$filter = StudentId eq {{gStudentId}}",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {
+          "value": [
+            {
+              "State": "Succeeded",
+              "RegistrationStatus": "Registered"
+            }
+          ]
+        }
+      }
+    ]
+  }
+]

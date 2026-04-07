@@ -1,0 +1,65 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "Create New Housing Date",
+    "Globals": {
+		"HousingDateName": "HouDateName",
+		"HousingDateCode": "HouDatC"
+	},
+    "Apis": [
+      {
+        "RequestId": "3cea0179-8b9e-4564-a19c-943254b3c04d",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/HousingDates?$filter=Code eq '{{gHousingDateCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {}
+      },
+      {
+        "RequestId": "9afc606b-242f-4182-80a1-0bda4b13dc62",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "ea90b3b3-97ef-4d48-aebd-4d8c4bdfc695",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/HousingDate/Create",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {}
+      },
+      {
+        "RequestId": "d552ca24-5388-430b-b813-5330afd85525",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/HousingDate/SaveNew",
+        "RequestBody": {
+          "payload": {
+            "code": "{{gHousingDateCode}}",
+            "endDate": "@DateNow(+90)",
+            "name": "{{gHousingDateName}}",
+            "startDate": "@DateNow(-90)"
+          }
+        },
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {}
+      },
+      {
+        "RequestId": "9afc606b-242f-4182-80a1-0bda4b13dc63",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/HousingDates?$expand=CampusGroup($select=Id;$expand=CampusList($select=Id;$expand=Campus($select=Id,Name)))&$filter=Id eq {{gHousingDateId}}",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      }
+    ]
+  }
+]

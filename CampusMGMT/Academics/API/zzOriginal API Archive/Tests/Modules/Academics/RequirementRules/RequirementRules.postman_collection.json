@@ -1,0 +1,970 @@
+{
+	"info": {
+		"_postman_id": "2aa4ff3e-267d-4f7b-89c7-75c368eac5f1",
+		"name": "RequirementRules",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Requirement Rule - Create",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "1a7d1836-b8d6-4bd9-a3ee-ae94055d1177",
+						"exec": [
+							"// If environment auth variable is set, then create auth header",
+							"if (pm.environment.has('envAuthUser') && pm.environment.has('envAuthPassword'))",
+							"{",
+							"    pm.globals.set('gAuthorizationValue', 'Basic ' + btoa(pm.environment.get('envAuthUser') + ':' + pm.environment.get('envAuthPassword')));",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "b9890eda-5a3a-4e7b-bbe8-f50b0e2c76ff",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gCmcUtility\"));",
+							"",
+							"// Set the fields of the expected response object, this is used to verify the response body",
+							"var expectedResponse = ",
+							"{",
+							"    \"payload\": {",
+							"        \"data\": {",
+							"            \"id\": -1,",
+							"            \"code\": null,",
+							"            \"isActive\": true,",
+							"            \"isAdvanced\": false,",
+							"            \"lastModifiedUserId\": 2,",
+							"            \"minimumCredits\": null,",
+							"            \"name\": null,",
+							"            \"numberOfCourses\": null,",
+							"            \"rowVersion\": null,",
+							"            \"originalState\": \"H4sIAAAAAAAEALWSQUvDQBCF/0rZu5nU3kIaKPYitvTQKl6HzaQdyO6Wmakx/nrtCt4qIuQ6j/e97zD1SgTHXfdE4wv2F9p1asLxiHE8jGeavYc+6tKdzM4VgPoTBdQisJekqbPCpwD3ZbmAeQl7EsaeP9A4Rchgdd+Ein8YwzAUw6JIcrwW5/C63ewz9o6jGkZPrqlv6OSg2aDaNrXcMbXPSvLY1nC917ky4ypyv3QmF3LQ5Ogm628jazQ6cKAJZiZxfxD6Mp5UW1fe+O2faPj96ZpPgYUT5JUCAAA=\",",
+							"            \"secureState\": \"H4sIAAAAAAAEAD3MQQrCMBAAwK9I7mZTeysqeFbpoSJel5C0C01Ssisxvl6s4ANm9qecsfb+7Ood56frPUumOGKst7q4zSvMkQ9qElk6ALaTC8g6kM2JkxdtU4CdMS00BgaXCWd6o1CKsMasfkNH/6OUokurUx6/sIHH9TKs7ZYiC0brFBw/juQnSpcAAAA=\",",
+							"            \"extendedProperties\": [],",
+							"            \"entityState\": 0",
+							"        }",
+							"    },",
+							"    \"notifications\": [],",
+							"    \"hasError\": false,",
+							"    \"hasFault\": false,",
+							"    \"hasWarning\": false,",
+							"    \"hasValidationError\": false,",
+							"    \"hasValidationWarning\": false,",
+							"    \"hasValidationInformation\": false,",
+							"    \"hasSecurityError\": false",
+							"};",
+							"",
+							"// Tests",
+							"pm.test(\"Verify response status is OK\", function() {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"pm.test(\"Verify response time is below 5000\", function() {",
+							"    pm.expect(pm.response.responseTime).to.be.below(5000);",
+							"});",
+							"pm.test(\"Verify response body matches expected response\", function() {",
+							"    pm.expect(cmcUtility.verifyResponse(expectedResponse,pm.response.json())).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{gAuthorizationValue}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{envWebHost}}/api/commands/Academics/RequirementRule/create",
+					"protocol": "https",
+					"host": [
+						"{{envWebHost}}"
+					],
+					"path": [
+						"api",
+						"commands",
+						"Academics",
+						"RequirementRule",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Requirement Rule - Get for Standard Rule",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "ef5aad49-802c-47c9-91c4-69e548c164c2",
+						"exec": [
+							"// If environment auth variable is set, then create auth header",
+							"if (pm.environment.has('envAuthUser') && pm.environment.has('envAuthPassword'))",
+							"{",
+							"    pm.globals.set('gAuthorizationValue', 'Basic ' + btoa(pm.environment.get('envAuthUser') + ':' + pm.environment.get('envAuthPassword')));",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "c6fe7f12-7577-4048-a046-a62fd5e049b0",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gCmcUtility\"));",
+							"",
+							"// Set the fields of the expected response object, this is used to verify the response body",
+							"var expectedResponse = ",
+							"{",
+							"    \"payload\": {",
+							"        \"data\": {",
+							"            \"id\": 11,",
+							"            \"code\": \"APIPRO\",",
+							"            \"isActive\": true,",
+							"            \"isAdvanced\": false,",
+							"            \"lastModifiedUserId\": 2,",
+							"            \"minimumCredits\": 10,",
+							"            \"name\": \"API Req PRo\",",
+							"            \"numberOfCourses\": 10,",
+							"        },",
+							"        \"count\": 1",
+							"    }",
+							"    ",
+							"};",
+							"",
+							"// Tests",
+							"pm.test(\"Verify response status is OK\", function() {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"pm.test(\"Verify response time is below 5000\", function() {",
+							"    pm.expect(pm.response.responseTime).to.be.below(5000);",
+							"});",
+							"pm.test(\"Verify response body matches expected response\", function() {",
+							"    pm.expect(cmcUtility.verifyResponse(expectedResponse,pm.response.json())).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{gAuthorizationValue}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"payload\" : {\r\n        \"id\" : 11\r\n    }\r\n\r\n}"
+				},
+				"url": {
+					"raw": "https://{{envWebHost}}/api/commands/Academics/RequirementRule/get",
+					"protocol": "https",
+					"host": [
+						"{{envWebHost}}"
+					],
+					"path": [
+						"api",
+						"commands",
+						"Academics",
+						"RequirementRule",
+						"get"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Requirement Rule - Get for Advanced Rule",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "ef5aad49-802c-47c9-91c4-69e548c164c2",
+						"exec": [
+							"// If environment auth variable is set, then create auth header",
+							"if (pm.environment.has('envAuthUser') && pm.environment.has('envAuthPassword'))",
+							"{",
+							"    pm.globals.set('gAuthorizationValue', 'Basic ' + btoa(pm.environment.get('envAuthUser') + ':' + pm.environment.get('envAuthPassword')));",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "2523c282-c190-42f2-a7c2-70fee870f38a",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gCmcUtility\"));",
+							"",
+							"// Set the fields of the expected response object, this is used to verify the response body",
+							"var expectedResponse = ",
+							"{",
+							"    \"payload\": {",
+							"        \"data\": {",
+							"            \"id\": 10,",
+							"            \"code\": \"APIAUTO\",",
+							"            \"isActive\": true,",
+							"            \"isAdvanced\": true,",
+							"            \"lastModifiedUserId\": 2,",
+							"            \"minimumCredits\": null,",
+							"            \"name\": \"API Automation Requirement Rule\",",
+							"            \"numberOfCourses\": null,",
+							"            },",
+							"        \"count\": 1",
+							"    }",
+							"};",
+							"",
+							"// Tests",
+							"pm.test(\"Verify response status is OK\", function() {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"pm.test(\"Verify response time is below 5000\", function() {",
+							"    pm.expect(pm.response.responseTime).to.be.below(5000);",
+							"});",
+							"pm.test(\"Verify response body matches expected response\", function() {",
+							"    pm.expect(cmcUtility.verifyResponse(expectedResponse,pm.response.json())).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{gAuthorizationValue}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"payload\" : {\r\n        \"id\" : 10\r\n    }\r\n\r\n}"
+				},
+				"url": {
+					"raw": "https://{{envWebHost}}/api/commands/Academics/RequirementRule/get",
+					"protocol": "https",
+					"host": [
+						"{{envWebHost}}"
+					],
+					"path": [
+						"api",
+						"commands",
+						"Academics",
+						"RequirementRule",
+						"get"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Requirement Rule - Delete for Area Of Study Association",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "21b33617-f74b-44fd-862f-4b1abf5aa40d",
+						"exec": [
+							"// If environment auth variable is set, then create auth header",
+							"if (pm.environment.has('envAuthUser') && pm.environment.has('envAuthPassword'))",
+							"{",
+							"    pm.globals.set('gAuthorizationValue', 'Basic ' + btoa(pm.environment.get('envAuthUser') + ':' + pm.environment.get('envAuthPassword')));",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "69af8ecd-d7ec-4207-b67e-f369469de73e",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gCmcUtility\"));",
+							"",
+							"// Set the fields of the expected response object, this is used to verify the response body",
+							"var expectedResponse = ",
+							"{",
+							"    \"payload\": null,",
+							"    \"notifications\": [",
+							"        {",
+							"            \"message\": \"This record is in use within the system and cannot be deleted.\",",
+							"        }",
+							"    ]",
+							"};",
+							"",
+							"// Tests",
+							"pm.test(\"Verify response status is Bad Request\", function() {",
+							"    pm.expect(pm.response.code).to.equal(400);",
+							"});",
+							"pm.test(\"Verify response time is below 5000\", function() {",
+							"    pm.expect(pm.response.responseTime).to.be.below(5000);",
+							"});",
+							"pm.test(\"Verify response body matches expected response\", function() {",
+							"    pm.expect(cmcUtility.verifyResponse(expectedResponse,pm.response.json())).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{gAuthorizationValue}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"payload\" : {\r\n        \"id\" : 13\r\n    }\r\n\r\n}"
+				},
+				"url": {
+					"raw": "https://{{envWebHost}}/api/commands/Academics/RequirementRule/delete",
+					"protocol": "https",
+					"host": [
+						"{{envWebHost}}"
+					],
+					"path": [
+						"api",
+						"commands",
+						"Academics",
+						"RequirementRule",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Requirement Rule - Delete for Course Category Association",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "21b33617-f74b-44fd-862f-4b1abf5aa40d",
+						"exec": [
+							"// If environment auth variable is set, then create auth header",
+							"if (pm.environment.has('envAuthUser') && pm.environment.has('envAuthPassword'))",
+							"{",
+							"    pm.globals.set('gAuthorizationValue', 'Basic ' + btoa(pm.environment.get('envAuthUser') + ':' + pm.environment.get('envAuthPassword')));",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "d9892616-f7c3-433a-ac47-bc8c85b3b13d",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gCmcUtility\"));",
+							"",
+							"// Set the fields of the expected response object, this is used to verify the response body",
+							"var expectedResponse = ",
+							"{",
+							"    \"payload\": null,",
+							"    \"notifications\": [",
+							"        {",
+							"            \"message\": \"This record is in use within the system and cannot be deleted.\",",
+							"        }",
+							"    ]",
+							"};",
+							"",
+							"// Tests",
+							"pm.test(\"Verify response status is Bad Request\", function() {",
+							"    pm.expect(pm.response.code).to.equal(400);",
+							"});",
+							"pm.test(\"Verify response time is below 5000\", function() {",
+							"    pm.expect(pm.response.responseTime).to.be.below(5000);",
+							"});",
+							"pm.test(\"Verify response body matches expected response\", function() {",
+							"    pm.expect(cmcUtility.verifyResponse(expectedResponse,pm.response.json())).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{gAuthorizationValue}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"payload\" : {\r\n        \"id\" : 12\r\n      \r\n    }\r\n\r\n}"
+				},
+				"url": {
+					"raw": "https://{{envWebHost}}/api/commands/Academics/RequirementRule/delete",
+					"protocol": "https",
+					"host": [
+						"{{envWebHost}}"
+					],
+					"path": [
+						"api",
+						"commands",
+						"Academics",
+						"RequirementRule",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Requirement Rule - Delete for Program Association",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "21b33617-f74b-44fd-862f-4b1abf5aa40d",
+						"exec": [
+							"// If environment auth variable is set, then create auth header",
+							"if (pm.environment.has('envAuthUser') && pm.environment.has('envAuthPassword'))",
+							"{",
+							"    pm.globals.set('gAuthorizationValue', 'Basic ' + btoa(pm.environment.get('envAuthUser') + ':' + pm.environment.get('envAuthPassword')));",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "6306f064-1f69-4695-b5c7-4da7fb768086",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gCmcUtility\"));",
+							"",
+							"// Set the fields of the expected response object, this is used to verify the response body",
+							"var expectedResponse = ",
+							"{",
+							"    \"payload\": null,",
+							"    \"notifications\": [",
+							"        {",
+							"            \"message\": \"This record is in use within the system and cannot be deleted.\",",
+							"        }",
+							"    ]",
+							"};",
+							"",
+							"// Tests",
+							"pm.test(\"Verify response status is Bad Request\", function() {",
+							"    pm.expect(pm.response.code).to.equal(400);",
+							"});",
+							"pm.test(\"Verify response time is below 5000\", function() {",
+							"    pm.expect(pm.response.responseTime).to.be.below(5000);",
+							"});",
+							"pm.test(\"Verify response body matches expected response\", function() {",
+							"    pm.expect(cmcUtility.verifyResponse(expectedResponse,pm.response.json())).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{gAuthorizationValue}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"payload\" : {\r\n        \"id\" : 11\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "https://{{envWebHost}}/api/commands/Academics/RequirementRule/delete",
+					"protocol": "https",
+					"host": [
+						"{{envWebHost}}"
+					],
+					"path": [
+						"api",
+						"commands",
+						"Academics",
+						"RequirementRule",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Requirement Rule Attribute - Create",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6f33203b-02d4-42ef-b590-108ed8046ee4",
+						"exec": [
+							"// If environment auth variable is set, then create auth header",
+							"if (pm.environment.has('envAuthUser') && pm.environment.has('envAuthPassword'))",
+							"{",
+							"    pm.globals.set('gAuthorizationValue', 'Basic ' + btoa(pm.environment.get('envAuthUser') + ':' + pm.environment.get('envAuthPassword')));",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "77b64c7f-fc6a-407e-9e59-1e762bd0c40c",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gCmcUtility\"));",
+							"",
+							"// Set the fields of the expected response object, this is used to verify the response body",
+							"var expectedResponse = ",
+							"{",
+							"    \"payload\": {",
+							"        \"data\": {",
+							"            \"courseAttributeId\": 0,",
+							"            \"requirementRuleId\": 0,",
+							"            \"lastModifiedUserId\": 2,",
+							"            \"minimumCredits\": null,",
+							"            \"numberOfCourses\": null,",
+							"            \"rowVersion\": null,",
+							"            \"originalState\": \"H4sIAAAAAAAEAJ2QsQrCQBBEf0WuNxu1CzEg2IiKhVFsl2SjC7k7uV2J8eslJ9gpYjvDvBkmX4SA/a5ZU3/E9ka7RjSwO6Pry/5Ko7ttnczNRfWaAUh1IYuSWK6CF99oUnkL0zSdwSSFPQXGlh+o7B1EsJgXIeM3o+u6pJslPpyH4ARO280+YsfsRNFVZIr8w5xoFBsU3fqaG6b6IBRWdQ6DnsfIiDPH7dxouJGBIlofWb+VLFGpZEv/1cD3i4snHxB5CYMBAAA=\",",
+							"            \"secureState\": \"H4sIAAAAAAAEAD3MQQrCMBAAwK9I7mZTeysqeFbpoSJel5C0C01Ssisxvl6s4ANm9qecsfb+7Ood56frPUumOGKst7q4zSvMkQ9qElk6ALaTC8g6kM2JkxdtU4CdMS00BgaXCWd6o1CKsMasfkNH/6OUokurUx6/sIHH9TKs7ZYiC0brFBw/juQnSpcAAAA=\",",
+							"            \"extendedProperties\": [],",
+							"            \"entityState\": 0",
+							"        }",
+							"    },",
+							"    \"notifications\": [],",
+							"    \"hasError\": false,",
+							"    \"hasFault\": false,",
+							"    \"hasWarning\": false,",
+							"    \"hasValidationError\": false,",
+							"    \"hasValidationWarning\": false,",
+							"    \"hasValidationInformation\": false,",
+							"    \"hasSecurityError\": false",
+							"};",
+							"",
+							"// Tests",
+							"pm.test(\"Verify response status is OK\", function() {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"pm.test(\"Verify response time is below 5000\", function() {",
+							"    pm.expect(pm.response.responseTime).to.be.below(5000);",
+							"});",
+							"pm.test(\"Verify response body matches expected response\", function() {",
+							"    pm.expect(cmcUtility.verifyResponse(expectedResponse,pm.response.json())).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{gAuthorizationValue}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{envWebHost}}/api/commands/Academics/RequirementRuleAttribute/create",
+					"protocol": "https",
+					"host": [
+						"{{envWebHost}}"
+					],
+					"path": [
+						"api",
+						"commands",
+						"Academics",
+						"RequirementRuleAttribute",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Requirement Rule Attribute - Get",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "8d11ed92-975d-4d1d-af3c-4408a034cc82",
+						"exec": [
+							"// If environment auth variable is set, then create auth header",
+							"if (pm.environment.has('envAuthUser') && pm.environment.has('envAuthPassword'))",
+							"{",
+							"    pm.globals.set('gAuthorizationValue', 'Basic ' + btoa(pm.environment.get('envAuthUser') + ':' + pm.environment.get('envAuthPassword')));",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "a0d45361-0348-45f6-8723-0ee227131619",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gCmcUtility\"));",
+							"",
+							"// Set the fields of the expected response object, this is used to verify the response body",
+							"var expectedResponse = ",
+							"{",
+							"    \"payload\": {",
+							"        \"data\": {",
+							"            \"requirementRuleAttribute\": {",
+							"                \"courseAttributeId\": 18,",
+							"                \"requirementRuleId\": 10,",
+							"                \"lastModifiedUserId\": 2,",
+							"                \"minimumCredits\": 1,",
+							"                \"numberOfCourses\": 1,",
+							"            },",
+							"            \"validationMessages\": []",
+							"        }",
+							"    }",
+							"};",
+							"",
+							"// Tests",
+							"pm.test(\"Verify response status is OK\", function() {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"pm.test(\"Verify response time is below 5000\", function() {",
+							"    pm.expect(pm.response.responseTime).to.be.below(5000);",
+							"});",
+							"pm.test(\"Verify response body matches expected response\", function() {",
+							"    pm.expect(cmcUtility.verifyResponse(expectedResponse,pm.response.json())).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{gAuthorizationValue}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"payload\" : {\r\n        \"requirementRuleAttribute\" : {\r\n            \"courseAttributeId\" : 18,\r\n            \"requirementRuleId\" : 10,\r\n            \"lastModifiedUserId\" : \"2\",\r\n            \"minimumCredits\" : 1,\r\n            \"numberOfCourses\" : 1\r\n        }\r\n    }\r\n\r\n}"
+				},
+				"url": {
+					"raw": "https://{{envWebHost}}/api/commands/Academics/RequirementRuleAttribute/getRequirementRuleAttribute",
+					"protocol": "https",
+					"host": [
+						"{{envWebHost}}"
+					],
+					"path": [
+						"api",
+						"commands",
+						"Academics",
+						"RequirementRuleAttribute",
+						"getRequirementRuleAttribute"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Requirement Rule Course Level - Create",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6fc9b306-d79f-426d-8bd1-631284b49318",
+						"exec": [
+							"// If environment auth variable is set, then create auth header",
+							"if (pm.environment.has('envAuthUser') && pm.environment.has('envAuthPassword'))",
+							"{",
+							"    pm.globals.set('gAuthorizationValue', 'Basic ' + btoa(pm.environment.get('envAuthUser') + ':' + pm.environment.get('envAuthPassword')));",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "f7ca8961-da05-46ee-811f-1069d3017855",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gCmcUtility\"));",
+							"",
+							"// Set the fields of the expected response object, this is used to verify the response body",
+							"var expectedResponse = ",
+							"{",
+							"    \"payload\": {",
+							"        \"data\": {",
+							"            \"isAllAttribute\": false,",
+							"            \"id\": -1,",
+							"            \"courseLevelId\": 0,",
+							"            \"lastModifiedUserId\": 2,",
+							"            \"minimumCredits\": null,",
+							"            \"numberOfCourses\": null,",
+							"            \"requirementRuleId\": 0,",
+							"            \"rowVersion\": null,",
+							"            \"originalState\": \"H4sIAAAAAAAEALWSQWvCQBCF/4rs3UystxADRS+lige19DokkziQ3ZWZkTT99dUt9KYIxes83ve+w5SvIjhu23caP7A/07ZVEw4dhnE/nmjy5fugC3c0OxUAWh/Jo2aea4kaW8vq6OElz+cwy2FHwtjzNxrHAAms7pdQ8B9jGIZsmGdRumtxBp+b9S5hpxzUMNTkqvKGTgqqNaptYsMtU3NQkremhOu9TJUJF4H7hTM5k4MqRTdZj42s0GjPnp4w8xT3pdDF+J/acP8zqh9MEFNEOgIAAA==\",",
+							"            \"secureState\": \"H4sIAAAAAAAEAD3MQQrCMBAAwK9I7mZTeysqeFbpoSJel5C0C01Ssisxvl6s4ANm9qecsfb+7Ood56frPUumOGKst7q4zSvMkQ9qElk6ALaTC8g6kM2JkxdtU4CdMS00BgaXCWd6o1CKsMasfkNH/6OUokurUx6/sIHH9TKs7ZYiC0brFBw/juQnSpcAAAA=\",",
+							"            \"extendedProperties\": [],",
+							"            \"entityState\": 0",
+							"        }",
+							"    },",
+							"    \"notifications\": [],",
+							"    \"hasError\": false,",
+							"    \"hasFault\": false,",
+							"    \"hasWarning\": false,",
+							"    \"hasValidationError\": false,",
+							"    \"hasValidationWarning\": false,",
+							"    \"hasValidationInformation\": false,",
+							"    \"hasSecurityError\": false",
+							"};",
+							"",
+							"// Tests",
+							"pm.test(\"Verify response status is OK\", function() {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"pm.test(\"Verify response time is below 5000\", function() {",
+							"    pm.expect(pm.response.responseTime).to.be.below(5000);",
+							"});",
+							"pm.test(\"Verify response body matches expected response\", function() {",
+							"    pm.expect(cmcUtility.verifyResponse(expectedResponse,pm.response.json())).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{gAuthorizationValue}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{envWebHost}}/api/commands/Academics/RequirementRuleCourseLevel/create",
+					"protocol": "https",
+					"host": [
+						"{{envWebHost}}"
+					],
+					"path": [
+						"api",
+						"commands",
+						"Academics",
+						"RequirementRuleCourseLevel",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Requirement Rule Course Level Attribute - Create",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6dcc2a12-38a2-4b0d-a27a-dd420d18f3b7",
+						"exec": [
+							"// If environment auth variable is set, then create auth header",
+							"if (pm.environment.has('envAuthUser') && pm.environment.has('envAuthPassword'))",
+							"{",
+							"    pm.globals.set('gAuthorizationValue', 'Basic ' + btoa(pm.environment.get('envAuthUser') + ':' + pm.environment.get('envAuthPassword')));",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "aafae3b1-45a3-4c35-b455-3b1dc87820f0",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gCmcUtility\"));",
+							"",
+							"// Set the fields of the expected response object, this is used to verify the response body",
+							"var expectedResponse = ",
+							"{",
+							"    \"payload\": {",
+							"        \"data\": {",
+							"            \"courseAttributeIdList\": null,",
+							"            \"courseAttributeId\": 0,",
+							"            \"requirementRuleCourseLevelId\": 0,",
+							"            \"lastModifiedUserId\": 2,",
+							"            \"minimumCredits\": null,",
+							"            \"numberOfCourses\": null,",
+							"            \"rowVersion\": null,",
+							"            \"originalState\": \"H4sIAAAAAAAEAJ2QsQrCQBBEf0WuNxu1CzEg2IiKhVFsl2SjC7k7uV2J8eslJ9gpYjvDvBkmX4SA/a5ZU3/E9ka7RjSwO6Pry/5Ko7ttnczNRfWaAUh1IYuSWK6CF99oUnkL0zSdwSSFPQXGlh+o7B1EsJgXIeM3o+u6pJslPpyH4ARO280+YsfsRNFVZIr8w5xoFBsU3fqaG6b6IBRWdQ6DnsfIiDPH7dxouJGBIlofWb+VLFGpZEv/1cD3i4snHxB5CYMBAAA=\",",
+							"            \"secureState\": \"H4sIAAAAAAAEAD3MQQrCMBAAwK9I7mZTeysqeFbpoSJel5C0C01Ssisxvl6s4ANm9qecsfb+7Ood56frPUumOGKst7q4zSvMkQ9qElk6ALaTC8g6kM2JkxdtU4CdMS00BgaXCWd6o1CKsMasfkNH/6OUokurUx6/sIHH9TKs7ZYiC0brFBw/juQnSpcAAAA=\",",
+							"            \"extendedProperties\": [],",
+							"            \"entityState\": 0",
+							"        }",
+							"    },",
+							"    \"notifications\": [],",
+							"    \"hasError\": false,",
+							"    \"hasFault\": false,",
+							"    \"hasWarning\": false,",
+							"    \"hasValidationError\": false,",
+							"    \"hasValidationWarning\": false,",
+							"    \"hasValidationInformation\": false,",
+							"    \"hasSecurityError\": false",
+							"};",
+							"",
+							"// Tests",
+							"pm.test(\"Verify response status is OK\", function() {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"pm.test(\"Verify response time is below 5000\", function() {",
+							"    pm.expect(pm.response.responseTime).to.be.below(5000);",
+							"});",
+							"pm.test(\"Verify response body matches expected response\", function() {",
+							"    pm.expect(cmcUtility.verifyResponse(expectedResponse,pm.response.json())).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{gAuthorizationValue}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{envWebHost}}/api/commands/Academics/RequirementRuleCourseLevelAttribute/create",
+					"protocol": "https",
+					"host": [
+						"{{envWebHost}}"
+					],
+					"path": [
+						"api",
+						"commands",
+						"Academics",
+						"RequirementRuleCourseLevelAttribute",
+						"create"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

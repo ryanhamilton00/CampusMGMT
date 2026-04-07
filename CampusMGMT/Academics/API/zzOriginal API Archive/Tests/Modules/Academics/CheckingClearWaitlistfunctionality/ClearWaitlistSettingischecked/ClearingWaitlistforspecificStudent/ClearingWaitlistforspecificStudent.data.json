@@ -1,0 +1,76 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "ClearingWaitlistforspecificStudent",
+    "Globals": {
+      "CourseCode": "Cou005",
+      "TermCode": "Ter005"
+    },
+    "Apis": [
+      {
+        "RequestId": "d34a8741-2fb7-419d-8369-6b7ae9d3fe1e",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {
+                          "value": [{
+                              "IsAllowedToClearWaitlist": true
+                            }]
+                        }
+      },
+      {
+        "RequestId": "052a138d-3dc3-4bc2-8654-a2c31e748832",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Terms/CampusNexus.GetParentTerm(campusId={{gCampusId}},studentId=0,studentGroupId=0)?$select=Name,Code,Id&$filter = Code eq '{{gTermCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {"value":[]}
+      },
+	  {
+        "RequestId": "e821fd1b-88cb-452b-badb-c7809783323b",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Courses?$select=Id,Name&$filter=Code eq '{{gCourseCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {"value":[]}
+      },
+      {
+        "RequestId": "3cc7f3b2-66d2-42ee-834d-9f9168e0f745",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/ClassSections/CampusNexus.GetDailyClassScheduleList(showLevelIndicator=0,termId=['{{gTermId}}'],courseId={{gCourseId}},instructorId=0,startDate ='',endDate='',campusId={{gCampusId}}, isInProgress=false)",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {"value":[]}
+      },
+      {
+        "RequestId": "1f3e41b6-278d-4a10-b511-74ef7b2e7ebc",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentCoursePendingRegistrations/CampusNexus.GetStudentCourseRegistrationPendingStudents(status=264,classSectionId={{gClassSectionId}},termId={{gTermId}},campusId={{gCampusId}})",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {"value":[]}
+      },
+      {
+        "RequestId": "867dd047-3486-49b3-b10b-e47578f613fa",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/ClassSection/ClearWaitListStudents",
+        "RequestBody": {
+							"payload": {
+								"isClearAllStudents": false,
+								"isSendMessage": true
+							}
+						},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {}
+      }
+    ]
+  }
+]

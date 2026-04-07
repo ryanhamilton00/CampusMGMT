@@ -1,0 +1,220 @@
+{
+	"info": {
+		"_postman_id": "324725de-8a7a-4fa1-baf0-9dfe5712eaaf",
+		"name": "GradeLetter_SaveNew_Defaultdrop_validation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"_postman_id": "651542c1-fbbe-47c6-a69a-9b02251cee99",
+			"name": "/api/commands/Academics/GradeScaleLetterGrade/saveNew - post",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "9f545471-78ca-4553-84ab-58e3da1c5ff2",
+						"type": "text/javascript",
+						"exec": [
+							"// If environment auth variable is set, then create auth header",
+							"if (pm.environment.has('envAuthUser') && pm.environment.has('envAuthPassword'))",
+							"{",
+							"    pm.globals.set('gAuthorizationValue', 'Basic ' + btoa(pm.environment.get('envAuthUser') + ':' + pm.environment.get('envAuthPassword')));",
+							"}"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "0c027e56-0189-4581-bccb-5d21b8c07bbc",
+						"type": "text/javascript",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gCmcUtility\"));",
+							"",
+							"// Set the fields of the expected response object, this is used to verify the response body",
+							"var expectedResponse = ",
+							"{",
+							"    \"payload\":{",
+							"        \"data\":{",
+							"            ",
+							"        \"isDefaultDropGrade\" : true,",
+							"        \"isDropGrade\" : true",
+							"        }",
+							"    }",
+							"};",
+							"",
+							"// Tests",
+							"pm.test(\"Verify response status is OK\", function() {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"pm.test(\"Verify response time is below 200\", function() {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"pm.test(\"Verify response body matches expected response\", function() {",
+							"    pm.expect(cmcUtility.verifyResponse(expectedResponse,pm.response.json())).to.be.true;",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "testing",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "administrator",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{gAuthorizationValue}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"payload\" : {\r\n        \"isContinueWithoutReplacementGradeRequired\" : false,\r\n        \"isContinueWithoutReplacementGradeConfirmed\" : false,\r\n        \"isDefaultGradeChangeRequired\" : false,\r\n        \"isDefaultGradeChangeConfirmed\" : false,\r\n        \"id\" : -1,\r\n        \"code\" : \"Drop\",\r\n        \"createdDateTime\" : \"2018/08/09 14:53:25\",\r\n        \"gradeScaleId\" : 40,\r\n        \"incompleteGradeExpirationDays\" : 0,\r\n        \"isActive\" : true,\r\n        \"isAfterLdwGrade\" : false,\r\n        \"isAuditGrade\" : false,\r\n        \"isCountedAsCreditEarned\" : false,\r\n        \"isCountedAsCreditsAttempted\" : false,\r\n        \"isDefaultDropGrade\" : true,\r\n        \"isDropGrade\" : true,\r\n        \"isIncludedInGpaCalculation\" : false,\r\n        \"isIncludedInSapCalculation\" : false,\r\n        \"isIncompleteGrade\" : false,\r\n        \"isPassFail\" : false,\r\n        \"isTransferGrade\" : false,\r\n        \"lastModifiedDateTime\" : \"2018/08/09 14:53:25\",\r\n        \"lastModifiedUserId\" : 2,\r\n        \"lowerRange\" : 0,\r\n        \"name\" : \"drop\",\r\n        \"points\" : 0,\r\n        \"replacementGradeScaleLetterGradesId\" : 0,\r\n        \r\n        \"upperRange\" : 0,\r\n       \"entityState\" : 0\r\n    }\r\n\r\n}"
+				},
+				"url": {
+					"raw": "http://{{envWebHost}}/api/commands/Academics/GradeScaleLetterGrade/saveNew",
+					"protocol": "http",
+					"host": [
+						"{{envWebHost}}"
+					],
+					"path": [
+						"api",
+						"commands",
+						"Academics",
+						"GradeScaleLetterGrade",
+						"saveNew"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "65884910-0afc-4579-8c88-b0b9df56f31d",
+			"name": "/api/commands/Academics/GradeScaleLetterGrade/saveNew - Validation",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c229cdbd-0684-4c1d-862b-176288f430f9",
+						"type": "text/javascript",
+						"exec": [
+							"// If environment auth variable is set, then create auth header",
+							"if (pm.environment.has('envAuthUser') && pm.environment.has('envAuthPassword'))",
+							"{",
+							"    pm.globals.set('gAuthorizationValue', 'Basic ' + btoa(pm.environment.get('envAuthUser') + ':' + pm.environment.get('envAuthPassword')));",
+							"}"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "0fef870a-18d0-4356-907a-9af37f65552a",
+						"type": "text/javascript",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gCmcUtility\"));",
+							"",
+							"// Set the fields of the expected response object, this is used to verify the response body",
+							"var expectedResponse = ",
+							"{",
+							"    ",
+							"    \"payload\": {",
+							"        \"data\": {",
+							"            \"isDefaultGradeChangeRequired\": true,",
+							"            \"isDefaultGradeChangeConfirmed\": false,",
+							"        ",
+							"        }",
+							"    },",
+							"        \"notifications\": [",
+							"    {",
+							"            ",
+							"             \"isValidationWarning\": true,",
+							"\"message\": \"The default drop grade Drop already exists.\",",
+							"}",
+							"]",
+							"",
+							"};",
+							"",
+							"// Tests",
+							"pm.test(\"Verify response status is OK\", function() {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"pm.test(\"Verify response time is below 200\", function() {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"pm.test(\"Verify response body matches expected response\", function() {",
+							"    pm.expect(cmcUtility.verifyResponse(expectedResponse,pm.response.json())).to.be.true;",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "testing",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "administrator",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{gAuthorizationValue}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"payload\" : {\r\n        \"isContinueWithoutReplacementGradeRequired\" : false,\r\n        \"isContinueWithoutReplacementGradeConfirmed\" : false,\r\n        \"isDefaultGradeChangeRequired\" : false,\r\n        \"isDefaultGradeChangeConfirmed\" : false,\r\n        \"id\" : -1,\r\n        \"code\" : \"Drop\",\r\n        \"createdDateTime\" : \"2018/08/09 14:53:25\",\r\n        \"gradeScaleId\" : 40,\r\n        \"incompleteGradeExpirationDays\" : 0,\r\n        \"isActive\" : true,\r\n        \"isAfterLdwGrade\" : false,\r\n        \"isAuditGrade\" : false,\r\n        \"isCountedAsCreditEarned\" : false,\r\n        \"isCountedAsCreditsAttempted\" : false,\r\n        \"isDefaultDropGrade\" : true,\r\n        \"isDropGrade\" : true,\r\n        \"isIncludedInGpaCalculation\" : false,\r\n        \"isIncludedInSapCalculation\" : false,\r\n        \"isIncompleteGrade\" : false,\r\n        \"isPassFail\" : false,\r\n        \"isTransferGrade\" : false,\r\n        \"lastModifiedDateTime\" : \"2018/08/09 14:53:25\",\r\n        \"lastModifiedUserId\" : 2,\r\n        \"lowerRange\" : 0,\r\n        \"name\" : \"drop\",\r\n        \"points\" : 0,\r\n        \"replacementGradeScaleLetterGradesId\" : 0,\r\n        \r\n        \"upperRange\" : 0,\r\n       \"entityState\" : 0\r\n    }\r\n\r\n}"
+				},
+				"url": {
+					"raw": "http://{{envWebHost}}/api/commands/Academics/GradeScaleLetterGrade/saveNew",
+					"protocol": "http",
+					"host": [
+						"{{envWebHost}}"
+					],
+					"path": [
+						"api",
+						"commands",
+						"Academics",
+						"GradeScaleLetterGrade",
+						"saveNew"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

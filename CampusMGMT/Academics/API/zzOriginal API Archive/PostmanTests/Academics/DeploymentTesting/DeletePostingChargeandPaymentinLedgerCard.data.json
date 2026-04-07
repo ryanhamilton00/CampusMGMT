@@ -1,0 +1,60 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "Creating a Charge and Adding Payment",
+    "Globals": {
+    },
+    "Apis": [
+      {
+        "RequestId": "f76afda1-d3a9-4d98-a016-3d6df35ad0ec",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gWorkflowStudentSSN}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "737c5814-3617-40ab-ad04-36d81901be6c",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentEnrollmentPeriodDetails/CampusNexus.GetStudentEnrollmentPeriodList(studentId={{gStudentId}})",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "3ffa9b26-2e38-4d21-bcaf-43a134509fa7",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentAcademicYears?$select=Id,Sequence,StartDate,EndDate&$filter=StudentEnrollmentPeriod/Id eq {{gEnrollmentPeriodId}}",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+	  {
+        "RequestId": "7d81e55f-cf17-42ae-a6e6-8e9d623c740b",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentAccountTransactions/CampusNexus.GetStudentAccountLedgerTransactions(studentId={{gStudentId}},studentEnrollmentPeriodId={{gEnrollmentPeriodId}},termId=-1,studentAcademicYearPaymentPeriodId=0,isPendingChargeRequired=false,isPendingCheckRequired=true)?$top=2&$orderby=TransactionPostDate asc",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "4d767bd7-78ce-4d1f-b8ac-335a0df9383e",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentAccounts/StudentAccountTransaction/DeleteAccountTransactionCharge",
+        "RequestBody": {
+						"payload": {
+							"Note": "Delete Transaction through API Call"
+						}
+					},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 50000,
+        "ResponseBody": {}
+      }
+    ]
+  }
+]

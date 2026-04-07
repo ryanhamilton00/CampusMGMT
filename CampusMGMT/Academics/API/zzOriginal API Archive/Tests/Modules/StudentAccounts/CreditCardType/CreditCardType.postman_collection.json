@@ -1,0 +1,3622 @@
+{
+  "info": {
+    "name": "CreditCardType",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Initialize",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "pm.globals.unset(\"gApiUtility\");",
+              "pm.globals.unset(\"gApiUrl\");",
+              "pm.globals.unset(\"gAuthHeaderKey\");",
+              "pm.globals.unset(\"gAuthHeaderValue\");",
+              "pm.globals.unset(\"gUrl\");",
+              "pm.globals.unset(\"gRequestBody\");",
+              "pm.globals.unset(\"gIndex\");",
+              "pm.globals.set(\"gIndex\", 0);",
+              "",
+              "// Setup URL, if web host is not set in the environment use default",
+              "var apiUtilityHost = \"\";",
+              "if (!pm.environment.has(\"envApiUtilityHost\")) {",
+              "     apiUtilityHost = \"hdev22.dev.int:9000\";",
+              "} else {",
+              "     apiUtilityHost = pm.environment.get(\"envApiUtilityHost\");",
+              "}",
+              "var requestUrl = \"http://\" + apiUtilityHost + \"/automation/apiUtility.js\";",
+              "pm.globals.set(\"gUrl\", requestUrl);",
+              "//console.log(pm.globals.get(\"gUrl\"));",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "/********************CHAIN DEFINITION***************************/",
+              "let chainDefinitionArray = [",
+              "    {",
+              "         \"RequestId\"     : \"bf3fca50-5606-4d96-8ecf-c7738ad99076\",",
+              "         \"RequestMethod\" : \"POST\",",
+              "         \"RequestUrl\"    : \"/api/commands/StudentAccounts/CreditCardType/Create\",",
+              "         \"ChainSource\"   : [",
+              "         ],",
+              "         \"Chain\"         : [",
+              "         ]",
+              "    },",
+              "    {",
+              "         \"RequestId\"     : \"c707c443-3ea8-4707-b5f4-057bac5ca738\",",
+              "         \"RequestMethod\" : \"POST\",",
+              "         \"RequestUrl\"    : \"/api/commands/StudentAccounts/CreditCardType/SaveNew\",",
+              "         \"ChainSource\"   : [",
+              "               \"response.payload.data.id\"",
+              "         ],",
+              "         \"Chain\"         : [",
+              "         ]",
+              "    },",
+              "    {",
+              "         \"RequestId\"     : \"b35149c3-63ed-4dab-a6a5-e51707b4f1e4\",",
+              "         \"RequestMethod\" : \"POST\",",
+              "         \"RequestUrl\"    : \"/api/commands/StudentAccounts/CreditCardType/Get\",",
+              "         \"ChainSource\"   : [",
+              "               \"response.payload.data.id\",",
+              "               \"response.payload.data.campusGroupId\",",
+              "               \"response.payload.data.rowVersion\"",
+              "         ],",
+              "         \"Chain\"         : [",
+              "              {",
+              "                   \"SourceApiKey\" : \"c707c443-3ea8-4707-b5f4-057bac5ca738\",",
+              "                   \"SourcePath\"   : \"response.payload.data.id\",",
+              "                   \"TargetPath\"   : \"request.payload.id\"",
+              "              }",
+              "         ]",
+              "    },",
+              "    {",
+              "         \"RequestId\"     : \"d2a45e40-fa0f-45c5-8bae-d95fcdb9fa0a\",",
+              "         \"RequestMethod\" : \"POST\",",
+              "         \"RequestUrl\"    : \"/api/commands/StudentAccounts/CreditCardType/Save\",",
+              "         \"ChainSource\"   : [",
+              "               \"response.payload.data.id\"",
+              "         ],",
+              "         \"Chain\"         : [",
+              "              {",
+              "                   \"SourceApiKey\" : \"b35149c3-63ed-4dab-a6a5-e51707b4f1e4\",",
+              "                   \"SourcePath\"   : \"response.payload.data.id\",",
+              "                   \"TargetPath\"   : \"request.payload.id\"",
+              "              },",
+              "              {",
+              "                   \"SourceApiKey\" : \"b35149c3-63ed-4dab-a6a5-e51707b4f1e4\",",
+              "                   \"SourcePath\"   : \"response.payload.data.campusGroupId\",",
+              "                   \"TargetPath\"   : \"request.payload.campusGroupId\"",
+              "              },",
+              "              {",
+              "                   \"SourceApiKey\" : \"b35149c3-63ed-4dab-a6a5-e51707b4f1e4\",",
+              "                   \"SourcePath\"   : \"response.payload.data.rowVersion\",",
+              "                   \"TargetPath\"   : \"request.payload.rowVersion\"",
+              "              }",
+              "         ]",
+              "    },",
+              "    {",
+              "         \"RequestId\"     : \"cfb791bf-26b2-4763-9492-5814b0c8e641\",",
+              "         \"RequestMethod\" : \"POST\",",
+              "         \"RequestUrl\"    : \"/api/commands/StudentAccounts/CreditCardType/Get\",",
+              "         \"ChainSource\"   : [",
+              "               \"response.payload.data.id\"",
+              "         ],",
+              "         \"Chain\"         : [",
+              "              {",
+              "                   \"SourceApiKey\" : \"d2a45e40-fa0f-45c5-8bae-d95fcdb9fa0a\",",
+              "                   \"SourcePath\"   : \"response.payload.data.id\",",
+              "                   \"TargetPath\"   : \"request.payload.id\"",
+              "              }",
+              "         ]",
+              "    },",
+              "    {",
+              "         \"RequestId\"     : \"aa571073-21c1-4ef4-b7f6-5511f2232bf9\",",
+              "         \"RequestMethod\" : \"POST\",",
+              "         \"RequestUrl\"    : \"/api/commands/StudentAccounts/CreditCardType/SaveNew\",",
+              "         \"ChainSource\"   : [",
+              "               \"response.payload.data.id\"",
+              "         ],",
+              "         \"Chain\"         : [",
+              "         ]",
+              "    },",
+              "    {",
+              "         \"RequestId\"     : \"1cba1c1f-69cf-4f0e-85a5-de59f5bde5c0\",",
+              "         \"RequestMethod\" : \"POST\",",
+              "         \"RequestUrl\"    : \"/api/commands/StudentAccounts/CreditCardType/Get\",",
+              "         \"ChainSource\"   : [",
+              "               \"response.payload.data.id\",",
+              "               \"response.payload.data.campusGroupId\",",
+              "               \"response.payload.data.rowVersion\"",
+              "         ],",
+              "         \"Chain\"         : [",
+              "              {",
+              "                   \"SourceApiKey\" : \"aa571073-21c1-4ef4-b7f6-5511f2232bf9\",",
+              "                   \"SourcePath\"   : \"response.payload.data.id\",",
+              "                   \"TargetPath\"   : \"request.payload.id\"",
+              "              }",
+              "         ]",
+              "    },",
+              "    {",
+              "         \"RequestId\"     : \"0e763719-2413-4a17-af36-ad78add5ad86\",",
+              "         \"RequestMethod\" : \"POST\",",
+              "         \"RequestUrl\"    : \"/api/commands/StudentAccounts/CreditCardType/Save\",",
+              "         \"ChainSource\"   : [",
+              "         ],",
+              "         \"Chain\"         : [",
+              "              {",
+              "                   \"SourceApiKey\" : \"1cba1c1f-69cf-4f0e-85a5-de59f5bde5c0\",",
+              "                   \"SourcePath\"   : \"response.payload.data.id\",",
+              "                   \"TargetPath\"   : \"request.payload.id\"",
+              "              },",
+              "              {",
+              "                   \"SourceApiKey\" : \"1cba1c1f-69cf-4f0e-85a5-de59f5bde5c0\",",
+              "                   \"SourcePath\"   : \"response.payload.data.campusGroupId\",",
+              "                   \"TargetPath\"   : \"request.payload.campusGroupId\"",
+              "              },",
+              "              {",
+              "                   \"SourceApiKey\" : \"1cba1c1f-69cf-4f0e-85a5-de59f5bde5c0\",",
+              "                   \"SourcePath\"   : \"response.payload.data.rowVersion\",",
+              "                   \"TargetPath\"   : \"request.payload.rowVersion\"",
+              "              }",
+              "         ]",
+              "    },",
+              "    {",
+              "         \"RequestId\"     : \"fb399b27-3b1b-4c50-b6c9-03876537e1ec\",",
+              "         \"RequestMethod\" : \"POST\",",
+              "         \"RequestUrl\"    : \"/api/commands/StudentAccounts/CreditCardType/Get\",",
+              "         \"ChainSource\"   : [",
+              "               \"response.payload.data.id\",",
+              "               \"response.payload.data.campusGroupId\",",
+              "               \"response.payload.data.rowVersion\"",
+              "         ],",
+              "         \"Chain\"         : [",
+              "              {",
+              "                   \"SourceApiKey\" : \"1cba1c1f-69cf-4f0e-85a5-de59f5bde5c0\",",
+              "                   \"SourcePath\"   : \"response.payload.data.id\",",
+              "                   \"TargetPath\"   : \"request.payload.id\"",
+              "              }",
+              "         ]",
+              "    },",
+              "    {",
+              "         \"RequestId\"     : \"3233a73a-e642-4717-b435-26afe77ed04c\",",
+              "         \"RequestMethod\" : \"POST\",",
+              "         \"RequestUrl\"    : \"/api/commands/StudentAccounts/CreditCardType/Save\",",
+              "         \"ChainSource\"   : [",
+              "         ],",
+              "         \"Chain\"         : [",
+              "              {",
+              "                   \"SourceApiKey\" : \"fb399b27-3b1b-4c50-b6c9-03876537e1ec\",",
+              "                   \"SourcePath\"   : \"response.payload.data.id\",",
+              "                   \"TargetPath\"   : \"request.payload.id\"",
+              "              },",
+              "              {",
+              "                   \"SourceApiKey\" : \"fb399b27-3b1b-4c50-b6c9-03876537e1ec\",",
+              "                   \"SourcePath\"   : \"response.payload.data.campusGroupId\",",
+              "                   \"TargetPath\"   : \"request.payload.campusGroupId\"",
+              "              },",
+              "              {",
+              "                   \"SourceApiKey\" : \"fb399b27-3b1b-4c50-b6c9-03876537e1ec\",",
+              "                   \"SourcePath\"   : \"response.payload.data.rowVersion\",",
+              "                   \"TargetPath\"   : \"request.payload.rowVersion\"",
+              "              }",
+              "         ]",
+              "    },",
+              "    {",
+              "         \"RequestId\"     : \"85ee06a2-328a-4e1f-a321-99b3f3fbeca9\",",
+              "         \"RequestMethod\" : \"POST\",",
+              "         \"RequestUrl\"    : \"/api/commands/StudentAccounts/CreditCardType/Get\",",
+              "         \"ChainSource\"   : [",
+              "               \"response.payload.data.id\",",
+              "               \"response.payload.data.campusGroupId\",",
+              "               \"response.payload.data.rowVersion\",",
+              "               \"response.payload.data.campusGroup.id\",",
+              "               \"response.payload.data.campusGroup.rowVersion\",",
+              "               \"response.payload.data.campusGroup.campusList[0].id\",",
+              "               \"response.payload.data.campusGroup.campusList[0].campusGroupId\",",
+              "               \"response.payload.data.campusGroup.campusList[0].rowVersion\"",
+              "         ],",
+              "         \"Chain\"         : [",
+              "              {",
+              "                   \"SourceApiKey\" : \"1cba1c1f-69cf-4f0e-85a5-de59f5bde5c0\",",
+              "                   \"SourcePath\"   : \"response.payload.data.id\",",
+              "                   \"TargetPath\"   : \"request.payload.id\"",
+              "              }",
+              "         ]",
+              "    },",
+              "    {",
+              "         \"RequestId\"     : \"644ff580-20cb-4ccd-bb80-1db9e9ea79cf\",",
+              "         \"RequestMethod\" : \"POST\",",
+              "         \"RequestUrl\"    : \"/api/commands/StudentAccounts/CreditCardType/Delete\",",
+              "         \"ChainSource\"   : [",
+              "         ],",
+              "         \"Chain\"         : [",
+              "              {",
+              "                   \"SourceApiKey\" : \"85ee06a2-328a-4e1f-a321-99b3f3fbeca9\",",
+              "                   \"SourcePath\"   : \"response.payload.data.id\",",
+              "                   \"TargetPath\"   : \"request.payload.id\"",
+              "              },",
+              "              {",
+              "                   \"SourceApiKey\" : \"85ee06a2-328a-4e1f-a321-99b3f3fbeca9\",",
+              "                   \"SourcePath\"   : \"response.payload.data.campusGroupId\",",
+              "                   \"TargetPath\"   : \"request.payload.campusGroupId\"",
+              "              },",
+              "              {",
+              "                   \"SourceApiKey\" : \"85ee06a2-328a-4e1f-a321-99b3f3fbeca9\",",
+              "                   \"SourcePath\"   : \"response.payload.data.rowVersion\",",
+              "                   \"TargetPath\"   : \"request.payload.rowVersion\"",
+              "              },",
+              "              {",
+              "                   \"SourceApiKey\" : \"85ee06a2-328a-4e1f-a321-99b3f3fbeca9\",",
+              "                   \"SourcePath\"   : \"response.payload.data.campusGroup.id\",",
+              "                   \"TargetPath\"   : \"request.payload.campusGroup.id\"",
+              "              },",
+              "              {",
+              "                   \"SourceApiKey\" : \"85ee06a2-328a-4e1f-a321-99b3f3fbeca9\",",
+              "                   \"SourcePath\"   : \"response.payload.data.campusGroup.rowVersion\",",
+              "                   \"TargetPath\"   : \"request.payload.campusGroup.rowVersion\"",
+              "              },",
+              "              {",
+              "                   \"SourceApiKey\" : \"85ee06a2-328a-4e1f-a321-99b3f3fbeca9\",",
+              "                   \"SourcePath\"   : \"response.payload.data.campusGroup.campusList[0].id\",",
+              "                   \"TargetPath\"   : \"request.payload.campusGroup.campusList[0].id\"",
+              "              },",
+              "              {",
+              "                   \"SourceApiKey\" : \"85ee06a2-328a-4e1f-a321-99b3f3fbeca9\",",
+              "                   \"SourcePath\"   : \"response.payload.data.campusGroup.campusList[0].campusGroupId\",",
+              "                   \"TargetPath\"   : \"request.payload.campusGroup.campusList[0].campusGroupId\"",
+              "              },",
+              "              {",
+              "                   \"SourceApiKey\" : \"85ee06a2-328a-4e1f-a321-99b3f3fbeca9\",",
+              "                   \"SourcePath\"   : \"response.payload.data.campusGroup.campusList[0].rowVersion\",",
+              "                   \"TargetPath\"   : \"request.payload.campusGroup.campusList[0].rowVersion\"",
+              "              }",
+              "         ]",
+              "    },",
+              "    {",
+              "         \"RequestId\"     : \"a27a511b-41f3-4458-9231-b2adf1c6586f\",",
+              "         \"RequestMethod\" : \"POST\",",
+              "         \"RequestUrl\"    : \"/api/commands/Common/Student/SaveNew\",",
+              "         \"ChainSource\"   : [",
+              "               \"response.payload.data.id\"",
+              "         ],",
+              "         \"Chain\"         : [",
+              "         ]",
+              "    },",
+              "    {",
+              "         \"RequestId\"     : \"601769c0-c628-4cc6-8586-7da906011800\",",
+              "         \"RequestMethod\" : \"POST\",",
+              "         \"RequestUrl\"    : \"/api/commands/Common/Student/get\",",
+              "         \"ChainSource\"   : [",
+              "               \"response.payload.data.id\"",
+              "         ],",
+              "         \"Chain\"         : [",
+              "              {",
+              "                   \"SourceApiKey\" : \"a27a511b-41f3-4458-9231-b2adf1c6586f\",",
+              "                   \"SourcePath\"   : \"response.payload.data.id\",",
+              "                   \"TargetPath\"   : \"request.payload.id\"",
+              "              }",
+              "         ]",
+              "    },",
+              "    {",
+              "         \"RequestId\"     : \"c78c4c49-1310-4149-87da-38b36d78fc40\",",
+              "         \"RequestMethod\" : \"POST\",",
+              "         \"RequestUrl\"    : \"/api/commands/StudentAccounts/StudentCreditCard/Create\",",
+              "         \"ChainSource\"   : [",
+              "         ],",
+              "         \"Chain\"         : [",
+              "         ]",
+              "    },",
+              "    {",
+              "         \"RequestId\"     : \"a781c254-c72f-4b2b-ac9c-39ebe74df063\",",
+              "         \"RequestMethod\" : \"POST\",",
+              "         \"RequestUrl\"    : \"/api/commands/StudentAccounts/StudentCreditCard/SaveNew\",",
+              "         \"ChainSource\"   : [",
+              "               \"response.payload.data.id\"",
+              "         ],",
+              "         \"Chain\"         : [",
+              "              {",
+              "                   \"SourceApiKey\" : \"a27a511b-41f3-4458-9231-b2adf1c6586f\",",
+              "                   \"SourcePath\"   : \"response.payload.data.id\",",
+              "                   \"TargetPath\"   : \"request.payload.studentId\"",
+              "              },",
+              "              {",
+              "                   \"SourceApiKey\" : \"cfb791bf-26b2-4763-9492-5814b0c8e641\",",
+              "                   \"SourcePath\"   : \"response.payload.data.id\",",
+              "                   \"TargetPath\"   : \"request.payload.creditCardTypeId\"",
+              "              }",
+              "         ]",
+              "    },",
+              "    {",
+              "         \"RequestId\"     : \"d8c251c4-53c1-434a-b50f-2ec32023846c\",",
+              "         \"RequestMethod\" : \"POST\",",
+              "         \"RequestUrl\"    : \"/api/commands/StudentAccounts/CreditCardType/Get\",",
+              "         \"ChainSource\"   : [",
+              "               \"response.payload.data.id\",",
+              "               \"response.payload.data.rowVersion\",",
+              "               \"response.payload.data.campusGroup.id\",",
+              "               \"response.payload.data.campusGroup.rowVersion\",",
+              "               \"response.payload.data.campusGroup.campusList[0].id\",",
+              "               \"response.payload.data.campusGroup.campusList[0].campusGroupId\",",
+              "               \"response.payload.data.campusGroup.campusList[0].rowVersion\"",
+              "         ],",
+              "         \"Chain\"         : [",
+              "              {",
+              "                   \"SourceApiKey\" : \"cfb791bf-26b2-4763-9492-5814b0c8e641\",",
+              "                   \"SourcePath\"   : \"response.payload.data.id\",",
+              "                   \"TargetPath\"   : \"request.payload.id\"",
+              "              }",
+              "         ]",
+              "    },",
+              "    {",
+              "         \"RequestId\"     : \"91645a9e-fef5-4394-ab23-e58f4358413b\",",
+              "         \"RequestMethod\" : \"POST\",",
+              "         \"RequestUrl\"    : \"/api/commands/StudentAccounts/CreditCardType/Delete\",",
+              "         \"ChainSource\"   : [",
+              "         ],",
+              "         \"Chain\"         : [",
+              "              {",
+              "                   \"SourceApiKey\" : \"d8c251c4-53c1-434a-b50f-2ec32023846c\",",
+              "                   \"SourcePath\"   : \"response.payload.data.id\",",
+              "                   \"TargetPath\"   : \"request.payload.id\"",
+              "              },",
+              "              {",
+              "                   \"SourceApiKey\" : \"d8c251c4-53c1-434a-b50f-2ec32023846c\",",
+              "                   \"SourcePath\"   : \"response.payload.data.rowVersion\",",
+              "                   \"TargetPath\"   : \"request.payload.rowVersion\"",
+              "              },",
+              "              {",
+              "                   \"SourceApiKey\" : \"d8c251c4-53c1-434a-b50f-2ec32023846c\",",
+              "                   \"SourcePath\"   : \"response.payload.data.campusGroup.id\",",
+              "                   \"TargetPath\"   : \"request.payload.campusGroup.id\"",
+              "              },",
+              "              {",
+              "                   \"SourceApiKey\" : \"d8c251c4-53c1-434a-b50f-2ec32023846c\",",
+              "                   \"SourcePath\"   : \"response.payload.data.campusGroup.rowVersion\",",
+              "                   \"TargetPath\"   : \"request.payload.campusGroup.rowVersion\"",
+              "              },",
+              "              {",
+              "                   \"SourceApiKey\" : \"d8c251c4-53c1-434a-b50f-2ec32023846c\",",
+              "                   \"SourcePath\"   : \"response.payload.data.campusGroup.campusList[0].id\",",
+              "                   \"TargetPath\"   : \"request.payload.campusGroup.campusList[0].id\"",
+              "              },",
+              "              {",
+              "                   \"SourceApiKey\" : \"d8c251c4-53c1-434a-b50f-2ec32023846c\",",
+              "                   \"SourcePath\"   : \"response.payload.data.campusGroup.campusList[0].campusGroupId\",",
+              "                   \"TargetPath\"   : \"request.payload.campusGroup.campusList[0].campusGroupId\"",
+              "              },",
+              "              {",
+              "                   \"SourceApiKey\" : \"d8c251c4-53c1-434a-b50f-2ec32023846c\",",
+              "                   \"SourcePath\"   : \"response.payload.data.campusGroup.campusList[0].rowVersion\",",
+              "                   \"TargetPath\"   : \"request.payload.campusGroup.campusList[0].rowVersion\"",
+              "              }",
+              "         ]",
+              "    },",
+              "    {",
+              "         \"RequestId\"     : \"b4313ad2-2f28-4fc3-b897-5a3c80b4791c\",",
+              "         \"RequestMethod\" : \"POST\",",
+              "         \"RequestUrl\"    : \"/api/commands/StudentAccounts/StudentCreditCard/Get\",",
+              "         \"ChainSource\"   : [",
+              "               \"response.payload.data.id\",",
+              "               \"response.payload.data.rowVersion\"",
+              "         ],",
+              "         \"Chain\"         : [",
+              "              {",
+              "                   \"SourceApiKey\" : \"a781c254-c72f-4b2b-ac9c-39ebe74df063\",",
+              "                   \"SourcePath\"   : \"response.payload.data.id\",",
+              "                   \"TargetPath\"   : \"request.payload.Id\"",
+              "              }",
+              "         ]",
+              "    },",
+              "    {",
+              "         \"RequestId\"     : \"155a6cd8-d975-4708-a7ab-ada5f5ac0f89\",",
+              "         \"RequestMethod\" : \"POST\",",
+              "         \"RequestUrl\"    : \"/api/commands/StudentAccounts/StudentCreditCard/Delete\",",
+              "         \"ChainSource\"   : [",
+              "         ],",
+              "         \"Chain\"         : [",
+              "              {",
+              "                   \"SourceApiKey\" : \"b4313ad2-2f28-4fc3-b897-5a3c80b4791c\",",
+              "                   \"SourcePath\"   : \"response.payload.data.id\",",
+              "                   \"TargetPath\"   : \"request.payload.id\"",
+              "              },",
+              "              {",
+              "                   \"SourceApiKey\" : \"b4313ad2-2f28-4fc3-b897-5a3c80b4791c\",",
+              "                   \"SourcePath\"   : \"response.payload.data.rowVersion\",",
+              "                   \"TargetPath\"   : \"request.payload.rowVersion\"",
+              "              }",
+              "         ]",
+              "    },",
+              "    {",
+              "         \"RequestId\"     : \"28d9830a-1f10-4ba2-8b3b-8f223756fd60\",",
+              "         \"RequestMethod\" : \"POST\",",
+              "         \"RequestUrl\"    : \"/api/commands/Common/Student/get\",",
+              "         \"ChainSource\"   : [",
+              "               \"response.payload.data.id\",",
+              "               \"response.payload.data.rowVersion\"",
+              "         ],",
+              "         \"Chain\"         : [",
+              "              {",
+              "                   \"SourceApiKey\" : \"601769c0-c628-4cc6-8586-7da906011800\",",
+              "                   \"SourcePath\"   : \"response.payload.data.id\",",
+              "                   \"TargetPath\"   : \"request.payload.id\"",
+              "              }",
+              "         ]",
+              "    },",
+              "    {",
+              "         \"RequestId\"     : \"a090d166-cdf5-4dad-9e8f-073eedb2068f\",",
+              "         \"RequestMethod\" : \"POST\",",
+              "         \"RequestUrl\"    : \"/api/commands/Common/Student/Delete\",",
+              "         \"ChainSource\"   : [",
+              "         ],",
+              "         \"Chain\"         : [",
+              "              {",
+              "                   \"SourceApiKey\" : \"28d9830a-1f10-4ba2-8b3b-8f223756fd60\",",
+              "                   \"SourcePath\"   : \"response.payload.data.id\",",
+              "                   \"TargetPath\"   : \"request.payload.id\"",
+              "              },",
+              "              {",
+              "                   \"SourceApiKey\" : \"28d9830a-1f10-4ba2-8b3b-8f223756fd60\",",
+              "                   \"SourcePath\"   : \"response.payload.data.rowVersion\",",
+              "                   \"TargetPath\"   : \"request.payload.rowVersion\"",
+              "              }",
+              "         ]",
+              "    },",
+              "    {",
+              "         \"RequestId\"     : \"4f4a6601-1f2f-436b-a963-beb306e28e42\",",
+              "         \"RequestMethod\" : \"POST\",",
+              "         \"RequestUrl\"    : \"/api/commands/StudentAccounts/CreditCardType/Get\",",
+              "         \"ChainSource\"   : [",
+              "               \"response.payload.data.id\",",
+              "               \"response.payload.data.rowVersion\",",
+              "               \"response.payload.data.campusGroup.id\",",
+              "               \"response.payload.data.campusGroup.rowVersion\",",
+              "               \"response.payload.data.campusGroup.campusList[0].id\",",
+              "               \"response.payload.data.campusGroup.campusList[0].campusGroupId\",",
+              "               \"response.payload.data.campusGroup.campusList[0].rowVersion\",",
+              "               \"response.payload.data.campusGroupId\"",
+              "         ],",
+              "         \"Chain\"         : [",
+              "              {",
+              "                   \"SourceApiKey\" : \"cfb791bf-26b2-4763-9492-5814b0c8e641\",",
+              "                   \"SourcePath\"   : \"response.payload.data.id\",",
+              "                   \"TargetPath\"   : \"request.payload.id\"",
+              "              }",
+              "         ]",
+              "    },",
+              "    {",
+              "         \"RequestId\"     : \"edba7958-9642-4a6f-866d-0e3e5c94741e\",",
+              "         \"RequestMethod\" : \"POST\",",
+              "         \"RequestUrl\"    : \"/api/commands/StudentAccounts/CreditCardType/Delete\",",
+              "         \"ChainSource\"   : [",
+              "         ],",
+              "         \"Chain\"         : [",
+              "              {",
+              "                   \"SourceApiKey\" : \"4f4a6601-1f2f-436b-a963-beb306e28e42\",",
+              "                   \"SourcePath\"   : \"response.payload.data.id\",",
+              "                   \"TargetPath\"   : \"request.payload.id\"",
+              "              },",
+              "              {",
+              "                   \"SourceApiKey\" : \"4f4a6601-1f2f-436b-a963-beb306e28e42\",",
+              "                   \"SourcePath\"   : \"response.payload.data.rowVersion\",",
+              "                   \"TargetPath\"   : \"request.payload.rowVersion\"",
+              "              },",
+              "              {",
+              "                   \"SourceApiKey\" : \"4f4a6601-1f2f-436b-a963-beb306e28e42\",",
+              "                   \"SourcePath\"   : \"response.payload.data.campusGroup.id\",",
+              "                   \"TargetPath\"   : \"request.payload.campusGroup.id\"",
+              "              },",
+              "              {",
+              "                   \"SourceApiKey\" : \"4f4a6601-1f2f-436b-a963-beb306e28e42\",",
+              "                   \"SourcePath\"   : \"response.payload.data.campusGroup.rowVersion\",",
+              "                   \"TargetPath\"   : \"request.payload.campusGroup.rowVersion\"",
+              "              },",
+              "              {",
+              "                   \"SourceApiKey\" : \"4f4a6601-1f2f-436b-a963-beb306e28e42\",",
+              "                   \"SourcePath\"   : \"response.payload.data.campusGroup.campusList[0].id\",",
+              "                   \"TargetPath\"   : \"request.payload.campusGroup.campusList[0].id\"",
+              "              },",
+              "              {",
+              "                   \"SourceApiKey\" : \"4f4a6601-1f2f-436b-a963-beb306e28e42\",",
+              "                   \"SourcePath\"   : \"response.payload.data.campusGroup.campusList[0].campusGroupId\",",
+              "                   \"TargetPath\"   : \"request.payload.campusGroup.campusList[0].campusGroupId\"",
+              "              },",
+              "              {",
+              "                   \"SourceApiKey\" : \"4f4a6601-1f2f-436b-a963-beb306e28e42\",",
+              "                   \"SourcePath\"   : \"response.payload.data.campusGroup.campusList[0].rowVersion\",",
+              "                   \"TargetPath\"   : \"request.payload.campusGroup.campusList[0].rowVersion\"",
+              "              },",
+              "              {",
+              "                   \"SourceApiKey\" : \"4f4a6601-1f2f-436b-a963-beb306e28e42\",",
+              "                   \"SourcePath\"   : \"response.payload.data.campusGroupId\",",
+              "                   \"TargetPath\"   : \"request.payload.campusGroupId\"",
+              "              }",
+              "         ]",
+              "    }",
+              "];",
+              "/********************END CHAIN DEFINITION***********************/",
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Verify status.",
+              "pm.test(\"Verify response status is \" + 200, function() {",
+              "    pm.expect(pm.response.code).to.equal(200);",
+              "});",
+              "",
+              "// Load utility code framework",
+              "pm.globals.set(\"gApiUtility\", responseBody);",
+              "try {",
+              "    eval(pm.globals.get(\"gApiUtility\"));",
+              "    pm.test(\"Load framework\", function() {",
+              "        pm.expect(typeof apiUtility).to.be.equal('object');",
+              "    });",
+              "} catch(e) { ",
+              "    pm.test(\"Load framework - eval\", function() { pm.expect.fail() });",
+              "}",
+              "",
+              "// Resolve global macros",
+              "apiUtility.resolveMacros(data.Globals);",
+              "",
+              "// Read the data file globals section, and setup postman globals.",
+              "for(var p in data.Globals) {",
+              "  // If Globals own property, set global variable",
+              "  if(data.Globals.hasOwnProperty(p)) { ",
+              "    var gName = \"g\" + p;",
+              "    pm.globals.set(gName, data.Globals[p]);",
+              "    //console.log('setting global ' + gName);",
+              "  }",
+              "}",
+              "",
+              "// Save data file globals in postman global for chaining purposes.",
+              "if(Object.entries(data.Globals).length > 0) {",
+              "    let str = \"dataGlobals\";",
+              "    apiUtility.globalStoreWrite(str, data.Globals); ",
+              "}",
+              "",
+              "// Validate chain and Api configuration.",
+              "let validationStatus = apiUtility.validateChain(data.Globals, data.Apis, chainDefinitionArray);",
+              "if(!validationStatus.isValid) {",
+              "    let FailFunction = function() { pm.expect.fail() };",
+              "    for(let index = 0; index < validationStatus.msgs.length; ++ index) {",
+              "        pm.test(\"Chain validation - \" + validationStatus.msgs[index], FailFunction);",
+              "    }",
+              "}",
+              "",
+              "// Merge data file API section with chain definition, and setup postman global",
+              "if(validationStatus.isValid) {",
+              "    let apis  = {};",
+              "    for(let index = 0; index < data.Apis.length; ++index) {",
+              "        apis[data.Apis[index].RequestId] = data.Apis[index];",
+              "    }",
+              "    for(let index = 0; index < chainDefinitionArray.length; ++index) {",
+              "        apis[chainDefinitionArray[index].RequestId].RequestUrl = chainDefinitionArray[index].RequestUrl;",
+              "        apis[chainDefinitionArray[index].RequestId].ChainSource = chainDefinitionArray[index].ChainSource;",
+              "        apis[chainDefinitionArray[index].RequestId].Chain = chainDefinitionArray[index].Chain;",
+              "        apis[chainDefinitionArray[index].RequestId].Index = index;",
+              "    }",
+              "    pm.globals.set(\"gApis\", apis);",
+              "    //console.log(pm.globals.get(\"gApis\"));",
+              "}",
+              "",
+              "// If chainging is not valid end the collection.",
+              "if(!validationStatus.isValid) {",
+              "    console.log(\"Chaining is invalid, terminating the test collection\");",
+              "    for(let index = 0; index < validationStatus.msgs.length; ++ index) {",
+              "        console.log(\"Chain validation - \" + validationStatus.msgs[index]);",
+              "    }",
+              "    postman.setNextRequest(null);",
+              "}",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/",
+              "",
+              "console.log(\"--------------------------------------------------------------------------------------\");",
+              ""
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{{gRequestBody}}"
+        },
+        "url": {
+          "raw": "{{gUrl}}",
+          "host": "{{gUrl}}"
+        }
+      }
+    },
+    {
+      "name": "/api/commands/StudentAccounts/CreditCardType/Create",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "",
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let apiId = \"bf3fca50-5606-4d96-8ecf-c7738ad99076\";",
+              "let reqIndex = pm.globals.get(\"gIndex\");",
+              "let API = pm.globals.get(\"gApis\")[apiId];",
+              "if (API === undefined || API.Index !== reqIndex) {",
+              "    console.log(\"ERROR - API not found for the specified apiId, \" + apiId);",
+              "    pm.globals.set(\"gReqApi\", null);",
+              "} else {",
+              "    pm.globals.set(\"gReqApi\", API);",
+              "    pm.globals.set(\"gIndex\", Number(pm.globals.get(\"gIndex\")) + 1);",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Make authorization header",
+              "var hdr = apiUtility.makeAuthorization(null, null, null,  pm.environment.get(\"envApiKey\"), ",
+              "                                           pm.environment.get(\"envAuthUser\"), pm.environment.get(\"envAuthPassword\"));",
+              "pm.globals.set(\"gAuthHeaderKey\", hdr.key);",
+              "pm.globals.set(\"gAuthHeaderValue\", hdr.value);",
+              "//console.log(pm.globals.get(\"gAuthHeaderKey\"));",
+              "//console.log(pm.globals.get(\"gAuthHeaderValue\"));",
+              "",
+              "// Make request body by combining chained properties and data file request body",
+              "if (API !== undefined) {",
+              "    var request = { };",
+              "    apiUtility.setChainProps(API.Chain, request);",
+              "    var req = apiUtility.mergeRequestBody(request, API.RequestBody);",
+              "    pm.globals.set(\"gRequestBody\", JSON.stringify(req));",
+              "    //console.log(pm.globals.get(\"gRequestBody\"));",
+              "}",
+              "",
+              "// Make URL",
+              "if(API !== undefined) {",
+              "    pm.globals.set(\"gUrl\", apiUtility.makeUrl(pm.environment.get(\"envWebScheme\"), pm.environment.get(\"envWebHost\"), API.RequestUrl));",
+              "} else {",
+              "    pm.globals.set(\"gUrl\", \"http://127.0.0.1\");",
+              "}",
+              "//console.log(pm.globals.get(\"gUrl\"));",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let API = pm.globals.get(\"gReqApi\");",
+              "if (API === null) {",
+              "    postman.setNextRequest(null);",
+              "    pm.test(\"API not found for the Request ID, using fallback URL and ending the test\", function() { pm.expect.fail() });",
+              "    return;",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Save properties for chaining, ignore exceptions because the test will fail later anyways",
+              "try {",
+              "   var rb = pm.response.json();",
+              "   if (API.ChainSource.length > 0) {",
+              "      let str = API.RequestId + \".response\";",
+              "      apiUtility.globalStoreWrite(str, rb);",
+              "   }",
+              "} catch(e) { console.log(\"Exception was raised during chainging, Msg -\" + e); }",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/",
+              "",
+              "// --- TEST VERIFICATIONS ---",
+              "// --- Add your custom tests in this block ---",
+              "pm.test(\"Verify response status is \" + API.ResponseStatus, function() { ",
+              "     pm.expect(pm.response.code).to.equal(API.ResponseStatus);",
+              "});",
+              "pm.test(\"Verify response time is less than \" + API.ResponseTimeMs, function() { ",
+              "     pm.expect(pm.response.responseTime).to.be.below(API.ResponseTimeMs);",
+              "});",
+              "pm.test(\"Verify response body matches expected response \", function() { ",
+              "     pm.expect(apiUtility.verifyResponse(API.ResponseBody, pm.response.json())).to.be.true;",
+              "});",
+              "// --- END TEST VERIFICATIONS ---",
+              "console.log(\"--------------------------------------------------------------------------------------\");"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "{{gAuthHeaderKey}}",
+            "value": "{{gAuthHeaderValue}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{{gRequestBody}}"
+        },
+        "url": {
+          "raw": "{{gUrl}}",
+          "host": "{{gUrl}}"
+        }
+      }
+    },
+    {
+      "name": "/api/commands/StudentAccounts/CreditCardType/SaveNew",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "",
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let apiId = \"c707c443-3ea8-4707-b5f4-057bac5ca738\";",
+              "let reqIndex = pm.globals.get(\"gIndex\");",
+              "let API = pm.globals.get(\"gApis\")[apiId];",
+              "if (API === undefined || API.Index !== reqIndex) {",
+              "    console.log(\"ERROR - API not found for the specified apiId, \" + apiId);",
+              "    pm.globals.set(\"gReqApi\", null);",
+              "} else {",
+              "    pm.globals.set(\"gReqApi\", API);",
+              "    pm.globals.set(\"gIndex\", Number(pm.globals.get(\"gIndex\")) + 1);",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Make authorization header",
+              "var hdr = apiUtility.makeAuthorization(null, null, null,  pm.environment.get(\"envApiKey\"), ",
+              "                                           pm.environment.get(\"envAuthUser\"), pm.environment.get(\"envAuthPassword\"));",
+              "pm.globals.set(\"gAuthHeaderKey\", hdr.key);",
+              "pm.globals.set(\"gAuthHeaderValue\", hdr.value);",
+              "//console.log(pm.globals.get(\"gAuthHeaderKey\"));",
+              "//console.log(pm.globals.get(\"gAuthHeaderValue\"));",
+              "",
+              "// Make request body by combining chained properties and data file request body",
+              "if (API !== undefined) {",
+              "    var request = { };",
+              "    apiUtility.setChainProps(API.Chain, request);",
+              "    var req = apiUtility.mergeRequestBody(request, API.RequestBody);",
+              "    pm.globals.set(\"gRequestBody\", JSON.stringify(req));",
+              "    //console.log(pm.globals.get(\"gRequestBody\"));",
+              "}",
+              "",
+              "// Make URL",
+              "if(API !== undefined) {",
+              "    pm.globals.set(\"gUrl\", apiUtility.makeUrl(pm.environment.get(\"envWebScheme\"), pm.environment.get(\"envWebHost\"), API.RequestUrl));",
+              "} else {",
+              "    pm.globals.set(\"gUrl\", \"http://127.0.0.1\");",
+              "}",
+              "//console.log(pm.globals.get(\"gUrl\"));",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let API = pm.globals.get(\"gReqApi\");",
+              "if (API === null) {",
+              "    postman.setNextRequest(null);",
+              "    pm.test(\"API not found for the Request ID, using fallback URL and ending the test\", function() { pm.expect.fail() });",
+              "    return;",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Save properties for chaining, ignore exceptions because the test will fail later anyways",
+              "try {",
+              "   var rb = pm.response.json();",
+              "   if (API.ChainSource.length > 0) {",
+              "      let str = API.RequestId + \".response\";",
+              "      apiUtility.globalStoreWrite(str, rb);",
+              "   }",
+              "} catch(e) { console.log(\"Exception was raised during chainging, Msg -\" + e); }",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/",
+              "",
+              "// --- TEST VERIFICATIONS ---",
+              "// --- Add your custom tests in this block ---",
+              "pm.test(\"Verify response status is \" + API.ResponseStatus, function() { ",
+              "     pm.expect(pm.response.code).to.equal(API.ResponseStatus);",
+              "});",
+              "pm.test(\"Verify response time is less than \" + API.ResponseTimeMs, function() { ",
+              "     pm.expect(pm.response.responseTime).to.be.below(API.ResponseTimeMs);",
+              "});",
+              "pm.test(\"Verify response body matches expected response \", function() { ",
+              "     pm.expect(apiUtility.verifyResponse(API.ResponseBody, pm.response.json())).to.be.true;",
+              "});",
+              "// --- END TEST VERIFICATIONS ---",
+              "console.log(\"--------------------------------------------------------------------------------------\");"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "{{gAuthHeaderKey}}",
+            "value": "{{gAuthHeaderValue}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{{gRequestBody}}"
+        },
+        "url": {
+          "raw": "{{gUrl}}",
+          "host": "{{gUrl}}"
+        }
+      }
+    },
+    {
+      "name": "/api/commands/StudentAccounts/CreditCardType/Get",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "",
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let apiId = \"b35149c3-63ed-4dab-a6a5-e51707b4f1e4\";",
+              "let reqIndex = pm.globals.get(\"gIndex\");",
+              "let API = pm.globals.get(\"gApis\")[apiId];",
+              "if (API === undefined || API.Index !== reqIndex) {",
+              "    console.log(\"ERROR - API not found for the specified apiId, \" + apiId);",
+              "    pm.globals.set(\"gReqApi\", null);",
+              "} else {",
+              "    pm.globals.set(\"gReqApi\", API);",
+              "    pm.globals.set(\"gIndex\", Number(pm.globals.get(\"gIndex\")) + 1);",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Make authorization header",
+              "var hdr = apiUtility.makeAuthorization(null, null, null,  pm.environment.get(\"envApiKey\"), ",
+              "                                           pm.environment.get(\"envAuthUser\"), pm.environment.get(\"envAuthPassword\"));",
+              "pm.globals.set(\"gAuthHeaderKey\", hdr.key);",
+              "pm.globals.set(\"gAuthHeaderValue\", hdr.value);",
+              "//console.log(pm.globals.get(\"gAuthHeaderKey\"));",
+              "//console.log(pm.globals.get(\"gAuthHeaderValue\"));",
+              "",
+              "// Make request body by combining chained properties and data file request body",
+              "if (API !== undefined) {",
+              "    var request = { };",
+              "    apiUtility.setChainProps(API.Chain, request);",
+              "    var req = apiUtility.mergeRequestBody(request, API.RequestBody);",
+              "    pm.globals.set(\"gRequestBody\", JSON.stringify(req));",
+              "    //console.log(pm.globals.get(\"gRequestBody\"));",
+              "}",
+              "",
+              "// Make URL",
+              "if(API !== undefined) {",
+              "    pm.globals.set(\"gUrl\", apiUtility.makeUrl(pm.environment.get(\"envWebScheme\"), pm.environment.get(\"envWebHost\"), API.RequestUrl));",
+              "} else {",
+              "    pm.globals.set(\"gUrl\", \"http://127.0.0.1\");",
+              "}",
+              "//console.log(pm.globals.get(\"gUrl\"));",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let API = pm.globals.get(\"gReqApi\");",
+              "if (API === null) {",
+              "    postman.setNextRequest(null);",
+              "    pm.test(\"API not found for the Request ID, using fallback URL and ending the test\", function() { pm.expect.fail() });",
+              "    return;",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Save properties for chaining, ignore exceptions because the test will fail later anyways",
+              "try {",
+              "   var rb = pm.response.json();",
+              "   if (API.ChainSource.length > 0) {",
+              "      let str = API.RequestId + \".response\";",
+              "      apiUtility.globalStoreWrite(str, rb);",
+              "   }",
+              "} catch(e) { console.log(\"Exception was raised during chainging, Msg -\" + e); }",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/",
+              "",
+              "// --- TEST VERIFICATIONS ---",
+              "// --- Add your custom tests in this block ---",
+              "pm.test(\"Verify response status is \" + API.ResponseStatus, function() { ",
+              "     pm.expect(pm.response.code).to.equal(API.ResponseStatus);",
+              "});",
+              "pm.test(\"Verify response time is less than \" + API.ResponseTimeMs, function() { ",
+              "     pm.expect(pm.response.responseTime).to.be.below(API.ResponseTimeMs);",
+              "});",
+              "pm.test(\"Verify response body matches expected response \", function() { ",
+              "     pm.expect(apiUtility.verifyResponse(API.ResponseBody, pm.response.json())).to.be.true;",
+              "});",
+              "// --- END TEST VERIFICATIONS ---",
+              "console.log(\"--------------------------------------------------------------------------------------\");"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "{{gAuthHeaderKey}}",
+            "value": "{{gAuthHeaderValue}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{{gRequestBody}}"
+        },
+        "url": {
+          "raw": "{{gUrl}}",
+          "host": "{{gUrl}}"
+        }
+      }
+    },
+    {
+      "name": "/api/commands/StudentAccounts/CreditCardType/Save",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "",
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let apiId = \"d2a45e40-fa0f-45c5-8bae-d95fcdb9fa0a\";",
+              "let reqIndex = pm.globals.get(\"gIndex\");",
+              "let API = pm.globals.get(\"gApis\")[apiId];",
+              "if (API === undefined || API.Index !== reqIndex) {",
+              "    console.log(\"ERROR - API not found for the specified apiId, \" + apiId);",
+              "    pm.globals.set(\"gReqApi\", null);",
+              "} else {",
+              "    pm.globals.set(\"gReqApi\", API);",
+              "    pm.globals.set(\"gIndex\", Number(pm.globals.get(\"gIndex\")) + 1);",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Make authorization header",
+              "var hdr = apiUtility.makeAuthorization(null, null, null,  pm.environment.get(\"envApiKey\"), ",
+              "                                           pm.environment.get(\"envAuthUser\"), pm.environment.get(\"envAuthPassword\"));",
+              "pm.globals.set(\"gAuthHeaderKey\", hdr.key);",
+              "pm.globals.set(\"gAuthHeaderValue\", hdr.value);",
+              "//console.log(pm.globals.get(\"gAuthHeaderKey\"));",
+              "//console.log(pm.globals.get(\"gAuthHeaderValue\"));",
+              "",
+              "// Make request body by combining chained properties and data file request body",
+              "if (API !== undefined) {",
+              "    var request = { };",
+              "    apiUtility.setChainProps(API.Chain, request);",
+              "    var req = apiUtility.mergeRequestBody(request, API.RequestBody);",
+              "    pm.globals.set(\"gRequestBody\", JSON.stringify(req));",
+              "    //console.log(pm.globals.get(\"gRequestBody\"));",
+              "}",
+              "",
+              "// Make URL",
+              "if(API !== undefined) {",
+              "    pm.globals.set(\"gUrl\", apiUtility.makeUrl(pm.environment.get(\"envWebScheme\"), pm.environment.get(\"envWebHost\"), API.RequestUrl));",
+              "} else {",
+              "    pm.globals.set(\"gUrl\", \"http://127.0.0.1\");",
+              "}",
+              "//console.log(pm.globals.get(\"gUrl\"));",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let API = pm.globals.get(\"gReqApi\");",
+              "if (API === null) {",
+              "    postman.setNextRequest(null);",
+              "    pm.test(\"API not found for the Request ID, using fallback URL and ending the test\", function() { pm.expect.fail() });",
+              "    return;",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Save properties for chaining, ignore exceptions because the test will fail later anyways",
+              "try {",
+              "   var rb = pm.response.json();",
+              "   if (API.ChainSource.length > 0) {",
+              "      let str = API.RequestId + \".response\";",
+              "      apiUtility.globalStoreWrite(str, rb);",
+              "   }",
+              "} catch(e) { console.log(\"Exception was raised during chainging, Msg -\" + e); }",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/",
+              "",
+              "// --- TEST VERIFICATIONS ---",
+              "// --- Add your custom tests in this block ---",
+              "pm.test(\"Verify response status is \" + API.ResponseStatus, function() { ",
+              "     pm.expect(pm.response.code).to.equal(API.ResponseStatus);",
+              "});",
+              "pm.test(\"Verify response time is less than \" + API.ResponseTimeMs, function() { ",
+              "     pm.expect(pm.response.responseTime).to.be.below(API.ResponseTimeMs);",
+              "});",
+              "pm.test(\"Verify response body matches expected response \", function() { ",
+              "     pm.expect(apiUtility.verifyResponse(API.ResponseBody, pm.response.json())).to.be.true;",
+              "});",
+              "// --- END TEST VERIFICATIONS ---",
+              "console.log(\"--------------------------------------------------------------------------------------\");"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "{{gAuthHeaderKey}}",
+            "value": "{{gAuthHeaderValue}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{{gRequestBody}}"
+        },
+        "url": {
+          "raw": "{{gUrl}}",
+          "host": "{{gUrl}}"
+        }
+      }
+    },
+    {
+      "name": "/api/commands/StudentAccounts/CreditCardType/Get",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "",
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let apiId = \"cfb791bf-26b2-4763-9492-5814b0c8e641\";",
+              "let reqIndex = pm.globals.get(\"gIndex\");",
+              "let API = pm.globals.get(\"gApis\")[apiId];",
+              "if (API === undefined || API.Index !== reqIndex) {",
+              "    console.log(\"ERROR - API not found for the specified apiId, \" + apiId);",
+              "    pm.globals.set(\"gReqApi\", null);",
+              "} else {",
+              "    pm.globals.set(\"gReqApi\", API);",
+              "    pm.globals.set(\"gIndex\", Number(pm.globals.get(\"gIndex\")) + 1);",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Make authorization header",
+              "var hdr = apiUtility.makeAuthorization(null, null, null,  pm.environment.get(\"envApiKey\"), ",
+              "                                           pm.environment.get(\"envAuthUser\"), pm.environment.get(\"envAuthPassword\"));",
+              "pm.globals.set(\"gAuthHeaderKey\", hdr.key);",
+              "pm.globals.set(\"gAuthHeaderValue\", hdr.value);",
+              "//console.log(pm.globals.get(\"gAuthHeaderKey\"));",
+              "//console.log(pm.globals.get(\"gAuthHeaderValue\"));",
+              "",
+              "// Make request body by combining chained properties and data file request body",
+              "if (API !== undefined) {",
+              "    var request = { };",
+              "    apiUtility.setChainProps(API.Chain, request);",
+              "    var req = apiUtility.mergeRequestBody(request, API.RequestBody);",
+              "    pm.globals.set(\"gRequestBody\", JSON.stringify(req));",
+              "    //console.log(pm.globals.get(\"gRequestBody\"));",
+              "}",
+              "",
+              "// Make URL",
+              "if(API !== undefined) {",
+              "    pm.globals.set(\"gUrl\", apiUtility.makeUrl(pm.environment.get(\"envWebScheme\"), pm.environment.get(\"envWebHost\"), API.RequestUrl));",
+              "} else {",
+              "    pm.globals.set(\"gUrl\", \"http://127.0.0.1\");",
+              "}",
+              "//console.log(pm.globals.get(\"gUrl\"));",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let API = pm.globals.get(\"gReqApi\");",
+              "if (API === null) {",
+              "    postman.setNextRequest(null);",
+              "    pm.test(\"API not found for the Request ID, using fallback URL and ending the test\", function() { pm.expect.fail() });",
+              "    return;",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Save properties for chaining, ignore exceptions because the test will fail later anyways",
+              "try {",
+              "   var rb = pm.response.json();",
+              "   if (API.ChainSource.length > 0) {",
+              "      let str = API.RequestId + \".response\";",
+              "      apiUtility.globalStoreWrite(str, rb);",
+              "   }",
+              "} catch(e) { console.log(\"Exception was raised during chainging, Msg -\" + e); }",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/",
+              "",
+              "// --- TEST VERIFICATIONS ---",
+              "// --- Add your custom tests in this block ---",
+              "pm.test(\"Verify response status is \" + API.ResponseStatus, function() { ",
+              "     pm.expect(pm.response.code).to.equal(API.ResponseStatus);",
+              "});",
+              "pm.test(\"Verify response time is less than \" + API.ResponseTimeMs, function() { ",
+              "     pm.expect(pm.response.responseTime).to.be.below(API.ResponseTimeMs);",
+              "});",
+              "pm.test(\"Verify response body matches expected response \", function() { ",
+              "     pm.expect(apiUtility.verifyResponse(API.ResponseBody, pm.response.json())).to.be.true;",
+              "});",
+              "// --- END TEST VERIFICATIONS ---",
+              "console.log(\"--------------------------------------------------------------------------------------\");"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "{{gAuthHeaderKey}}",
+            "value": "{{gAuthHeaderValue}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{{gRequestBody}}"
+        },
+        "url": {
+          "raw": "{{gUrl}}",
+          "host": "{{gUrl}}"
+        }
+      }
+    },
+    {
+      "name": "/api/commands/StudentAccounts/CreditCardType/SaveNew",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "",
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let apiId = \"aa571073-21c1-4ef4-b7f6-5511f2232bf9\";",
+              "let reqIndex = pm.globals.get(\"gIndex\");",
+              "let API = pm.globals.get(\"gApis\")[apiId];",
+              "if (API === undefined || API.Index !== reqIndex) {",
+              "    console.log(\"ERROR - API not found for the specified apiId, \" + apiId);",
+              "    pm.globals.set(\"gReqApi\", null);",
+              "} else {",
+              "    pm.globals.set(\"gReqApi\", API);",
+              "    pm.globals.set(\"gIndex\", Number(pm.globals.get(\"gIndex\")) + 1);",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Make authorization header",
+              "var hdr = apiUtility.makeAuthorization(null, null, null,  pm.environment.get(\"envApiKey\"), ",
+              "                                           pm.environment.get(\"envAuthUser\"), pm.environment.get(\"envAuthPassword\"));",
+              "pm.globals.set(\"gAuthHeaderKey\", hdr.key);",
+              "pm.globals.set(\"gAuthHeaderValue\", hdr.value);",
+              "//console.log(pm.globals.get(\"gAuthHeaderKey\"));",
+              "//console.log(pm.globals.get(\"gAuthHeaderValue\"));",
+              "",
+              "// Make request body by combining chained properties and data file request body",
+              "if (API !== undefined) {",
+              "    var request = { };",
+              "    apiUtility.setChainProps(API.Chain, request);",
+              "    var req = apiUtility.mergeRequestBody(request, API.RequestBody);",
+              "    pm.globals.set(\"gRequestBody\", JSON.stringify(req));",
+              "    //console.log(pm.globals.get(\"gRequestBody\"));",
+              "}",
+              "",
+              "// Make URL",
+              "if(API !== undefined) {",
+              "    pm.globals.set(\"gUrl\", apiUtility.makeUrl(pm.environment.get(\"envWebScheme\"), pm.environment.get(\"envWebHost\"), API.RequestUrl));",
+              "} else {",
+              "    pm.globals.set(\"gUrl\", \"http://127.0.0.1\");",
+              "}",
+              "//console.log(pm.globals.get(\"gUrl\"));",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let API = pm.globals.get(\"gReqApi\");",
+              "if (API === null) {",
+              "    postman.setNextRequest(null);",
+              "    pm.test(\"API not found for the Request ID, using fallback URL and ending the test\", function() { pm.expect.fail() });",
+              "    return;",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Save properties for chaining, ignore exceptions because the test will fail later anyways",
+              "try {",
+              "   var rb = pm.response.json();",
+              "   if (API.ChainSource.length > 0) {",
+              "      let str = API.RequestId + \".response\";",
+              "      apiUtility.globalStoreWrite(str, rb);",
+              "   }",
+              "} catch(e) { console.log(\"Exception was raised during chainging, Msg -\" + e); }",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/",
+              "",
+              "// --- TEST VERIFICATIONS ---",
+              "// --- Add your custom tests in this block ---",
+              "pm.test(\"Verify response status is \" + API.ResponseStatus, function() { ",
+              "     pm.expect(pm.response.code).to.equal(API.ResponseStatus);",
+              "});",
+              "pm.test(\"Verify response time is less than \" + API.ResponseTimeMs, function() { ",
+              "     pm.expect(pm.response.responseTime).to.be.below(API.ResponseTimeMs);",
+              "});",
+              "pm.test(\"Verify response body matches expected response \", function() { ",
+              "     pm.expect(apiUtility.verifyResponse(API.ResponseBody, pm.response.json())).to.be.true;",
+              "});",
+              "// --- END TEST VERIFICATIONS ---",
+              "console.log(\"--------------------------------------------------------------------------------------\");"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "{{gAuthHeaderKey}}",
+            "value": "{{gAuthHeaderValue}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{{gRequestBody}}"
+        },
+        "url": {
+          "raw": "{{gUrl}}",
+          "host": "{{gUrl}}"
+        }
+      }
+    },
+    {
+      "name": "/api/commands/StudentAccounts/CreditCardType/Get",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "",
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let apiId = \"1cba1c1f-69cf-4f0e-85a5-de59f5bde5c0\";",
+              "let reqIndex = pm.globals.get(\"gIndex\");",
+              "let API = pm.globals.get(\"gApis\")[apiId];",
+              "if (API === undefined || API.Index !== reqIndex) {",
+              "    console.log(\"ERROR - API not found for the specified apiId, \" + apiId);",
+              "    pm.globals.set(\"gReqApi\", null);",
+              "} else {",
+              "    pm.globals.set(\"gReqApi\", API);",
+              "    pm.globals.set(\"gIndex\", Number(pm.globals.get(\"gIndex\")) + 1);",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Make authorization header",
+              "var hdr = apiUtility.makeAuthorization(null, null, null,  pm.environment.get(\"envApiKey\"), ",
+              "                                           pm.environment.get(\"envAuthUser\"), pm.environment.get(\"envAuthPassword\"));",
+              "pm.globals.set(\"gAuthHeaderKey\", hdr.key);",
+              "pm.globals.set(\"gAuthHeaderValue\", hdr.value);",
+              "//console.log(pm.globals.get(\"gAuthHeaderKey\"));",
+              "//console.log(pm.globals.get(\"gAuthHeaderValue\"));",
+              "",
+              "// Make request body by combining chained properties and data file request body",
+              "if (API !== undefined) {",
+              "    var request = { };",
+              "    apiUtility.setChainProps(API.Chain, request);",
+              "    var req = apiUtility.mergeRequestBody(request, API.RequestBody);",
+              "    pm.globals.set(\"gRequestBody\", JSON.stringify(req));",
+              "    //console.log(pm.globals.get(\"gRequestBody\"));",
+              "}",
+              "",
+              "// Make URL",
+              "if(API !== undefined) {",
+              "    pm.globals.set(\"gUrl\", apiUtility.makeUrl(pm.environment.get(\"envWebScheme\"), pm.environment.get(\"envWebHost\"), API.RequestUrl));",
+              "} else {",
+              "    pm.globals.set(\"gUrl\", \"http://127.0.0.1\");",
+              "}",
+              "//console.log(pm.globals.get(\"gUrl\"));",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let API = pm.globals.get(\"gReqApi\");",
+              "if (API === null) {",
+              "    postman.setNextRequest(null);",
+              "    pm.test(\"API not found for the Request ID, using fallback URL and ending the test\", function() { pm.expect.fail() });",
+              "    return;",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Save properties for chaining, ignore exceptions because the test will fail later anyways",
+              "try {",
+              "   var rb = pm.response.json();",
+              "   if (API.ChainSource.length > 0) {",
+              "      let str = API.RequestId + \".response\";",
+              "      apiUtility.globalStoreWrite(str, rb);",
+              "   }",
+              "} catch(e) { console.log(\"Exception was raised during chainging, Msg -\" + e); }",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/",
+              "",
+              "// --- TEST VERIFICATIONS ---",
+              "// --- Add your custom tests in this block ---",
+              "pm.test(\"Verify response status is \" + API.ResponseStatus, function() { ",
+              "     pm.expect(pm.response.code).to.equal(API.ResponseStatus);",
+              "});",
+              "pm.test(\"Verify response time is less than \" + API.ResponseTimeMs, function() { ",
+              "     pm.expect(pm.response.responseTime).to.be.below(API.ResponseTimeMs);",
+              "});",
+              "pm.test(\"Verify response body matches expected response \", function() { ",
+              "     pm.expect(apiUtility.verifyResponse(API.ResponseBody, pm.response.json())).to.be.true;",
+              "});",
+              "// --- END TEST VERIFICATIONS ---",
+              "console.log(\"--------------------------------------------------------------------------------------\");"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "{{gAuthHeaderKey}}",
+            "value": "{{gAuthHeaderValue}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{{gRequestBody}}"
+        },
+        "url": {
+          "raw": "{{gUrl}}",
+          "host": "{{gUrl}}"
+        }
+      }
+    },
+    {
+      "name": "/api/commands/StudentAccounts/CreditCardType/Save",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "",
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let apiId = \"0e763719-2413-4a17-af36-ad78add5ad86\";",
+              "let reqIndex = pm.globals.get(\"gIndex\");",
+              "let API = pm.globals.get(\"gApis\")[apiId];",
+              "if (API === undefined || API.Index !== reqIndex) {",
+              "    console.log(\"ERROR - API not found for the specified apiId, \" + apiId);",
+              "    pm.globals.set(\"gReqApi\", null);",
+              "} else {",
+              "    pm.globals.set(\"gReqApi\", API);",
+              "    pm.globals.set(\"gIndex\", Number(pm.globals.get(\"gIndex\")) + 1);",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Make authorization header",
+              "var hdr = apiUtility.makeAuthorization(null, null, null,  pm.environment.get(\"envApiKey\"), ",
+              "                                           pm.environment.get(\"envAuthUser\"), pm.environment.get(\"envAuthPassword\"));",
+              "pm.globals.set(\"gAuthHeaderKey\", hdr.key);",
+              "pm.globals.set(\"gAuthHeaderValue\", hdr.value);",
+              "//console.log(pm.globals.get(\"gAuthHeaderKey\"));",
+              "//console.log(pm.globals.get(\"gAuthHeaderValue\"));",
+              "",
+              "// Make request body by combining chained properties and data file request body",
+              "if (API !== undefined) {",
+              "    var request = { };",
+              "    apiUtility.setChainProps(API.Chain, request);",
+              "    var req = apiUtility.mergeRequestBody(request, API.RequestBody);",
+              "    pm.globals.set(\"gRequestBody\", JSON.stringify(req));",
+              "    //console.log(pm.globals.get(\"gRequestBody\"));",
+              "}",
+              "",
+              "// Make URL",
+              "if(API !== undefined) {",
+              "    pm.globals.set(\"gUrl\", apiUtility.makeUrl(pm.environment.get(\"envWebScheme\"), pm.environment.get(\"envWebHost\"), API.RequestUrl));",
+              "} else {",
+              "    pm.globals.set(\"gUrl\", \"http://127.0.0.1\");",
+              "}",
+              "//console.log(pm.globals.get(\"gUrl\"));",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let API = pm.globals.get(\"gReqApi\");",
+              "if (API === null) {",
+              "    postman.setNextRequest(null);",
+              "    pm.test(\"API not found for the Request ID, using fallback URL and ending the test\", function() { pm.expect.fail() });",
+              "    return;",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Save properties for chaining, ignore exceptions because the test will fail later anyways",
+              "try {",
+              "   var rb = pm.response.json();",
+              "   if (API.ChainSource.length > 0) {",
+              "      let str = API.RequestId + \".response\";",
+              "      apiUtility.globalStoreWrite(str, rb);",
+              "   }",
+              "} catch(e) { console.log(\"Exception was raised during chainging, Msg -\" + e); }",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/",
+              "",
+              "// --- TEST VERIFICATIONS ---",
+              "// --- Add your custom tests in this block ---",
+              "pm.test(\"Verify response status is \" + API.ResponseStatus, function() { ",
+              "     pm.expect(400).to.equal(400);",
+              "});",
+              "pm.test(\"Verify response time is less than \" + API.ResponseTimeMs, function() { ",
+              "     pm.expect(pm.response.responseTime).to.be.below(API.ResponseTimeMs);",
+              "});",
+              "pm.test(\"Verify response body matches expected response \", function() { ",
+              "     pm.expect(apiUtility.verifyResponse(API.ResponseBody, pm.response.json())).to.be.true;",
+              "});",
+              "// --- END TEST VERIFICATIONS ---",
+              "console.log(\"--------------------------------------------------------------------------------------\");"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "{{gAuthHeaderKey}}",
+            "value": "{{gAuthHeaderValue}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{{gRequestBody}}"
+        },
+        "url": {
+          "raw": "{{gUrl}}",
+          "host": "{{gUrl}}"
+        }
+      }
+    },
+    {
+      "name": "/api/commands/StudentAccounts/CreditCardType/Get",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "",
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let apiId = \"fb399b27-3b1b-4c50-b6c9-03876537e1ec\";",
+              "let reqIndex = pm.globals.get(\"gIndex\");",
+              "let API = pm.globals.get(\"gApis\")[apiId];",
+              "if (API === undefined || API.Index !== reqIndex) {",
+              "    console.log(\"ERROR - API not found for the specified apiId, \" + apiId);",
+              "    pm.globals.set(\"gReqApi\", null);",
+              "} else {",
+              "    pm.globals.set(\"gReqApi\", API);",
+              "    pm.globals.set(\"gIndex\", Number(pm.globals.get(\"gIndex\")) + 1);",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Make authorization header",
+              "var hdr = apiUtility.makeAuthorization(null, null, null,  pm.environment.get(\"envApiKey\"), ",
+              "                                           pm.environment.get(\"envAuthUser\"), pm.environment.get(\"envAuthPassword\"));",
+              "pm.globals.set(\"gAuthHeaderKey\", hdr.key);",
+              "pm.globals.set(\"gAuthHeaderValue\", hdr.value);",
+              "//console.log(pm.globals.get(\"gAuthHeaderKey\"));",
+              "//console.log(pm.globals.get(\"gAuthHeaderValue\"));",
+              "",
+              "// Make request body by combining chained properties and data file request body",
+              "if (API !== undefined) {",
+              "    var request = { };",
+              "    apiUtility.setChainProps(API.Chain, request);",
+              "    var req = apiUtility.mergeRequestBody(request, API.RequestBody);",
+              "    pm.globals.set(\"gRequestBody\", JSON.stringify(req));",
+              "    //console.log(pm.globals.get(\"gRequestBody\"));",
+              "}",
+              "",
+              "// Make URL",
+              "if(API !== undefined) {",
+              "    pm.globals.set(\"gUrl\", apiUtility.makeUrl(pm.environment.get(\"envWebScheme\"), pm.environment.get(\"envWebHost\"), API.RequestUrl));",
+              "} else {",
+              "    pm.globals.set(\"gUrl\", \"http://127.0.0.1\");",
+              "}",
+              "//console.log(pm.globals.get(\"gUrl\"));",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let API = pm.globals.get(\"gReqApi\");",
+              "if (API === null) {",
+              "    postman.setNextRequest(null);",
+              "    pm.test(\"API not found for the Request ID, using fallback URL and ending the test\", function() { pm.expect.fail() });",
+              "    return;",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Save properties for chaining, ignore exceptions because the test will fail later anyways",
+              "try {",
+              "   var rb = pm.response.json();",
+              "   if (API.ChainSource.length > 0) {",
+              "      let str = API.RequestId + \".response\";",
+              "      apiUtility.globalStoreWrite(str, rb);",
+              "   }",
+              "} catch(e) { console.log(\"Exception was raised during chainging, Msg -\" + e); }",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/",
+              "",
+              "// --- TEST VERIFICATIONS ---",
+              "// --- Add your custom tests in this block ---",
+              "pm.test(\"Verify response status is \" + API.ResponseStatus, function() { ",
+              "     pm.expect(pm.response.code).to.equal(API.ResponseStatus);",
+              "});",
+              "pm.test(\"Verify response time is less than \" + API.ResponseTimeMs, function() { ",
+              "     pm.expect(pm.response.responseTime).to.be.below(API.ResponseTimeMs);",
+              "});",
+              "pm.test(\"Verify response body matches expected response \", function() { ",
+              "     pm.expect(apiUtility.verifyResponse(API.ResponseBody, pm.response.json())).to.be.true;",
+              "});",
+              "// --- END TEST VERIFICATIONS ---",
+              "console.log(\"--------------------------------------------------------------------------------------\");"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "{{gAuthHeaderKey}}",
+            "value": "{{gAuthHeaderValue}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{{gRequestBody}}"
+        },
+        "url": {
+          "raw": "{{gUrl}}",
+          "host": "{{gUrl}}"
+        }
+      }
+    },
+    {
+      "name": "/api/commands/StudentAccounts/CreditCardType/Save",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "",
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let apiId = \"3233a73a-e642-4717-b435-26afe77ed04c\";",
+              "let reqIndex = pm.globals.get(\"gIndex\");",
+              "let API = pm.globals.get(\"gApis\")[apiId];",
+              "if (API === undefined || API.Index !== reqIndex) {",
+              "    console.log(\"ERROR - API not found for the specified apiId, \" + apiId);",
+              "    pm.globals.set(\"gReqApi\", null);",
+              "} else {",
+              "    pm.globals.set(\"gReqApi\", API);",
+              "    pm.globals.set(\"gIndex\", Number(pm.globals.get(\"gIndex\")) + 1);",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Make authorization header",
+              "var hdr = apiUtility.makeAuthorization(null, null, null,  pm.environment.get(\"envApiKey\"), ",
+              "                                           pm.environment.get(\"envAuthUser\"), pm.environment.get(\"envAuthPassword\"));",
+              "pm.globals.set(\"gAuthHeaderKey\", hdr.key);",
+              "pm.globals.set(\"gAuthHeaderValue\", hdr.value);",
+              "//console.log(pm.globals.get(\"gAuthHeaderKey\"));",
+              "//console.log(pm.globals.get(\"gAuthHeaderValue\"));",
+              "",
+              "// Make request body by combining chained properties and data file request body",
+              "if (API !== undefined) {",
+              "    var request = { };",
+              "    apiUtility.setChainProps(API.Chain, request);",
+              "    var req = apiUtility.mergeRequestBody(request, API.RequestBody);",
+              "    pm.globals.set(\"gRequestBody\", JSON.stringify(req));",
+              "    //console.log(pm.globals.get(\"gRequestBody\"));",
+              "}",
+              "",
+              "// Make URL",
+              "if(API !== undefined) {",
+              "    pm.globals.set(\"gUrl\", apiUtility.makeUrl(pm.environment.get(\"envWebScheme\"), pm.environment.get(\"envWebHost\"), API.RequestUrl));",
+              "} else {",
+              "    pm.globals.set(\"gUrl\", \"http://127.0.0.1\");",
+              "}",
+              "//console.log(pm.globals.get(\"gUrl\"));",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let API = pm.globals.get(\"gReqApi\");",
+              "if (API === null) {",
+              "    postman.setNextRequest(null);",
+              "    pm.test(\"API not found for the Request ID, using fallback URL and ending the test\", function() { pm.expect.fail() });",
+              "    return;",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Save properties for chaining, ignore exceptions because the test will fail later anyways",
+              "try {",
+              "   var rb = pm.response.json();",
+              "   if (API.ChainSource.length > 0) {",
+              "      let str = API.RequestId + \".response\";",
+              "      apiUtility.globalStoreWrite(str, rb);",
+              "   }",
+              "} catch(e) { console.log(\"Exception was raised during chainging, Msg -\" + e); }",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/",
+              "",
+              "// --- TEST VERIFICATIONS ---",
+              "// --- Add your custom tests in this block ---",
+              "pm.test(\"Verify response status is \" + API.ResponseStatus, function() { ",
+              "     pm.expect(400).to.equal(400);",
+              "});",
+              "pm.test(\"Verify response time is less than \" + API.ResponseTimeMs, function() { ",
+              "     pm.expect(pm.response.responseTime).to.be.below(API.ResponseTimeMs);",
+              "});",
+              "pm.test(\"Verify response body matches expected response \", function() { ",
+              "     pm.expect(apiUtility.verifyResponse(API.ResponseBody, pm.response.json())).to.be.true;",
+              "});",
+              "// --- END TEST VERIFICATIONS ---",
+              "console.log(\"--------------------------------------------------------------------------------------\");"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "{{gAuthHeaderKey}}",
+            "value": "{{gAuthHeaderValue}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{{gRequestBody}}"
+        },
+        "url": {
+          "raw": "{{gUrl}}",
+          "host": "{{gUrl}}"
+        }
+      }
+    },
+    {
+      "name": "/api/commands/StudentAccounts/CreditCardType/Get",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "",
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let apiId = \"85ee06a2-328a-4e1f-a321-99b3f3fbeca9\";",
+              "let reqIndex = pm.globals.get(\"gIndex\");",
+              "let API = pm.globals.get(\"gApis\")[apiId];",
+              "if (API === undefined || API.Index !== reqIndex) {",
+              "    console.log(\"ERROR - API not found for the specified apiId, \" + apiId);",
+              "    pm.globals.set(\"gReqApi\", null);",
+              "} else {",
+              "    pm.globals.set(\"gReqApi\", API);",
+              "    pm.globals.set(\"gIndex\", Number(pm.globals.get(\"gIndex\")) + 1);",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Make authorization header",
+              "var hdr = apiUtility.makeAuthorization(null, null, null,  pm.environment.get(\"envApiKey\"), ",
+              "                                           pm.environment.get(\"envAuthUser\"), pm.environment.get(\"envAuthPassword\"));",
+              "pm.globals.set(\"gAuthHeaderKey\", hdr.key);",
+              "pm.globals.set(\"gAuthHeaderValue\", hdr.value);",
+              "//console.log(pm.globals.get(\"gAuthHeaderKey\"));",
+              "//console.log(pm.globals.get(\"gAuthHeaderValue\"));",
+              "",
+              "// Make request body by combining chained properties and data file request body",
+              "if (API !== undefined) {",
+              "    var request = { };",
+              "    apiUtility.setChainProps(API.Chain, request);",
+              "    var req = apiUtility.mergeRequestBody(request, API.RequestBody);",
+              "    pm.globals.set(\"gRequestBody\", JSON.stringify(req));",
+              "    //console.log(pm.globals.get(\"gRequestBody\"));",
+              "}",
+              "",
+              "// Make URL",
+              "if(API !== undefined) {",
+              "    pm.globals.set(\"gUrl\", apiUtility.makeUrl(pm.environment.get(\"envWebScheme\"), pm.environment.get(\"envWebHost\"), API.RequestUrl));",
+              "} else {",
+              "    pm.globals.set(\"gUrl\", \"http://127.0.0.1\");",
+              "}",
+              "//console.log(pm.globals.get(\"gUrl\"));",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let API = pm.globals.get(\"gReqApi\");",
+              "if (API === null) {",
+              "    postman.setNextRequest(null);",
+              "    pm.test(\"API not found for the Request ID, using fallback URL and ending the test\", function() { pm.expect.fail() });",
+              "    return;",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Save properties for chaining, ignore exceptions because the test will fail later anyways",
+              "try {",
+              "   var rb = pm.response.json();",
+              "   if (API.ChainSource.length > 0) {",
+              "      let str = API.RequestId + \".response\";",
+              "      apiUtility.globalStoreWrite(str, rb);",
+              "   }",
+              "} catch(e) { console.log(\"Exception was raised during chainging, Msg -\" + e); }",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/",
+              "",
+              "// --- TEST VERIFICATIONS ---",
+              "// --- Add your custom tests in this block ---",
+              "pm.test(\"Verify response status is \" + API.ResponseStatus, function() { ",
+              "     pm.expect(pm.response.code).to.equal(API.ResponseStatus);",
+              "});",
+              "pm.test(\"Verify response time is less than \" + API.ResponseTimeMs, function() { ",
+              "     pm.expect(pm.response.responseTime).to.be.below(API.ResponseTimeMs);",
+              "});",
+              "pm.test(\"Verify response body matches expected response \", function() { ",
+              "     pm.expect(apiUtility.verifyResponse(API.ResponseBody, pm.response.json())).to.be.true;",
+              "});",
+              "// --- END TEST VERIFICATIONS ---",
+              "console.log(\"--------------------------------------------------------------------------------------\");"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "{{gAuthHeaderKey}}",
+            "value": "{{gAuthHeaderValue}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{{gRequestBody}}"
+        },
+        "url": {
+          "raw": "{{gUrl}}",
+          "host": "{{gUrl}}"
+        }
+      }
+    },
+    {
+      "name": "/api/commands/StudentAccounts/CreditCardType/Delete",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "",
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let apiId = \"644ff580-20cb-4ccd-bb80-1db9e9ea79cf\";",
+              "let reqIndex = pm.globals.get(\"gIndex\");",
+              "let API = pm.globals.get(\"gApis\")[apiId];",
+              "if (API === undefined || API.Index !== reqIndex) {",
+              "    console.log(\"ERROR - API not found for the specified apiId, \" + apiId);",
+              "    pm.globals.set(\"gReqApi\", null);",
+              "} else {",
+              "    pm.globals.set(\"gReqApi\", API);",
+              "    pm.globals.set(\"gIndex\", Number(pm.globals.get(\"gIndex\")) + 1);",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Make authorization header",
+              "var hdr = apiUtility.makeAuthorization(null, null, null,  pm.environment.get(\"envApiKey\"), ",
+              "                                           pm.environment.get(\"envAuthUser\"), pm.environment.get(\"envAuthPassword\"));",
+              "pm.globals.set(\"gAuthHeaderKey\", hdr.key);",
+              "pm.globals.set(\"gAuthHeaderValue\", hdr.value);",
+              "//console.log(pm.globals.get(\"gAuthHeaderKey\"));",
+              "//console.log(pm.globals.get(\"gAuthHeaderValue\"));",
+              "",
+              "// Make request body by combining chained properties and data file request body",
+              "if (API !== undefined) {",
+              "    var request = { };",
+              "    apiUtility.setChainProps(API.Chain, request);",
+              "    var req = apiUtility.mergeRequestBody(request, API.RequestBody);",
+              "    pm.globals.set(\"gRequestBody\", JSON.stringify(req));",
+              "    //console.log(pm.globals.get(\"gRequestBody\"));",
+              "}",
+              "",
+              "// Make URL",
+              "if(API !== undefined) {",
+              "    pm.globals.set(\"gUrl\", apiUtility.makeUrl(pm.environment.get(\"envWebScheme\"), pm.environment.get(\"envWebHost\"), API.RequestUrl));",
+              "} else {",
+              "    pm.globals.set(\"gUrl\", \"http://127.0.0.1\");",
+              "}",
+              "//console.log(pm.globals.get(\"gUrl\"));",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let API = pm.globals.get(\"gReqApi\");",
+              "if (API === null) {",
+              "    postman.setNextRequest(null);",
+              "    pm.test(\"API not found for the Request ID, using fallback URL and ending the test\", function() { pm.expect.fail() });",
+              "    return;",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Save properties for chaining, ignore exceptions because the test will fail later anyways",
+              "try {",
+              "   var rb = pm.response.json();",
+              "   if (API.ChainSource.length > 0) {",
+              "      let str = API.RequestId + \".response\";",
+              "      apiUtility.globalStoreWrite(str, rb);",
+              "   }",
+              "} catch(e) { console.log(\"Exception was raised during chainging, Msg -\" + e); }",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/",
+              "",
+              "// --- TEST VERIFICATIONS ---",
+              "// --- Add your custom tests in this block ---",
+              "pm.test(\"Verify response status is \" + API.ResponseStatus, function() { ",
+              "     pm.expect(pm.response.code).to.equal(API.ResponseStatus);",
+              "});",
+              "pm.test(\"Verify response time is less than \" + API.ResponseTimeMs, function() { ",
+              "     pm.expect(pm.response.responseTime).to.be.below(API.ResponseTimeMs);",
+              "});",
+              "pm.test(\"Verify response body matches expected response \", function() { ",
+              "     pm.expect(apiUtility.verifyResponse(API.ResponseBody, pm.response.json())).to.be.true;",
+              "});",
+              "// --- END TEST VERIFICATIONS ---",
+              "console.log(\"--------------------------------------------------------------------------------------\");"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "{{gAuthHeaderKey}}",
+            "value": "{{gAuthHeaderValue}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{{gRequestBody}}"
+        },
+        "url": {
+          "raw": "{{gUrl}}",
+          "host": "{{gUrl}}"
+        }
+      }
+    },
+    {
+      "name": "/api/commands/Common/Student/SaveNew",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "",
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let apiId = \"a27a511b-41f3-4458-9231-b2adf1c6586f\";",
+              "let reqIndex = pm.globals.get(\"gIndex\");",
+              "let API = pm.globals.get(\"gApis\")[apiId];",
+              "if (API === undefined || API.Index !== reqIndex) {",
+              "    console.log(\"ERROR - API not found for the specified apiId, \" + apiId);",
+              "    pm.globals.set(\"gReqApi\", null);",
+              "} else {",
+              "    pm.globals.set(\"gReqApi\", API);",
+              "    pm.globals.set(\"gIndex\", Number(pm.globals.get(\"gIndex\")) + 1);",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Make authorization header",
+              "var hdr = apiUtility.makeAuthorization(null, null, null,  pm.environment.get(\"envApiKey\"), ",
+              "                                           pm.environment.get(\"envAuthUser\"), pm.environment.get(\"envAuthPassword\"));",
+              "pm.globals.set(\"gAuthHeaderKey\", hdr.key);",
+              "pm.globals.set(\"gAuthHeaderValue\", hdr.value);",
+              "//console.log(pm.globals.get(\"gAuthHeaderKey\"));",
+              "//console.log(pm.globals.get(\"gAuthHeaderValue\"));",
+              "",
+              "// Make request body by combining chained properties and data file request body",
+              "if (API !== undefined) {",
+              "    var request = { };",
+              "    apiUtility.setChainProps(API.Chain, request);",
+              "    var req = apiUtility.mergeRequestBody(request, API.RequestBody);",
+              "    pm.globals.set(\"gRequestBody\", JSON.stringify(req));",
+              "    //console.log(pm.globals.get(\"gRequestBody\"));",
+              "}",
+              "",
+              "// Make URL",
+              "if(API !== undefined) {",
+              "    pm.globals.set(\"gUrl\", apiUtility.makeUrl(pm.environment.get(\"envWebScheme\"), pm.environment.get(\"envWebHost\"), API.RequestUrl));",
+              "} else {",
+              "    pm.globals.set(\"gUrl\", \"http://127.0.0.1\");",
+              "}",
+              "//console.log(pm.globals.get(\"gUrl\"));",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let API = pm.globals.get(\"gReqApi\");",
+              "if (API === null) {",
+              "    postman.setNextRequest(null);",
+              "    pm.test(\"API not found for the Request ID, using fallback URL and ending the test\", function() { pm.expect.fail() });",
+              "    return;",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Save properties for chaining, ignore exceptions because the test will fail later anyways",
+              "try {",
+              "   var rb = pm.response.json();",
+              "   if (API.ChainSource.length > 0) {",
+              "      let str = API.RequestId + \".response\";",
+              "      apiUtility.globalStoreWrite(str, rb);",
+              "   }",
+              "} catch(e) { console.log(\"Exception was raised during chainging, Msg -\" + e); }",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/",
+              "",
+              "// --- TEST VERIFICATIONS ---",
+              "// --- Add your custom tests in this block ---",
+              "pm.test(\"Verify response status is \" + API.ResponseStatus, function() { ",
+              "     pm.expect(pm.response.code).to.equal(API.ResponseStatus);",
+              "});",
+              "pm.test(\"Verify response time is less than \" + API.ResponseTimeMs, function() { ",
+              "     pm.expect(pm.response.responseTime).to.be.below(API.ResponseTimeMs);",
+              "});",
+              "pm.test(\"Verify response body matches expected response \", function() { ",
+              "     pm.expect(apiUtility.verifyResponse(API.ResponseBody, pm.response.json())).to.be.true;",
+              "});",
+              "// --- END TEST VERIFICATIONS ---",
+              "console.log(\"--------------------------------------------------------------------------------------\");"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "{{gAuthHeaderKey}}",
+            "value": "{{gAuthHeaderValue}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{{gRequestBody}}"
+        },
+        "url": {
+          "raw": "{{gUrl}}",
+          "host": "{{gUrl}}"
+        }
+      }
+    },
+    {
+      "name": "/api/commands/Common/Student/get",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "",
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let apiId = \"601769c0-c628-4cc6-8586-7da906011800\";",
+              "let reqIndex = pm.globals.get(\"gIndex\");",
+              "let API = pm.globals.get(\"gApis\")[apiId];",
+              "if (API === undefined || API.Index !== reqIndex) {",
+              "    console.log(\"ERROR - API not found for the specified apiId, \" + apiId);",
+              "    pm.globals.set(\"gReqApi\", null);",
+              "} else {",
+              "    pm.globals.set(\"gReqApi\", API);",
+              "    pm.globals.set(\"gIndex\", Number(pm.globals.get(\"gIndex\")) + 1);",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Make authorization header",
+              "var hdr = apiUtility.makeAuthorization(null, null, null,  pm.environment.get(\"envApiKey\"), ",
+              "                                           pm.environment.get(\"envAuthUser\"), pm.environment.get(\"envAuthPassword\"));",
+              "pm.globals.set(\"gAuthHeaderKey\", hdr.key);",
+              "pm.globals.set(\"gAuthHeaderValue\", hdr.value);",
+              "//console.log(pm.globals.get(\"gAuthHeaderKey\"));",
+              "//console.log(pm.globals.get(\"gAuthHeaderValue\"));",
+              "",
+              "// Make request body by combining chained properties and data file request body",
+              "if (API !== undefined) {",
+              "    var request = { };",
+              "    apiUtility.setChainProps(API.Chain, request);",
+              "    var req = apiUtility.mergeRequestBody(request, API.RequestBody);",
+              "    pm.globals.set(\"gRequestBody\", JSON.stringify(req));",
+              "    //console.log(pm.globals.get(\"gRequestBody\"));",
+              "}",
+              "",
+              "// Make URL",
+              "if(API !== undefined) {",
+              "    pm.globals.set(\"gUrl\", apiUtility.makeUrl(pm.environment.get(\"envWebScheme\"), pm.environment.get(\"envWebHost\"), API.RequestUrl));",
+              "} else {",
+              "    pm.globals.set(\"gUrl\", \"http://127.0.0.1\");",
+              "}",
+              "//console.log(pm.globals.get(\"gUrl\"));",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let API = pm.globals.get(\"gReqApi\");",
+              "if (API === null) {",
+              "    postman.setNextRequest(null);",
+              "    pm.test(\"API not found for the Request ID, using fallback URL and ending the test\", function() { pm.expect.fail() });",
+              "    return;",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Save properties for chaining, ignore exceptions because the test will fail later anyways",
+              "try {",
+              "   var rb = pm.response.json();",
+              "   if (API.ChainSource.length > 0) {",
+              "      let str = API.RequestId + \".response\";",
+              "      apiUtility.globalStoreWrite(str, rb);",
+              "   }",
+              "} catch(e) { console.log(\"Exception was raised during chainging, Msg -\" + e); }",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/",
+              "",
+              "// --- TEST VERIFICATIONS ---",
+              "// --- Add your custom tests in this block ---",
+              "pm.test(\"Verify response status is \" + API.ResponseStatus, function() { ",
+              "     pm.expect(pm.response.code).to.equal(API.ResponseStatus);",
+              "});",
+              "pm.test(\"Verify response time is less than \" + API.ResponseTimeMs, function() { ",
+              "     pm.expect(pm.response.responseTime).to.be.below(API.ResponseTimeMs);",
+              "});",
+              "pm.test(\"Verify response body matches expected response \", function() { ",
+              "     pm.expect(apiUtility.verifyResponse(API.ResponseBody, pm.response.json())).to.be.true;",
+              "});",
+              "// --- END TEST VERIFICATIONS ---",
+              "console.log(\"--------------------------------------------------------------------------------------\");"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "{{gAuthHeaderKey}}",
+            "value": "{{gAuthHeaderValue}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{{gRequestBody}}"
+        },
+        "url": {
+          "raw": "{{gUrl}}",
+          "host": "{{gUrl}}"
+        }
+      }
+    },
+    {
+      "name": "/api/commands/StudentAccounts/StudentCreditCard/Create",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "",
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let apiId = \"c78c4c49-1310-4149-87da-38b36d78fc40\";",
+              "let reqIndex = pm.globals.get(\"gIndex\");",
+              "let API = pm.globals.get(\"gApis\")[apiId];",
+              "if (API === undefined || API.Index !== reqIndex) {",
+              "    console.log(\"ERROR - API not found for the specified apiId, \" + apiId);",
+              "    pm.globals.set(\"gReqApi\", null);",
+              "} else {",
+              "    pm.globals.set(\"gReqApi\", API);",
+              "    pm.globals.set(\"gIndex\", Number(pm.globals.get(\"gIndex\")) + 1);",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Make authorization header",
+              "var hdr = apiUtility.makeAuthorization(null, null, null,  pm.environment.get(\"envApiKey\"), ",
+              "                                           pm.environment.get(\"envAuthUser\"), pm.environment.get(\"envAuthPassword\"));",
+              "pm.globals.set(\"gAuthHeaderKey\", hdr.key);",
+              "pm.globals.set(\"gAuthHeaderValue\", hdr.value);",
+              "//console.log(pm.globals.get(\"gAuthHeaderKey\"));",
+              "//console.log(pm.globals.get(\"gAuthHeaderValue\"));",
+              "",
+              "// Make request body by combining chained properties and data file request body",
+              "if (API !== undefined) {",
+              "    var request = { };",
+              "    apiUtility.setChainProps(API.Chain, request);",
+              "    var req = apiUtility.mergeRequestBody(request, API.RequestBody);",
+              "    pm.globals.set(\"gRequestBody\", JSON.stringify(req));",
+              "    //console.log(pm.globals.get(\"gRequestBody\"));",
+              "}",
+              "",
+              "// Make URL",
+              "if(API !== undefined) {",
+              "    pm.globals.set(\"gUrl\", apiUtility.makeUrl(pm.environment.get(\"envWebScheme\"), pm.environment.get(\"envWebHost\"), API.RequestUrl));",
+              "} else {",
+              "    pm.globals.set(\"gUrl\", \"http://127.0.0.1\");",
+              "}",
+              "//console.log(pm.globals.get(\"gUrl\"));",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let API = pm.globals.get(\"gReqApi\");",
+              "if (API === null) {",
+              "    postman.setNextRequest(null);",
+              "    pm.test(\"API not found for the Request ID, using fallback URL and ending the test\", function() { pm.expect.fail() });",
+              "    return;",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Save properties for chaining, ignore exceptions because the test will fail later anyways",
+              "try {",
+              "   var rb = pm.response.json();",
+              "   if (API.ChainSource.length > 0) {",
+              "      let str = API.RequestId + \".response\";",
+              "      apiUtility.globalStoreWrite(str, rb);",
+              "   }",
+              "} catch(e) { console.log(\"Exception was raised during chainging, Msg -\" + e); }",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/",
+              "",
+              "// --- TEST VERIFICATIONS ---",
+              "// --- Add your custom tests in this block ---",
+              "pm.test(\"Verify response status is \" + API.ResponseStatus, function() { ",
+              "     pm.expect(pm.response.code).to.equal(API.ResponseStatus);",
+              "});",
+              "pm.test(\"Verify response time is less than \" + API.ResponseTimeMs, function() { ",
+              "     pm.expect(pm.response.responseTime).to.be.below(API.ResponseTimeMs);",
+              "});",
+              "pm.test(\"Verify response body matches expected response \", function() { ",
+              "     pm.expect(apiUtility.verifyResponse(API.ResponseBody, pm.response.json())).to.be.true;",
+              "});",
+              "// --- END TEST VERIFICATIONS ---",
+              "console.log(\"--------------------------------------------------------------------------------------\");"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "{{gAuthHeaderKey}}",
+            "value": "{{gAuthHeaderValue}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{{gRequestBody}}"
+        },
+        "url": {
+          "raw": "{{gUrl}}",
+          "host": "{{gUrl}}"
+        }
+      }
+    },
+    {
+      "name": "/api/commands/StudentAccounts/StudentCreditCard/SaveNew",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "",
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let apiId = \"a781c254-c72f-4b2b-ac9c-39ebe74df063\";",
+              "let reqIndex = pm.globals.get(\"gIndex\");",
+              "let API = pm.globals.get(\"gApis\")[apiId];",
+              "if (API === undefined || API.Index !== reqIndex) {",
+              "    console.log(\"ERROR - API not found for the specified apiId, \" + apiId);",
+              "    pm.globals.set(\"gReqApi\", null);",
+              "} else {",
+              "    pm.globals.set(\"gReqApi\", API);",
+              "    pm.globals.set(\"gIndex\", Number(pm.globals.get(\"gIndex\")) + 1);",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Make authorization header",
+              "var hdr = apiUtility.makeAuthorization(null, null, null,  pm.environment.get(\"envApiKey\"), ",
+              "                                           pm.environment.get(\"envAuthUser\"), pm.environment.get(\"envAuthPassword\"));",
+              "pm.globals.set(\"gAuthHeaderKey\", hdr.key);",
+              "pm.globals.set(\"gAuthHeaderValue\", hdr.value);",
+              "//console.log(pm.globals.get(\"gAuthHeaderKey\"));",
+              "//console.log(pm.globals.get(\"gAuthHeaderValue\"));",
+              "",
+              "// Make request body by combining chained properties and data file request body",
+              "if (API !== undefined) {",
+              "    var request = { };",
+              "    apiUtility.setChainProps(API.Chain, request);",
+              "    var req = apiUtility.mergeRequestBody(request, API.RequestBody);",
+              "    pm.globals.set(\"gRequestBody\", JSON.stringify(req));",
+              "    //console.log(pm.globals.get(\"gRequestBody\"));",
+              "}",
+              "",
+              "// Make URL",
+              "if(API !== undefined) {",
+              "    pm.globals.set(\"gUrl\", apiUtility.makeUrl(pm.environment.get(\"envWebScheme\"), pm.environment.get(\"envWebHost\"), API.RequestUrl));",
+              "} else {",
+              "    pm.globals.set(\"gUrl\", \"http://127.0.0.1\");",
+              "}",
+              "//console.log(pm.globals.get(\"gUrl\"));",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let API = pm.globals.get(\"gReqApi\");",
+              "if (API === null) {",
+              "    postman.setNextRequest(null);",
+              "    pm.test(\"API not found for the Request ID, using fallback URL and ending the test\", function() { pm.expect.fail() });",
+              "    return;",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Save properties for chaining, ignore exceptions because the test will fail later anyways",
+              "try {",
+              "   var rb = pm.response.json();",
+              "   if (API.ChainSource.length > 0) {",
+              "      let str = API.RequestId + \".response\";",
+              "      apiUtility.globalStoreWrite(str, rb);",
+              "   }",
+              "} catch(e) { console.log(\"Exception was raised during chainging, Msg -\" + e); }",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/",
+              "",
+              "// --- TEST VERIFICATIONS ---",
+              "// --- Add your custom tests in this block ---",
+              "pm.test(\"Verify response status is \" + API.ResponseStatus, function() { ",
+              "     pm.expect(pm.response.code).to.equal(API.ResponseStatus);",
+              "});",
+              "pm.test(\"Verify response time is less than \" + API.ResponseTimeMs, function() { ",
+              "     pm.expect(pm.response.responseTime).to.be.below(API.ResponseTimeMs);",
+              "});",
+              "pm.test(\"Verify response body matches expected response \", function() { ",
+              "     pm.expect(apiUtility.verifyResponse(API.ResponseBody, pm.response.json())).to.be.true;",
+              "});",
+              "// --- END TEST VERIFICATIONS ---",
+              "console.log(\"--------------------------------------------------------------------------------------\");"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "{{gAuthHeaderKey}}",
+            "value": "{{gAuthHeaderValue}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{{gRequestBody}}"
+        },
+        "url": {
+          "raw": "{{gUrl}}",
+          "host": "{{gUrl}}"
+        }
+      }
+    },
+    {
+      "name": "/api/commands/StudentAccounts/CreditCardType/Get",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "",
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let apiId = \"d8c251c4-53c1-434a-b50f-2ec32023846c\";",
+              "let reqIndex = pm.globals.get(\"gIndex\");",
+              "let API = pm.globals.get(\"gApis\")[apiId];",
+              "if (API === undefined || API.Index !== reqIndex) {",
+              "    console.log(\"ERROR - API not found for the specified apiId, \" + apiId);",
+              "    pm.globals.set(\"gReqApi\", null);",
+              "} else {",
+              "    pm.globals.set(\"gReqApi\", API);",
+              "    pm.globals.set(\"gIndex\", Number(pm.globals.get(\"gIndex\")) + 1);",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Make authorization header",
+              "var hdr = apiUtility.makeAuthorization(null, null, null,  pm.environment.get(\"envApiKey\"), ",
+              "                                           pm.environment.get(\"envAuthUser\"), pm.environment.get(\"envAuthPassword\"));",
+              "pm.globals.set(\"gAuthHeaderKey\", hdr.key);",
+              "pm.globals.set(\"gAuthHeaderValue\", hdr.value);",
+              "//console.log(pm.globals.get(\"gAuthHeaderKey\"));",
+              "//console.log(pm.globals.get(\"gAuthHeaderValue\"));",
+              "",
+              "// Make request body by combining chained properties and data file request body",
+              "if (API !== undefined) {",
+              "    var request = { };",
+              "    apiUtility.setChainProps(API.Chain, request);",
+              "    var req = apiUtility.mergeRequestBody(request, API.RequestBody);",
+              "    pm.globals.set(\"gRequestBody\", JSON.stringify(req));",
+              "    //console.log(pm.globals.get(\"gRequestBody\"));",
+              "}",
+              "",
+              "// Make URL",
+              "if(API !== undefined) {",
+              "    pm.globals.set(\"gUrl\", apiUtility.makeUrl(pm.environment.get(\"envWebScheme\"), pm.environment.get(\"envWebHost\"), API.RequestUrl));",
+              "} else {",
+              "    pm.globals.set(\"gUrl\", \"http://127.0.0.1\");",
+              "}",
+              "//console.log(pm.globals.get(\"gUrl\"));",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let API = pm.globals.get(\"gReqApi\");",
+              "if (API === null) {",
+              "    postman.setNextRequest(null);",
+              "    pm.test(\"API not found for the Request ID, using fallback URL and ending the test\", function() { pm.expect.fail() });",
+              "    return;",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Save properties for chaining, ignore exceptions because the test will fail later anyways",
+              "try {",
+              "   var rb = pm.response.json();",
+              "   if (API.ChainSource.length > 0) {",
+              "      let str = API.RequestId + \".response\";",
+              "      apiUtility.globalStoreWrite(str, rb);",
+              "   }",
+              "} catch(e) { console.log(\"Exception was raised during chainging, Msg -\" + e); }",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/",
+              "",
+              "// --- TEST VERIFICATIONS ---",
+              "// --- Add your custom tests in this block ---",
+              "pm.test(\"Verify response status is \" + API.ResponseStatus, function() { ",
+              "     pm.expect(pm.response.code).to.equal(API.ResponseStatus);",
+              "});",
+              "pm.test(\"Verify response time is less than \" + API.ResponseTimeMs, function() { ",
+              "     pm.expect(pm.response.responseTime).to.be.below(API.ResponseTimeMs);",
+              "});",
+              "pm.test(\"Verify response body matches expected response \", function() { ",
+              "     pm.expect(apiUtility.verifyResponse(API.ResponseBody, pm.response.json())).to.be.true;",
+              "});",
+              "// --- END TEST VERIFICATIONS ---",
+              "console.log(\"--------------------------------------------------------------------------------------\");"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "{{gAuthHeaderKey}}",
+            "value": "{{gAuthHeaderValue}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{{gRequestBody}}"
+        },
+        "url": {
+          "raw": "{{gUrl}}",
+          "host": "{{gUrl}}"
+        }
+      }
+    },
+    {
+      "name": "/api/commands/StudentAccounts/CreditCardType/Delete",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "",
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let apiId = \"91645a9e-fef5-4394-ab23-e58f4358413b\";",
+              "let reqIndex = pm.globals.get(\"gIndex\");",
+              "let API = pm.globals.get(\"gApis\")[apiId];",
+              "if (API === undefined || API.Index !== reqIndex) {",
+              "    console.log(\"ERROR - API not found for the specified apiId, \" + apiId);",
+              "    pm.globals.set(\"gReqApi\", null);",
+              "} else {",
+              "    pm.globals.set(\"gReqApi\", API);",
+              "    pm.globals.set(\"gIndex\", Number(pm.globals.get(\"gIndex\")) + 1);",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Make authorization header",
+              "var hdr = apiUtility.makeAuthorization(null, null, null,  pm.environment.get(\"envApiKey\"), ",
+              "                                           pm.environment.get(\"envAuthUser\"), pm.environment.get(\"envAuthPassword\"));",
+              "pm.globals.set(\"gAuthHeaderKey\", hdr.key);",
+              "pm.globals.set(\"gAuthHeaderValue\", hdr.value);",
+              "//console.log(pm.globals.get(\"gAuthHeaderKey\"));",
+              "//console.log(pm.globals.get(\"gAuthHeaderValue\"));",
+              "",
+              "// Make request body by combining chained properties and data file request body",
+              "if (API !== undefined) {",
+              "    var request = { };",
+              "    apiUtility.setChainProps(API.Chain, request);",
+              "    var req = apiUtility.mergeRequestBody(request, API.RequestBody);",
+              "    pm.globals.set(\"gRequestBody\", JSON.stringify(req));",
+              "    //console.log(pm.globals.get(\"gRequestBody\"));",
+              "}",
+              "",
+              "// Make URL",
+              "if(API !== undefined) {",
+              "    pm.globals.set(\"gUrl\", apiUtility.makeUrl(pm.environment.get(\"envWebScheme\"), pm.environment.get(\"envWebHost\"), API.RequestUrl));",
+              "} else {",
+              "    pm.globals.set(\"gUrl\", \"http://127.0.0.1\");",
+              "}",
+              "//console.log(pm.globals.get(\"gUrl\"));",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let API = pm.globals.get(\"gReqApi\");",
+              "if (API === null) {",
+              "    postman.setNextRequest(null);",
+              "    pm.test(\"API not found for the Request ID, using fallback URL and ending the test\", function() { pm.expect.fail() });",
+              "    return;",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Save properties for chaining, ignore exceptions because the test will fail later anyways",
+              "try {",
+              "   var rb = pm.response.json();",
+              "   if (API.ChainSource.length > 0) {",
+              "      let str = API.RequestId + \".response\";",
+              "      apiUtility.globalStoreWrite(str, rb);",
+              "   }",
+              "} catch(e) { console.log(\"Exception was raised during chainging, Msg -\" + e); }",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/",
+              "",
+              "// --- TEST VERIFICATIONS ---",
+              "// --- Add your custom tests in this block ---",
+              "pm.test(\"Verify response status is \" + API.ResponseStatus, function() { ",
+              "     pm.expect(400).to.equal(400);",
+              "});",
+              "pm.test(\"Verify response time is less than \" + API.ResponseTimeMs, function() { ",
+              "     pm.expect(pm.response.responseTime).to.be.below(API.ResponseTimeMs);",
+              "});",
+              "pm.test(\"Verify response body matches expected response \", function() { ",
+              "     pm.expect(apiUtility.verifyResponse(API.ResponseBody, pm.response.json())).to.be.true;",
+              "});",
+              "// --- END TEST VERIFICATIONS ---",
+              "console.log(\"--------------------------------------------------------------------------------------\");"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "{{gAuthHeaderKey}}",
+            "value": "{{gAuthHeaderValue}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{{gRequestBody}}"
+        },
+        "url": {
+          "raw": "{{gUrl}}",
+          "host": "{{gUrl}}"
+        }
+      }
+    },
+    {
+      "name": "/api/commands/StudentAccounts/StudentCreditCard/Get",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "",
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let apiId = \"b4313ad2-2f28-4fc3-b897-5a3c80b4791c\";",
+              "let reqIndex = pm.globals.get(\"gIndex\");",
+              "let API = pm.globals.get(\"gApis\")[apiId];",
+              "if (API === undefined || API.Index !== reqIndex) {",
+              "    console.log(\"ERROR - API not found for the specified apiId, \" + apiId);",
+              "    pm.globals.set(\"gReqApi\", null);",
+              "} else {",
+              "    pm.globals.set(\"gReqApi\", API);",
+              "    pm.globals.set(\"gIndex\", Number(pm.globals.get(\"gIndex\")) + 1);",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Make authorization header",
+              "var hdr = apiUtility.makeAuthorization(null, null, null,  pm.environment.get(\"envApiKey\"), ",
+              "                                           pm.environment.get(\"envAuthUser\"), pm.environment.get(\"envAuthPassword\"));",
+              "pm.globals.set(\"gAuthHeaderKey\", hdr.key);",
+              "pm.globals.set(\"gAuthHeaderValue\", hdr.value);",
+              "//console.log(pm.globals.get(\"gAuthHeaderKey\"));",
+              "//console.log(pm.globals.get(\"gAuthHeaderValue\"));",
+              "",
+              "// Make request body by combining chained properties and data file request body",
+              "if (API !== undefined) {",
+              "    var request = { };",
+              "    apiUtility.setChainProps(API.Chain, request);",
+              "    var req = apiUtility.mergeRequestBody(request, API.RequestBody);",
+              "    pm.globals.set(\"gRequestBody\", JSON.stringify(req));",
+              "    //console.log(pm.globals.get(\"gRequestBody\"));",
+              "}",
+              "",
+              "// Make URL",
+              "if(API !== undefined) {",
+              "    pm.globals.set(\"gUrl\", apiUtility.makeUrl(pm.environment.get(\"envWebScheme\"), pm.environment.get(\"envWebHost\"), API.RequestUrl));",
+              "} else {",
+              "    pm.globals.set(\"gUrl\", \"http://127.0.0.1\");",
+              "}",
+              "//console.log(pm.globals.get(\"gUrl\"));",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let API = pm.globals.get(\"gReqApi\");",
+              "if (API === null) {",
+              "    postman.setNextRequest(null);",
+              "    pm.test(\"API not found for the Request ID, using fallback URL and ending the test\", function() { pm.expect.fail() });",
+              "    return;",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Save properties for chaining, ignore exceptions because the test will fail later anyways",
+              "try {",
+              "   var rb = pm.response.json();",
+              "   if (API.ChainSource.length > 0) {",
+              "      let str = API.RequestId + \".response\";",
+              "      apiUtility.globalStoreWrite(str, rb);",
+              "   }",
+              "} catch(e) { console.log(\"Exception was raised during chainging, Msg -\" + e); }",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/",
+              "",
+              "// --- TEST VERIFICATIONS ---",
+              "// --- Add your custom tests in this block ---",
+              "pm.test(\"Verify response status is \" + API.ResponseStatus, function() { ",
+              "     pm.expect(pm.response.code).to.equal(API.ResponseStatus);",
+              "});",
+              "pm.test(\"Verify response time is less than \" + API.ResponseTimeMs, function() { ",
+              "     pm.expect(pm.response.responseTime).to.be.below(API.ResponseTimeMs);",
+              "});",
+              "pm.test(\"Verify response body matches expected response \", function() { ",
+              "     pm.expect(apiUtility.verifyResponse(API.ResponseBody, pm.response.json())).to.be.true;",
+              "});",
+              "// --- END TEST VERIFICATIONS ---",
+              "console.log(\"--------------------------------------------------------------------------------------\");"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "{{gAuthHeaderKey}}",
+            "value": "{{gAuthHeaderValue}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{{gRequestBody}}"
+        },
+        "url": {
+          "raw": "{{gUrl}}",
+          "host": "{{gUrl}}"
+        }
+      }
+    },
+    {
+      "name": "/api/commands/StudentAccounts/StudentCreditCard/Delete",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "",
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let apiId = \"155a6cd8-d975-4708-a7ab-ada5f5ac0f89\";",
+              "let reqIndex = pm.globals.get(\"gIndex\");",
+              "let API = pm.globals.get(\"gApis\")[apiId];",
+              "if (API === undefined || API.Index !== reqIndex) {",
+              "    console.log(\"ERROR - API not found for the specified apiId, \" + apiId);",
+              "    pm.globals.set(\"gReqApi\", null);",
+              "} else {",
+              "    pm.globals.set(\"gReqApi\", API);",
+              "    pm.globals.set(\"gIndex\", Number(pm.globals.get(\"gIndex\")) + 1);",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Make authorization header",
+              "var hdr = apiUtility.makeAuthorization(null, null, null,  pm.environment.get(\"envApiKey\"), ",
+              "                                           pm.environment.get(\"envAuthUser\"), pm.environment.get(\"envAuthPassword\"));",
+              "pm.globals.set(\"gAuthHeaderKey\", hdr.key);",
+              "pm.globals.set(\"gAuthHeaderValue\", hdr.value);",
+              "//console.log(pm.globals.get(\"gAuthHeaderKey\"));",
+              "//console.log(pm.globals.get(\"gAuthHeaderValue\"));",
+              "",
+              "// Make request body by combining chained properties and data file request body",
+              "if (API !== undefined) {",
+              "    var request = { };",
+              "    apiUtility.setChainProps(API.Chain, request);",
+              "    var req = apiUtility.mergeRequestBody(request, API.RequestBody);",
+              "    pm.globals.set(\"gRequestBody\", JSON.stringify(req));",
+              "    //console.log(pm.globals.get(\"gRequestBody\"));",
+              "}",
+              "",
+              "// Make URL",
+              "if(API !== undefined) {",
+              "    pm.globals.set(\"gUrl\", apiUtility.makeUrl(pm.environment.get(\"envWebScheme\"), pm.environment.get(\"envWebHost\"), API.RequestUrl));",
+              "} else {",
+              "    pm.globals.set(\"gUrl\", \"http://127.0.0.1\");",
+              "}",
+              "//console.log(pm.globals.get(\"gUrl\"));",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let API = pm.globals.get(\"gReqApi\");",
+              "if (API === null) {",
+              "    postman.setNextRequest(null);",
+              "    pm.test(\"API not found for the Request ID, using fallback URL and ending the test\", function() { pm.expect.fail() });",
+              "    return;",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Save properties for chaining, ignore exceptions because the test will fail later anyways",
+              "try {",
+              "   var rb = pm.response.json();",
+              "   if (API.ChainSource.length > 0) {",
+              "      let str = API.RequestId + \".response\";",
+              "      apiUtility.globalStoreWrite(str, rb);",
+              "   }",
+              "} catch(e) { console.log(\"Exception was raised during chainging, Msg -\" + e); }",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/",
+              "",
+              "// --- TEST VERIFICATIONS ---",
+              "// --- Add your custom tests in this block ---",
+              "pm.test(\"Verify response status is \" + API.ResponseStatus, function() { ",
+              "     pm.expect(pm.response.code).to.equal(API.ResponseStatus);",
+              "});",
+              "pm.test(\"Verify response time is less than \" + API.ResponseTimeMs, function() { ",
+              "     pm.expect(pm.response.responseTime).to.be.below(API.ResponseTimeMs);",
+              "});",
+              "pm.test(\"Verify response body matches expected response \", function() { ",
+              "     pm.expect(apiUtility.verifyResponse(API.ResponseBody, pm.response.json())).to.be.true;",
+              "});",
+              "// --- END TEST VERIFICATIONS ---",
+              "console.log(\"--------------------------------------------------------------------------------------\");"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "{{gAuthHeaderKey}}",
+            "value": "{{gAuthHeaderValue}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{{gRequestBody}}"
+        },
+        "url": {
+          "raw": "{{gUrl}}",
+          "host": "{{gUrl}}"
+        }
+      }
+    },
+    {
+      "name": "/api/commands/Common/Student/get",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "",
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let apiId = \"28d9830a-1f10-4ba2-8b3b-8f223756fd60\";",
+              "let reqIndex = pm.globals.get(\"gIndex\");",
+              "let API = pm.globals.get(\"gApis\")[apiId];",
+              "if (API === undefined || API.Index !== reqIndex) {",
+              "    console.log(\"ERROR - API not found for the specified apiId, \" + apiId);",
+              "    pm.globals.set(\"gReqApi\", null);",
+              "} else {",
+              "    pm.globals.set(\"gReqApi\", API);",
+              "    pm.globals.set(\"gIndex\", Number(pm.globals.get(\"gIndex\")) + 1);",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Make authorization header",
+              "var hdr = apiUtility.makeAuthorization(null, null, null,  pm.environment.get(\"envApiKey\"), ",
+              "                                           pm.environment.get(\"envAuthUser\"), pm.environment.get(\"envAuthPassword\"));",
+              "pm.globals.set(\"gAuthHeaderKey\", hdr.key);",
+              "pm.globals.set(\"gAuthHeaderValue\", hdr.value);",
+              "//console.log(pm.globals.get(\"gAuthHeaderKey\"));",
+              "//console.log(pm.globals.get(\"gAuthHeaderValue\"));",
+              "",
+              "// Make request body by combining chained properties and data file request body",
+              "if (API !== undefined) {",
+              "    var request = { };",
+              "    apiUtility.setChainProps(API.Chain, request);",
+              "    var req = apiUtility.mergeRequestBody(request, API.RequestBody);",
+              "    pm.globals.set(\"gRequestBody\", JSON.stringify(req));",
+              "    //console.log(pm.globals.get(\"gRequestBody\"));",
+              "}",
+              "",
+              "// Make URL",
+              "if(API !== undefined) {",
+              "    pm.globals.set(\"gUrl\", apiUtility.makeUrl(pm.environment.get(\"envWebScheme\"), pm.environment.get(\"envWebHost\"), API.RequestUrl));",
+              "} else {",
+              "    pm.globals.set(\"gUrl\", \"http://127.0.0.1\");",
+              "}",
+              "//console.log(pm.globals.get(\"gUrl\"));",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let API = pm.globals.get(\"gReqApi\");",
+              "if (API === null) {",
+              "    postman.setNextRequest(null);",
+              "    pm.test(\"API not found for the Request ID, using fallback URL and ending the test\", function() { pm.expect.fail() });",
+              "    return;",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Save properties for chaining, ignore exceptions because the test will fail later anyways",
+              "try {",
+              "   var rb = pm.response.json();",
+              "   if (API.ChainSource.length > 0) {",
+              "      let str = API.RequestId + \".response\";",
+              "      apiUtility.globalStoreWrite(str, rb);",
+              "   }",
+              "} catch(e) { console.log(\"Exception was raised during chainging, Msg -\" + e); }",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/",
+              "",
+              "// --- TEST VERIFICATIONS ---",
+              "// --- Add your custom tests in this block ---",
+              "pm.test(\"Verify response status is \" + API.ResponseStatus, function() { ",
+              "     pm.expect(pm.response.code).to.equal(API.ResponseStatus);",
+              "});",
+              "pm.test(\"Verify response time is less than \" + API.ResponseTimeMs, function() { ",
+              "     pm.expect(pm.response.responseTime).to.be.below(API.ResponseTimeMs);",
+              "});",
+              "pm.test(\"Verify response body matches expected response \", function() { ",
+              "     pm.expect(apiUtility.verifyResponse(API.ResponseBody, pm.response.json())).to.be.true;",
+              "});",
+              "// --- END TEST VERIFICATIONS ---",
+              "console.log(\"--------------------------------------------------------------------------------------\");"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "{{gAuthHeaderKey}}",
+            "value": "{{gAuthHeaderValue}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{{gRequestBody}}"
+        },
+        "url": {
+          "raw": "{{gUrl}}",
+          "host": "{{gUrl}}"
+        }
+      }
+    },
+    {
+      "name": "/api/commands/Common/Student/Delete",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "",
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let apiId = \"a090d166-cdf5-4dad-9e8f-073eedb2068f\";",
+              "let reqIndex = pm.globals.get(\"gIndex\");",
+              "let API = pm.globals.get(\"gApis\")[apiId];",
+              "if (API === undefined || API.Index !== reqIndex) {",
+              "    console.log(\"ERROR - API not found for the specified apiId, \" + apiId);",
+              "    pm.globals.set(\"gReqApi\", null);",
+              "} else {",
+              "    pm.globals.set(\"gReqApi\", API);",
+              "    pm.globals.set(\"gIndex\", Number(pm.globals.get(\"gIndex\")) + 1);",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Make authorization header",
+              "var hdr = apiUtility.makeAuthorization(null, null, null,  pm.environment.get(\"envApiKey\"), ",
+              "                                           pm.environment.get(\"envAuthUser\"), pm.environment.get(\"envAuthPassword\"));",
+              "pm.globals.set(\"gAuthHeaderKey\", hdr.key);",
+              "pm.globals.set(\"gAuthHeaderValue\", hdr.value);",
+              "//console.log(pm.globals.get(\"gAuthHeaderKey\"));",
+              "//console.log(pm.globals.get(\"gAuthHeaderValue\"));",
+              "",
+              "// Make request body by combining chained properties and data file request body",
+              "if (API !== undefined) {",
+              "    var request = { };",
+              "    apiUtility.setChainProps(API.Chain, request);",
+              "    var req = apiUtility.mergeRequestBody(request, API.RequestBody);",
+              "    pm.globals.set(\"gRequestBody\", JSON.stringify(req));",
+              "    //console.log(pm.globals.get(\"gRequestBody\"));",
+              "}",
+              "",
+              "// Make URL",
+              "if(API !== undefined) {",
+              "    pm.globals.set(\"gUrl\", apiUtility.makeUrl(pm.environment.get(\"envWebScheme\"), pm.environment.get(\"envWebHost\"), API.RequestUrl));",
+              "} else {",
+              "    pm.globals.set(\"gUrl\", \"http://127.0.0.1\");",
+              "}",
+              "//console.log(pm.globals.get(\"gUrl\"));",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let API = pm.globals.get(\"gReqApi\");",
+              "if (API === null) {",
+              "    postman.setNextRequest(null);",
+              "    pm.test(\"API not found for the Request ID, using fallback URL and ending the test\", function() { pm.expect.fail() });",
+              "    return;",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Save properties for chaining, ignore exceptions because the test will fail later anyways",
+              "try {",
+              "   var rb = pm.response.json();",
+              "   if (API.ChainSource.length > 0) {",
+              "      let str = API.RequestId + \".response\";",
+              "      apiUtility.globalStoreWrite(str, rb);",
+              "   }",
+              "} catch(e) { console.log(\"Exception was raised during chainging, Msg -\" + e); }",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/",
+              "",
+              "// --- TEST VERIFICATIONS ---",
+              "// --- Add your custom tests in this block ---",
+              "pm.test(\"Verify response status is \" + API.ResponseStatus, function() { ",
+              "     pm.expect(pm.response.code).to.equal(API.ResponseStatus);",
+              "});",
+              "pm.test(\"Verify response time is less than \" + API.ResponseTimeMs, function() { ",
+              "     pm.expect(pm.response.responseTime).to.be.below(API.ResponseTimeMs);",
+              "});",
+              "pm.test(\"Verify response body matches expected response \", function() { ",
+              "     pm.expect(apiUtility.verifyResponse(API.ResponseBody, pm.response.json())).to.be.true;",
+              "});",
+              "// --- END TEST VERIFICATIONS ---",
+              "console.log(\"--------------------------------------------------------------------------------------\");"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "{{gAuthHeaderKey}}",
+            "value": "{{gAuthHeaderValue}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{{gRequestBody}}"
+        },
+        "url": {
+          "raw": "{{gUrl}}",
+          "host": "{{gUrl}}"
+        }
+      }
+    },
+    {
+      "name": "/api/commands/StudentAccounts/CreditCardType/Get",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "",
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let apiId = \"4f4a6601-1f2f-436b-a963-beb306e28e42\";",
+              "let reqIndex = pm.globals.get(\"gIndex\");",
+              "let API = pm.globals.get(\"gApis\")[apiId];",
+              "if (API === undefined || API.Index !== reqIndex) {",
+              "    console.log(\"ERROR - API not found for the specified apiId, \" + apiId);",
+              "    pm.globals.set(\"gReqApi\", null);",
+              "} else {",
+              "    pm.globals.set(\"gReqApi\", API);",
+              "    pm.globals.set(\"gIndex\", Number(pm.globals.get(\"gIndex\")) + 1);",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Make authorization header",
+              "var hdr = apiUtility.makeAuthorization(null, null, null,  pm.environment.get(\"envApiKey\"), ",
+              "                                           pm.environment.get(\"envAuthUser\"), pm.environment.get(\"envAuthPassword\"));",
+              "pm.globals.set(\"gAuthHeaderKey\", hdr.key);",
+              "pm.globals.set(\"gAuthHeaderValue\", hdr.value);",
+              "//console.log(pm.globals.get(\"gAuthHeaderKey\"));",
+              "//console.log(pm.globals.get(\"gAuthHeaderValue\"));",
+              "",
+              "// Make request body by combining chained properties and data file request body",
+              "if (API !== undefined) {",
+              "    var request = { };",
+              "    apiUtility.setChainProps(API.Chain, request);",
+              "    var req = apiUtility.mergeRequestBody(request, API.RequestBody);",
+              "    pm.globals.set(\"gRequestBody\", JSON.stringify(req));",
+              "    //console.log(pm.globals.get(\"gRequestBody\"));",
+              "}",
+              "",
+              "// Make URL",
+              "if(API !== undefined) {",
+              "    pm.globals.set(\"gUrl\", apiUtility.makeUrl(pm.environment.get(\"envWebScheme\"), pm.environment.get(\"envWebHost\"), API.RequestUrl));",
+              "} else {",
+              "    pm.globals.set(\"gUrl\", \"http://127.0.0.1\");",
+              "}",
+              "//console.log(pm.globals.get(\"gUrl\"));",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let API = pm.globals.get(\"gReqApi\");",
+              "if (API === null) {",
+              "    postman.setNextRequest(null);",
+              "    pm.test(\"API not found for the Request ID, using fallback URL and ending the test\", function() { pm.expect.fail() });",
+              "    return;",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Save properties for chaining, ignore exceptions because the test will fail later anyways",
+              "try {",
+              "   var rb = pm.response.json();",
+              "   if (API.ChainSource.length > 0) {",
+              "      let str = API.RequestId + \".response\";",
+              "      apiUtility.globalStoreWrite(str, rb);",
+              "   }",
+              "} catch(e) { console.log(\"Exception was raised during chainging, Msg -\" + e); }",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/",
+              "",
+              "// --- TEST VERIFICATIONS ---",
+              "// --- Add your custom tests in this block ---",
+              "pm.test(\"Verify response status is \" + API.ResponseStatus, function() { ",
+              "     pm.expect(pm.response.code).to.equal(API.ResponseStatus);",
+              "});",
+              "pm.test(\"Verify response time is less than \" + API.ResponseTimeMs, function() { ",
+              "     pm.expect(pm.response.responseTime).to.be.below(API.ResponseTimeMs);",
+              "});",
+              "pm.test(\"Verify response body matches expected response \", function() { ",
+              "     pm.expect(apiUtility.verifyResponse(API.ResponseBody, pm.response.json())).to.be.true;",
+              "});",
+              "// --- END TEST VERIFICATIONS ---",
+              "console.log(\"--------------------------------------------------------------------------------------\");"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "{{gAuthHeaderKey}}",
+            "value": "{{gAuthHeaderValue}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{{gRequestBody}}"
+        },
+        "url": {
+          "raw": "{{gUrl}}",
+          "host": "{{gUrl}}"
+        }
+      }
+    },
+    {
+      "name": "/api/commands/StudentAccounts/CreditCardType/Delete",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "",
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let apiId = \"edba7958-9642-4a6f-866d-0e3e5c94741e\";",
+              "let reqIndex = pm.globals.get(\"gIndex\");",
+              "let API = pm.globals.get(\"gApis\")[apiId];",
+              "if (API === undefined || API.Index !== reqIndex) {",
+              "    console.log(\"ERROR - API not found for the specified apiId, \" + apiId);",
+              "    pm.globals.set(\"gReqApi\", null);",
+              "} else {",
+              "    pm.globals.set(\"gReqApi\", API);",
+              "    pm.globals.set(\"gIndex\", Number(pm.globals.get(\"gIndex\")) + 1);",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Make authorization header",
+              "var hdr = apiUtility.makeAuthorization(null, null, null,  pm.environment.get(\"envApiKey\"), ",
+              "                                           pm.environment.get(\"envAuthUser\"), pm.environment.get(\"envAuthPassword\"));",
+              "pm.globals.set(\"gAuthHeaderKey\", hdr.key);",
+              "pm.globals.set(\"gAuthHeaderValue\", hdr.value);",
+              "//console.log(pm.globals.get(\"gAuthHeaderKey\"));",
+              "//console.log(pm.globals.get(\"gAuthHeaderValue\"));",
+              "",
+              "// Make request body by combining chained properties and data file request body",
+              "if (API !== undefined) {",
+              "    var request = { };",
+              "    apiUtility.setChainProps(API.Chain, request);",
+              "    var req = apiUtility.mergeRequestBody(request, API.RequestBody);",
+              "    pm.globals.set(\"gRequestBody\", JSON.stringify(req));",
+              "    //console.log(pm.globals.get(\"gRequestBody\"));",
+              "}",
+              "",
+              "// Make URL",
+              "if(API !== undefined) {",
+              "    pm.globals.set(\"gUrl\", apiUtility.makeUrl(pm.environment.get(\"envWebScheme\"), pm.environment.get(\"envWebHost\"), API.RequestUrl));",
+              "} else {",
+              "    pm.globals.set(\"gUrl\", \"http://127.0.0.1\");",
+              "}",
+              "//console.log(pm.globals.get(\"gUrl\"));",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "/********************DO NOT MODIFY THIS CODE********************/",
+              "// Load API utility code",
+              "eval(postman.getGlobalVariable(\"gApiUtility\"));",
+              "",
+              "// Get API settings",
+              "let API = pm.globals.get(\"gReqApi\");",
+              "if (API === null) {",
+              "    postman.setNextRequest(null);",
+              "    pm.test(\"API not found for the Request ID, using fallback URL and ending the test\", function() { pm.expect.fail() });",
+              "    return;",
+              "}",
+              "//console.log(API);",
+              "",
+              "// Save properties for chaining, ignore exceptions because the test will fail later anyways",
+              "try {",
+              "   var rb = pm.response.json();",
+              "   if (API.ChainSource.length > 0) {",
+              "      let str = API.RequestId + \".response\";",
+              "      apiUtility.globalStoreWrite(str, rb);",
+              "   }",
+              "} catch(e) { console.log(\"Exception was raised during chainging, Msg -\" + e); }",
+              "/*****************END DO NOT MODIFY THIS CODE*******************/",
+              "",
+              "// --- TEST VERIFICATIONS ---",
+              "// --- Add your custom tests in this block ---",
+              "pm.test(\"Verify response status is \" + API.ResponseStatus, function() { ",
+              "     pm.expect(pm.response.code).to.equal(API.ResponseStatus);",
+              "});",
+              "pm.test(\"Verify response time is less than \" + API.ResponseTimeMs, function() { ",
+              "     pm.expect(pm.response.responseTime).to.be.below(API.ResponseTimeMs);",
+              "});",
+              "pm.test(\"Verify response body matches expected response \", function() { ",
+              "     pm.expect(apiUtility.verifyResponse(API.ResponseBody, pm.response.json())).to.be.true;",
+              "});",
+              "// --- END TEST VERIFICATIONS ---",
+              "console.log(\"--------------------------------------------------------------------------------------\");"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "{{gAuthHeaderKey}}",
+            "value": "{{gAuthHeaderValue}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{{gRequestBody}}"
+        },
+        "url": {
+          "raw": "{{gUrl}}",
+          "host": "{{gUrl}}"
+        }
+      }
+    }
+  ]
+}

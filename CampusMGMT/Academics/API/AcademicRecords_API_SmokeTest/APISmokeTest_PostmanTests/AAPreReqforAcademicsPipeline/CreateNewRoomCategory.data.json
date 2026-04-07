@@ -1,0 +1,66 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "Create New Room Category",
+    "Globals": {
+		"RoomCatName": "RoomCatName",
+		"RoomCatCode": "RoomCatC"
+	},
+    "Apis": [
+      {
+        "RequestId": "3cea0179-8b9e-4564-a19c-943254b3c04d",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/RoomCategories/CampusNexus.GetRoomCategoryList()?$filter=RoomCategory/Code eq '{{gRoomCatCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {}
+      },
+      {
+        "RequestId": "ba7513b8-7eb4-49c5-93ca-dcaf3aa8035f",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "99bff847-f20c-4426-9ddf-1fbb18a92108",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/RoomCategory/Create",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {}
+      },
+      {
+        "RequestId": "439aeb89-a181-4fd5-b4cd-b686ffe0c6ba",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/RoomCategory/SaveNew",
+        "RequestBody": {
+          "payload": {
+            "code": "{{gRoomCatCode}}",
+            "name": "{{gRoomCatName}}",
+            "note": "{{gRoomCatName}}",
+            "maximumCapacity": 5,
+            "normalCapacity": 1
+          }
+        },
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {}
+      },
+      {
+        "RequestId": "e7555082-4042-45cb-af7b-429502b9eec5",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/RoomCategories/CampusNexus.GetRoomCategoryList()?$expand=RoomCategory,RoomCategoryCampusList,RoomCategoryHousingFeatureList&$filter = Id eq {{gRoomCategoryId}}",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      }
+    ]
+  }
+]

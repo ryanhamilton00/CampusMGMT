@@ -1,0 +1,114 @@
+[{
+	"Type": "AdvancedDataFile",
+	"Version": "2.0",
+	"TestDescription": "This API will create a SMS Service Provider (Config-CM-SMS Service Providers)",
+	"Globals": {
+		"Name": "SMSName1",
+		"Code": "SMSCode1",
+		"UpdatedName": "SMSNameUpdate1"
+	},
+	"Apis": [{
+			"RequestId": "00000000-0000-0000-0000-000000000000",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000001",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Crm/SmsServiceProvider/Create",
+			"RequestBody": "{}",
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {
+				"payload": {}
+			}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000002",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Crm/SmsServiceProvider/SaveNew",
+			"RequestBody": {
+				"payload": {
+					"code": "{{gCode}}",
+					"name": "{{gName}}",
+					"domainName": "domainName",
+					"maximumMessageLength": "10"
+				}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000003",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Crm/SmsServiceProvider/Get",
+			"RequestBody": {
+				"payload": {}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000004",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Crm/SmsServiceProvider/Save",
+			"RequestBody": {
+				"payload": {
+					"name": "{{gUpdatedName}}"
+				}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {
+				"payload": {
+					"data": {
+						"name": "SMSNameUpdate1"
+					}
+				}
+			}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000005",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Crm/SmsServiceProvider/SaveNew",
+			"RequestBody": {
+				"payload": {
+					"code": null,
+					"name": null,
+					"domainName": null
+				}
+			},
+			"ResponseStatus": 400,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {
+				"payload": null,
+				"notifications": [{
+					"message": "The Code field is required."
+				}, {
+					"message": "The DomainName field is required."
+				}, {
+					"message": "The Name field is required."
+				}]
+			}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000006",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Crm/SmsServiceProvider/Delete",
+			"RequestBody": {},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {
+				"payload": {
+					"deleted": true
+				}
+			}
+		}
+	]
+}]

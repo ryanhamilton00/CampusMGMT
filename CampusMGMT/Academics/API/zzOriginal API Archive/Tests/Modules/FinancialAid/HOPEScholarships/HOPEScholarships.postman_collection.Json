@@ -1,0 +1,699 @@
+{
+	"info": {
+		"_postman_id": "6166082d-5da3-4c13-baec-cabad4b85cbc",
+		"name": "HOPEScholarships",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/api/commands/FinancialAid/HopeConfiguration/getHopeConfiguration - post",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "b9825063-53df-4df4-9e50-51251bc58905",
+						"exec": [
+							"// If environment auth variable is set, then create auth header",
+							"if (pm.environment.has('envAuthUser') && pm.environment.has('envAuthPassword'))",
+							"{",
+							"    pm.globals.set('gAuthorizationValue', 'Basic ' + btoa(pm.environment.get('envAuthUser') + ':' + pm.environment.get('envAuthPassword')));",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "e4902118-8391-4d36-8314-67d31a751cbe",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gCmcUtility\"));",
+							"",
+							"// Set the fields of the expected response object, this is used to verify the response body",
+							"var expectedResponse = ",
+							"{",
+							"  \"payload\": {",
+							"    \"data\": {",
+							"      \"campusMapping\": [",
+							"        {",
+							"          \"stateReportCampusInformationID\": 67,",
+							"          \"stateReportCampusFileCode\": \"234\",",
+							"          \"stateReportCampusCode\": \"12\",",
+							"          \"campusID\": 10,",
+							"          \"campusCode\": \"BMC\",",
+							"          \"campusName\": \"Bangalore Medical College\",",
+							"          \"defaultFilePath\": \"\\\\\\\\cltqafe16\\\\faa\\\\Portal_C2000_152\\\\CMC\"",
+							"        },",
+							"        {",
+							"          \"stateReportCampusInformationID\": 68,",
+							"          \"stateReportCampusFileCode\": \"\",",
+							"          \"stateReportCampusCode\": \"\",",
+							"          \"campusID\": 11,",
+							"          \"campusCode\": \"MMC\",",
+							"          \"campusName\": \"Mysore Medical Colleges\",",
+							"          \"defaultFilePath\": \"\"",
+							"        }",
+							"      ],",
+							"      \"fundSourceMapping\": [",
+							"        {",
+							"          \"stateReportConfigurationSettingID\": 148,",
+							"          \"configurationField\": \"FUND\",",
+							"          \"stateReportFundSourceCode\": \"HOPE\",",
+							"          \"stateReportFundSourceName\": \"Hope Scholarship\",",
+							"          \"minimumGPA\": 3.550000,",
+							"          \"fundSourceType\": null,",
+							"          \"mappedFundSources\": [",
+							"            {",
+							"              \"id\": 97,",
+							"              \"code\": \"PCOR\",",
+							"              \"name\": \"AMERICORPS SCHOLARSHIP\"",
+							"            },",
+							"            {",
+							"              \"id\": 632,",
+							"              \"code\": \"CCBS\",",
+							"              \"name\": \"COLANGELO COLLEGE OF BUSINESS SCHOL\"",
+							"            },",
+							"            {",
+							"              \"id\": 150,",
+							"              \"code\": \"PTCH\",",
+							"              \"name\": \"CHANDLER REGIONAL TUITION SCHOLARSHIP\"",
+							"            },",
+							"            {",
+							"              \"id\": 101,",
+							"              \"code\": \"PCSA\",",
+							"              \"name\": \"CASA GRAND HOSPITAL TUITION SCHOLARSHIP\"",
+							"            },",
+							"            {",
+							"              \"id\": 127,",
+							"              \"code\": \"PNCR\",",
+							"              \"name\": \"CARONDELET TUTION SCHOLARSHIP\"",
+							"            },",
+							"            {",
+							"              \"id\": 93,",
+							"              \"code\": \"PBAN\",",
+							"              \"name\": \"BANNER TUITION SCHOLARSHIP\"",
+							"            },",
+							"            {",
+							"              \"id\": 34,",
+							"              \"code\": \"AZ SLEAP\",",
+							"              \"name\": \"AZ SUPPLEMENTAL LEVERAGING GRANT\"",
+							"            },",
+							"            {",
+							"              \"id\": 446,",
+							"              \"code\": \"AZ MSSE\",",
+							"              \"name\": \"AZ MATH,SCIENCE & SPECIAL EDUCATION\"",
+							"            },",
+							"            {",
+							"              \"id\": 18,",
+							"              \"code\": \"AZEGS\",",
+							"              \"name\": \"AZ EARLY GRADUATION SCHOLARSHIP PROGRAM\"",
+							"            },",
+							"            {",
+							"              \"id\": 421,",
+							"              \"code\": \"AZNSG\",",
+							"              \"name\": \"AZ CACS NON-STEM GRANT\"",
+							"            },",
+							"            {",
+							"              \"id\": 696,",
+							"              \"code\": \"OALEV\",",
+							"              \"name\": \"ASSISTANCE LEAGUE OF EAST VALLEY\"",
+							"            },",
+							"            {",
+							"              \"id\": 85,",
+							"              \"code\": \"PABR\",",
+							"              \"name\": \"ABRAZO HEALTH TUITION SCHOLARSHIP\"",
+							"            }",
+							"          ]",
+							"        },",
+							"        {",
+							"          \"stateReportConfigurationSettingID\": 160,",
+							"          \"configurationField\": \"FUND\",",
+							"          \"stateReportFundSourceCode\": \"ZELL\",",
+							"          \"stateReportFundSourceName\": \"Zell Miller Scholarship\",",
+							"          \"minimumGPA\": 3.000000,",
+							"          \"fundSourceType\": null,",
+							"          \"mappedFundSources\": [",
+							"            {",
+							"              \"id\": 85,",
+							"              \"code\": \"PABR\",",
+							"              \"name\": \"ABRAZO HEALTH TUITION SCHOLARSHIP\"",
+							"            },",
+							"            {",
+							"              \"id\": 421,",
+							"              \"code\": \"AZNSG\",",
+							"              \"name\": \"AZ CACS NON-STEM GRANT\"",
+							"            },",
+							"            {",
+							"              \"id\": 696,",
+							"              \"code\": \"OALEV\",",
+							"              \"name\": \"ASSISTANCE LEAGUE OF EAST VALLEY\"",
+							"            },",
+							"            {",
+							"              \"id\": 97,",
+							"              \"code\": \"PCOR\",",
+							"              \"name\": \"AMERICORPS SCHOLARSHIP\"",
+							"            },",
+							"            {",
+							"              \"id\": 446,",
+							"              \"code\": \"AZ MSSE\",",
+							"              \"name\": \"AZ MATH,SCIENCE & SPECIAL EDUCATION\"",
+							"            }",
+							"          ]",
+							"        }",
+							"      ],",
+							"      \"awardYear\": \"2017-18\",",
+							"      \"termMapping\": [",
+							"        {",
+							"          \"stateReportConfigurationSettingID\": 149,",
+							"          \"configurationField\": \"TERM\",",
+							"          \"stateReportTermCode\": \"SUMMER\",",
+							"          \"stateReportTermName\": \"SUMMER\",",
+							"          \"mappedTerms\": []",
+							"        },",
+							"        {",
+							"          \"stateReportConfigurationSettingID\": 150,",
+							"          \"configurationField\": \"TERM\",",
+							"          \"stateReportTermCode\": \"FALL\",",
+							"          \"stateReportTermName\": \"FALL\",",
+							"          \"mappedTerms\": []",
+							"        },",
+							"        {",
+							"          \"stateReportConfigurationSettingID\": 151,",
+							"          \"configurationField\": \"TERM\",",
+							"          \"stateReportTermCode\": \"WINTER\",",
+							"          \"stateReportTermName\": \"WINTER\",",
+							"          \"mappedTerms\": []",
+							"        },",
+							"        {",
+							"          \"stateReportConfigurationSettingID\": 152,",
+							"          \"configurationField\": \"TERM\",",
+							"          \"stateReportTermCode\": \"SPRING\",",
+							"          \"stateReportTermName\": \"SPRING\",",
+							"          \"mappedTerms\": []",
+							"        }",
+							"      ],",
+							"      \"benchmarkMapping\": [",
+							"        {",
+							"          \"stateReportBenchmarkMappingID\": 6,",
+							"          \"stateReportBenchmarkMappingName\": \"Tracks18999\",",
+							"          \"mappingValue\": \"Spring\",",
+							"          \"stateReportConfigurationSettingID\": 153,",
+							"          \"stateReportConfigurationSettingCode\": \"TERMS\",",
+							"          \"stateReportConfigurationSettingName\": \"Selected Terms\"",
+							"        },",
+							"        {",
+							"          \"stateReportBenchmarkMappingID\": 10,",
+							"          \"stateReportBenchmarkMappingName\": \"Tracks18999999\",",
+							"          \"mappingValue\": \"45.54\",",
+							"          \"stateReportConfigurationSettingID\": 154,",
+							"          \"stateReportConfigurationSettingCode\": \"ECREDIT\",",
+							"          \"stateReportConfigurationSettingName\": \"Earned Credit Hours\"",
+							"        }",
+							"      ],",
+							"      \"tierMapping\": [",
+							"        {",
+							"          \"id\": 10,",
+							"          \"creditType\": \"A\",",
+							"          \"highCreditHours\": 191.0000,",
+							"          \"lowCreditHours\": 189.0000,",
+							"          \"name\": \"Tracks189999\",",
+							"          \"stateReportConfigurationSettingId\": 159,",
+							"          \"stateReportConfigurationSetting\": null",
+							"        },",
+							"        {",
+							"          \"id\": 12,",
+							"          \"creditType\": \"E\",",
+							"          \"highCreditHours\": 199.0000,",
+							"          \"lowCreditHours\": 189.0000,",
+							"          \"name\": \"Tracks1899999\",",
+							"          \"stateReportConfigurationSettingId\": 159,",
+							"          \"stateReportConfigurationSetting\": null",
+							"        },",
+							"        {",
+							"          \"id\": 14,",
+							"          \"creditType\": \"A\",",
+							"          \"highCreditHours\": 18999.0000,",
+							"          \"lowCreditHours\": 1899.0000,",
+							"          \"name\": \"Tracks1899\",",
+							"          \"stateReportConfigurationSettingId\": 159,",
+							"          \"stateReportConfigurationSetting\": null",
+							"        }",
+							"      ],",
+							"      \"validationMessages\": []",
+							"    }",
+							"  },",
+							"  \"notifications\": [],",
+							"  \"hasError\": false,",
+							"  \"hasFault\": false,",
+							"  \"hasWarning\": false,",
+							"  \"hasValidationError\": false,",
+							"  \"hasValidationWarning\": false,",
+							"  \"hasValidationInformation\": false,",
+							"  \"hasSecurityError\": false",
+							"};",
+							"",
+							"// Tests",
+							"pm.test(\"Verify response status is OK\", function() {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"pm.test(\"Verify response time is below 200\", function() {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"pm.test(\"Verify response body matches expected response\", function() {",
+							"    pm.expect(cmcUtility.verifyResponse(expectedResponse,pm.response.json())).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{gAuthorizationValue}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n   \"payload\":{  \r\n      \"AwardYear\":\"\",\r\n      \"IsGetTermMappingOnly\":false\r\n   }\r\n}"
+				},
+				"url": {
+					"raw": "https://{{envWebHost}}/api/commands/FinancialAid/HopeConfiguration/getHopeConfiguration",
+					"protocol": "https",
+					"host": [
+						"{{envWebHost}}"
+					],
+					"path": [
+						"api",
+						"commands",
+						"FinancialAid",
+						"HopeConfiguration",
+						"getHopeConfiguration"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/api/commands/FinancialAid/HopeConfiguration/saveHopeConfiguration - post",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "b8f9bbd3-9dfd-469b-8213-f0ce08464914",
+						"exec": [
+							"// If environment auth variable is set, then create auth header",
+							"if (pm.environment.has('envAuthUser') && pm.environment.has('envAuthPassword'))",
+							"{",
+							"    pm.globals.set('gAuthorizationValue', 'Basic ' + btoa(pm.environment.get('envAuthUser') + ':' + pm.environment.get('envAuthPassword')));",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "727572a9-251f-4f0f-baae-cd98c9aa43e4",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gCmcUtility\"));",
+							"",
+							"// Set the fields of the expected response object, this is used to verify the response body",
+							"var expectedResponse = ",
+							"{",
+							"  \"payload\": {",
+							"    \"data\": {",
+							"      \"validationMessages\": []",
+							"    }",
+							"  },",
+							"  \"notifications\": [],",
+							"  \"hasError\": false,",
+							"  \"hasFault\": false,",
+							"  \"hasWarning\": false,",
+							"  \"hasValidationError\": false,",
+							"  \"hasValidationWarning\": false,",
+							"  \"hasValidationInformation\": false,",
+							"  \"hasSecurityError\": false",
+							"};",
+							"",
+							"// Tests",
+							"pm.test(\"Verify response status is OK\", function() {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"pm.test(\"Verify response time is below 200\", function() {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"pm.test(\"Verify response body matches expected response\", function() {",
+							"    pm.expect(cmcUtility.verifyResponse(expectedResponse,pm.response.json())).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{gAuthorizationValue}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n   \"payload\":{  \r\n      \"CampusMapping\":[  \r\n         {  \r\n            \"stateReportCampusInformationID\":67,\r\n            \"stateReportCampusFileCode\":\"234\",\r\n            \"stateReportCampusCode\":\"12\",\r\n            \"campusID\":10,\r\n            \"campusCode\":\"BMC\",\r\n            \"campusName\":\"Bangalore Medical College\",\r\n            \"defaultFilePath\":\"\\\\\\\\cltqafe16\\\\faa\\\\Portal_C2000_152\\\\CMC\"\r\n         },\r\n         {  \r\n            \"stateReportCampusInformationID\":68,\r\n            \"stateReportCampusFileCode\":\"\",\r\n            \"stateReportCampusCode\":\"\",\r\n            \"campusID\":11,\r\n            \"campusCode\":\"MMC\",\r\n            \"campusName\":\"Mysore Medical Colleges\",\r\n            \"defaultFilePath\":\"\"\r\n         }\r\n      ],\r\n      \"FundSourceMapping\":[  \r\n         {  \r\n            \"stateReportConfigurationSettingID\":148,\r\n            \"configurationField\":\"FUND\",\r\n            \"stateReportFundSourceCode\":\"HOPE\",\r\n            \"stateReportFundSourceName\":\"Hope Scholarship\",\r\n            \"minimumGPA\":3.55,\r\n            \"fundSourceType\":null,\r\n            \"mappedFundSources\":[  \r\n               {  \r\n                  \"id\":97,\r\n                  \"code\":\"PCOR\",\r\n                  \"name\":\"AMERICORPS SCHOLARSHIP\"\r\n               },\r\n               {  \r\n                  \"id\":632,\r\n                  \"code\":\"CCBS\",\r\n                  \"name\":\"COLANGELO COLLEGE OF BUSINESS SCHOL\"\r\n               },\r\n               {  \r\n                  \"id\":150,\r\n                  \"code\":\"PTCH\",\r\n                  \"name\":\"CHANDLER REGIONAL TUITION SCHOLARSHIP\"\r\n               },\r\n               {  \r\n                  \"id\":101,\r\n                  \"code\":\"PCSA\",\r\n                  \"name\":\"CASA GRAND HOSPITAL TUITION SCHOLARSHIP\"\r\n               },\r\n               {  \r\n                  \"id\":127,\r\n                  \"code\":\"PNCR\",\r\n                  \"name\":\"CARONDELET TUTION SCHOLARSHIP\"\r\n               },\r\n               {  \r\n                  \"id\":93,\r\n                  \"code\":\"PBAN\",\r\n                  \"name\":\"BANNER TUITION SCHOLARSHIP\"\r\n               },\r\n               {  \r\n                  \"id\":34,\r\n                  \"code\":\"AZ SLEAP\",\r\n                  \"name\":\"AZ SUPPLEMENTAL LEVERAGING GRANT\"\r\n               },\r\n               {  \r\n                  \"id\":446,\r\n                  \"code\":\"AZ MSSE\",\r\n                  \"name\":\"AZ MATH,SCIENCE & SPECIAL EDUCATION\"\r\n               },\r\n               {  \r\n                  \"id\":18,\r\n                  \"code\":\"AZEGS\",\r\n                  \"name\":\"AZ EARLY GRADUATION SCHOLARSHIP PROGRAM\"\r\n               },\r\n               {  \r\n                  \"id\":421,\r\n                  \"code\":\"AZNSG\",\r\n                  \"name\":\"AZ CACS NON-STEM GRANT\"\r\n               },\r\n               {  \r\n                  \"id\":696,\r\n                  \"code\":\"OALEV\",\r\n                  \"name\":\"ASSISTANCE LEAGUE OF EAST VALLEY\"\r\n               },\r\n               {  \r\n                  \"id\":85,\r\n                  \"code\":\"PABR\",\r\n                  \"name\":\"ABRAZO HEALTH TUITION SCHOLARSHIP\"\r\n               }\r\n            ]\r\n         },\r\n         {  \r\n            \"stateReportConfigurationSettingID\":160,\r\n            \"configurationField\":\"FUND\",\r\n            \"stateReportFundSourceCode\":\"ZELL\",\r\n            \"stateReportFundSourceName\":\"Zell Miller Scholarship\",\r\n            \"minimumGPA\":3,\r\n            \"fundSourceType\":null,\r\n            \"mappedFundSources\":[  \r\n               {  \r\n                  \"id\":85,\r\n                  \"code\":\"PABR\",\r\n                  \"name\":\"ABRAZO HEALTH TUITION SCHOLARSHIP\"\r\n               },\r\n               {  \r\n                  \"id\":421,\r\n                  \"code\":\"AZNSG\",\r\n                  \"name\":\"AZ CACS NON-STEM GRANT\"\r\n               },\r\n               {  \r\n                  \"id\":696,\r\n                  \"code\":\"OALEV\",\r\n                  \"name\":\"ASSISTANCE LEAGUE OF EAST VALLEY\"\r\n               },\r\n               {  \r\n                  \"id\":97,\r\n                  \"code\":\"PCOR\",\r\n                  \"name\":\"AMERICORPS SCHOLARSHIP\"\r\n               },\r\n               {  \r\n                  \"id\":446,\r\n                  \"code\":\"AZ MSSE\",\r\n                  \"name\":\"AZ MATH,SCIENCE & SPECIAL EDUCATION\"\r\n               }\r\n            ]\r\n         }\r\n      ],\r\n      \"AwardYear\":\"2017-18\",\r\n      \"TermMapping\":[  \r\n         {  \r\n            \"stateReportConfigurationSettingID\":149,\r\n            \"configurationField\":\"TERM\",\r\n            \"stateReportTermCode\":\"SUMMER\",\r\n            \"stateReportTermName\":\"SUMMER\",\r\n            \"mappedTerms\":[  \r\n\r\n            ]\r\n         },\r\n         {  \r\n            \"stateReportConfigurationSettingID\":150,\r\n            \"configurationField\":\"TERM\",\r\n            \"stateReportTermCode\":\"FALL\",\r\n            \"stateReportTermName\":\"FALL\",\r\n            \"mappedTerms\":[  \r\n\r\n            ]\r\n         },\r\n         {  \r\n            \"stateReportConfigurationSettingID\":151,\r\n            \"configurationField\":\"TERM\",\r\n            \"stateReportTermCode\":\"WINTER\",\r\n            \"stateReportTermName\":\"WINTER\",\r\n            \"mappedTerms\":[  \r\n\r\n            ]\r\n         },\r\n         {  \r\n            \"stateReportConfigurationSettingID\":152,\r\n            \"configurationField\":\"TERM\",\r\n            \"stateReportTermCode\":\"SPRING\",\r\n            \"stateReportTermName\":\"SPRING\",\r\n            \"mappedTerms\":[  \r\n\r\n            ]\r\n         }\r\n      ],\r\n      \"BenchmarkMapping\":[  \r\n         {  \r\n            \"stateReportBenchmarkMappingID\":6,\r\n            \"stateReportBenchmarkMappingName\":\"Tracks18999\",\r\n            \"mappingValue\":\"Spring\",\r\n            \"stateReportConfigurationSettingID\":153,\r\n            \"stateReportConfigurationSettingCode\":\"TERMS\",\r\n            \"stateReportConfigurationSettingName\":\"Selected Terms\"\r\n         },\r\n         {  \r\n            \"stateReportBenchmarkMappingID\":10,\r\n            \"stateReportBenchmarkMappingName\":\"Tracks18999999\",\r\n            \"mappingValue\":\"45.54\",\r\n            \"stateReportConfigurationSettingID\":154,\r\n            \"stateReportConfigurationSettingCode\":\"ECREDIT\",\r\n            \"stateReportConfigurationSettingName\":\"Earned Credit Hours\"\r\n         }\r\n      ],\r\n      \"TierMapping\":[  \r\n         {  \r\n            \"id\":10,\r\n            \"creditType\":\"A\",\r\n            \"highCreditHours\":191,\r\n            \"lowCreditHours\":189,\r\n            \"name\":\"Tracks189999\",\r\n            \"stateReportConfigurationSettingId\":159,\r\n            \"stateReportConfigurationSetting\":null\r\n         },\r\n         {  \r\n            \"id\":12,\r\n            \"creditType\":\"E\",\r\n            \"highCreditHours\":199,\r\n            \"lowCreditHours\":189,\r\n            \"name\":\"Tracks1899999\",\r\n            \"stateReportConfigurationSettingId\":159,\r\n            \"stateReportConfigurationSetting\":null\r\n         },\r\n         {  \r\n            \"id\":14,\r\n            \"creditType\":\"A\",\r\n            \"highCreditHours\":18999,\r\n            \"lowCreditHours\":1899,\r\n            \"name\":\"Tracks1899\",\r\n            \"stateReportConfigurationSettingId\":159,\r\n            \"stateReportConfigurationSetting\":null\r\n         }\r\n      ]\r\n   }\r\n}"
+				},
+				"url": {
+					"raw": "https://{{envWebHost}}/api/commands/FinancialAid/HopeConfiguration/saveHopeConfiguration",
+					"protocol": "https",
+					"host": [
+						"{{envWebHost}}"
+					],
+					"path": [
+						"api",
+						"commands",
+						"FinancialAid",
+						"HopeConfiguration",
+						"saveHopeConfiguration"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SaveHopeConfiguration - File Code Validation",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "b8f9bbd3-9dfd-469b-8213-f0ce08464914",
+						"exec": [
+							"// If environment auth variable is set, then create auth header",
+							"if (pm.environment.has('envAuthUser') && pm.environment.has('envAuthPassword'))",
+							"{",
+							"    pm.globals.set('gAuthorizationValue', 'Basic ' + btoa(pm.environment.get('envAuthUser') + ':' + pm.environment.get('envAuthPassword')));",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "727572a9-251f-4f0f-baae-cd98c9aa43e4",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gCmcUtility\"));",
+							"",
+							"// Set the fields of the expected response object, this is used to verify the response body",
+							"var expectedResponse = ",
+							"{",
+							"  \"payload\": {",
+							"    \"data\": {",
+							"      \"validationMessages\": [",
+							"        {",
+							"          \"message\": \"File code must be 3 digit.\",",
+							"          \"messageType\": 0",
+							"        }",
+							"      ]",
+							"    }",
+							"  },",
+							"  \"notifications\": [],",
+							"  \"hasError\": false,",
+							"  \"hasFault\": false,",
+							"  \"hasWarning\": false,",
+							"  \"hasValidationError\": false,",
+							"  \"hasValidationWarning\": false,",
+							"  \"hasValidationInformation\": false,",
+							"  \"hasSecurityError\": false",
+							"};",
+							"",
+							"// Tests",
+							"pm.test(\"Verify response status is OK\", function() {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"pm.test(\"Verify response time is below 200\", function() {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"pm.test(\"Verify response body matches expected response\", function() {",
+							"    pm.expect(cmcUtility.verifyResponse(expectedResponse,pm.response.json())).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{gAuthorizationValue}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n   \"payload\":{  \r\n      \"CampusMapping\":[  \r\n         {  \r\n            \"stateReportCampusInformationID\":67,\r\n            \"stateReportCampusFileCode\":\"99\",\r\n            \"stateReportCampusCode\":\"12\",\r\n            \"campusID\":10,\r\n            \"campusCode\":\"BMC\",\r\n            \"campusName\":\"Bangalore Medical College\",\r\n            \"defaultFilePath\":\"\\\\\\\\cltqafe16\\\\faa\\\\Portal_C2000_152\\\\CMC\"\r\n         },\r\n         {  \r\n            \"stateReportCampusInformationID\":68,\r\n            \"stateReportCampusFileCode\":\"\",\r\n            \"stateReportCampusCode\":\"\",\r\n            \"campusID\":11,\r\n            \"campusCode\":\"MMC\",\r\n            \"campusName\":\"Mysore Medical Colleges\",\r\n            \"defaultFilePath\":\"\"\r\n         }\r\n      ],\r\n      \"FundSourceMapping\":[  \r\n         {  \r\n            \"stateReportConfigurationSettingID\":148,\r\n            \"configurationField\":\"FUND\",\r\n            \"stateReportFundSourceCode\":\"HOPE\",\r\n            \"stateReportFundSourceName\":\"Hope Scholarship\",\r\n            \"minimumGPA\":3.55,\r\n            \"fundSourceType\":null,\r\n            \"mappedFundSources\":[  \r\n               {  \r\n                  \"id\":97,\r\n                  \"code\":\"PCOR\",\r\n                  \"name\":\"AMERICORPS SCHOLARSHIP\"\r\n               },\r\n               {  \r\n                  \"id\":632,\r\n                  \"code\":\"CCBS\",\r\n                  \"name\":\"COLANGELO COLLEGE OF BUSINESS SCHOL\"\r\n               },\r\n               {  \r\n                  \"id\":150,\r\n                  \"code\":\"PTCH\",\r\n                  \"name\":\"CHANDLER REGIONAL TUITION SCHOLARSHIP\"\r\n               },\r\n               {  \r\n                  \"id\":101,\r\n                  \"code\":\"PCSA\",\r\n                  \"name\":\"CASA GRAND HOSPITAL TUITION SCHOLARSHIP\"\r\n               },\r\n               {  \r\n                  \"id\":127,\r\n                  \"code\":\"PNCR\",\r\n                  \"name\":\"CARONDELET TUTION SCHOLARSHIP\"\r\n               },\r\n               {  \r\n                  \"id\":93,\r\n                  \"code\":\"PBAN\",\r\n                  \"name\":\"BANNER TUITION SCHOLARSHIP\"\r\n               },\r\n               {  \r\n                  \"id\":34,\r\n                  \"code\":\"AZ SLEAP\",\r\n                  \"name\":\"AZ SUPPLEMENTAL LEVERAGING GRANT\"\r\n               },\r\n               {  \r\n                  \"id\":446,\r\n                  \"code\":\"AZ MSSE\",\r\n                  \"name\":\"AZ MATH,SCIENCE & SPECIAL EDUCATION\"\r\n               },\r\n               {  \r\n                  \"id\":18,\r\n                  \"code\":\"AZEGS\",\r\n                  \"name\":\"AZ EARLY GRADUATION SCHOLARSHIP PROGRAM\"\r\n               },\r\n               {  \r\n                  \"id\":421,\r\n                  \"code\":\"AZNSG\",\r\n                  \"name\":\"AZ CACS NON-STEM GRANT\"\r\n               },\r\n               {  \r\n                  \"id\":696,\r\n                  \"code\":\"OALEV\",\r\n                  \"name\":\"ASSISTANCE LEAGUE OF EAST VALLEY\"\r\n               },\r\n               {  \r\n                  \"id\":85,\r\n                  \"code\":\"PABR\",\r\n                  \"name\":\"ABRAZO HEALTH TUITION SCHOLARSHIP\"\r\n               }\r\n            ]\r\n         },\r\n         {  \r\n            \"stateReportConfigurationSettingID\":160,\r\n            \"configurationField\":\"FUND\",\r\n            \"stateReportFundSourceCode\":\"ZELL\",\r\n            \"stateReportFundSourceName\":\"Zell Miller Scholarship\",\r\n            \"minimumGPA\":3,\r\n            \"fundSourceType\":null,\r\n            \"mappedFundSources\":[  \r\n               {  \r\n                  \"id\":85,\r\n                  \"code\":\"PABR\",\r\n                  \"name\":\"ABRAZO HEALTH TUITION SCHOLARSHIP\"\r\n               },\r\n               {  \r\n                  \"id\":421,\r\n                  \"code\":\"AZNSG\",\r\n                  \"name\":\"AZ CACS NON-STEM GRANT\"\r\n               },\r\n               {  \r\n                  \"id\":696,\r\n                  \"code\":\"OALEV\",\r\n                  \"name\":\"ASSISTANCE LEAGUE OF EAST VALLEY\"\r\n               },\r\n               {  \r\n                  \"id\":97,\r\n                  \"code\":\"PCOR\",\r\n                  \"name\":\"AMERICORPS SCHOLARSHIP\"\r\n               },\r\n               {  \r\n                  \"id\":446,\r\n                  \"code\":\"AZ MSSE\",\r\n                  \"name\":\"AZ MATH,SCIENCE & SPECIAL EDUCATION\"\r\n               }\r\n            ]\r\n         }\r\n      ],\r\n      \"AwardYear\":\"2017-18\",\r\n      \"TermMapping\":[  \r\n         {  \r\n            \"stateReportConfigurationSettingID\":149,\r\n            \"configurationField\":\"TERM\",\r\n            \"stateReportTermCode\":\"SUMMER\",\r\n            \"stateReportTermName\":\"SUMMER\",\r\n            \"mappedTerms\":[  \r\n\r\n            ]\r\n         },\r\n         {  \r\n            \"stateReportConfigurationSettingID\":150,\r\n            \"configurationField\":\"TERM\",\r\n            \"stateReportTermCode\":\"FALL\",\r\n            \"stateReportTermName\":\"FALL\",\r\n            \"mappedTerms\":[  \r\n\r\n            ]\r\n         },\r\n         {  \r\n            \"stateReportConfigurationSettingID\":151,\r\n            \"configurationField\":\"TERM\",\r\n            \"stateReportTermCode\":\"WINTER\",\r\n            \"stateReportTermName\":\"WINTER\",\r\n            \"mappedTerms\":[  \r\n\r\n            ]\r\n         },\r\n         {  \r\n            \"stateReportConfigurationSettingID\":152,\r\n            \"configurationField\":\"TERM\",\r\n            \"stateReportTermCode\":\"SPRING\",\r\n            \"stateReportTermName\":\"SPRING\",\r\n            \"mappedTerms\":[  \r\n\r\n            ]\r\n         }\r\n      ],\r\n      \"BenchmarkMapping\":[  \r\n         {  \r\n            \"stateReportBenchmarkMappingID\":6,\r\n            \"stateReportBenchmarkMappingName\":\"Tracks18999\",\r\n            \"mappingValue\":\"Spring\",\r\n            \"stateReportConfigurationSettingID\":153,\r\n            \"stateReportConfigurationSettingCode\":\"TERMS\",\r\n            \"stateReportConfigurationSettingName\":\"Selected Terms\"\r\n         },\r\n         {  \r\n            \"stateReportBenchmarkMappingID\":10,\r\n            \"stateReportBenchmarkMappingName\":\"Tracks18999999\",\r\n            \"mappingValue\":\"45.54\",\r\n            \"stateReportConfigurationSettingID\":154,\r\n            \"stateReportConfigurationSettingCode\":\"ECREDIT\",\r\n            \"stateReportConfigurationSettingName\":\"Earned Credit Hours\"\r\n         }\r\n      ],\r\n      \"TierMapping\":[  \r\n         {  \r\n            \"id\":10,\r\n            \"creditType\":\"A\",\r\n            \"highCreditHours\":191,\r\n            \"lowCreditHours\":189,\r\n            \"name\":\"Tracks189999\",\r\n            \"stateReportConfigurationSettingId\":159,\r\n            \"stateReportConfigurationSetting\":null\r\n         },\r\n         {  \r\n            \"id\":12,\r\n            \"creditType\":\"E\",\r\n            \"highCreditHours\":199,\r\n            \"lowCreditHours\":189,\r\n            \"name\":\"Tracks1899999\",\r\n            \"stateReportConfigurationSettingId\":159,\r\n            \"stateReportConfigurationSetting\":null\r\n         },\r\n         {  \r\n            \"id\":14,\r\n            \"creditType\":\"A\",\r\n            \"highCreditHours\":18999,\r\n            \"lowCreditHours\":1899,\r\n            \"name\":\"Tracks1899\",\r\n            \"stateReportConfigurationSettingId\":159,\r\n            \"stateReportConfigurationSetting\":null\r\n         }\r\n      ]\r\n   }\r\n}"
+				},
+				"url": {
+					"raw": "https://{{envWebHost}}/api/commands/FinancialAid/HopeConfiguration/saveHopeConfiguration",
+					"protocol": "https",
+					"host": [
+						"{{envWebHost}}"
+					],
+					"path": [
+						"api",
+						"commands",
+						"FinancialAid",
+						"HopeConfiguration",
+						"saveHopeConfiguration"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SaveHopeConfiguration - Campus Code Validation",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "b8f9bbd3-9dfd-469b-8213-f0ce08464914",
+						"exec": [
+							"// If environment auth variable is set, then create auth header",
+							"if (pm.environment.has('envAuthUser') && pm.environment.has('envAuthPassword'))",
+							"{",
+							"    pm.globals.set('gAuthorizationValue', 'Basic ' + btoa(pm.environment.get('envAuthUser') + ':' + pm.environment.get('envAuthPassword')));",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "727572a9-251f-4f0f-baae-cd98c9aa43e4",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gCmcUtility\"));",
+							"",
+							"// Set the fields of the expected response object, this is used to verify the response body",
+							"var expectedResponse = ",
+							"{",
+							"  \"payload\": {",
+							"    \"data\": {",
+							"      \"validationMessages\": [",
+							"        {",
+							"          \"message\": \"Campus code must be 2 digit.\",",
+							"          \"messageType\": 0",
+							"        }",
+							"      ]",
+							"    }",
+							"  },",
+							"  \"notifications\": [],",
+							"  \"hasError\": false,",
+							"  \"hasFault\": false,",
+							"  \"hasWarning\": false,",
+							"  \"hasValidationError\": false,",
+							"  \"hasValidationWarning\": false,",
+							"  \"hasValidationInformation\": false,",
+							"  \"hasSecurityError\": false",
+							"};",
+							"",
+							"// Tests",
+							"pm.test(\"Verify response status is OK\", function() {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"pm.test(\"Verify response time is below 200\", function() {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"pm.test(\"Verify response body matches expected response\", function() {",
+							"    pm.expect(cmcUtility.verifyResponse(expectedResponse,pm.response.json())).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{gAuthorizationValue}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n   \"payload\":{  \r\n      \"CampusMapping\":[  \r\n         {  \r\n            \"stateReportCampusInformationID\":67,\r\n            \"stateReportCampusFileCode\":\"999\",\r\n            \"stateReportCampusCode\":\"9\",\r\n            \"campusID\":10,\r\n            \"campusCode\":\"BMC\",\r\n            \"campusName\":\"Bangalore Medical College\",\r\n            \"defaultFilePath\":\"\\\\\\\\cltqafe16\\\\faa\\\\Portal_C2000_152\\\\CMC\"\r\n         },\r\n         {  \r\n            \"stateReportCampusInformationID\":68,\r\n            \"stateReportCampusFileCode\":\"\",\r\n            \"stateReportCampusCode\":\"\",\r\n            \"campusID\":11,\r\n            \"campusCode\":\"MMC\",\r\n            \"campusName\":\"Mysore Medical Colleges\",\r\n            \"defaultFilePath\":\"\"\r\n         }\r\n      ],\r\n      \"FundSourceMapping\":[  \r\n         {  \r\n            \"stateReportConfigurationSettingID\":148,\r\n            \"configurationField\":\"FUND\",\r\n            \"stateReportFundSourceCode\":\"HOPE\",\r\n            \"stateReportFundSourceName\":\"Hope Scholarship\",\r\n            \"minimumGPA\":3.55,\r\n            \"fundSourceType\":null,\r\n            \"mappedFundSources\":[  \r\n               {  \r\n                  \"id\":97,\r\n                  \"code\":\"PCOR\",\r\n                  \"name\":\"AMERICORPS SCHOLARSHIP\"\r\n               },\r\n               {  \r\n                  \"id\":632,\r\n                  \"code\":\"CCBS\",\r\n                  \"name\":\"COLANGELO COLLEGE OF BUSINESS SCHOL\"\r\n               },\r\n               {  \r\n                  \"id\":150,\r\n                  \"code\":\"PTCH\",\r\n                  \"name\":\"CHANDLER REGIONAL TUITION SCHOLARSHIP\"\r\n               },\r\n               {  \r\n                  \"id\":101,\r\n                  \"code\":\"PCSA\",\r\n                  \"name\":\"CASA GRAND HOSPITAL TUITION SCHOLARSHIP\"\r\n               },\r\n               {  \r\n                  \"id\":127,\r\n                  \"code\":\"PNCR\",\r\n                  \"name\":\"CARONDELET TUTION SCHOLARSHIP\"\r\n               },\r\n               {  \r\n                  \"id\":93,\r\n                  \"code\":\"PBAN\",\r\n                  \"name\":\"BANNER TUITION SCHOLARSHIP\"\r\n               },\r\n               {  \r\n                  \"id\":34,\r\n                  \"code\":\"AZ SLEAP\",\r\n                  \"name\":\"AZ SUPPLEMENTAL LEVERAGING GRANT\"\r\n               },\r\n               {  \r\n                  \"id\":446,\r\n                  \"code\":\"AZ MSSE\",\r\n                  \"name\":\"AZ MATH,SCIENCE & SPECIAL EDUCATION\"\r\n               },\r\n               {  \r\n                  \"id\":18,\r\n                  \"code\":\"AZEGS\",\r\n                  \"name\":\"AZ EARLY GRADUATION SCHOLARSHIP PROGRAM\"\r\n               },\r\n               {  \r\n                  \"id\":421,\r\n                  \"code\":\"AZNSG\",\r\n                  \"name\":\"AZ CACS NON-STEM GRANT\"\r\n               },\r\n               {  \r\n                  \"id\":696,\r\n                  \"code\":\"OALEV\",\r\n                  \"name\":\"ASSISTANCE LEAGUE OF EAST VALLEY\"\r\n               },\r\n               {  \r\n                  \"id\":85,\r\n                  \"code\":\"PABR\",\r\n                  \"name\":\"ABRAZO HEALTH TUITION SCHOLARSHIP\"\r\n               }\r\n            ]\r\n         },\r\n         {  \r\n            \"stateReportConfigurationSettingID\":160,\r\n            \"configurationField\":\"FUND\",\r\n            \"stateReportFundSourceCode\":\"ZELL\",\r\n            \"stateReportFundSourceName\":\"Zell Miller Scholarship\",\r\n            \"minimumGPA\":3,\r\n            \"fundSourceType\":null,\r\n            \"mappedFundSources\":[  \r\n               {  \r\n                  \"id\":85,\r\n                  \"code\":\"PABR\",\r\n                  \"name\":\"ABRAZO HEALTH TUITION SCHOLARSHIP\"\r\n               },\r\n               {  \r\n                  \"id\":421,\r\n                  \"code\":\"AZNSG\",\r\n                  \"name\":\"AZ CACS NON-STEM GRANT\"\r\n               },\r\n               {  \r\n                  \"id\":696,\r\n                  \"code\":\"OALEV\",\r\n                  \"name\":\"ASSISTANCE LEAGUE OF EAST VALLEY\"\r\n               },\r\n               {  \r\n                  \"id\":97,\r\n                  \"code\":\"PCOR\",\r\n                  \"name\":\"AMERICORPS SCHOLARSHIP\"\r\n               },\r\n               {  \r\n                  \"id\":446,\r\n                  \"code\":\"AZ MSSE\",\r\n                  \"name\":\"AZ MATH,SCIENCE & SPECIAL EDUCATION\"\r\n               }\r\n            ]\r\n         }\r\n      ],\r\n      \"AwardYear\":\"2017-18\",\r\n      \"TermMapping\":[  \r\n         {  \r\n            \"stateReportConfigurationSettingID\":149,\r\n            \"configurationField\":\"TERM\",\r\n            \"stateReportTermCode\":\"SUMMER\",\r\n            \"stateReportTermName\":\"SUMMER\",\r\n            \"mappedTerms\":[  \r\n\r\n            ]\r\n         },\r\n         {  \r\n            \"stateReportConfigurationSettingID\":150,\r\n            \"configurationField\":\"TERM\",\r\n            \"stateReportTermCode\":\"FALL\",\r\n            \"stateReportTermName\":\"FALL\",\r\n            \"mappedTerms\":[  \r\n\r\n            ]\r\n         },\r\n         {  \r\n            \"stateReportConfigurationSettingID\":151,\r\n            \"configurationField\":\"TERM\",\r\n            \"stateReportTermCode\":\"WINTER\",\r\n            \"stateReportTermName\":\"WINTER\",\r\n            \"mappedTerms\":[  \r\n\r\n            ]\r\n         },\r\n         {  \r\n            \"stateReportConfigurationSettingID\":152,\r\n            \"configurationField\":\"TERM\",\r\n            \"stateReportTermCode\":\"SPRING\",\r\n            \"stateReportTermName\":\"SPRING\",\r\n            \"mappedTerms\":[  \r\n\r\n            ]\r\n         }\r\n      ],\r\n      \"BenchmarkMapping\":[  \r\n         {  \r\n            \"stateReportBenchmarkMappingID\":6,\r\n            \"stateReportBenchmarkMappingName\":\"Tracks18999\",\r\n            \"mappingValue\":\"Spring\",\r\n            \"stateReportConfigurationSettingID\":153,\r\n            \"stateReportConfigurationSettingCode\":\"TERMS\",\r\n            \"stateReportConfigurationSettingName\":\"Selected Terms\"\r\n         },\r\n         {  \r\n            \"stateReportBenchmarkMappingID\":10,\r\n            \"stateReportBenchmarkMappingName\":\"Tracks18999999\",\r\n            \"mappingValue\":\"45.54\",\r\n            \"stateReportConfigurationSettingID\":154,\r\n            \"stateReportConfigurationSettingCode\":\"ECREDIT\",\r\n            \"stateReportConfigurationSettingName\":\"Earned Credit Hours\"\r\n         }\r\n      ],\r\n      \"TierMapping\":[  \r\n         {  \r\n            \"id\":10,\r\n            \"creditType\":\"A\",\r\n            \"highCreditHours\":191,\r\n            \"lowCreditHours\":189,\r\n            \"name\":\"Tracks189999\",\r\n            \"stateReportConfigurationSettingId\":159,\r\n            \"stateReportConfigurationSetting\":null\r\n         },\r\n         {  \r\n            \"id\":12,\r\n            \"creditType\":\"E\",\r\n            \"highCreditHours\":199,\r\n            \"lowCreditHours\":189,\r\n            \"name\":\"Tracks1899999\",\r\n            \"stateReportConfigurationSettingId\":159,\r\n            \"stateReportConfigurationSetting\":null\r\n         },\r\n         {  \r\n            \"id\":14,\r\n            \"creditType\":\"A\",\r\n            \"highCreditHours\":18999,\r\n            \"lowCreditHours\":1899,\r\n            \"name\":\"Tracks1899\",\r\n            \"stateReportConfigurationSettingId\":159,\r\n            \"stateReportConfigurationSetting\":null\r\n         }\r\n      ]\r\n   }\r\n}"
+				},
+				"url": {
+					"raw": "https://{{envWebHost}}/api/commands/FinancialAid/HopeConfiguration/saveHopeConfiguration",
+					"protocol": "https",
+					"host": [
+						"{{envWebHost}}"
+					],
+					"path": [
+						"api",
+						"commands",
+						"FinancialAid",
+						"HopeConfiguration",
+						"saveHopeConfiguration"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SaveHopeConfiguration - Path Validation",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "b8f9bbd3-9dfd-469b-8213-f0ce08464914",
+						"exec": [
+							"// If environment auth variable is set, then create auth header",
+							"if (pm.environment.has('envAuthUser') && pm.environment.has('envAuthPassword'))",
+							"{",
+							"    pm.globals.set('gAuthorizationValue', 'Basic ' + btoa(pm.environment.get('envAuthUser') + ':' + pm.environment.get('envAuthPassword')));",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "727572a9-251f-4f0f-baae-cd98c9aa43e4",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gCmcUtility\"));",
+							"",
+							"// Set the fields of the expected response object, this is used to verify the response body",
+							"var expectedResponse = ",
+							"{",
+							"  \"payload\": {",
+							"    \"data\": {",
+							"      \"validationMessages\": [",
+							"        {",
+							"          \"message\": \"The export path folder 545454545454545454 does not exist.\",",
+							"          \"messageType\": 0",
+							"        }",
+							"      ]",
+							"    }",
+							"  },",
+							"  \"notifications\": [],",
+							"  \"hasError\": false,",
+							"  \"hasFault\": false,",
+							"  \"hasWarning\": false,",
+							"  \"hasValidationError\": false,",
+							"  \"hasValidationWarning\": false,",
+							"  \"hasValidationInformation\": false,",
+							"  \"hasSecurityError\": false",
+							"};",
+							"",
+							"// Tests",
+							"pm.test(\"Verify response status is OK\", function() {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"pm.test(\"Verify response time is below 200\", function() {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"pm.test(\"Verify response body matches expected response\", function() {",
+							"    pm.expect(cmcUtility.verifyResponse(expectedResponse,pm.response.json())).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{gAuthorizationValue}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{  \r\n   \"payload\":{  \r\n      \"CampusMapping\":[  \r\n         {  \r\n            \"stateReportCampusInformationID\":67,\r\n            \"stateReportCampusFileCode\":\"234\",\r\n            \"stateReportCampusCode\":\"12\",\r\n            \"campusID\":10,\r\n            \"campusCode\":\"BMC\",\r\n            \"campusName\":\"Bangalore Medical College\",\r\n            \"defaultFilePath\":\"545454545454545454\"\r\n         },\r\n         {  \r\n            \"stateReportCampusInformationID\":68,\r\n            \"stateReportCampusFileCode\":\"\",\r\n            \"stateReportCampusCode\":\"\",\r\n            \"campusID\":11,\r\n            \"campusCode\":\"MMC\",\r\n            \"campusName\":\"Mysore Medical Colleges\",\r\n            \"defaultFilePath\":\"\"\r\n         }\r\n      ],\r\n      \"FundSourceMapping\":[  \r\n         {  \r\n            \"stateReportConfigurationSettingID\":148,\r\n            \"configurationField\":\"FUND\",\r\n            \"stateReportFundSourceCode\":\"HOPE\",\r\n            \"stateReportFundSourceName\":\"Hope Scholarship\",\r\n            \"minimumGPA\":3.55,\r\n            \"fundSourceType\":null,\r\n            \"mappedFundSources\":[  \r\n               {  \r\n                  \"id\":97,\r\n                  \"code\":\"PCOR\",\r\n                  \"name\":\"AMERICORPS SCHOLARSHIP\"\r\n               },\r\n               {  \r\n                  \"id\":632,\r\n                  \"code\":\"CCBS\",\r\n                  \"name\":\"COLANGELO COLLEGE OF BUSINESS SCHOL\"\r\n               },\r\n               {  \r\n                  \"id\":150,\r\n                  \"code\":\"PTCH\",\r\n                  \"name\":\"CHANDLER REGIONAL TUITION SCHOLARSHIP\"\r\n               },\r\n               {  \r\n                  \"id\":101,\r\n                  \"code\":\"PCSA\",\r\n                  \"name\":\"CASA GRAND HOSPITAL TUITION SCHOLARSHIP\"\r\n               },\r\n               {  \r\n                  \"id\":127,\r\n                  \"code\":\"PNCR\",\r\n                  \"name\":\"CARONDELET TUTION SCHOLARSHIP\"\r\n               },\r\n               {  \r\n                  \"id\":93,\r\n                  \"code\":\"PBAN\",\r\n                  \"name\":\"BANNER TUITION SCHOLARSHIP\"\r\n               },\r\n               {  \r\n                  \"id\":34,\r\n                  \"code\":\"AZ SLEAP\",\r\n                  \"name\":\"AZ SUPPLEMENTAL LEVERAGING GRANT\"\r\n               },\r\n               {  \r\n                  \"id\":446,\r\n                  \"code\":\"AZ MSSE\",\r\n                  \"name\":\"AZ MATH,SCIENCE & SPECIAL EDUCATION\"\r\n               },\r\n               {  \r\n                  \"id\":18,\r\n                  \"code\":\"AZEGS\",\r\n                  \"name\":\"AZ EARLY GRADUATION SCHOLARSHIP PROGRAM\"\r\n               },\r\n               {  \r\n                  \"id\":421,\r\n                  \"code\":\"AZNSG\",\r\n                  \"name\":\"AZ CACS NON-STEM GRANT\"\r\n               },\r\n               {  \r\n                  \"id\":696,\r\n                  \"code\":\"OALEV\",\r\n                  \"name\":\"ASSISTANCE LEAGUE OF EAST VALLEY\"\r\n               },\r\n               {  \r\n                  \"id\":85,\r\n                  \"code\":\"PABR\",\r\n                  \"name\":\"ABRAZO HEALTH TUITION SCHOLARSHIP\"\r\n               }\r\n            ]\r\n         },\r\n         {  \r\n            \"stateReportConfigurationSettingID\":160,\r\n            \"configurationField\":\"FUND\",\r\n            \"stateReportFundSourceCode\":\"ZELL\",\r\n            \"stateReportFundSourceName\":\"Zell Miller Scholarship\",\r\n            \"minimumGPA\":3,\r\n            \"fundSourceType\":null,\r\n            \"mappedFundSources\":[  \r\n               {  \r\n                  \"id\":85,\r\n                  \"code\":\"PABR\",\r\n                  \"name\":\"ABRAZO HEALTH TUITION SCHOLARSHIP\"\r\n               },\r\n               {  \r\n                  \"id\":421,\r\n                  \"code\":\"AZNSG\",\r\n                  \"name\":\"AZ CACS NON-STEM GRANT\"\r\n               },\r\n               {  \r\n                  \"id\":696,\r\n                  \"code\":\"OALEV\",\r\n                  \"name\":\"ASSISTANCE LEAGUE OF EAST VALLEY\"\r\n               },\r\n               {  \r\n                  \"id\":97,\r\n                  \"code\":\"PCOR\",\r\n                  \"name\":\"AMERICORPS SCHOLARSHIP\"\r\n               },\r\n               {  \r\n                  \"id\":446,\r\n                  \"code\":\"AZ MSSE\",\r\n                  \"name\":\"AZ MATH,SCIENCE & SPECIAL EDUCATION\"\r\n               }\r\n            ]\r\n         }\r\n      ],\r\n      \"AwardYear\":\"2017-18\",\r\n      \"TermMapping\":[  \r\n         {  \r\n            \"stateReportConfigurationSettingID\":149,\r\n            \"configurationField\":\"TERM\",\r\n            \"stateReportTermCode\":\"SUMMER\",\r\n            \"stateReportTermName\":\"SUMMER\",\r\n            \"mappedTerms\":[  \r\n\r\n            ]\r\n         },\r\n         {  \r\n            \"stateReportConfigurationSettingID\":150,\r\n            \"configurationField\":\"TERM\",\r\n            \"stateReportTermCode\":\"FALL\",\r\n            \"stateReportTermName\":\"FALL\",\r\n            \"mappedTerms\":[  \r\n\r\n            ]\r\n         },\r\n         {  \r\n            \"stateReportConfigurationSettingID\":151,\r\n            \"configurationField\":\"TERM\",\r\n            \"stateReportTermCode\":\"WINTER\",\r\n            \"stateReportTermName\":\"WINTER\",\r\n            \"mappedTerms\":[  \r\n\r\n            ]\r\n         },\r\n         {  \r\n            \"stateReportConfigurationSettingID\":152,\r\n            \"configurationField\":\"TERM\",\r\n            \"stateReportTermCode\":\"SPRING\",\r\n            \"stateReportTermName\":\"SPRING\",\r\n            \"mappedTerms\":[  \r\n\r\n            ]\r\n         }\r\n      ],\r\n      \"BenchmarkMapping\":[  \r\n         {  \r\n            \"stateReportBenchmarkMappingID\":6,\r\n            \"stateReportBenchmarkMappingName\":\"Tracks18999\",\r\n            \"mappingValue\":\"Spring\",\r\n            \"stateReportConfigurationSettingID\":153,\r\n            \"stateReportConfigurationSettingCode\":\"TERMS\",\r\n            \"stateReportConfigurationSettingName\":\"Selected Terms\"\r\n         },\r\n         {  \r\n            \"stateReportBenchmarkMappingID\":10,\r\n            \"stateReportBenchmarkMappingName\":\"Tracks18999999\",\r\n            \"mappingValue\":\"45.54\",\r\n            \"stateReportConfigurationSettingID\":154,\r\n            \"stateReportConfigurationSettingCode\":\"ECREDIT\",\r\n            \"stateReportConfigurationSettingName\":\"Earned Credit Hours\"\r\n         }\r\n      ],\r\n      \"TierMapping\":[  \r\n         {  \r\n            \"id\":10,\r\n            \"creditType\":\"A\",\r\n            \"highCreditHours\":191,\r\n            \"lowCreditHours\":189,\r\n            \"name\":\"Tracks189999\",\r\n            \"stateReportConfigurationSettingId\":159,\r\n            \"stateReportConfigurationSetting\":null\r\n         },\r\n         {  \r\n            \"id\":12,\r\n            \"creditType\":\"E\",\r\n            \"highCreditHours\":199,\r\n            \"lowCreditHours\":189,\r\n            \"name\":\"Tracks1899999\",\r\n            \"stateReportConfigurationSettingId\":159,\r\n            \"stateReportConfigurationSetting\":null\r\n         },\r\n         {  \r\n            \"id\":14,\r\n            \"creditType\":\"A\",\r\n            \"highCreditHours\":18999,\r\n            \"lowCreditHours\":1899,\r\n            \"name\":\"Tracks1899\",\r\n            \"stateReportConfigurationSettingId\":159,\r\n            \"stateReportConfigurationSetting\":null\r\n         }\r\n      ]\r\n   }\r\n}"
+				},
+				"url": {
+					"raw": "https://{{envWebHost}}/api/commands/FinancialAid/HopeConfiguration/saveHopeConfiguration",
+					"protocol": "https",
+					"host": [
+						"{{envWebHost}}"
+					],
+					"path": [
+						"api",
+						"commands",
+						"FinancialAid",
+						"HopeConfiguration",
+						"saveHopeConfiguration"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

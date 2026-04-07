@@ -1,0 +1,120 @@
+[{
+	"Type": "AdvancedDataFile",
+	"Version": "2.0",
+	"TestDescription": "This API will create an Skill (Config-CS-Skill)",
+	"Globals": {
+		"SkillName": "CareerFieldTest",
+		"StudentSsn": "111-22-0055"
+	},
+	"Apis": [{
+			"RequestId": "00000000-0000-0000-0000-000000000000",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000003",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gStudentSsn}}'",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 15000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000004",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/StudentEnrollmentPeriodDetails/CampusNexus.GetStudentEnrollmentPeriodList(studentId={{gStudentId}})",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 15000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000010",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/StudentPlacementSummaryInSchoolDetails?$filter=StudentEnrollmentPeriodId eq {{gEnrollId}}",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 15000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000008",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/CareerServices/StudentPlacementSummaryInSchoolDetail/Get",
+			"RequestBody": "{}",
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {
+				"payload": {}
+			}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000005",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/SchoolStatuses/CampusNexus.GetInSchoolPlacementStatusesByEnroll(campusId={{gCampusId}},enrollId={{gEnrollId}},currentSchoolStatusId={{gCurrSchoolStatus}})?$filter=contains(Name,'In School Not Available')",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 15000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000012",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/CareerServices/StudentPlacementSummaryInSchoolDetail/Save",
+			"RequestBody": {
+					"payload": {
+						"availableForEmploymentDate": "@DateNow",
+						"createdDateTime": "@DateNow",
+						"lastModifiedDateTime": "@DateNow",
+						"placementDate": "@DateNow",
+						"daysOfWeekAvailable": "5",
+						"hasCar": false,
+						"hoursAvailable": "8",
+						"isAssistanceWanted": true,
+						"lastModifiedUserId": 2,
+						"note": null,
+						"placementStatusReasonId": "",
+						"schoolStatusId": "{{gschoolStatusId}}",
+						"salaryRangeHigh": 13,
+						"salaryRangeLow": 2.13,
+						"extendedProperties": [],
+						"entityState": 2
+								}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {"payload": {}}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000014",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/CareerServices/StudentPlacementStatusHistory/InsertStudentPlacementStatusHistory",
+			"RequestBody": {
+					"payload": {
+						"Note": null
+					}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {"payload": {}}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000015",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/CareerServices/StudentPlacementStatusHistory/Get",
+			"RequestBody": {
+					"payload": {
+						"note": null
+								}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {"payload": {}}
+		}
+	]
+}]

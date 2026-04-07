@@ -1,0 +1,63 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "ClearingWaitlistnotallowedforselectedTerm",
+    "Globals": {
+      "TermCode": "Ter005"
+    },
+    "Apis": [
+      {
+        "RequestId": "d34a8741-2fb7-419d-8369-6b7ae9d3fe1e",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {
+                          "value": [{
+                              "IsAllowedToClearWaitlist": false
+                            }]
+                        }
+      },
+      {
+        "RequestId": "052a138d-3dc3-4bc2-8654-a2c31e748832",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Terms/CampusNexus.GetParentTerm(campusId={{gCampusId}},studentId=0,studentGroupId=0)?$select=Name,Code,Id&$filter = Code eq '{{gTermCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": { "value": [] }
+      },
+      {
+        "RequestId": "3cc7f3b2-66d2-42ee-834d-9f9168e0f745",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentCourses/CampusNexus.ClearWaitlist(campusId = {{gCampusId}},termId={{gTermId}})",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {}
+      },
+      {
+        "RequestId": "867dd047-3486-49b3-b10b-e47578f613fa",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/ClassSection/ClearWaitList",
+        "RequestBody": {
+          "payload": {
+            "isSendMessage": true
+          }
+        },
+        "ResponseStatus": 400,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {
+          "payload": null,
+          "notifications": [
+            {
+              "message": "User does not have the permission to clear the waitlist."
+            }
+          ]
+        }
+      }
+    ]
+  }
+]

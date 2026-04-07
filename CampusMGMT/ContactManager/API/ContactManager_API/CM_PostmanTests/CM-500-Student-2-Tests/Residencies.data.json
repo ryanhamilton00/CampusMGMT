@@ -1,0 +1,70 @@
+[{
+	"Type": "AdvancedDataFile",
+	"Version": "2.0",
+	"TestDescription": "This API will Add a Document for a student in Contact Manager",
+	"Globals": {
+		"StudentSsn": "111-33-0066"
+	},
+	"Apis": [{
+			"RequestId": "00000000-0000-0000-0000-000000000000",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000001",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gStudentSsn}}'",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000002",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/ResidencyTypes/CampusNexus.GetUnAssociatedResidencyTypes(studentId={{gStudentId}})?$select=Id,Code,Name&$format=json&$count=true&$filter=IsActive eq true and CampusGroup/CampusList/any(x:x/CampusId eq {{gCampusId}})",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000004",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/ResidencyStatusCodes/CampusNexus.GetUnAssociatedResidencyStatusCodes(studentCampusId={{gCampusId}},residencyTypeId={{gResidencyTypeId}})?$select=Id,Code,Name,IsActive&%24format=json&%24count=true&%24orderby=Name",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000005",
+			"TypeDescription": "Save residency",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Common/StudentResidencyDetail/SaveNew",
+			"RequestBody": {
+				"payload": {
+					"id": -1,
+					"effectiveDate": "@DateNow"
+					
+				}},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {"payload": {}}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000006",
+			"TypeDescription": "Get residency",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Common/StudentResidencyDetail/Get",
+			"RequestBody": {"payload": {}},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {"payload": {}}
+		}
+	]
+}]

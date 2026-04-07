@@ -1,0 +1,103 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "UnscheduleClassScheduletoValidateCourseComparison",
+    "Globals": {
+      "TermCode": "01Term",
+      "CourseCode": "01Course",
+      "SectionCode": ""
+    },
+    "Apis": [
+      {
+        "RequestId": "4dc23388-c96d-4707-b342-0ce8b1fdec35",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": { "value": [] }
+      },
+      {
+        "RequestId": "071e5b4b-cad6-40ae-b55c-2f38a14a23c0",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Terms?$select=Id,StartDate,EndDate,Name,IsActive&$filter=Code eq '{{gTermCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": { "value": [] }
+      },
+      {
+        "RequestId": "071e5b4b-cad6-40ae-b55c-2f38a14a23c1",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Courses?$select=Id,Name,Code,IsActive,EnrollStatusCredits,EnrollStatusHours,IsDependent,CreditHours,ClockHours,AllowOverride,MatchOverrideCredits,MinimumCredits,MaximumCredits&$filter=Code eq '{{gCourseCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": { "value": [] }
+      },
+      {
+        "RequestId": "98059e63-baf6-40d0-93a9-43df60460be6",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/ClassSections/CampusNexus.GetDailyClassScheduleList(showLevelIndicator=0,instructorId=0,startDate ='',endDate='',campusId={{gCampusId}}, isInProgress=false,termId=[{{gTermId}}],courseId = {{gCourseId}})?$filter=SectionCode eq '{{gSectionCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": { "value": [] }
+      },
+      {
+        "RequestId": "f8947d1e-bd08-4e2c-9378-6d20476efda6",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/ClassSectionMeetingSchedules/CampusNexus.GetClassSectionMeetingScheduleDay(classSectionId={{gClassSectionId}},meetingDate='{{gMeetingDate}}')",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {
+          "value": [
+            {
+              "Status": "S",
+              "Note": null
+            }
+          ]
+        }
+      },
+      {
+        "RequestId": "045bec59-d09c-43ce-b6df-0a0f1ba493ee",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/ClassSection/UnscheduleClassSection",
+        "RequestBody": {
+          "payload": {
+            "IsContinue": true,
+            "entityState": 2,
+            "Date": "{{gUnscheduleDate}}"
+          }
+        },
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {
+          "notifications": [
+            {
+              "message": "The meetings  cannot be unscheduled because total scheduled hours of 0.45 for this class section will fall below the required contact hours 5.00."
+            }
+          ]
+        }
+      },
+      {
+        "RequestId": "f8947d1e-bd08-4e2c-9378-6d20476efda7",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/ClassSectionMeetingSchedules/CampusNexus.GetClassSectionMeetingScheduleDay(classSectionId={{gClassSectionId}},meetingDate='{{gMeetingDate}}')",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {
+          "value": [
+            {
+              "Status": "S",
+              "Note": null
+            }
+          ]
+        }
+      }
+    ]
+  }
+]

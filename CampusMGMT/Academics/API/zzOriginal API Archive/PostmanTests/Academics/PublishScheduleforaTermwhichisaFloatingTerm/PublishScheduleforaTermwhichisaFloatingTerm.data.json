@@ -1,0 +1,113 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "Publish Schedule for a Term for a Floating Term Campus",
+    "Globals": {
+      "StartDate": "12-01-2015",
+      "EndDate": "12-31-2030",
+      "TermCode": "TerCode2",
+      "StaffName": "Staff, Automated01",
+      "SettingName": "Student Registration"
+    },
+    "Apis": [
+      {
+        "RequestId": "4dc23388-c96d-4707-b342-0ce8b1fdec35",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": { "value": [] }
+      },
+	  {
+        "RequestId": "071e5b4b-cad6-40ae-b55c-2f38a14a23c0",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Terms?$select=Id,StartDate,EndDate&$filter=Code eq '{{gTermCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {"value":[]}
+      },
+	  {
+        "RequestId": "5e990105-aa7f-4b50-999b-f3dc28c7519a",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Campuses?$filter=Id eq {{gCampusId}}&$select=IsFloatingTermUsed",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {
+						  "value": [{
+								"IsFloatingTermUsed": true
+							}]
+						}
+      },
+	  {
+        "RequestId": "688ec118-4430-486e-a256-67a2b3541352",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/CampusNexusStudentSettings?$select=SettingName,SettingValue,ShortDisplayText,LongDisplayText,LastModifiedDateTime,LastModifiedUserId,ValidValues,DisplayControlType&$expand=LastModifiedUser($select=FullName)&$filter=contains(ShortDisplayText,'{{gSettingName}}')",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {"value":[]}
+      },
+      {
+        "RequestId": "98059e63-baf6-40d0-93a9-43df60460be6",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/ClassSections/CampusNexus.GetDailyClassScheduleList(showLevelIndicator=0,termId=[{{gTermId}}],courseId=0,instructorId=0,startDate ='{{gStartDate}}',endDate='{{gEndDate}}',campusId={{gCampusId}}, isInProgress=false,departmentIds=[])",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": { "value": [] }
+      },
+	  {
+        "RequestId": "f8947d1e-bd08-4e2c-9378-6d20476efda6",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Terms/CampusNexus.GetTermRegistrationSettingsForPublishing(campusId={{gCampusId}},termIds=[{{gTermId}}],startDate='{{gStartDate}}',endDate='{{gEndDate}}',courseId=0,instructorId=0,showLevelIndicator=1,isInProgress=false)",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {
+							"value": [{
+								"IsPublished": false
+							}]
+						}
+      },
+      {
+        "RequestId": "045bec59-d09c-43ce-b6df-0a0f1ba493ee",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/TermRegistrationSetting/SaveTermRegistrationSetting",
+        "RequestBody": {
+							"payload": {
+								"termRegistrationSettings": [{
+									"classSectionScheduleAvailableDate": "{{gTermStartDate}}",
+									"classSectionScheduleUnavailableDate": "{{gTermEndDate}}",
+									"gradesAvailableDate": "{{gTermEndDate}}",
+									"courseSharingStartDateTime": "{{gTermStartDate}}",
+									"courseSharingEndDateTime": "{{gTermEndDate}}"
+								}],
+								"entityState": 2
+							}
+						},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 25000,
+        "ResponseBody": {
+					  "payload": {
+						"data": {
+						  "termRegistrationSettings": null,
+						  "validationMessages": []
+						}
+					  },
+					  "notifications": [],
+					  "hasError": false,
+					  "hasFault": false,
+					  "hasWarning": false,
+					  "hasValidationError": false,
+					  "hasValidationWarning": false,
+					  "hasValidationInformation": false,
+					  "hasSecurityError": false
+					}
+      }
+    ]
+  }
+]

@@ -1,0 +1,84 @@
+[
+    {
+        "Type": "AdvancedDataFile",
+        "Version": "2.0",
+        "TestDescription": "This API will create an Agency Type Record (Config-AD-Agency Types)",
+        "Globals": {
+            "Name": "AppName1",
+            "Code": "AppCode1"
+        },
+        "Apis": [
+            {
+                "RequestId": "00000000-0000-0000-0000-000000000000",
+                "RequestMethod": "GET",
+                "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+                "RequestBody": null,
+                "ResponseStatus": 200,
+                "ResponseTimeMs": 5000,
+                "ResponseBody": "{\"value\":[]}"
+            },
+            {
+                "RequestId": "00000000-0000-0000-0000-000000000001",
+                "RequestMethod": "POST",
+                "RequestUrl": "/api/commands/Admissions/ApplicationForm/Create",
+                "RequestBody": {},
+                "ResponseStatus": 200,
+                "ResponseTimeMs": 5000,
+                "ResponseBody": "{}"
+            },
+            {
+                "RequestId": "00000000-0000-0000-0000-000000000002",
+                "RequestMethod": "POST",
+                "RequestUrl": "/api/commands/Admissions/ApplicationForm/SaveNew",
+                "RequestBody": {
+                    "payload": {
+                        "code": "{{gCode}}",
+                        "name": "{{gName}}"
+                    }
+                },
+                "ResponseStatus": 200,
+                "ResponseTimeMs": 5000,
+                "ResponseBody": {}
+            },
+            {
+                "RequestId": "00000000-0000-0000-0000-000000000003",
+                "RequestMethod": "GET",
+                "RequestUrl": "/ds/campusnexus/PropertyEnumValues?&$filter=TableName eq 'AmApplication' and ColumnName eq 'QuestionType' and ValueDescription eq 'True/False'",
+                "RequestBody": null,
+                "ResponseStatus": 200,
+                "ResponseTimeMs": 5000,
+                "ResponseBody": "{}"
+            },
+            {
+                "RequestId": "00000000-0000-0000-0000-000000000004",
+                "RequestMethod": "GET",
+                "RequestUrl": "/ds/campusnexus/ApplicationForms/CampusNexus.GetApplicationFormQuestionChoice(applicationFormQuestionId=0,type='{{gQType}}')",
+                "RequestBody": null,
+                "ResponseStatus": 200,
+                "ResponseTimeMs": 5000,
+                "ResponseBody": {}
+            },
+            {
+                "RequestId": "00000000-0000-0000-0000-000000000005",
+                "RequestMethod": "POST",
+                "RequestUrl": "/api/commands/Admissions/ApplicationFormQuestion/saveNew",
+                "RequestBody": {
+                    "payload": {
+						"Code": "QUESTION",
+						"Id": -1,
+						"IsActive": true,
+						"IsRequired": false,
+						"LastModifiedUserId": 2,
+						"Name": "Question Text",
+						"QuestionNumber": 1
+					}
+                },
+                "ResponseStatus": 200,
+                "ResponseTimeMs": 5000,
+                "ResponseBody": {
+                    "payload": {}
+                }
+            }
+        ]
+    }
+]

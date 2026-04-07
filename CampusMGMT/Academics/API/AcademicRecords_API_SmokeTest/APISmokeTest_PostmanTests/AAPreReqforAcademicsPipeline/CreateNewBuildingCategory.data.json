@@ -1,0 +1,64 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "Create New Building Cateory",
+    "Globals": {
+		"BuildingCatName": "BulCatName",
+		"BuildingCatCode": "BulCatC"
+	},
+    "Apis": [
+      {
+        "RequestId": "3cea0179-8b9e-4564-a19c-943254b3c04d",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/BuildingCategories/CampusNexus.GetBuildingCategoryList()?$filter=BuildingCategory/Code eq '{{gBuildingCatCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {}
+      },
+      {
+        "RequestId": "3cea0179-8b9e-4564-a19c-943254b3c04c",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "a36da5ac-86ff-48de-b80e-305d38741c30",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/BuildingCategory/Create",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {}
+      },
+      {
+        "RequestId": "cd92f8d2-1811-4491-b872-bf54d5439f46",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/BuildingCategory/SaveNew",
+        "RequestBody": {
+          "payload": {
+            "code": "{{gBuildingCatCode}}",
+            "name": "{{gBuildingCatName}}",
+            "note": "{{gBuildingCatName}}"
+          }
+        },
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {}
+      },
+      {
+        "RequestId": "371477bd-b034-4217-aca6-2f562ff93c74",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/BuildingCategories/CampusNexus.GetBuildingCategoryList()?$expand=BuildingCategory,BuildingCategoryCampusList,BuildingCategoryHousingFeatureList&$filter =  Id eq {{gBuildingCategoryId}}",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      }
+    ]
+  }
+]

@@ -1,0 +1,67 @@
+[{
+	"Type": "AdvancedDataFile",
+	"Version": "2.0",
+	"TestDescription": "This API will create an Skill (Config-CS-Skill)",
+	"Globals": {
+		"Name": "CertificateName",
+		"Code": "CCODE"
+	},
+	"Apis": [
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000006",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Certifications?$filter=Name eq '{{gName}}'",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000000",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000003",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/CareerServices/Certification/Create",
+			"RequestBody": "{}",
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {
+				"payload": {}
+			}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000004",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/CareerServices/Certification/SaveNew",
+			"RequestBody": {
+				"payload": {
+					"code": "{{gCode}}",
+					"name": "{{gName}}",
+					"createdDateTime": "@DateNow",
+					"extendedProperties": []
+				}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000005",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/CareerServices/Certification/Get",
+			"RequestBody": {
+				"payload": {}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {}
+		}
+	]
+}]

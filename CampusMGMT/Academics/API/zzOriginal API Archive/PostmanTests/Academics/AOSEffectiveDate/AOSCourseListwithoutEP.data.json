@@ -1,0 +1,421 @@
+[{
+	"Type": "AdvancedDataFile",
+	"Version": "2.0",
+	"TestDescription": "This API will create a record for the Course List tile : Config - Academics - Areas of Study - Course List",
+	"Globals": {
+		"AOSCode": "AOSED1",
+		"CatalogCode": "AOSED1",
+		"CategoryName": "AOSEDTestName",
+		"CategoryCode": "AOSED1"
+
+	},
+	"Apis": [{
+			"RequestId": "d3ab99c4-21b9-441a-8625-abc4417c8d6e",
+			"TypeDescription": "Get Campus info by User",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "cf406926-0aa6-4432-844b-10a6c0708270",
+			"TypeDescription": "Get Created AOS",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/AreasOfStudy?$filter= Code eq '{{gAOSCode}}'",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "bb63a141-3279-4d47-8844-c62c1d011c6a",
+			"TypeDescription": "Get AOS data",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Academics/AreaOfStudy/Get",
+			"RequestBody": "{}",
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {
+				"payload": {}
+			}
+		},
+		{
+			"RequestId": "cf406926-0aa6-4432-844b-10a6c0708380",
+			"TypeDescription": "Get Created CatalogYear",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/CatalogYears?$filter= Code eq '{{gCatalogCode}}'",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "cf406926-0aa6-4432-844b-10a6c07082781",
+			"TypeDescription": "Get Created CourseCategory for validation",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/CourseCategories?$filter= Code eq '{{gCategoryCode}}'",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "bb63a141-3279-4d47-8844-c62c1d012x8n",
+			"TypeDescription": "Save Catalog & Course Category AOS data",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Academics/RequiredCourseCategory/SaveRequiredCourseCategory",
+			"RequestBody": {
+				"payload": {
+					"IsAppliedToCategoryAndCourses": false,
+					"isDegreeAuditChangesOverride": true,
+					"IsDeleteFroamCatalogOverride": false,
+					"IsDeleteFromCatalog": false,
+					"IsDeleteFromCategory": false,
+					"IsDeleteFromCategoryOverride": false,
+					"RequiredCourseCategoryList": [{
+						"clockHoursRequired": 0,
+						"creditHoursRequired": 6,
+						"extendedProperties": [],
+						"isCoreCategory": false,
+						"isDroppedFailedCourseRepeated": false,
+						"minimumGpa": null,
+						"name": "'{{gCategoryName}}'",
+						"note": "",
+						"numberCoursesRequired": 3,
+						"programVersionId": null
+					}]
+				}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {
+				"payload": {}
+			}
+		},
+		{
+			"RequestId": "cf406926-0aa6-4432-844b-10a6c07082892",
+			"TypeDescription": "Get Catalog Year Course List",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/RequiredCourses/CampusNexus.GetRequiredProgramCoursesByAreaOfStudyId(areaOfStudyId={{gAOSID}},catalogYearId={{gCYID}})",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "bb63a141-3279-4d47-0001-c62c1d012x8n",
+			"TypeDescription": "Add Course 1",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Academics/RequiredCourse/SaveNew",
+			"RequestBody": {
+				"payload": {	
+						"displayOrder": 1,
+						"electiveClockHours": 0,
+						"electiveCreditHours": 0,
+						"electivePoolName": null,
+						"entityState": 0,
+						"isAdvisementRequired": false,
+						"isDropExcluded": false,
+						"isSubstituteAllowed": false,
+						"minimumGpa": null,
+						"MinimumGpa": null,
+						"programElectivePoolId": null,
+						"programVersionId": null,
+						"skillMinimumGpa": null,
+						"courseAttributeIdList": [],
+						"extendedProperties": [],
+						"requiredCourseElectivePoolEntityList": []
+					
+				}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {
+				"payload": {}
+			}
+		}
+	]
+},
+{
+	"Type": "AdvancedDataFile",
+	"Version": "2.0",
+	"TestDescription": "This API will create a record for the Course List tile : Config - Academics - Areas of Study - Course List",
+	"Globals": {
+		"AOSCode": "AOSED2",
+		"CatalogCode": "AOSED1",
+		"CategoryName": "AOSEDTestName",
+		"CategoryCode": "AOSED1"
+
+	},
+	"Apis": [{
+			"RequestId": "d3ab99c4-21b9-441a-8625-abc4417c8d6e",
+			"TypeDescription": "Get Campus info by User",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "cf406926-0aa6-4432-844b-10a6c0708270",
+			"TypeDescription": "Get Created AOS",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/AreasOfStudy?$filter= Code eq '{{gAOSCode}}'",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "bb63a141-3279-4d47-8844-c62c1d011c6a",
+			"TypeDescription": "Get AOS data",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Academics/AreaOfStudy/Get",
+			"RequestBody": "{}",
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {
+				"payload": {}
+			}
+		},
+		{
+			"RequestId": "cf406926-0aa6-4432-844b-10a6c0708380",
+			"TypeDescription": "Get Created CatalogYear",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/CatalogYears?$filter= Code eq '{{gCatalogCode}}'",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "cf406926-0aa6-4432-844b-10a6c07082781",
+			"TypeDescription": "Get Created CourseCategory for validation",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/CourseCategories?$filter= Code eq '{{gCategoryCode}}'",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "bb63a141-3279-4d47-8844-c62c1d012x8n",
+			"TypeDescription": "Save Catalog & Course Category AOS data",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Academics/RequiredCourseCategory/SaveRequiredCourseCategory",
+			"RequestBody": {
+				"payload": {
+					"IsAppliedToCategoryAndCourses": false,
+					"isDegreeAuditChangesOverride": true,
+					"IsDeleteFroamCatalogOverride": false,
+					"IsDeleteFromCatalog": false,
+					"IsDeleteFromCategory": false,
+					"IsDeleteFromCategoryOverride": false,
+					"RequiredCourseCategoryList": [{
+						"clockHoursRequired": 0,
+						"creditHoursRequired": 6,
+						"extendedProperties": [],
+						"isCoreCategory": false,
+						"isDroppedFailedCourseRepeated": false,
+						"minimumGpa": null,
+						"name": "'{{gCategoryName}}'",
+						"note": "",
+						"numberCoursesRequired": 3,
+						"programVersionId": null
+					}]
+				}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {
+				"payload": {}
+			}
+		},
+		{
+			"RequestId": "cf406926-0aa6-4432-844b-10a6c07082892",
+			"TypeDescription": "Get Catalog Year Course List",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/RequiredCourses/CampusNexus.GetRequiredProgramCoursesByAreaOfStudyId(areaOfStudyId={{gAOSID}},catalogYearId={{gCYID}})",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "bb63a141-3279-4d47-0001-c62c1d012x8n",
+			"TypeDescription": "Add Course 1",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Academics/RequiredCourse/SaveNew",
+			"RequestBody": {
+				"payload": {	
+						"displayOrder": 1,
+						"electiveClockHours": 0,
+						"electiveCreditHours": 0,
+						"electivePoolName": null,
+						"entityState": 0,
+						"isAdvisementRequired": false,
+						"isDropExcluded": false,
+						"isSubstituteAllowed": false,
+						"minimumGpa": null,
+						"MinimumGpa": null,
+						"programElectivePoolId": null,
+						"programVersionId": null,
+						"skillMinimumGpa": null,
+						"courseAttributeIdList": [],
+						"extendedProperties": [],
+						"requiredCourseElectivePoolEntityList": []
+					
+				}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {
+				"payload": {}
+			}
+		}
+	]
+},
+{
+	"Type": "AdvancedDataFile",
+	"Version": "2.0",
+	"TestDescription": "This API will create a record for the Course List tile : Config - Academics - Areas of Study - Course List",
+	"Globals": {
+		"AOSCode": "AOSED3",
+		"CatalogCode": "AOSED1",
+		"CategoryName": "AOSEDTestName",
+		"CategoryCode": "AOSED1"
+
+	},
+	"Apis": [{
+			"RequestId": "d3ab99c4-21b9-441a-8625-abc4417c8d6e",
+			"TypeDescription": "Get Campus info by User",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "cf406926-0aa6-4432-844b-10a6c0708270",
+			"TypeDescription": "Get Created AOS",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/AreasOfStudy?$filter= Code eq '{{gAOSCode}}'",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "bb63a141-3279-4d47-8844-c62c1d011c6a",
+			"TypeDescription": "Get AOS data",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Academics/AreaOfStudy/Get",
+			"RequestBody": "{}",
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {
+				"payload": {}
+			}
+		},
+		{
+			"RequestId": "cf406926-0aa6-4432-844b-10a6c0708380",
+			"TypeDescription": "Get Created CatalogYear",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/CatalogYears?$filter= Code eq '{{gCatalogCode}}'",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "cf406926-0aa6-4432-844b-10a6c07082781",
+			"TypeDescription": "Get Created CourseCategory for validation",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/CourseCategories?$filter= Code eq '{{gCategoryCode}}'",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "bb63a141-3279-4d47-8844-c62c1d012x8n",
+			"TypeDescription": "Save Catalog & Course Category AOS data",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Academics/RequiredCourseCategory/SaveRequiredCourseCategory",
+			"RequestBody": {
+				"payload": {
+					"IsAppliedToCategoryAndCourses": false,
+					"isDegreeAuditChangesOverride": true,
+					"IsDeleteFroamCatalogOverride": false,
+					"IsDeleteFromCatalog": false,
+					"IsDeleteFromCategory": false,
+					"IsDeleteFromCategoryOverride": false,
+					"RequiredCourseCategoryList": [{
+						"clockHoursRequired": 0,
+						"creditHoursRequired": 6,
+						"extendedProperties": [],
+						"isCoreCategory": false,
+						"isDroppedFailedCourseRepeated": false,
+						"minimumGpa": null,
+						"name": "'{{gCategoryName}}'",
+						"note": "",
+						"numberCoursesRequired": 3,
+						"programVersionId": null
+					}]
+				}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {
+				"payload": {}
+			}
+		},
+		{
+			"RequestId": "cf406926-0aa6-4432-844b-10a6c07082892",
+			"TypeDescription": "Get Catalog Year Course List",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/RequiredCourses/CampusNexus.GetRequiredProgramCoursesByAreaOfStudyId(areaOfStudyId={{gAOSID}},catalogYearId={{gCYID}})",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "bb63a141-3279-4d47-0001-c62c1d012x8n",
+			"TypeDescription": "Add Course 1",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Academics/RequiredCourse/SaveNew",
+			"RequestBody": {
+				"payload": {	
+						"displayOrder": 1,
+						"electiveClockHours": 0,
+						"electiveCreditHours": 0,
+						"electivePoolName": null,
+						"entityState": 0,
+						"isAdvisementRequired": false,
+						"isDropExcluded": false,
+						"isSubstituteAllowed": false,
+						"minimumGpa": null,
+						"MinimumGpa": null,
+						"programElectivePoolId": null,
+						"programVersionId": null,
+						"skillMinimumGpa": null,
+						"courseAttributeIdList": [],
+						"extendedProperties": [],
+						"requiredCourseElectivePoolEntityList": []
+					
+				}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {
+				"payload": {}
+			}
+		}
+	]
+}
+]

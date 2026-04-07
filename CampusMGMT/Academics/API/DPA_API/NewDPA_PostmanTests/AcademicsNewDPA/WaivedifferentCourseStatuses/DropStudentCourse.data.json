@@ -1,0 +1,102 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "Drop Student Course",
+    "Globals": {
+      "StudentSsn": "222-22-0022",
+      "CourseCode": "AudCou009",
+      "EnrollmentPVName": "Audit Program Version 01"
+    },
+    "Apis": [
+      {
+        "RequestId": "a89a78ae-ffaa-479a-8c2d-1685e73055c0",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gStudentSsn}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "05febb5e-f716-4402-9b26-6a4adecf5fba",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentEnrollmentPeriodDetails/CampusNexus.GetStudentEnrollmentPeriodList(studentId={{gStudentId}})?$filter=ProgramVersionName eq '{{gEnrollmentPVName}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{}"
+      },
+      {
+        "RequestId": "afa18136-e1dd-4c80-a59d-a8d569d97635",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentCourseSchedules/CampusNexus.GetStudentCourseSchedule(studentEnrollmentPeriodId={{gStudentEnrollmentPeriodId}},studentId={{gStudentId}},termId=0,status='')?$filter=CourseCode eq '{{gCourseCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{}"
+      },
+      {
+        "RequestId": "a8f21199-a1cc-4d92-914b-1c94121830fa",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/GradeScales?$filter=Name eq '{{gGradeScaleName}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{}"
+      },
+      {
+        "RequestId": "8a8b0db0-8a03-40ad-baa0-7eae87f4a159",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/GradeScaleLetterGrades/CampusNexus.GetGradeScaleLetterGradeListByCriteria(gradeScaleId={{gGradeScaleId}},isAuditGrade=false,isPassFail=false,isIncludeInactive=false,appendGradeCode='',isReturnAll=false)?$select=Id,Code&$filter=IsDropGrade eq true &$orderby=Code",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{}"
+      },
+      {
+        "RequestId": "8a8b0db0-8a03-40ad-baa0-7eae87f4a160",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentCourseStatusChangeReasons?$filter=IsForDrop eq true and IsActive eq true and CampusGroup/CampusList/any(c: c/CampusId eq {{gCampusId}})&$count=true",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{}"
+      },
+      {
+        "RequestId": "4b627b73-4c6e-4956-a36f-9f97511ae08a",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/StudentCourse/DropCourse",
+        "RequestBody": {
+          "payload": {
+            "DropDate": "@DateNow()",
+            "IsAllowedToOverrideRegistrationConflict": false,
+            "SkipCoreqCheck": false,
+            "SkipPrereqCheck": false,
+            "IgnoreMultiCourseDependency": false,
+            "AllowOverrideRegistrationPrereqCoreqConflict": false,
+            "IsAddDropPeriodClassSectionAllowed": false,
+            "PrereqCoreqFailureMesssageType": null,
+            "AllowOverrideClosedTerm": false,
+            "AllowLdwOverride": false,
+            "IsAuditCourse": false,
+            "ImpactedStudentCourseIds": [],
+            "AllowedOnlyParent": false
+          }
+        },
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 25000,
+        "ResponseBody": "{}"
+      },
+      {
+        "RequestId": "3e4e6f68-a40c-4757-bbdb-514eb9b69dab",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentCourseSchedules/CampusNexus.GetStudentCourseSchedule(studentEnrollmentPeriodId={{gStudentEnrollmentPeriodId}},studentId={{gStudentId}},termId=0,status='')?$filter= CourseCode eq '{{gCourseCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{}"
+      }
+    ]
+  }
+]

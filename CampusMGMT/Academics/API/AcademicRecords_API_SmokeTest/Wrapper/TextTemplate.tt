@@ -1,0 +1,49 @@
+﻿<#@ output extension=".cs" #>
+<#@ template debug="false" hostspecific="true" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ assembly name="$(CommonFolder)\Postman.Common.dll" #>
+<#@ assembly name="$(JsonFolder)\Newtonsoft.Json.dll" #>
+<#@ import namespace="Postman.Common" #>
+<#@ import namespace="System.Reflection" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+using System.Reflection;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace Postman.Wrapper
+{
+<#
+    string[] files = new Setup().GetCollectionFilePaths();                                   
+    foreach (string jsonFile in files)
+    {
+        CollectionFile cf = new CollectionFile(jsonFile);
+#>
+        [TestClass]
+        public class <#= cf.Name #>
+        {
+            public TestContext TestContext { get; set; }
+
+            [TestMethod]
+            [TestProperty("AdoId", "<#=cf.AdoId#>")]
+            public void <#= cf.Name #>_Test() 
+            {
+                PostmanWrapper.testFailuresCount = 0;
+
+<#
+                foreach (Folder folder in cf.Folders)
+                {
+#>
+                    new PostmanWrapper(collectionName: this.GetType().Name, folder: "<#= folder.Name#>", dataLine: "<#= folder.Data#>", environmentFile: "<#= folder.EnvironmentFile#>", preRequest: "<#= folder.PreRequest#>", postRun: "<#= folder.PostRun#>").Run(TestContext);
+<#                    
+                }          
+#>
+
+                Assert.IsTrue(PostmanWrapper.testFailuresCount == 0, "Errors occured in Postman test execution");
+            }
+        }
+<#
+    }
+#>
+}

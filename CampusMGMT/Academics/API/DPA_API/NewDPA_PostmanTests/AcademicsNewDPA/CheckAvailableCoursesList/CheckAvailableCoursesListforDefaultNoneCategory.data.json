@@ -1,0 +1,49 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "Check Available Course Details List for Default None Category",
+    "Globals": {
+      "StudentSsn": "222-22-0044",
+      "EnrollmentPVName": "Audit Program Version 02"
+    },
+    "Apis": [
+      {
+        "RequestId": "a89a78ae-ffaa-479a-8c2d-1685e73055c0",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gStudentSsn}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": { "value": [] }
+      },
+      {
+        "RequestId": "05febb5e-f716-4402-9b26-6a4adecf5fba",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentEnrollmentPeriodDetails/CampusNexus.GetStudentEnrollmentPeriodList(studentId={{gStudentId}})?$select=Id,ProgramVersionId,ProgramId,ProgramVersionName,CatalogYearId&$filter = ProgramVersionName eq '{{gEnrollmentPVName}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": { "value": [] }
+      },
+      {
+        "RequestId": "05febb5e-f716-4402-9b26-6a4adecf5fbb",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Courses?$select=Id,Code,Name,CreditHours,ClockHours,AllowOverride,MaximumCredits,MinimumCredits,AllowRetakeOverride,Note,IsActive&$filter=(IsActive eq true and IsDependent eq false) and CampusGroup/CampusList/any(l:l/CampusId eq {{gCampusId}})&$orderby=Code desc",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 25000,
+        "ResponseBody": { "value": [] }
+      },
+      {
+        "RequestId": "05febb5e-f716-4402-9b26-6a4adecf5fbd",
+        "RequestMethod": "GET",
+        "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId}}/availablecourses?$orderby=code desc",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {}
+      }
+    ]
+  }
+]

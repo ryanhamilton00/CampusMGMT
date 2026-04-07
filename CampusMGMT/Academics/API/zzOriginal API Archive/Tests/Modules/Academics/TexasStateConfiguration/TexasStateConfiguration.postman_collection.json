@@ -1,0 +1,330 @@
+{
+  "info": {
+    "_postman_id": "f34f0b6b-d4e9-4965-85b2-295c908af65c",
+    "name": "TexasStateConfiguration",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Initialize",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "35ea4064-5b28-4bb3-93fa-30d8b011ad7c",
+            "type": "text/javascript",
+            "exec": [
+              "pm.globals.set(\"gApiUtility\", responseBody);",
+              "",
+              "try {",
+              "   eval(pm.globals.get(\"gApiUtility\"));",
+              "}",
+              "catch(e) { }",
+              "",
+              "pm.test(\"Framework ready\", function(){",
+              "    pm.expect(typeof apiUtility).to.be.equal('object');",
+              "});",
+              "",
+              "",
+              "pm.test(\"Verify response status is \" + 200, function() {",
+              "    pm.expect(pm.response.code).to.equal(200);",
+              "});",
+              "",
+              "switch(data.RequestMethod)",
+              "{",
+              "    case 'POST':",
+              "        console.log('execute POST');",
+              "        postman.setNextRequest('POST-Request');        ",
+              "        break;",
+              "        ",
+              "    case 'GET':",
+              "        console.log('execute GET');",
+              "        postman.setNextRequest('GET-Request');        ",
+              "        break;",
+              "        ",
+              "    default:",
+              "        postman.setNextRequest(null);",
+              "        break;",
+              "}",
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "id": "69251a48-a330-4fb5-85f1-5933a508d4a8",
+            "type": "text/javascript",
+            "exec": [
+              "// Load API utility code",
+              "pm.globals.unset(\"gApiUtility\");",
+              "pm.globals.unset('gApiUrl');",
+              "pm.globals.unset('gCmcUtility');",
+              "pm.globals.unset('gAuthHeaderKey');",
+              "pm.globals.unset('gAuthHeaderValue');",
+              "pm.globals.unset('gUrl');",
+              "pm.globals.unset('gPostRequest');",
+              "pm.globals.unset('gGetRequest'); ",
+              "",
+              "var apiUtilitHost= \"\";",
+              "",
+              "if(!pm.environment.has(\"envApiUtilityHost\")) {",
+              "    apiUtilityHost = \"hdev22.dev.int:9000\"",
+              "} else {",
+              "    apiUtilityHost = pm.environment.get(\"envApiUtilityHost\");",
+              "}",
+              "",
+              "var requestUrl = \"http://\" + apiUtilityHost + \"/automation/apiUtility.js\";",
+              "",
+              "pm.globals.set(\"gApiUrl\", requestUrl);",
+              "",
+              "//console.log(pm.globals.get(\"gUrl\"));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "{{gApiUrl}}",
+          "host": [
+            "{{gApiUrl}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET-Request",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "523283d4-d289-489d-9312-ce71d517a191",
+            "type": "text/javascript",
+            "exec": [
+              "",
+              "eval(pm.globals.get('gApiUtility'));",
+              "",
+              "pm.test(\"Verify response status is \" + data.ResponseStatus, function() {",
+              "    pm.expect(pm.response.code).to.equal(data.ResponseStatus);",
+              "});",
+              "pm.test(\"Verify response time is below \" + data.ResponseTimeMs, function() {",
+              "    pm.expect(pm.response.responseTime).to.be.below(data.ResponseTimeMs);",
+              "});",
+              "",
+              "if(pm.response.code === 200) { ",
+              "    // Chaining",
+              "    // Save ID & response to global variable for Get",
+              "    var rb = pm.response.json();",
+              "    if(data.ChainSource.length > 0) {",
+              "        let str = data.RequestId + \".response\";",
+              "        apiUtility.globalStoreWrite(str,rb);",
+              "    }",
+              "       ",
+              "}",
+              "// Do not execute next request in the collection",
+              "postman.setNextRequest(null);",
+              " "
+            ]
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "id": "eaa6366f-3b7d-465c-b3b3-70b272a50d74",
+            "type": "text/javascript",
+            "exec": [
+              "",
+              "eval(pm.globals.get('gApiUtility'));",
+              "",
+              "//eval(postman.getGlobalVariable(\"gCmcUtility\"));",
+              "",
+              "console.log('POST pre-req');",
+              "",
+              "",
+              "//Set Authorization header",
+              "var hdr = apiUtility.makeAuthorization( data.ApiKey, data.User, data.Password, pm.environment.get('envApiKey'),pm.environment.get('envAuthUser'), pm.environment.get('envAuthPassword'));",
+              "pm.globals.set('gAuthHeaderKey', hdr.key);",
+              "pm.globals.set('gAuthHeaderValue', hdr.value);",
+              "//console.log(pm.globals.get('gAuthHeaderKey'));",
+              "//console.log(pm.globals.get('gAuthHeaderValue'));",
+              "",
+              "// Make URL",
+              "pm.globals.set('gUrl', apiUtility.makeUrl(data.Scheme, pm.environment.get('envWebHost'), data.RequestUrl));",
+              "//console.log(pm.globals.get('gUrl'));",
+              "",
+              "//Set Global Variables",
+              "var request = {};",
+              "apiUtility.setChainProps(data.Chain,request);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "{{gAuthHeaderKey}}",
+            "value": "{{gAuthHeaderValue}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{{gRequestBody}}"
+        },
+        "url": {
+          "raw": "{{gUrl}}",
+          "host": [
+            "{{gUrl}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST-Request",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "1c89b41f-7459-4d63-b8dc-096410b8a289",
+            "type": "text/javascript",
+            "exec": [
+              "",
+              "",
+              "eval(pm.globals.get('gApiUtility'));",
+              "",
+              "",
+              "pm.test(\"Verify response status is \" + data.ResponseStatus, function() {",
+              "    pm.expect(pm.response.code).to.equal(data.ResponseStatus);",
+              "});",
+              "pm.test(\"Verify response time is below \" + data.ResponseTimeMs, function() {",
+              "    pm.expect(pm.response.responseTime).to.be.below(data.ResponseTimeMs);",
+              "});",
+              "",
+              "pm.test(\"Verify for all delete validations message pass whiling\", function() {",
+              "    var rb=JSON.parse(responseBody);",
+              "    pm.expect(apiUtility.verifyResponse(data.ResponseBody,rb)).to.be.true;",
+              "",
+              "});",
+              "",
+              "if(pm.response.code === 200) { ",
+              "    // Chaining",
+              "    // Save ID & response to global variable for Get",
+              "    var rb = pm.response.json();",
+              "    if(data.ChainSource.length > 0) {",
+              "        let str = data.RequestId + \".response\";",
+              "        apiUtility.globalStoreWrite(str,rb);",
+              "    }",
+              "       ",
+              "}",
+              "// else {",
+              "//     postman.setNextRequest(null);",
+              "// }",
+              "",
+              "",
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "id": "6ac35e8b-5a56-450b-abbd-df07f20f4a55",
+            "type": "text/javascript",
+            "exec": [
+              "",
+              "eval(pm.globals.get('gApiUtility'));",
+              "console.log('POST pre-req');",
+              "",
+              "//Set Authorization header",
+              "var hdr = apiUtility.makeAuthorization( data.ApiKey, data.User, data.Password, pm.environment.get('envApiKey'),pm.environment.get('envAuthUser'), pm.environment.get('envAuthPassword'));",
+              "pm.globals.set('gAuthHeaderKey', hdr.key);",
+              "pm.globals.set('gAuthHeaderValue', hdr.value);",
+              "//console.log(pm.globals.get('gAuthHeaderKey'));",
+              "//console.log(pm.globals.get('gAuthHeaderValue'));",
+              "",
+              "// Make URL",
+              "pm.globals.set('gUrl', apiUtility.makeUrl(data.Scheme,pm.environment.get('envWebHost'), data.RequestUrl));",
+              "//console.log(pm.globals.get('gUrl'));",
+              "",
+              "// Make request body.",
+              "var request = {};",
+              "apiUtility.setChainProps(data.Chain, request);",
+              "pm.globals.set('gPostRequest', JSON.stringify(apiUtility.mergeRequestBody(request,data.RequestBody)));",
+              "// console.log(pm.globals.get('gPostRequest'));",
+              ""
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "{{gAuthHeaderKey}}",
+            "value": "{{gAuthHeaderValue}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{{gPostRequest}}"
+        },
+        "url": {
+          "raw": "{{gUrl}}",
+          "host": [
+            "{{gUrl}}"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "id": "61992fd7-16b0-46ac-882a-06d04b354231",
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "id": "2ed00b5b-559f-480d-833a-4e7f82db717c",
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ]
+}

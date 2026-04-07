@@ -1,0 +1,56 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "UpdatingStudentRegistrationSetting",
+    "Globals": {
+			"SettingName": "Student Registration",
+			"SettingValue": "2"	
+		},
+    "Apis": [
+      {
+        "RequestId": "688ec118-4430-486e-a256-67a2b3541352",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/CampusNexusStudentSettings?$select=SettingName,SettingValue,ShortDisplayText,LongDisplayText,LastModifiedDateTime,LastModifiedUserId,ValidValues,DisplayControlType&$expand=LastModifiedUser($select=FullName)&$filter=contains(ShortDisplayText,'{{gSettingName}}')",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {"value":[]}
+      },
+      {
+        "RequestId": "40a53023-1359-43dc-b79e-26a3731f4ca1",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Common/CampusNexusStudentSetting/SaveCampusNexusStudentSettings",
+        "RequestBody": {
+							"payload": {
+								"campusNexusStudentSettingList": [{
+									"settingValue": "{{gSettingValue}}"
+								}]
+							}
+						},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {
+						  "payload": {
+							"data": {
+							  "campusNexusStudentSettingList": [
+								{
+								  "settingValue": "2"
+								}
+							  ],
+							  "validationMessages": []
+							}
+						  },
+						  "notifications": [],
+						  "hasError": false,
+						  "hasFault": false,
+						  "hasWarning": false,
+						  "hasValidationError": false,
+						  "hasValidationWarning": false,
+						  "hasValidationInformation": false,
+						  "hasSecurityError": false
+						}
+      }
+    ]
+  }
+]

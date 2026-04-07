@@ -1,0 +1,129 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "This will create the configuration for Indicators (Config-SS-Indicators)",
+    "Globals": {
+		"IndicatorName": "TestName",
+		"IndicatorCode": "TestCode"
+				},
+    "Apis": [
+      {
+        "RequestId": "c3ab99c4-21b9-441a-8625-abc4417c8d5f",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+	  {
+        "RequestId": "c3ab99c4-21b9-441a-8625-abc4417c8d6e",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/CampusGroups?$filter=Id eq {{gCampusGroupId}}",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+			{
+				"RequestId": "0ad5aee1-a24b-4799-bdd4-76d372e1c8a2",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/StudentServices/Indicator/Create",
+				"RequestBody": "{}",
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 5000,
+				"ResponseBody": {
+					"payload": {}
+				}
+			},
+			{
+				"RequestId": "62e6dabf-86b6-470b-be00-6bfbff3b3ecb",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/StudentServices/Indicator/SaveNew",
+				"RequestBody": {
+					"payload": {
+						"code": "{{gIndicatorCode}}",
+						"name": "{{gIndicatorName}}",
+						"isActive": true,
+						"campusGroup": {
+							"campusList": [
+								{
+									"campusGroupId": -1,
+									"entityState": 0,
+									"id": -1
+								}
+							]
+						}
+					}
+				},
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 5000,
+				"ResponseBody": {
+					"payload": {}
+				}
+
+			},
+			{
+				"RequestId": "62e6dabf-86b6-470b-be00-6bfbff3b3ecc",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/StudentServices/Indicator/SaveNew",
+				"RequestBody": {
+					"payload": {
+						"code": null,
+						"name": null,
+						"isActive": true,
+						"campusGroup": {
+							"campusList": [
+
+							]
+
+						}
+					}
+				},
+				"ResponseStatus": 400,
+				"ResponseTimeMs": 5000,
+				"ResponseBody": {
+					"payload": null,
+					"notifications": [
+						{
+							"message": "The Code field is required."
+						},
+						{
+							"message": "The Name field is required."
+						},
+						{
+							"message": "This entity requires one or more Campuses."
+						},
+						{
+							"message": "At least one Campus is required."
+						}
+					]
+				}
+
+			},
+			{
+				"RequestId": "e15071e9-e277-48f9-a1ea-6c107eb1e80a",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/Indicators?$select=Id,Name,Code&$filter=Code eq '{{gIndicatorCode}}'",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 5000,
+				"ResponseBody": {}
+			},
+			{
+				"RequestId": "c57a1045-5063-47bf-ae1a-071786763c7f",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/StudentServices/Indicator/Delete",
+				"RequestBody": {},
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 5000,
+				"ResponseBody": {
+					"payload": {
+						"deleted": true
+					}
+				}
+			}
+    ]
+  }
+]

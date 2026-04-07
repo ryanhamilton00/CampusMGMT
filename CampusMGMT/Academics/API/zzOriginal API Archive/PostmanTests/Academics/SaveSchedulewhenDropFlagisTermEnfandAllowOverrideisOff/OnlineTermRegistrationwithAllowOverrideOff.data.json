@@ -1,0 +1,160 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "Enter test description here",
+		"Globals": {
+			"TermCode": "TerCode4",
+			"ProgramName": "ProName1"
+		},
+    "Apis": [
+      {
+        "RequestId": "cd47f2e6-1d88-4efd-9ba3-68c3892acbab",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "9ca4183b-c636-4a79-b0b2-f79b61ffce5d",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff?$filter=Id eq {{gStaffId}}&$select=DefaultSyCampusId",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "525b46b1-e410-41c1-90b2-24ba71c936f8",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Terms?$filter= Code eq '{{gTermCode}}' and IsActive eq true and CampusGroup/CampusList/any(x:x/CampusId eq {{gCampusId}})",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+			{
+				"RequestId": "525b46b1-e410-41c1-90b2-24ba71c936d8",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/Programs/CampusNexus.GetAllProgramList(isActive=true)?&$filter=(IsActive eq true and Name eq '{{gProgramName}}')",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 15000,
+				"ResponseBody": "{\"value\":[]}"
+			},
+      {
+        "RequestId": "2fe4a206-db5c-48b2-ad7d-305a807e9361",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/TermRegistrationSetting/Get",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {
+							"payload": {
+								"data": {
+								      "entity": null,
+									  "validationMessages": []
+								}
+							}
+						}
+      },
+	  {
+        "RequestId": "2fe4a206-db5c-48b2-ad7d-305a807e9362",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/TermRegistrationSetting/Create",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {
+							"payload": {
+								"data": {
+								}
+							}
+						}
+      },
+      {
+        "RequestId": "1323a542-b47a-4413-b9a2-4109f667be3a",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/TermRelationships?$filter= ChildTermId eq {{gTermId}} or ParentTermId eq {{gTermId}}&$top=1",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "bee4f524-bb8b-447c-adce-f852509a29a2",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/ProgramVersions/CampusNexus.GetOnlineProgramVersions(campusId={{gCampusId}},isActive=1)?$expand=items&$filter= id eq {{gProgramId}}",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "9b950128-46e6-4a03-a432-fac983134671",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/TermRegistrationSetting/SaveTermRegistrationSettingAndProgramVersions",
+        "RequestBody": {
+						"payload": {
+							"ProgramVersions": [{
+							"IsOutsideProgramRegistrationAllowed": true
+							}],
+							"TermRegistrationSetting": {
+								"auditMaximumCredits": 0,
+								"classSectionScheduleAvailableDate": null,
+								"classSectionScheduleUnavailableDate": null,
+								"courseSharingEndDateTime": null,
+								"courseSharingStartDateTime": null,
+								"createdDateTime": "@DateNow()",
+								"gradesAvailableDate": null,
+								"isAuditClassAllowed": null,
+								"isBillingSummaryShown": false,
+								"isClassSectionOverrideAllowed": true,
+								"isDropAllowed": false,
+								"isFundingShown": false,
+								"isInvoiceShown": false,
+								"isPaymentAllowed": false,
+								"isReservationAllowed": false,
+								"isUnregistrationAllowed": false,
+								"isWaitlistingAllowed": false,
+								"lastModifiedDateTime": "@DateNow()",
+								"maximumCredits": 0,
+								"minimumCredits": 0,
+								"preRegistrationAvailableDate": null,
+								"reservationConfirmMinutes": 0,
+								"reservationExpirationMinutes": 0,
+								"reservationMaximumCredits": 0,
+								"rowVersion": null,
+								"waitlistMaximumCredits": 0,
+								"extendedProperties": [],
+								"entityState": 0,
+								"progamVersion": {
+									"MinOnlineRegistrationCredits": 0,
+									"MaxOnlineRegistrationCredits": 0
+								}
+							}
+						}
+					},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 25000,
+        "ResponseBody": {
+							"payload": {
+								"data": {
+								}
+							}
+						}
+      },
+	  {
+        "RequestId": "9b950129-46e6-4a03-a432-fac983134671",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/TermRegistrationSetting/Get",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {}
+      }
+    ]
+  }
+]

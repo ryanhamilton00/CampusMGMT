@@ -1,0 +1,297 @@
+	[
+    {
+      "Type": "AdvancedDataFile",
+      "Version": "2.0",
+      "TestDescription": "Check Waive Validations",
+      "Globals": {
+        "StudentSsn": "222-22-0022",
+        "CourseCode": "AudCou001",
+        "EnrollmentPVName1": "Audit Program Version 01",
+        "EnrollmentPVName2": "Audit Program Version 02",
+        "AdjustEnrollments": "false",
+        "Note": "Waived"
+      },
+      "Apis": [
+        {
+          "RequestId": "a89a78ae-ffaa-479a-8c2d-1685e73055c0",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gStudentSsn}}'",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{\"value\":[]}"
+        },
+        {
+          "RequestId": "05febb5e-f716-4402-9b26-6a4adecf5fba",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/StudentEnrollmentPeriodDetails/CampusNexus.GetStudentEnrollmentPeriodList(studentId={{gStudentId}})?$filter=ProgramVersionName eq '{{gEnrollmentPVName1}}'",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "05febb5e-f716-4402-9b26-6a4adecf5fbb",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/StudentEnrollmentPeriodDetails/CampusNexus.GetStudentEnrollmentPeriodList(studentId={{gStudentId}})?$filter=ProgramVersionName eq '{{gEnrollmentPVName2}}'",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "a8f21199-a1cc-4d92-914b-1c94121830fa",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/Courses?$filter=Code eq '{{gCourseCode}}'",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "a8f21199-a1cc-4d92-914b-1c94121830ff",
+          "RequestMethod": "GET",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId1}}/requiredcourses",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f97511ae08c",
+          "RequestMethod": "PUT",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId1}}/waivecourserequirement",
+          "RequestBody": "{\"payload\":{}}",
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": "{true}"
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f97511ae08d",
+          "RequestMethod": "PUT",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId1}}/waivecourserequirement",
+          "RequestBody": "{\"payload\":{}}",
+          "ResponseStatus": 404,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": {
+            "errors": [
+              {
+                "errorCode": "KeyNotFound",
+                "errorMessage": "The specified StudentCourseId does not exist.",
+                "source": {
+                  "field": "StudentCourseId"
+                }
+              },
+              {
+                "errorCode": "RequirementPreviouslyWaived",
+                "errorMessage": "The requirement cannot be waived because it was previously waived.",
+                "source": {
+                  "field": "StudentEnrollmentDpaCourseId"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f97511ae08e",
+          "RequestMethod": "PUT",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/0/waivecourserequirement",
+          "RequestBody": "{\"payload\":{}}",
+          "ResponseStatus": 400,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": {
+            "errors": [
+              {
+                "errorCode": "InvalidKeyValue",
+                "errorMessage": "A valid StudentEnrollmentPeriodId is required.",
+                "source": {
+                  "field": "StudentEnrollmentPeriodId"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f97511ae08f",
+          "RequestMethod": "PUT",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/-1/waivecourserequirement",
+          "RequestBody": "{\"payload\":{}}",
+          "ResponseStatus": 400,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": {
+            "errors": [
+              {
+                "errorCode": "InvalidKeyValue",
+                "errorMessage": "A valid StudentEnrollmentPeriodId is required.",
+                "source": {
+                  "field": "StudentEnrollmentPeriodId"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f97511ae08g",
+          "RequestMethod": "PUT",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/787878/waivecourserequirement",
+          "RequestBody": "{\"payload\":{}}",
+          "ResponseStatus": 404,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": {
+            "errors": [
+              {
+                "errorCode": "KeyNotFound",
+                "errorMessage": "The specified StudentEnrollmentPeriodId does not exist.",
+                "source": {
+                  "field": "StudentEnrollmentPeriodId"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f97511ae08h",
+          "RequestMethod": "PUT",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId1}}/waivecourserequirement",
+          "RequestBody": "{\"payload\":{}}",
+          "ResponseStatus": 400,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": {
+            "errors": [
+              {
+                "errorCode": "InvalidKeyValue",
+                "errorMessage": "A valid StudentEnrollmentDpaCourseId is required.",
+                "source": {
+                  "field": "StudentEnrollmentDpaCourseId"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f97511ae08i",
+          "RequestMethod": "PUT",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId1}}/waivecourserequirement",
+          "RequestBody": "{\"payload\":{}}",
+          "ResponseStatus": 400,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": {
+            "errors": [
+              {
+                "errorCode": "InvalidKeyValue",
+                "errorMessage": "A valid StudentEnrollmentDpaCourseId is required.",
+                "source": {
+                  "field": "StudentEnrollmentDpaCourseId"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f97511ae08j",
+          "RequestMethod": "PUT",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId1}}/waivecourserequirement",
+          "RequestBody": "{\"payload\":{}}",
+          "ResponseStatus": 404,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": {
+            "errors": [
+              {
+                "errorCode": "KeyNotFound",
+                "errorMessage": "The specified StudentEnrollmentDpaCourseId does not exist.",
+                "source": {
+                  "field": "StudentEnrollmentDpaCourseId"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f97511ae08k",
+          "RequestMethod": "PUT",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId2}}/waivecourserequirement",
+          "RequestBody": "{\"payload\":{}}",
+          "ResponseStatus": 404,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": {
+            "errors": [
+              {
+                "errorCode": "KeyNotFound",
+                "errorMessage": "The specified StudentEnrollmentDpaCourseId does not exist.",
+                "source": {
+                  "field": "StudentEnrollmentDpaCourseId"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f97511ae08l",
+          "RequestMethod": "PUT",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId1}}/waivecourserequirement",
+          "RequestBody": "{\"payload\":{}}",
+          "ResponseStatus": 400,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": {
+            "errors": [
+              {
+                "errorCode": "InvalidKeyValue",
+                "errorMessage": "A valid StudentCourseId is required.",
+                "source": {
+                  "field": "StudentCourseId"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f97511ae08m",
+          "RequestMethod": "PUT",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId1}}/waivecourserequirement",
+          "RequestBody": "{\"payload\":{}}",
+          "ResponseStatus": 400,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": {
+            "errors": [
+              {
+                "errorCode": "InvalidKeyValue",
+                "errorMessage": "A valid StudentCourseId is required.",
+                "source": {
+                  "field": "StudentCourseId"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f97511ae08n",
+          "RequestMethod": "PUT",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId1}}/waivecourserequirement",
+          "RequestBody": "{\"payload\":{}}",
+          "ResponseStatus": 404,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": {
+            "errors": [
+              {
+                "errorCode": "KeyNotFound",
+                "errorMessage": "The specified StudentCourseId does not exist.",
+                "source": {
+                  "field": "StudentCourseId"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f97511ae08o",
+          "RequestMethod": "POST",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId1}}/waivecourserequirement",
+          "RequestBody": "{\"payload\":{}}",
+          "ResponseStatus": 405,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": {}
+        }
+      ]
+    }
+	]

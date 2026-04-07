@@ -1,0 +1,152 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "This API will run Validations to confirm the correct error responses are given",
+    "Globals": {
+		"StudentSsn": "111-22-0011"
+				},
+    "Apis": [
+	{
+        "RequestId": "3184d426-9bc1-4656-85da-a41e74055d6b",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Students/CampusNexus.GetStudentsForSearch(searchText='{{gStudentSsn}}',refines='', campusId=0,advancedSearchCriteriaId=0)?",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+	  {
+        "RequestId": "9b281d89-e25e-4f31-b728-3140a30205bd",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Common/Student/get",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {}
+      },
+      {
+        "RequestId": "3184d426-9bc1-4656-85da-a41e74055d5a",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/StudentAthleticDetail/Create",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {}
+      },
+      {
+        "RequestId": "40cb7bad-8ac9-4113-8d79-5cc7377cd749",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Sports?$filter=IsActive eq true&$orderby =Name",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "d657433b-7b33-4e61-9ebf-e1024dc9061f",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentAthleteRecruitmentTypes?$filter=IsActive eq true&$orderby =Name",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "17f51c80-e2d2-4e57-a2c6-be60dae2e59d",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/AthleticStatuses?$filter=IsActive eq true&$orderby =Name",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "fc199d63-25e1-416f-aa0b-3fdb65f394be",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Terms/CampusNexus.GetEnrollmentTermList(campusId={{gCampusId}},schoolStartdateId=0,adProgramVersionId=0,adFromAddEnroll=true)?$select=Id,Name,Code,StartDate,EndDate,StudentRegisterStartDate,StudentRegisterEndDate&$filter=IsActive eq true&$top=5",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "fa5c5897-e249-4a28-a326-84900dfc6563",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/StudentAthleticDetail/SaveNew",
+        "RequestBody": {
+				  "payload": {
+					  "athleticIdentifier": "12",
+					  "remainingEligibility": "3",
+					  "isStudentAthleticIdentifierUpdated": true
+							 }
+						},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {}
+      },
+	  {
+        "RequestId": "fa5c5897-e249-4a28-a326-84900dfc6574",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/StudentAthleticDetail/Save",
+        "RequestBody": {
+				  "payload": {
+					  "athleticIdentifier": "-5",
+					  "remainingEligibility": "-2",
+					  "isStudentAthleticIdentifierUpdated": true
+							 }
+						},
+        "ResponseStatus": 400,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {
+					"payload": null,
+					"notifications": [{
+						"message": "Remaining Eligibility must be less than or equal to 4 years."
+    }]
+}
+      },
+	  {
+        "RequestId": "fa5c5897-e249-4a28-a326-84900dfc6585",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/StudentAthleticDetail/Save",
+        "RequestBody": {
+				  "payload": {
+					  "athleticIdentifier": "1234",
+					  "remainingEligibility": "3",
+					  "isStudentAthleticIdentifierUpdated": true
+							 }
+						},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {}
+      },
+      {
+        "RequestId": "b253692d-deb2-4f69-a995-3947c4f57ebf",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentAthleticDetails?$filter= StudentId eq {{gStudentId}}",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "e5136174-a207-4959-8fde-b42c1c8f853a",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/StudentAthleticDetail/Get",
+        "RequestBody": {},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {"payload": {}}
+      },
+	  {
+        "RequestId": "e5136174-a207-4959-8fde-b42c1c8f854b",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/StudentAthleticDetail/Delete",
+        "RequestBody": {},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {"payload": {}}
+      }
+    ]
+  }
+]

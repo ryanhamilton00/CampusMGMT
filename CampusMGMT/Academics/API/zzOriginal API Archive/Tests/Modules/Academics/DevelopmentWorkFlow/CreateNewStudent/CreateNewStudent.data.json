@@ -1,0 +1,225 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "Create New Student",
+    "Globals": {
+      "FirstName": "Deployment",
+      "MiddleName": "Test",
+      "LastName": "Workflow",
+      "DateofBirth": "1990/03/03 00:00:00",
+      "EmailId": "test@test.com",
+      "MobilePhoneNumber": "(111)111-2222",
+      "CountryCode": "USA",
+      "Nationality": "America",
+      "Citizenship": "US Citizen",
+      "PostalCode": "10121"
+    },
+    "Apis": [
+      {
+        "RequestId": "cd47f2e6-1d88-4efd-9ba3-68c3892acbab",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,PersonId",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+	  {
+        "RequestId": "5f7792d1-4c34-40e7-bedb-a909f2d739df",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Common/Student/Create",
+        "RequestBody": "{}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {
+							"payload": {},
+							"notifications": [],
+							"hasError": false,
+							"hasFault": false,
+							"hasWarning": false,
+							"hasValidationError": false,
+							"hasValidationWarning": false,
+							"hasValidationInformation": false,
+							"hasSecurityError": false
+						}
+      },
+      {
+        "RequestId": "16994e90-e0be-4749-a1dc-5cf790eefff1",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff?$select=Id,DefaultSyCampusId,IsAllowedContactManagerShowAllOption&$expand=CampusGroup($select=Id;$expand=CampusList($select=CampusId,IsCampusActive))&$filter=PersonId eq {{gPersonId}}",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "c609cbe2-dc06-41a2-8fe6-7adb2501bf12",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/SchoolStatuses?$filter=Code eq 'NEW'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "ed082657-9838-40b8-88a9-e6977cecb906",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Countries?$filter=IsActive eq true and Code eq '{{gCountryCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "a2ed7fb8-3b71-40d3-946e-f2fce4827e0b",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Nationalities?$filter=IsActive eq true and contains(Name,'{{gNationality}}')",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "6c4303c3-1d65-4bbf-a787-3190d285e75a",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/UsaStates?$filter=IsActive eq true&$orderby=Code",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "5bc3c133-6871-4c84-bc90-b81bb91551a6",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Citizens?$filter=IsActive eq true and Name eq '{{gCitizenship}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "a244cbfe-d96e-4111-993c-8d4117da277d",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Genders?$filter=IsActive eq true&$orderby=Name",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "d06a83f4-288d-41bb-b4b3-d19f910824b2",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/PostalCodeList?$select=Id,City,State,PostalCode&$filter = PostalCode eq '{{gPostalCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "45b8225f-38e3-4f2a-a50e-d37cea0249f8",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/LeadSources?$filter=CampusGroup/CampusList/any(x: x/Campus/Id eq {{gCampusId}})and IsActive eq true&$orderby=Name",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "d351c9fd-6481-412b-b939-ea94a5f9a743",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/LeadTypes?$filter=IsActive eq true&$orderby=Name",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "ca77782a-3688-40d7-868f-b870dbaa35af",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/LeadSourceLeadVendors/CampusNexus.GetLeadSourceLeadVendorList(syOrganizationId=null,leadSourceId=null,studentId=-1,campusId={{gCampusId}},isActive=true,isStudentMaster=true,prospectInquiryId=0)?$orderby=OrganizationName",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "923fe82d-6531-44f5-9173-93bc649a21d0",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/AdmissionsReps?$select=Name,Code,Id,IsActive&$format=json&$top=50&$orderby=Name&$count=true&$filter=((IsActive eq true and CampusGroup/CampusList/any(x: x/CampusId eq {{gCampusId}})) or Id eq 0)",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "be04ebf0-37d6-4474-898a-0fcb757771f3",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Common/Student/SaveNew",
+        "RequestBody": {
+          "payload": {
+            "vendors": [
+              {
+                "SyOrganizationId": -1
+              }
+            ],
+            "id": -1,
+            "createdDateTime": "@DateNow()",
+            "dateOfBirth": "{{gDateofBirth}}",
+            "emailAddress": "{{gEmailId}}",
+            "firstName": "{{gFirstName}}",
+            "isActive": true,
+            "lastModifiedDateTime": "@DateNow()",
+            "lastName": "{{gLastName}}",
+            "leadDate": "@DateNow()",
+            "middleName": "{{gMiddleName}}",
+            "mobilePhoneNumber": "{{gMobilePhoneNumber}}",
+            "preferredContactType": "Mobile",
+            "ssn": "{{gWorkflowStudentSSN}}",
+            "startDate": "@DateNow()",
+            "streetAddress": "Test Address 1",
+            "ethnicity": [],
+            "extraCurricular": [],
+            "oldAssignedAdmissionsRepId": 0,
+            "deleteInquiryDetails": true,
+            "fullName": "{{gFirstName}}",
+            "age": null,
+            "niStudentEnabled": false,
+            "leadTime": null,
+            "StudentInquiryRequired": false,
+            "ExtraCurricularActivitiesList": []
+          }
+					},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 25000,
+        "ResponseBody": {
+							"payload": {},
+							"notifications": [],
+							"hasError": false,
+							"hasFault": false,
+							"hasValidationError": false,
+							"hasSecurityError": false
+						}
+      },
+      {
+        "RequestId": "3b65936b-2d82-4b66-95ca-581d6ddf1797",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Common/Student/get",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {
+							"payload": {},
+							"notifications": [],
+							"hasError": false,
+							"hasFault": false,
+							"hasWarning": false,
+							"hasValidationError": false,
+							"hasValidationWarning": false,
+							"hasValidationInformation": false,
+							"hasSecurityError": false
+						}
+      }
+    ]
+  }
+]

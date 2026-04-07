@@ -1,0 +1,222 @@
+[
+    {
+        "Type": "AdvancedDataFile",
+        "Version": "2.0",
+        "TestDescription": "This API will enable  Ferpa Record for a student in Contact Manager",
+        "Globals": {
+              "StudentSsn": "111-33-0066"
+      },
+        "Apis": [
+            {
+                "RequestId": "00000000-0000-0000-0000-000000000000",
+                "RequestMethod": "GET",
+                "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+                "RequestBody": null,
+                "ResponseStatus": 200,
+                "ResponseTimeMs": 10000,
+                "ResponseBody": "{\"value\":[]}"
+            },
+            {
+              "RequestId": "00000000-0000-0000-0000-000000000001",
+              "RequestMethod": "GET",
+              "RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gStudentSsn}}'",
+              "RequestBody": null,
+              "ResponseStatus": 200,
+              "ResponseTimeMs": 10000,
+              "ResponseBody": "{\"value\":[]}"
+            },
+            {
+                "RequestId": "00000000-0000-0000-0000-000000000002",
+                "RequestMethod": "GET",
+                "RequestUrl": "/ds/campusnexus/StudentRelationshipAddresses?$select=Id,FirstName,LastName,FullName&$expand=AddressType($select=Id,Code,IsShownFerpa)&$format=json&$count=true&$filter=AddressType/IsShownFerpa eq true and StudentId eq {{gStudentId}}&$orderby=LastName",
+                "RequestBody": null,
+                "ResponseStatus": 200,
+                "ResponseTimeMs": 10000,
+                "ResponseBody": "{\"value\":[]}"
+            },
+            {
+                "RequestId": "00000000-0000-0000-0000-000000000003",
+                "RequestMethod": "GET",
+                "RequestUrl": "/ds/campusnexus/FerpaStudentReleaseAcademicFields/CampusNexus.GetFerpaAcademicFieldsShared(ferpaStudentRelationshipId = {{gFERPASRId}})?$orderby=Name",
+                "RequestBody": null,
+                "ResponseStatus": 200,
+                "ResponseTimeMs": 10000,
+                "ResponseBody": "{\"value\":[]}"
+            },
+            {
+                "RequestId": "00000000-0000-0000-0000-000000000005",
+                "RequestMethod": "POST",
+                "RequestUrl": "/api/commands/Crm/FerpaStudentRelationship/Create",
+                "RequestBody": {
+                    "payload": {}
+                },
+                "ResponseStatus": 200,
+                "ResponseTimeMs": 5000,
+                "ResponseBody": {
+                    "payload": {}
+                }
+            },
+            {
+                "RequestId": "00000000-0000-0000-0000-000000000006",
+                "RequestMethod": "POST",
+                "RequestUrl": "/api/commands/Crm/FerpaStudentRelationship/SaveNew",
+                "RequestBody": {
+                    "payload": {
+                        "isActive": true,
+                        "isAllowedToAmend": true,
+                        "isAllowedToReview": true,
+                        "reason": "Reason",
+                        "description": "Access Name",
+                        "shareInfoStartDate": "@DateNow(-10)",
+                        "shareInfoEndDate": "@DateNow(+30)"
+                    }
+                },
+                "ResponseStatus": 200,
+                "ResponseTimeMs": 5000,
+                "ResponseBody": {
+                    "payload": {}
+                }
+            },
+            {
+                "RequestId": "00000000-0000-0000-0000-000000000007",
+                "RequestMethod": "GET",
+                "RequestUrl": "/ds/campusnexus/FerpaStudentRelationships/CampusNexus.GetFerpaRequestedByAddress(studentId={{gStudentId}},isReviewRequest=true)?",
+                "RequestBody": null,
+                "ResponseStatus": 200,
+                "ResponseTimeMs": 10000,
+                "ResponseBody": "{\"value\":[]}"
+            },
+            {
+                "RequestId": "00000000-0000-0000-0000-000000000008",
+                "RequestMethod": "POST",
+                "RequestUrl": "/api/commands/Crm/FerpaStudentRelationshipInfoShareDetail/SaveNew",
+                "RequestBody": {
+                    "payload": {
+                        "effectiveDate": "@DateNow(+15)",
+                        "requestedDate": "@DateNow",
+                        "infoShareType": 1,
+                        "ferpaStudentRelationshipId": null
+                    }
+                },
+                "ResponseStatus": 200,
+                "ResponseTimeMs": 5000,
+                "ResponseBody": {
+                    "payload": {}
+                }
+            },
+            {
+                "RequestId": "00000000-0000-0000-0000-000000000012",
+                "RequestMethod": "GET",
+                "RequestUrl": "/ds/campusnexus/FerpaStudentRelationshipInfoShareDetails/CampusNexus.GetFerpaReviewRequestedData(studentId={{gStudentId}},infoShareType=1,ferpaStudentRelationshipId=null)",
+                "RequestBody": null,
+                "ResponseStatus": 200,
+                "ResponseTimeMs": 10000,
+                "ResponseBody": "{\"value\":[]}"
+            },
+            {
+                "RequestId": "00000000-0000-0000-0000-000000000009",
+                "RequestMethod": "GET",
+                "RequestUrl": "/ds/campusnexus/FerpaStudentRelationshipInfoShareDetails/CampusNexus.GetFerpaStudentRelationshipInfoShareDetail(studentId=264154,ferpaStudentInfoRequestId={{gFerpaId}})",
+                "RequestBody": null,
+                "ResponseStatus": 200,
+                "ResponseTimeMs": 10000,
+                "ResponseBody": "{\"value\":[]}"
+            },
+            {
+                "RequestId": "00000000-0000-0000-0000-000000000010",
+                "RequestMethod": "POST",
+                "RequestUrl": "/api/commands/Crm/FerpaStudentRelationshipInfoShareDetail/SaveNew",
+                "RequestBody": {
+                    "payload": {
+                        "effectiveDate": "@DateNow",
+                        "requestedDate": "@DateNow",
+                        "infoShareType": 2,
+                        "ferpaStudentRelationshipId": null,
+                        "studentRelationshipAcademicInfo": [
+                            {
+                                "isAmendSelected": true,
+								"isRemovedSelected": false,
+								"createdDateTime": "@DateNow()"
+                            },
+                            {
+                                "isAmendSelected": true,
+								"isRemovedSelected": false,
+								"createdDateTime": "@DateNow()"
+                            },
+                            {
+                                "isAmendSelected": true,
+								"isRemovedSelected": false,
+								"createdDateTime": "@DateNow()"
+                            },
+                            {
+                                "isAmendSelected": true,
+								"isRemovedSelected": false,
+								"createdDateTime": "@DateNow()"
+                            },
+                            {
+                                "isAmendSelected": true,
+								"isRemovedSelected": false,
+								"createdDateTime": "@DateNow()"
+                            },
+                            {
+                                "isAmendSelected": true,
+								"isRemovedSelected": false,
+								"createdDateTime": "@DateNow()"
+                            }
+                        ]
+                    }
+                },
+                "ResponseStatus": 200,
+                "ResponseTimeMs": 5000,
+                "ResponseBody": {"payload": {}}
+            },
+            {
+                "RequestId": "00000000-0000-0000-0000-000000000011",
+                "RequestMethod": "POST",
+                "RequestUrl": "/api/commands/Crm/FerpaStudentRelationshipInfoShareDetail/SaveNew",
+                "RequestBody": {
+                    "payload": {
+                        "effectiveDate": "@DateNow",
+                        "requestedDate": "@DateNow",
+                        "infoShareType": 2,
+                        "ferpaStudentRelationshipId": null,
+                        "studentRelationshipAcademicInfo": [
+                            {
+                                "isRemovedSelected": true,
+								"createdDateTime": "@DateNow()"
+                            },
+                            {
+								"isAmendSelected": false,
+                                "isRemovedSelected": true,
+								"createdDateTime": "@DateNow()"
+                            },
+                            {
+								"isAmendSelected": false,
+                                "isRemovedSelected": true,
+								"createdDateTime": "@DateNow()"
+                            },
+                            {
+								"isAmendSelected": false,
+                                "isRemovedSelected": true,
+								"createdDateTime": "@DateNow()"
+                            },
+                            {
+								"isAmendSelected": false,
+                                "isRemovedSelected": true,
+								"createdDateTime": "@DateNow()"
+                            },
+                            {
+								"isAmendSelected": false,
+                                "isRemovedSelected": true,
+								"createdDateTime": "@DateNow()"
+                            }
+                        ]
+                    }
+                },
+                "ResponseStatus": 200,
+                "ResponseTimeMs": 5000,
+                "ResponseBody": {"payload": {}}
+            }
+        ]
+    }
+]

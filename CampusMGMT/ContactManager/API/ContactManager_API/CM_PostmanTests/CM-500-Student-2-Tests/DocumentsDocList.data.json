@@ -1,0 +1,83 @@
+[
+	{
+		"Type": "AdvancedDataFile",
+		"Version": "2.0",
+		"TestDescription": "This API will create a Document List for a student in Contact Manager",
+		"Globals": {
+			"StudentSsn": "111-33-0066"
+		},
+		"Apis": [
+			{
+				"RequestId": "00000000-0000-0000-0000-000000000000",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 10000,
+				"ResponseBody": "{\"value\":[]}"
+			},
+			{
+				"RequestId": "00000000-0000-0000-0000-000000000001",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gStudentSsn}}'",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 10000,
+				"ResponseBody": "{\"value\":[]}"
+			},
+			{
+				"RequestId": "00000000-0000-0000-0000-000000000002",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/Modules?$select=Id,Code,Name&$filter=Code eq 'CM'&$orderby=Name",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 10000,
+				"ResponseBody": "{\"value\":[]}"
+			},
+			{
+				"RequestId": "00000000-0000-0000-0000-000000000003",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/DocumentTypeLists?$select=Id,Code,Name&$filter=(ModuleId eq {{gModuleId}} and CampusGroup/CampusList/any(c: c/CampusId eq {{gCampusId}}) and IsActive eq true) or Id eq 0&$orderby=Name",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 10000,
+				"ResponseBody": "{\"value\":[]}"
+			},
+			{
+				"RequestId": "00000000-0000-0000-0000-000000000004",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/DocumentStatuses?$select=Id,Code,Name,IsApproved&$filter=IsActive eq true&$orderby=Name",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 10000,
+				"ResponseBody": "{\"value\":[]}"
+			},
+			{
+				"RequestId": "00000000-0000-0000-0000-000000000006",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/StudentEnrollmentPeriodDetails/CampusNexus.GetStudentEnrollmentPeriodList(studentId={{gStudentId}})?$select=Id",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 10000,
+				"ResponseBody": "{\"value\":[]}"
+			},
+			{
+				"RequestId": "00000000-0000-0000-0000-000000000005",
+				"TypeDescription": "Create Task",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/crm/Document/AddDocumentListForStudent",
+				"RequestBody": {
+					"payload": {
+						"DateRequested": "@DateNow",
+						"AwardYear": null,
+						"DateApproved": null,
+						"StudentPlacementId": null
+					}
+				},
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 5000,
+				"ResponseBody": { "payload": {} }
+			}
+		]
+	}
+]

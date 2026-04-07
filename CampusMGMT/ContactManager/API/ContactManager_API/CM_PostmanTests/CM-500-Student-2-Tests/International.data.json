@@ -1,0 +1,197 @@
+[{
+	"Type": "AdvancedDataFile",
+	"Version": "2.0",
+	"TestDescription": "This API will create an Agency Affiliation Record for a student in Contact Manager",
+	"Globals": {
+		"VisaType": "F-1",
+		"StudentSsn": "111-33-0066"
+	},
+	"Apis": [{
+			"RequestId": "00000000-0000-0000-0000-000000000000",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000001",
+			"TestDescription": "Get Student info from SSN",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gStudentSsn}}'",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000005",
+			"TestDescription": "Get Transmission Status",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/PropertyEnumValues/CampusNexus.GetTransStatus(studentId={{gStudentId}})?$filter=Code eq 'R'",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000006",
+			"TestDescription": "Get Visa Types",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/VisaTypes?&$format=json&$count=true&$filter=Name eq '{{gVisaType}}'",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000007",
+			"TestDescription": "Get Action",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/PropertyEnumValues?$select=Code,ValueDescription&$format=json&$count=true&$filter=TableName eq 'SyStudentNI' and ColumnName eq 'FormPurpose' and (Code eq 'I' or Code eq 'S')&$orderby=Code",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000008",
+			"TestDescription": "Get Citizenship",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/SevisCountries?$select=Id,Code,Name&$format=json&$count=true",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000011",
+			"TestDescription": "Get Enrollment ID",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/StudentEnrollmentPeriodDetails/CampusNexus.GetStudentEnrollmentPeriodList(studentId={{gStudentId}})?$select=Id",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000009",
+			"TestDescription": "Get Enrollment Details",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/StudentEnrollmentPeriods?$filter=Id eq {{gEnrollId}}&$expand=Campus($select=StreetAddress, City, State, PostalCode),ProgramVersion($select=IsEnglishProficiencyRequired,EnglishProficiencyNotRequiredReason),SchoolStatus($select=Name)&$select=Id,ProgramVersionName,ExpectedStartDate,GraduationDate",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000010",
+			"TestDescription": "Get Education Level",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/PropertyEnumValues?$select=Code,ValueDescription&$format=json&$count=true&$filter=TableName eq 'SyStudentNI' and ColumnName eq 'EduLevel' and (Code ne '08' and Code ne '09' and Code ne '10')&$orderby=ValueDescription",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000012",
+			"TestDescription": "Get Sevis Major",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/SevisMajors?$select=Id,Code,Name&$top=5",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000013",
+			"TestDescription": "Get Sevis Major",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/AddressTypes?$filter=Code eq 'SUSADDR' or Code eq 'SFORADDR'",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000014",
+			"TestDescription": "Get Sevis Major",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/PostalCodeList?$select=Id,City,State,PostalCode&$top=25&$orderby=PostalCode",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000002",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Crm/SevisStudent/SetInternationalStudent",
+			"RequestBody": {
+				"payload": {}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {
+				"payload": {}
+			}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000003",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Crm/SevisStudent/Create",
+			"RequestBody": {
+				"payload": {}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {
+				"payload": {}
+			}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000004",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Crm/SevisStudent/SaveNew",
+			"RequestBody": {
+				"payload": {
+					"iscptFullTime": false,
+					"costOfAttendance": 10.0,
+					"livingExpense": 10.0,
+					"personalFundAmount": 10.0,
+					"englishProficiencyNotRequiredReason": "English Proficiency Not Required Reason",
+					"foreignAddress": {
+						"streetAddress": "streetAddress",
+						"phoneNumber": "1234567890",
+						"streetAddress2":"",
+						"workPhoneNumber":""
+					},
+					"usAddress": {
+						"streetAddress": "streetAddress",
+						"phoneNumber": "1234567890",
+						"streetAddress2":"",
+						"workPhoneNumber":""
+					}
+				}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000015",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Crm/SevisStudent/Get",
+			"RequestBody": {
+				"payload": {}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {
+				"payload": {}
+			}
+		}
+	]
+}]

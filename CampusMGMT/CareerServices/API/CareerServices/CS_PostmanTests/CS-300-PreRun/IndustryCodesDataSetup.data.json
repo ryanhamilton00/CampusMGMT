@@ -1,0 +1,111 @@
+[{
+	"Type": "AdvancedDataFile",
+	"Version": "2.0",
+	"TestDescription": "This API will create an Skill (Config-CS-Skill)",
+	"Globals": {
+		"Name": "IndustryName",
+		"Code": "IndCode"
+	},
+	"Apis": [
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000012",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Industries/CampusNexus.GetIndustriesWithSICCodeDetail()?$select=Id,Name,Code,IsActive,CampusGroupId,SicCode,SicName&$expand=CampusGroup($select=Id;$expand=CampusList($select=Id;$expand=Campus($select=Id,Name)))&$filter=Name eq '{{gName}}'",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000000",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000011",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/SicCodes?%24format=json&%24count=true&%24orderby=Name",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000001",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Common/Industry/Create",
+			"RequestBody": "{}",
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {
+				"payload": {}
+			}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000002",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Common/Industry/SaveNew",
+			"RequestBody": {
+				"payload": {
+					"code": "{{gCode}}",
+					"name": "{{gName}}",
+					"id": -1,
+					"campusGroupId": 1,
+					"createdDateTime": "@DateNow",
+					"isActive": true,
+					"extendedProperties": [],
+					"entityState": 0
+				}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000003",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Common/Industry/Get",
+			"RequestBody": {
+				"payload": {}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000004",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus//IndustryProgramVersions/CampusNexus.GetProgramVersionCanAssignDetail(industryId={{gIndustryId}})?$select=Id,Code,Name&%24format=json&%24top=50&%24orderby=Code&%24filter=IsActive%20eq%20true&%24count=true",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000005",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/CareerServices/IndustryProgramVersion/SaveNew",
+			"RequestBody": {
+				"payload": {}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000009",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Common/Industry/Get",
+			"RequestBody": {
+				"payload": {}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {}
+		}
+	]
+}]

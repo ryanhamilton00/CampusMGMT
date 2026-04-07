@@ -1,0 +1,102 @@
+	[
+    {
+      "Type": "AdvancedDataFile",
+      "Version": "2.0",
+      "TestDescription": "AddPreReqtoCourse",
+      "Globals": {
+        "CourseCode": "AudCou001",
+        "CoReqCourseCode": "AudCou004"
+      },
+      "Apis": [
+        {
+          "RequestId": "a8f21199-a1cc-4d92-914b-1c94121830fa",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "afa18136-e1dd-4c80-a59d-a8d569d97635",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/Courses?$filter=Code eq '{{gCourseCode}}'",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "8a8b0db0-8a03-40ad-baa0-7eae87f4a159",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/Courses/CampusNexus.GetPrerequisiteCampusCourses(campusId={{gCampusId}})?$select=Id,ClockHours,Code,CreditHours,IsActive&$filter = contains(Code,'{{gCoReqCourseCode}}')",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f97511ae08a",
+          "RequestMethod": "POST",
+          "RequestUrl": "/api/commands/Academics/Course/SaveCoursePrerequisiteDetails",
+          "RequestBody": {
+            "payload": {
+              "IsCoRequisite": true,
+              "CourePrerequisiteRuleList": [
+                {
+                  "name": "",
+                  "id": 1,
+                  "parentCousePrerequisiteRuleId": null,
+                  "courseId": "{{gCourseId}}",
+                  "numberRequired": null,
+                  "ruleType": "C",
+                  "operator": "And"
+                },
+                {
+                  "name": "Rule 1 :",
+                  "id": 2,
+                  "parentCousePrerequisiteRuleId": 1,
+                  "courseId": "{{gCourseId}}",
+                  "numberRequired": 1,
+                  "ruleType": "C",
+                  "operator": "",
+                  "preAndCorequisiteCourseList": [
+                    {
+                      "name": "",
+                      "id": 2,
+                      "parentCousePrerequisiteRuleId": 1,
+                      "courseId": "{{gCoReqCourseId}}",
+                      "numberRequired": null,
+                      "ruleType": "C",
+                      "minimumGpaRequired": 0,
+                      "operator": null
+                    }
+                  ]
+                }
+              ],
+              "CoursePrerequisiteTests": [],
+              "CoursePrerequisiteDocuments": [],
+              "CoursePrerequisiteList": []
+            }
+          },
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 25000,
+          "ResponseBody": {
+                            "payload": {
+                              "data": {
+                                "validationMessages": []
+                              }
+                            },
+                            "notifications": [],
+                            "hasError": false,
+                            "hasFault": false,
+                            "hasWarning": false,
+                            "hasValidationError": false,
+                            "hasValidationWarning": false,
+                            "hasValidationInformation": false,
+                            "hasSecurityError": false
+                          }
+        }
+      ]
+    }
+]

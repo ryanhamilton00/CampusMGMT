@@ -1,0 +1,118 @@
+[
+	{
+		"Type": "AdvancedDataFile",
+		"Version": "2.0",
+		"TestDescription": "GeneralCancelPolicyOnandStaffPolicyOnforlimitedaccess",
+		"Globals": {
+			"SettingName": "Allow Cancel Class Section",
+			"SettingValue": "1",
+			"StaffName": "Sardar, Swanand"
+		},
+		"Apis": [
+			{
+				"RequestId": "688ec118-4430-486e-a256-67a2b3541352",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/CampusNexusStudentSettings?$select=SettingName,SettingValue,ShortDisplayText,LongDisplayText,LastModifiedDateTime,LastModifiedUserId,ValidValues,DisplayControlType&$expand=LastModifiedUser($select=FullName)&$filter=contains(ShortDisplayText,'{{gSettingName}}')",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 15000,
+				"ResponseBody": { "value": [] }
+			},
+			{
+				"RequestId": "40a53023-1359-43dc-b79e-26a3731f4ca1",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/Common/CampusNexusStudentSetting/SaveCampusNexusStudentSettings",
+				"RequestBody": {
+					"payload": {
+						"campusNexusStudentSettingList": [
+							{
+								"settingValue": "{{gSettingValue}}"
+							}
+						]
+					}
+				},
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 15000,
+				"ResponseBody": {
+					"payload": {
+						"data": {
+							"campusNexusStudentSettingList": [
+								{
+									"shortDisplayText": "Allow Cancel Class Section",
+									"settingValue": "1"
+								}
+							],
+							"validationMessages": []
+						}
+					},
+					"notifications": [],
+					"hasError": false,
+					"hasFault": false,
+					"hasWarning": false,
+					"hasValidationError": false,
+					"hasValidationWarning": false,
+					"hasValidationInformation": false,
+					"hasSecurityError": false
+				}
+			},
+			{
+				"RequestId": "ae37c36b-b1e7-4bf4-81c3-d05e15286dec",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetStaffPasswordRuleProfile()?$filter=contains(FullName,'{{gStaffName}}')",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 15000,
+				"ResponseBody": { "value": [] }
+			},
+			{
+				"RequestId": "924e167e-fbbc-4ac3-b071-4d74ad2f23b9",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/Common/Staff/Get",
+				"RequestBody": "{\"payload\":{}}",
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 15000,
+				"ResponseBody": {
+					"payload": {
+						"data": {
+						}
+					},
+					"notifications": [],
+					"hasError": false,
+					"hasFault": false,
+					"hasWarning": false,
+					"hasValidationError": false,
+					"hasValidationWarning": false,
+					"hasValidationInformation": false,
+					"hasSecurityError": false
+				}
+			},
+			{
+				"RequestId": "0b7d91cf-416f-48c3-8f3c-207c6bb8a359",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/Common/Staff/Save",
+				"RequestBody": {
+					"payload": {
+						"isAllowedToCancelClassSection": true
+					}
+				},
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 15000,
+				"ResponseBody": {
+					"payload": {
+						"data": {
+							"isAllowedToCancelClassSection": true
+						}
+					},
+					"notifications": [],
+					"hasError": false,
+					"hasFault": false,
+					"hasWarning": false,
+					"hasValidationError": false,
+					"hasValidationWarning": false,
+					"hasValidationInformation": false,
+					"hasSecurityError": false
+				}
+			}
+		]
+	}
+]

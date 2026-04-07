@@ -1,0 +1,122 @@
+[{
+	"Type": "AdvancedDataFile",
+	"Version": "2.0",
+	"TestDescription": "Enter test description here",
+	"Globals": {
+		"EnrollmentPVName": "Fashion Marketing",
+		"CourseStatus": "Scheduled",
+		"CourseCode": "!COURSE"
+	},
+	"Apis": [
+		{
+			"RequestId": "7368b43a-1c07-47b2-bac8-9f218888da4a",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gWorkflowStudentSSN}}'",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {
+				"value": []
+			}
+		},
+		{
+			"RequestId": "0e8fcb1c-77f9-4d54-b0c1-69707e5ece28",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Common/Student/get",
+			"RequestBody": {
+				"payload": {}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {}
+		},
+		{
+			"RequestId": "91d9dfab-5da2-4511-b838-880bf458c542",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/StudentEnrollmentPeriodDetails/CampusNexus.GetStudentEnrollmentPeriodList(studentId={{gStudentId}})?$filter=ProgramVersionName eq '{{gEnrollmentPVName}}'",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {
+				"value": []
+			}
+		},
+		{
+			"RequestId": "ed910f61-e002-4cca-a87d-c65cf5e1ab58",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Academics/StudentEnrollmentPeriod/Get",
+			"RequestBody": {
+				"payload": {}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {}
+		},
+		{
+			"RequestId": "aba7f793-8c4d-4cbf-a3f3-2533e48248c8",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/StudentCourseSchedules/CampusNexus.GetStudentCourseSchedule(studentEnrollmentPeriodId={{gEnrollmentId}},studentId={{gStudentId}},termId=0,status='')?$filter=(StatusName eq '{{gCourseStatus}}' and CourseCode eq '{{gCourseCode}}')",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {
+				"value": []
+			}
+		},
+		{
+			"RequestId": "74495346-5e6c-4887-b8a2-06c4015dd412",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Academics/StudentCourse/Get",
+			"RequestBody": {
+				"payload": {}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {}
+		},
+		{
+			"RequestId": "aba7f793-8c4d-4cbf-a3f3-2533e48248c9",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/GradeScaleLetterGrades/CampusNexus.GetLetterGradesForFinalGrades(studentCourseId={{gStudentCourseId}})?$select=Id,Code",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 15000,
+			"ResponseBody": {
+				"value": []
+			}
+		},
+		{
+			"RequestId": "7979b0d2-048b-4913-a60d-f610fe0a106a",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Academics/StudentCourse/PostFinalGrade",
+			"RequestBody": {
+				"payload": {
+					"PostFinalGradeForExistingGrade": false,
+					"AllowOverrideExpectedDeadlineDate": false,
+					"StudentCourse": {
+						"clockHours": 50,
+						"clockHoursAttempted": 50,
+						"clockHoursEarned": 50,
+						"creditHours": 5,
+						"creditHoursAttempted": 5,
+						"creditHoursEarned": 5,
+						"gradePostedDate": "@DateNow",
+						"isIncludedInGpaCalc": true,
+						"entityState": 2
+					}
+				}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 40000,
+			"ResponseBody": {
+				"payload": {
+					"data": {
+						"studentCourse": {
+							"status": "P"
+						}
+					}
+				}
+			}
+		}
+	]
+}]

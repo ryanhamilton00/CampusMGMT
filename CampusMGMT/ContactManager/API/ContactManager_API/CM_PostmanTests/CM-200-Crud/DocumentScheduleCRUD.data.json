@@ -1,0 +1,135 @@
+[{
+	"Type": "AdvancedDataFile",
+	"Version": "2.0",
+	"TestDescription": "This API will create an Document Schedule (Config-CM-Document Schedule)",
+	"Globals": {
+		"Name": "DocSched1",
+		"Code": "DocShed",
+		"UpdatedName": "DocSchUpdte"
+	},
+	"Apis": [{
+			"RequestId": "00000000-0000-0000-0000-000000000000",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000007",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/PropertyEnumValues?&$format=json&$count=true&$filter=TableName eq 'CmDocSchedule' and ColumnName eq 'CmObjectCode'&$orderby=Id",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000008",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/TaskDocumentScheduleBasedOnEntites?$filter = Type eq 'D'&$select=Id,Code,Name",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000009",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/DocumentAddTriggers/CampusNexus.GetScheduleCriteriaValues(criteriaCode='MODEL',taskDocumentScheduleBasedOnEntityId=5,campusIdList ='1',awardYear='')",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000010",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/DocumentTypes/CampusNexus.GetDocumentTypeListByCampus(campusIdList='{{gCampusId}}',moduleId=0,activeOnly=1)?%24format=json&%24top=50&%24orderby=Name&%24count=true",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000001",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Crm/DocumentAddTrigger/Create",
+			"RequestBody": "{}",
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {
+				"payload": {}
+			}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000002",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Crm/DocumentAddTrigger/SaveNew",
+			"RequestBody": {
+				"payload": {
+					"code": "{{gCode}}",
+					"name": "{{gName}}",
+					"id": -1,
+					"createdDateTime": "@DateNow",
+					"isActive": true,
+					"entityState": 0,
+					"criterion":  [
+						{
+							"documentAddTriggerId": -1,
+							"entityState": 0,
+							"id": -1,
+							"rowVersion": null
+							
+						}
+					]					
+				}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000003",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Crm/DocumentAddTrigger/Get",
+			"RequestBody": {
+				"payload": {}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000004",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Crm/DocumentAddTrigger/Save",
+			"RequestBody": {
+				"payload": {
+					"name": "{{gUpdatedName}}"
+				}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {}
+		},
+		
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000006",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Crm/DocumentAddTrigger/Delete",
+			"RequestBody": {
+				"payload": {}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {
+				"payload": {
+					"deleted": true
+				}
+			}
+		}
+	]
+}]

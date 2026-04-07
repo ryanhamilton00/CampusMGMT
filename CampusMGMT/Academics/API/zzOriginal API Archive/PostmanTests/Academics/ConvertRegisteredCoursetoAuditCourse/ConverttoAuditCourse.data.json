@@ -1,0 +1,80 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "Enter test description here",
+    "Globals": {
+      "StudentSsn": "111-22-0011",
+      "CourseCode": "Cou003",
+      "ProgramName": "V1Name"
+    },
+    "Apis": [
+      {
+        "RequestId": "a89a78ae-ffaa-479a-8c2d-1685e73055c0",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gStudentSsn}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {"value":[]}
+      },
+	  {
+        "RequestId": "05febb5e-f716-4402-9b26-6a4adecf5fba",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentEnrollmentPeriodDetails/CampusNexus.GetStudentEnrollmentPeriodList(studentId={{gStudentId}})?$select=Id,ProgramVersionId,ProgramId,ProgramVersionName&$filter = ProgramVersionName eq '{{gProgramName}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {"value":[]}
+      },
+      {
+        "RequestId": "afa18136-e1dd-4c80-a59d-a8d569d97635",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Courses?$filter=Code eq '{{gCourseCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {"value":[]}
+      },
+      {
+        "RequestId": "3294a6bf-ba6c-48aa-819a-59aadf0303d2",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentCourseSchedules/CampusNexus.GetStudentCourseSchedule(studentEnrollmentPeriodId={{gStudentEnrollmentPeriodId}},studentId={{gStudentId}},termId=0,status='')?$filter = CourseId eq {{gCourseId}}",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {"value":[]}
+      },
+      {
+        "RequestId": "4394abfd-6ea4-4a1a-83e1-182a292129ac",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/StudentCourse/ConvertToAuditCourse",
+        "RequestBody": {
+						"payload": {
+							"IsRetakeOverride": false,
+							"EffectiveDateLaterOverride": false,
+							"EffectiveDate": "@DateNow",
+							"IsAllowedToOverrideRegistrationConflict": true
+						}
+					},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 25000,
+        "ResponseBody": "{}"
+      },
+	  {
+        "RequestId": "4489a281-ef1b-4a73-ab00-7548125daecb",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentCourseSchedules/CampusNexus.GetStudentCourseSchedule(studentEnrollmentPeriodId={{gStudentEnrollmentPeriodId}},studentId={{gStudentId}},termId=0,status='')?$filter = CourseId eq {{gCourseId}}",
+        "RequestBody": "{}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {
+							"value": [{
+								"EnrollmentStatusCreditHours": 0.0000,
+								"EnrollmentStatusClockHours": 0.0000
+							}]
+						}
+      }
+    ]
+  }
+]

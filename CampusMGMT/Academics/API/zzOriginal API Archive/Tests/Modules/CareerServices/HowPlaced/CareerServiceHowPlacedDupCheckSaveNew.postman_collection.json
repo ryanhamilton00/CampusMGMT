@@ -1,0 +1,304 @@
+{
+  "info": {
+    "_postman_id": "112935c2-74eb-4124-b811-bf85f86b4945",
+    "name": "CareerServiceHowPlacedDupCheckSaveNew",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Workflow",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "4b82f99b-e5ba-4a85-b9d9-f834af670568",
+            "type": "text/javascript",
+            "exec": [
+              "switch(data.RequestMethod)",
+              "{",
+              "    case 'POST':",
+              "        console.log('execute POST');",
+              "        postman.setNextRequest('POST-Request');        ",
+              "        break;",
+              "        ",
+              "    case 'GET':",
+              "        console.log('execute POST');",
+              "        postman.setNextRequest('GET-Request');        ",
+              "        break;",
+              "        ",
+              "    default:",
+              "        postman.setNextRequest(null);",
+              "        break;",
+              "}",
+              "",
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "id": "fbb22819-ab45-476a-8471-7b8259fb8ecb",
+            "type": "text/javascript",
+            "exec": [
+              "pm.globals.unset('gAuthHeaderKey');",
+              "pm.globals.unset('gAuthHeaderValue');",
+              "pm.globals.unset('gUrl');",
+              "pm.globals.unset('gPostRequest');",
+              "pm.globals.unset('gGetRequest');"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"payload\": { \"id\" : 1 } }"
+        },
+        "url": {
+          "raw": "www.gooogle.com",
+          "host": [
+            "www",
+            "gooogle",
+            "com"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET-Request",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "9ab4c06f-6b75-4a13-b134-8f6607407ab0",
+            "type": "text/javascript",
+            "exec": [
+              "",
+              "eval(pm.globals.get('gCmcUtility'));",
+              "request.id = data.RequestId;",
+              "",
+              "pm.test(\"Verify response status is \" + data.ResponseStatus, function() {",
+              "    pm.expect(pm.response.code).to.equal(data.ResponseStatus);",
+              "});",
+              "pm.test(\"Verify response time is below \" + data.ResponseTimeMs, function() {",
+              "    pm.expect(pm.response.responseTime).to.be.below(data.ResponseTimeMs);",
+              "});",
+              "",
+              "if(pm.response.code === 200) { ",
+              "    // Chaining",
+              "    // Save ID & response to global variable for Get",
+              "    var rb = pm.response.json();",
+              "    if(data.ChainSource.length > 0) {",
+              "        let str = data.RequestId + \".response\";",
+              "        cmcUtility.globalStoreWrite(str,rb);",
+              "    }",
+              "       ",
+              "}",
+              "// Do not execute next request in the collection",
+              "postman.setNextRequest(null);",
+              " "
+            ]
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "id": "07eec89f-3ab2-46fe-bc77-da54f54073c6",
+            "type": "text/javascript",
+            "exec": [
+              "",
+              "eval(pm.globals.get('gCmcUtility'));",
+              "",
+              "//eval(postman.getGlobalVariable(\"gCmcUtility\"));",
+              "",
+              "console.log('POST pre-req');",
+              "",
+              "",
+              "//Set Authorization header",
+              "var hdr = cmcUtility.makeAuthorization(data.User, data.Password, data.ApiKey, pm.environment.get('envAuthUser'), pm.environment.get('envAuthPassword'));",
+              "pm.globals.set('gAuthHeaderKey', hdr.key);",
+              "pm.globals.set('gAuthHeaderValue', hdr.value);",
+              "//console.log(pm.globals.get('gAuthHeaderKey'));",
+              "//console.log(pm.globals.get('gAuthHeaderValue'));",
+              "",
+              "// Make URL",
+              "pm.globals.set('gUrl', cmcUtility.makeUrl(data.Scheme, pm.environment.get('envWebHost'), data.RequestUrl));",
+              "//console.log(pm.globals.get('gUrl'));",
+              "",
+              "//Set Global Variables",
+              "var request = {};",
+              "cmcUtility.setChainProps(data.Chain,request);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "{{gAuthHeaderKey}}",
+            "value": "{{gAuthHeaderValue}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{{gRequestBody}}"
+        },
+        "url": {
+          "raw": "{{gUrl}}",
+          "host": [
+            "{{gUrl}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST-Request",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "90e0562f-d3e5-438f-ba9d-9584dbb8c166",
+            "type": "text/javascript",
+            "exec": [
+              "",
+              "",
+              "eval(postman.getGlobalVariable(\"gCmcUtility\"));",
+              "",
+              "",
+              "pm.test(\"Verify response status is \" + data.ResponseStatus, function() {",
+              "    pm.expect(pm.response.code).to.equal(data.ResponseStatus);",
+              "});",
+              "pm.test(\"Verify response time is below \" + data.ResponseTimeMs, function() {",
+              "    pm.expect(pm.response.responseTime).to.be.below(data.ResponseTimeMs);",
+              "});",
+              "",
+              "pm.test(\"Verify for all delete validations message pass whiling\", function() {",
+              "    var rb=JSON.parse(responseBody);",
+              "    pm.expect(cmcUtility.verifyResponse(data.ResponseBody,rb)).to.be.true;",
+              "",
+              "});",
+              "",
+              "if(pm.response.code === 200) { ",
+              "    // Chaining",
+              "    // Save ID & response to global variable for Get",
+              "    var rb = pm.response.json();",
+              "    if(data.ChainSource.length > 0) {",
+              "        let str = data.RequestId + \".response\";",
+              "        cmcUtility.globalStoreWrite(str,rb);",
+              "    }",
+              "       ",
+              "}",
+              "// else {",
+              "//     postman.setNextRequest(null);",
+              "// }",
+              "",
+              "",
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "id": "84b5efe4-8215-44bf-80fb-186909f7d0de",
+            "type": "text/javascript",
+            "exec": [
+              "",
+              "eval(postman.getGlobalVariable(\"gCmcUtility\"));",
+              "",
+              "console.log('POST pre-req');",
+              "",
+              "//Set Authorization header",
+              "var hdr = cmcUtility.makeAuthorization(data.User, data.Password, data.ApiKey, pm.environment.get('envAuthUser'), pm.environment.get('envAuthPassword'));",
+              "pm.globals.set('gAuthHeaderKey', hdr.key);",
+              "pm.globals.set('gAuthHeaderValue', hdr.value);",
+              "//console.log(pm.globals.get('gAuthHeaderKey'));",
+              "//console.log(pm.globals.get('gAuthHeaderValue'));",
+              "",
+              "// Make URL",
+              "pm.globals.set('gUrl', cmcUtility.makeUrl(data.Scheme,pm.environment.get('envWebHost'), data.RequestUrl));",
+              "//console.log(pm.globals.get('gUrl'));",
+              "",
+              "// Make request body.",
+              "var request = {};",
+              "cmcUtility.setChainProps(data.Chain, request);",
+              "pm.globals.set('gPostRequest', JSON.stringify(cmcUtility.mergeRequestBody(request,data.RequestBody)));",
+              "// console.log(pm.globals.get('gPostRequest'));",
+              ""
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "{{gAuthHeaderKey}}",
+            "value": "{{gAuthHeaderValue}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{{gPostRequest}}"
+        },
+        "url": {
+          "raw": "{{gUrl}}",
+          "host": [
+            "{{gUrl}}"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "id": "61992fd7-16b0-46ac-882a-06d04b354231",
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "id": "2ed00b5b-559f-480d-833a-4e7f82db717c",
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ]
+}

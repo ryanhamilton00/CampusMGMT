@@ -1,0 +1,803 @@
+{
+	"info": {
+		"_postman_id": "5108fe78-591b-40f3-b8a8-8030c539beb4",
+		"name": "OrganisationContactCrud",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Initialize",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "bf51c67a-43f6-4c15-969e-f9cd01f5de0b",
+						"exec": [
+							"/********************DO NOT MODIFY THIS CODE********************/",
+							"pm.globals.unset(\"gCmcUtility\");",
+							"pm.globals.unset(\"gApiUrl\");",
+							"pm.globals.unset(\"gAuthHeaderKey\");",
+							"pm.globals.unset(\"gAuthHeaderValue\");",
+							"pm.globals.unset(\"gUrl\");",
+							"pm.globals.unset(\"gRequestBody\");",
+							"pm.globals.unset(\"gIndex\");",
+							"pm.globals.set(\"gIndex\", 0);",
+							"",
+							"// Setup URL, if web host is not set in the environment use default",
+							"var apiUtilityHost = \"\";",
+							"if (!pm.environment.has(\"envApiUtilityHost\")) {",
+							"     apiUtilityHost = \"hdev22.dev.int:9000\";",
+							"} else {",
+							"     apiUtilityHost = pm.environment.get(\"envApiUtilityHost\");",
+							"}",
+							"var requestUrl = \"http://\" + apiUtilityHost + \"/automation/apiUtility.js\";",
+							"pm.globals.set(\"gUrl\", requestUrl);",
+							"//console.log(pm.globals.get(\"gUrl\"));",
+							"/*****************END DO NOT MODIFY THIS CODE*******************/"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "688102ed-81e7-48f9-beeb-c6217890fbf2",
+						"exec": [
+							"",
+							"/********************DO NOT MODIFY THIS CODE********************/",
+							"// Verify status.",
+							"pm.test(\"Verify response status is \" + 200, function() {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"",
+							"// Load utility code framework",
+							"pm.globals.set(\"gapiUtility\", responseBody);",
+							"try {",
+							"    eval(pm.globals.get(\"gapiUtility\"));",
+							"    pm.test(\"Load framework\", function() {",
+							"        pm.expect(typeof apiUtility).to.be.equal('object');",
+							"    });",
+							"} catch(e) { ",
+							"    pm.test(\"Load framework - eval\", function() { pm.expect.fail() });",
+							"}",
+							"/*****************END DO NOT MODIFY THIS CODE*******************/",
+							"",
+							"console.log(\"--------------------------------------------------------------------------------------\");",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": "{{gUrl}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Create",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "4b54768a-289e-4e38-a7ff-a453fd0ff7e6",
+						"exec": [
+							"",
+							"",
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gapiUtility\"));",
+							"",
+							"// This is the first request in the collection, clear the global variables",
+							"// used in the CRUD collection.   Do not do a clear all globals using pm.globals.clear",
+							"// because that will remove the common code global variable gapiUtility.",
+							"pm.globals.unset('gAuthHeaderKey');",
+							"pm.globals.unset('gAuthHeaderValue');",
+							"pm.globals.unset('gUrl');",
+							"pm.globals.unset('gCreateRequestBody');",
+							"pm.globals.unset('gSaveRequestBody');",
+							"pm.globals.unset('gGetRequestBody');",
+							"pm.globals.unset('gObject');",
+							"pm.globals.unset('gIndex');",
+							"",
+							"pm.globals.set('gIndex', 0);",
+							"",
+							"let API = data.Apis[pm.globals.get('gIndex')];",
+							"",
+							"// Make authorization header using basic auth or API key settings in the data file.",
+							"// If data file does not autornization info, use environment variable if available.",
+							"var hdr = apiUtility.makeAuthorization(null, null, null,  pm.environment.get(\"envApiKey\"), ",
+							"                                           pm.environment.get(\"envAuthUser\"), pm.environment.get(\"envAuthPassword\"));",
+							"pm.globals.set('gAuthHeaderKey', hdr.key);",
+							"pm.globals.set('gAuthHeaderValue', hdr.value);",
+							"//console.log(pm.globals.get('gAuthHeaderKey'));",
+							"//console.log(pm.globals.get('gAuthHeaderValue'));",
+							"",
+							"// Make URL",
+							"pm.globals.set('gUrl', apiUtility.makeUrl(API.Scheme,pm.environment.get('envWebHost'), API.RequestUrl));",
+							"//console.log(pm.globals.get('gUrl'));",
+							"",
+							"// Make request body.",
+							"pm.globals.set('gCreateRequestBody', apiUtility.makeRequestBody(API.RequestBody));",
+							"//console.log(pm.globals.get('gCreateRequestBody'));"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "21b8136c-c257-4549-bbd2-6bb16a08ec8d",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gapiUtility\"));",
+							"let API = data.Apis[pm.globals.get('gIndex')];",
+							"// Tests",
+							"pm.test(\"Verify response status is \" + API.ResponseStatus, function() {",
+							"    pm.expect(pm.response.code).to.equal(API.ResponseStatus);",
+							"});",
+							"pm.test(\"Verify response time is below \" + API.ResponseTimeMs, function() {",
+							"    pm.expect(pm.response.responseTime).to.be.below(API.ResponseTimeMs);",
+							"});",
+							"pm.test(\"Verify response body matches expected response\", function() {",
+							"    pm.expect(apiUtility.verifyResponse(API.ResponseBody,pm.response.json())).to.be.true;",
+							"});",
+							"",
+							"// If status is OK do chaining, else terminate workflow",
+							"if(pm.response.code === 200) { ",
+							"    if(API.ChainSource.length > 0) {",
+							"        let str = API.RequestId + \".response\";",
+							"        apiUtility.globalStoreWrite(str,rb);",
+							"    }",
+							"} ",
+							"// else {",
+							"//     postman.setNextRequest(null);",
+							"// }",
+							"",
+							"pm.globals.set(\"gIndex\", Number(pm.globals.get(\"gIndex\"))+1);",
+							"//console.log(pm.globals.get('gIndex'));",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "{{gAuthHeaderKey}}",
+						"value": "{{gAuthHeaderValue}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{{gCreateRequestBody}}"
+				},
+				"url": "{{gUrl}}",
+				"description": "CRUD create operation"
+			},
+			"response": []
+		},
+		{
+			"name": "SaveNew",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "2365aa19-c07d-4ee7-be69-68267f75baab",
+						"exec": [
+							"",
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gapiUtility\"));",
+							"",
+							"let API = data.Apis[pm.globals.get('gIndex')];",
+							"",
+							"//Make authorization header using basic auth or API key settings in the data file.",
+							"//If data file does not autornization info, use environment variable if available.",
+							"var hdr = apiUtility.makeAuthorization(null, null, null,  pm.environment.get(\"envApiKey\"), ",
+							"                                           pm.environment.get(\"envAuthUser\"), pm.environment.get(\"envAuthPassword\"));",
+							"pm.globals.set('gAuthHeaderKey', hdr.key);",
+							"pm.globals.set('gAuthHeaderValue', hdr.value);",
+							"// console.log(pm.globals.get('gAuthHeaderKey'));",
+							"// console.log(pm.globals.get('gAuthHeaderValue'));",
+							"",
+							"// Make URL",
+							"pm.globals.set('gUrl', apiUtility.makeUrl( API.Scheme,pm.environment.get('envWebHost'), API.RequestUrl));",
+							"//console.log(pm.globals.get('gUrl'));",
+							"",
+							"// Make request body.",
+							"var request = {};",
+							"apiUtility.setChainProps(API.Chain,request);",
+							"var req = apiUtility.mergeRequestBody(request,API.RequestBody);",
+							"",
+							"pm.globals.set('gSaveRequestBody', JSON.stringify(req));",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "c2b9db61-98e8-4a38-b9a1-5027b408a0dc",
+						"exec": [
+							"",
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gapiUtility\"));",
+							"",
+							"let API = data.Apis[pm.globals.get('gIndex')];",
+							"",
+							"// Tests",
+							"pm.test(\"Verify response status is \" + API.ResponseStatus, function() {",
+							"    pm.expect(pm.response.code).to.equal(API.ResponseStatus);",
+							"});",
+							"pm.test(\"Verify response time is below \" + API.ResponseTimeMs, function() {",
+							"    pm.expect(pm.response.responseTime).to.be.below(API.ResponseTimeMs);",
+							"});",
+							"pm.test(\"Verify response body matches expected response\", function() {",
+							"     var actualresponse=JSON.parse(responseBody);",
+							"    pm.expect(apiUtility.verifyResponse(API.ResponseBody,pm.response.json())).to.be.true;",
+							"});",
+							"",
+							"// If status is OK do chaining, else terminate workflow",
+							"if(pm.response.code === 200) { ",
+							"    // Chaining",
+							"    // Save ID & response to global variable for Get",
+							"    var rb = pm.response.json();",
+							"    if(API.ChainSource.length > 0) {",
+							"        let str = API.RequestId + \".response\";",
+							"        apiUtility.globalStoreWrite(str,rb);",
+							"    }",
+							"        ",
+							"}",
+							"// else {",
+							"//     postman.setNextRequest(null);",
+							"// }",
+							"",
+							"pm.globals.set(\"gIndex\", Number(pm.globals.get(\"gIndex\"))+1);",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "{{gAuthHeaderKey}}",
+						"value": "{{gAuthHeaderValue}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{{gSaveRequestBody}}"
+				},
+				"url": "{{gUrl}}",
+				"description": "CRUD create operation"
+			},
+			"response": []
+		},
+		{
+			"name": "Get After SaveNew",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "f34bc632-3193-4f8b-b62f-c229ff43acc0",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gapiUtility\"));",
+							"let API = data.Apis[pm.globals.get('gIndex')];",
+							"",
+							"//Make authorization header using basic auth or API key settings in the data file.",
+							"//If data file does not autornization info, use environment variable if available.",
+							"var hdr = apiUtility.makeAuthorization(null, null, null,  pm.environment.get(\"envApiKey\"), ",
+							"                                           pm.environment.get(\"envAuthUser\"), pm.environment.get(\"envAuthPassword\"));",
+							"pm.globals.set('gAuthHeaderKey', hdr.key);",
+							"pm.globals.set('gAuthHeaderValue', hdr.value);",
+							"// console.log(pm.globals.get('gAuthHeaderKey'));",
+							"// console.log(pm.globals.get('gAuthHeaderValue'));",
+							"",
+							"// Make URL",
+							"pm.globals.set('gUrl', apiUtility.makeUrl( API.Scheme,pm.environment.get('envWebHost'), API.RequestUrl));",
+							"//console.log(pm.globals.get('gUrl'));",
+							"",
+							"// Make request body.",
+							"var request = {};",
+							"apiUtility.setChainProps(API.Chain,request);",
+							"var req = apiUtility.mergeRequestBody(request,API.RequestBody);",
+							"",
+							"",
+							"pm.globals.set('gGetRequestBody', JSON.stringify(req));",
+							"",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "d43b4ab1-ee46-4b06-b8f3-7e855811c3d2",
+						"exec": [
+							"",
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gapiUtility\"));",
+							"",
+							"let API = data.Apis[pm.globals.get('gIndex')];",
+							"",
+							"// Tests",
+							"pm.test(\"Verify response status is \" + API.ResponseStatus, function() {",
+							"    pm.expect(pm.response.code).to.equal(API.ResponseStatus);",
+							"});",
+							"pm.test(\"Verify response time is below \" + API.ResponseTimeMs, function() {",
+							"    pm.expect(pm.response.responseTime).to.be.below(API.ResponseTimeMs);",
+							"});",
+							"pm.test(\"Verify response body matches expected response\", function() {",
+							"     var actualresponse=JSON.parse(responseBody);",
+							"    pm.expect(apiUtility.verifyResponse(API.ResponseBody,pm.response.json())).to.be.true;",
+							"});",
+							"",
+							"// If status is OK do chaining, else terminate workflow",
+							"if(pm.response.code === 200) { ",
+							"    // Chaining",
+							"    // Save ID & response to global variable for Get",
+							"    var rb = pm.response.json();",
+							"    if(API.ChainSource.length > 0) {",
+							"        let str = API.RequestId + \".response\";",
+							"        apiUtility.globalStoreWrite(str,rb);",
+							"    }",
+							"}",
+							"// else {",
+							"//     postman.setNextRequest(null);",
+							"// }",
+							"pm.globals.set(\"gIndex\", Number(pm.globals.get(\"gIndex\"))+1);",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "{{gAuthHeaderKey}}",
+						"value": "{{gAuthHeaderValue}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{{gGetRequestBody}}"
+				},
+				"url": "{{gUrl}}",
+				"description": "CRUD create operation"
+			},
+			"response": []
+		},
+		{
+			"name": "Save",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "f06c1b92-58c9-4c2f-81eb-5b8f4ec24ad4",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gapiUtility\"));",
+							"let API = data.Apis[pm.globals.get('gIndex')];",
+							"",
+							"",
+							"// Make authorization header using basic auth or API key settings in the data file.",
+							"// If data file does not autornization info, use environment variable if available.",
+							"var hdr = apiUtility.makeAuthorization(null, null, null,  pm.environment.get(\"envApiKey\"), ",
+							"                                           pm.environment.get(\"envAuthUser\"), pm.environment.get(\"envAuthPassword\"));",
+							"pm.globals.set('gAuthHeaderKey', hdr.key);",
+							"pm.globals.set('gAuthHeaderValue', hdr.value);",
+							"//console.log(pm.globals.get('gAuthHeaderKey'));",
+							"//console.log(pm.globals.get('gAuthHeaderValue'));",
+							"",
+							"// Make URL",
+							"pm.globals.set('gUrl', apiUtility.makeUrl( API.Scheme,pm.environment.get('envWebHost'), API.RequestUrl));",
+							"//console.log(pm.globals.get('gUrl'));",
+							"",
+							"",
+							"// Make request body.",
+							"var request = {};",
+							"apiUtility.setChainProps(API.Chain,request);",
+							"var req = apiUtility.mergeRequestBody(request,API.RequestBody);",
+							"",
+							"",
+							"pm.globals.set('gSaveRequestBody', JSON.stringify(req));",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "e6f1b597-1333-407a-b685-41da9812aa83",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gapiUtility\"));",
+							"",
+							"let API = data.Apis[pm.globals.get('gIndex')];",
+							"",
+							"// Tests",
+							"pm.test(\"Verify response status is \" + API.ResponseStatus, function() {",
+							"    pm.expect(pm.response.code).to.equal(API.ResponseStatus);",
+							"});",
+							"pm.test(\"Verify response time is below \" + API.ResponseTimeMs, function() {",
+							"    pm.expect(pm.response.responseTime).to.be.below(API.ResponseTimeMs);",
+							"});",
+							"pm.test(\"Verify response body matches expected response\", function() {",
+							"     var actualresponse=JSON.parse(responseBody);",
+							"    pm.expect(apiUtility.verifyResponse(API.ResponseBody,pm.response.json())).to.be.true;",
+							"});",
+							"// If status is OK do chaining, else terminate workflow",
+							"if(pm.response.code === 200) {",
+							"    // Chaining",
+							"    // Save ID & response to global variable for Get",
+							"    var rb = pm.response.json();",
+							"    if(API.ChainSource.length > 0) {",
+							"        let str = API.RequestId + \".response\";",
+							"        apiUtility.globalStoreWrite(str,rb);",
+							"    }",
+							"}",
+							"// else {",
+							"//     postman.setNextRequest(null);",
+							"// }",
+							"pm.globals.set(\"gIndex\", Number(pm.globals.get(\"gIndex\"))+1);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "{{gAuthHeaderKey}}",
+						"value": "{{gAuthHeaderValue}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{{gSaveRequestBody}}"
+				},
+				"url": "{{gUrl}}",
+				"description": "CRUD create operation"
+			},
+			"response": []
+		},
+		{
+			"name": "Get After Save",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7ee8579d-2a3e-4a28-91c5-94b79683575e",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gapiUtility\"));",
+							"let API = data.Apis[pm.globals.get('gIndex')];",
+							"",
+							"//Make authorization header using basic auth or API key settings in the data file.",
+							"//If data file does not autornization info, use environment variable if available.",
+							"var hdr = apiUtility.makeAuthorization(null, null, null,  pm.environment.get(\"envApiKey\"), ",
+							"                                           pm.environment.get(\"envAuthUser\"), pm.environment.get(\"envAuthPassword\"));",
+							"pm.globals.set('gAuthHeaderKey', hdr.key);",
+							"pm.globals.set('gAuthHeaderValue', hdr.value);",
+							"// console.log(pm.globals.get('gAuthHeaderKey'));",
+							"// console.log(pm.globals.get('gAuthHeaderValue'));",
+							"",
+							"// Make URL",
+							"pm.globals.set('gUrl', apiUtility.makeUrl( API.Scheme,pm.environment.get('envWebHost'), API.RequestUrl));",
+							"//console.log(pm.globals.get('gUrl'));",
+							"",
+							"// Make request body.",
+							"var request = {};",
+							"apiUtility.setChainProps(API.Chain,request);",
+							"var req = apiUtility.mergeRequestBody(request,API.RequestBody);",
+							"",
+							"pm.globals.set('gGetRequestBody', JSON.stringify(req));",
+							"",
+							"",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "eec7c964-5730-4472-86f7-cb0c2ef6f958",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gapiUtility\"));",
+							"",
+							"let API = data.Apis[pm.globals.get('gIndex')];",
+							"",
+							"// Tests",
+							"pm.test(\"Verify response status is \" + API.ResponseStatus, function() {",
+							"    pm.expect(pm.response.code).to.equal(API.ResponseStatus);",
+							"});",
+							"pm.test(\"Verify response time is below \" + API.ResponseTimeMs, function() {",
+							"    pm.expect(pm.response.responseTime).to.be.below(API.ResponseTimeMs);",
+							"});",
+							"pm.test(\"Verify response body matches expected response\", function() {",
+							"     var actualresponse=JSON.parse(responseBody);",
+							"    pm.expect(apiUtility.verifyResponse(API.ResponseBody,pm.response.json())).to.be.true;",
+							"});",
+							"// If status is OK do chaining, else terminate workflow",
+							"if(pm.response.code === 200) {",
+							"    // Chaining",
+							"    // Save ID & response to global variable for Get",
+							"    var rb = pm.response.json();",
+							"    if(API.ChainSource.length > 0) {",
+							"        let str = API.RequestId + \".response\";",
+							"        apiUtility.globalStoreWrite(str,rb);",
+							"    }",
+							"}",
+							"// else {",
+							"//     postman.setNextRequest(null);",
+							"// }",
+							"",
+							"pm.globals.set(\"gIndex\", Number(pm.globals.get(\"gIndex\"))+1);",
+							"// /console.log(pm.globals.get('gIndex'));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "{{gAuthHeaderKey}}",
+						"value": "{{gAuthHeaderValue}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{{gGetRequestBody}}"
+				},
+				"url": "{{gUrl}}",
+				"description": "CRUD create operation"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "e7f90c09-e669-436a-84c3-e4685d327b75",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gapiUtility\"));",
+							"",
+							"let API = data.Apis[pm.globals.get('gIndex')];",
+							"",
+							"//Make authorization header using basic auth or API key settings in the data file.",
+							"//If data file does not autornization info, use environment variable if available.",
+							"var hdr = apiUtility.makeAuthorization(null, null, null,  pm.environment.get(\"envApiKey\"), ",
+							"                                           pm.environment.get(\"envAuthUser\"), pm.environment.get(\"envAuthPassword\"));",
+							"pm.globals.set('gAuthHeaderKey', hdr.key);",
+							"pm.globals.set('gAuthHeaderValue', hdr.value);",
+							"// console.log(pm.globals.get('gAuthHeaderKey'));",
+							"// console.log(pm.globals.get('gAuthHeaderValue'));",
+							"",
+							"// Make URL",
+							"pm.globals.set('gUrl', apiUtility.makeUrl( API.Scheme,pm.environment.get('envWebHost'), API.RequestUrl));",
+							"//console.log(pm.globals.get('gUrl'));",
+							"",
+							"",
+							"//Make request",
+							"var request = {};",
+							"apiUtility.setChainProps(API.Chain,request);",
+							"var req = apiUtility.mergeRequestBody(request,API.RequestBody);",
+							"",
+							"",
+							"pm.globals.set('gDeleteRequestBody', JSON.stringify(req));"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "826b54a5-c761-4c45-928c-cc0da96755f1",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gapiUtility\"));",
+							"",
+							"let API = data.Apis[pm.globals.get('gIndex')];",
+							"request.id = API.RequestId;",
+							"// Tests",
+							"pm.test(\"Verify response status is \" + API.ResponseStatus, function() {",
+							"    pm.expect(pm.response.code).to.equal(API.ResponseStatus);",
+							"});",
+							"pm.test(\"Verify response time is below \" + API.ResponseTimeMs, function() {",
+							"    pm.expect(pm.response.responseTime).to.be.below(API.ResponseTimeMs);",
+							"});",
+							"pm.test(\"Verify response body matches expected response\", function() {",
+							"     var actualresponse=JSON.parse(responseBody);",
+							"    pm.expect(apiUtility.verifyResponse(API.ResponseBody,pm.response.json())).to.be.true;",
+							"});",
+							"// If status is OK do chaining, else terminate workflow",
+							"if(pm.response.code === 200) {",
+							"    // Chaining",
+							"    // Save ID & response to global variable for Get",
+							"    var rb = pm.response.json();",
+							"    if(API.ChainSource.length > 0) {",
+							"        let str = API.RequestId + \".response\";",
+							"        apiUtility.globalStoreWrite(str,rb);",
+							"    }",
+							"        ",
+							"}",
+							"// else {",
+							"//     postman.setNextRequest(null);",
+							"// }",
+							"",
+							"pm.globals.set(\"gIndex\", Number(pm.globals.get(\"gIndex\"))+1);",
+							"//console.log(pm.globals.get('gIndex'));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "{{gAuthHeaderKey}}",
+						"value": "{{gAuthHeaderValue}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{{gDeleteRequestBody}}"
+				},
+				"url": "{{gUrl}}",
+				"description": "CRUD create operation"
+			},
+			"response": []
+		},
+		{
+			"name": "Get After Delete",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6af004cf-f8a1-43fa-bbba-ff47c9d5bba8",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gapiUtility\"));",
+							"let API = data.Apis[pm.globals.get('gIndex')];",
+							"",
+							"//Make authorization header using basic auth or API key settings in the data file.",
+							"//If data file does not autornization info, use environment variable if available.",
+							"var hdr = apiUtility.makeAuthorization(null, null, null,  pm.environment.get(\"envApiKey\"), ",
+							"                                           pm.environment.get(\"envAuthUser\"), pm.environment.get(\"envAuthPassword\"));",
+							"pm.globals.set('gAuthHeaderKey', hdr.key);",
+							"pm.globals.set('gAuthHeaderValue', hdr.value);",
+							"// console.log(pm.globals.get('gAuthHeaderKey'));",
+							"// console.log(pm.globals.get('gAuthHeaderValue'));",
+							"",
+							"// Make URL",
+							"pm.globals.set('gUrl', apiUtility.makeUrl( API.Scheme,pm.environment.get('envWebHost'), API.RequestUrl));",
+							"//console.log(pm.globals.get('gUrl'));",
+							"",
+							"// Make request body.",
+							"// Make request body.",
+							"var request = {};",
+							"apiUtility.setChainProps(API.Chain,request);",
+							"var req = apiUtility.mergeRequestBody(request,API.RequestBody);",
+							"",
+							"pm.globals.set('gGetRequestBody', JSON.stringify(req));",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "54a71a1b-229c-4859-8a15-3c5967e81cfc",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gapiUtility\"));",
+							"",
+							"let API = data.Apis[pm.globals.get('gIndex')];",
+							"// Tests",
+							"pm.test(\"Verify response status is \" + API.ResponseStatus, function() {",
+							"    pm.expect(pm.response.code).to.equal(API.ResponseStatus);",
+							"});",
+							"pm.test(\"Verify response time is below \" + API.ResponseTimeMs, function() {",
+							"    pm.expect(pm.response.responseTime).to.be.below(API.ResponseTimeMs);",
+							"});",
+							"pm.test(\"Verify response body matches expected response\", function() {",
+							"     var actualresponse=JSON.parse(responseBody);",
+							"    pm.expect(apiUtility.verifyResponse(API.ResponseBody,pm.response.json())).to.be.true;",
+							"});",
+							"//console.log(pm.globals.get('gIndex'));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "{{gAuthHeaderKey}}",
+						"value": "{{gAuthHeaderValue}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{{gGetRequestBody}}"
+				},
+				"url": "{{gUrl}}",
+				"description": "CRUD create operation"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

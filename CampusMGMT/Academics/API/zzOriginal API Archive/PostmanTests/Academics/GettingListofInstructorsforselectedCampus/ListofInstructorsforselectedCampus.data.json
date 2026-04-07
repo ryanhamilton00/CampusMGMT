@@ -1,0 +1,80 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "Getting the list of Instructors for the user's default campus",
+    "Globals": {
+	"CampusGroupList": [],
+	"InstructorStaffGroupCode": "TEACH"
+	},
+    "Apis": [
+      {
+        "RequestId": "cd47f2e6-1d88-4efd-9ba3-68c3892acbab",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "88d8943c-a238-453a-a7f8-e0cac411c014",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff?$filter=Id eq {{gStaffId}}&$select=DefaultSyCampusId",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "09604ba3-026e-40f8-b7a2-f9caba6ff466",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/CampusGroups?$select=Id,Type,Code,Name,CreatedDateTime,IsSystemCode&$format=json&$filter=Type eq 'U' and IsActive eq true",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "2d8eee73-a22f-4678-acc4-cef78a94fad7",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Common/CampusGroup/Get",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 50000,
+        "ResponseBody": {
+                            "payload": {
+                              "data": {
+                              }
+                            },
+                            "notifications": [],
+                            "hasError": false,
+                            "hasFault": false,
+                            "hasWarning": false,
+                            "hasValidationError": false,
+                            "hasValidationWarning": false,
+                            "hasValidationInformation": false,
+                            "hasSecurityError": false
+                          }
+      },
+      {
+        "RequestId": "b49ec74d-4be0-4ab6-8704-cb109318be11",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/odata/StaffGroupMembers?$filter=Staff/IsActive eq true and StaffGroup/Code eq '{{gInstructorStaffGroupCode}}'&$orderby=Staff/Code&$expand=Staff($select=IsActive,Id,Code,FullName,CampusGroupId),StaffGroup($select=Code)",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 25000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "1b93c295-57b1-4453-aa0b-36443b0f8f5e",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Instructors/CampusNexus.GetInstructorsForCampusCourse(campusId={{gCampusId}},courseId=0,showAll=true)",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 25000,
+        "ResponseBody": "{\"value\":[]}"
+      }
+    ]
+  }
+]

@@ -1,0 +1,353 @@
+[{
+	"Type": "AdvancedDataFile",
+	"Version": "2.0",
+	"TestDescription": "Test Required Field for Parent Term when Student Registration Settings is set to Use CRSG",
+	"Globals": {
+		"TermCode": "UNIQUEP",
+		"SettingName": "Student Registration"
+	},
+	"Apis": [
+		{
+			"RequestId": "61cfa462-5e93-417b-956a-cff809cfcae6",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/CampusNexusStudentSettings?$filter=contains(ShortDisplayText,'{{gSettingName}}')",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 15000,
+			"ResponseBody": {
+				"value": []
+			}
+		},
+		{
+			"RequestId": "faa4d96b-e578-4bce-9f0e-5fba88412e78",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Common/CampusNexusStudentSetting/Get",
+			"RequestBody": {},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 15000,
+			"ResponseBody": {
+				"notifications": [],
+				"hasError": false,
+				"hasFault": false,
+				"hasWarning": false,
+				"hasValidationError": false,
+				"hasValidationWarning": false,
+				"hasValidationInformation": false,
+				"hasSecurityError": false
+			}
+		},
+		{
+			"RequestId": "faa4d96b-d578-5bcd-9f1e-5fba88412e78",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Common/CampusNexusStudentSetting/SaveCampusNexusStudentSettings",
+			"RequestBody": {
+				"payload": {
+					"campusNexusStudentSettingList": [
+						{
+							"settingName": "adRegisterCourseFilter",
+							"settingValue": "1"
+						}
+					]
+				}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 15000,
+			"ResponseBody": {
+				"notifications": [],
+				"hasError": false,
+				"hasFault": false,
+				"hasWarning": false,
+				"hasValidationError": false,
+				"hasValidationWarning": false,
+				"hasValidationInformation": false,
+				"hasSecurityError": false
+			}
+		},
+		{
+			"RequestId": "6ef294fa-f4c8-40bb-98ee-d8d627fab928",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Terms?$filter=Code eq '{{gTermCode}}'",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 15000,
+			"ResponseBody": {
+				"value": []
+			}
+		},
+		{
+			"RequestId": "2b582582-04d4-480f-8cb4-d5bc9896efe4",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Terms/CampusNexus.GetChildTerms(termId={{gTermId}},isActive=true,onlyImmediateParents=true)",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 15000,
+			"ResponseBody": {
+				"value": []
+			}
+		},
+		{
+			"RequestId": "5e1a35c2-1b9b-47b9-9be8-e7971b8b4a4c",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Campuses/CampusNexus.GetCampusListByStaff()?$select=Name,Id,Code",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 15000,
+			"ResponseBody": {
+				"value": []
+			}
+		},
+		{
+			"RequestId": "8f91c0c1-bb1e-4617-a8de-d4d5312645de",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Terms?$expand=TermRegistrationSettings($filter=CampusId eq {{gCampusId}})&$filter=(contains(tolower(Code),'{{gTermCode}}'))",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 15000,
+			"ResponseBody": {
+				"value": [
+					{
+						"TermRegistrationSettings": [
+
+						]
+					}
+				]
+			}
+		},
+		{
+			"RequestId": "f4e961b5-753e-443d-a585-3e15dce8a8ef",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Academics/TermRegistrationSetting/Get",
+			"RequestBody": {},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 15000,
+			"ResponseBody": {
+				"notifications": [],
+				"hasError": false,
+				"hasFault": false,
+				"hasWarning": false,
+				"hasValidationError": false,
+				"hasValidationWarning": false,
+				"hasValidationInformation": false,
+				"hasSecurityError": false
+			}
+		},
+		{
+			"RequestId": "378d0372-2cf0-4404-a896-d75cf2bda8a0",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Academics/TermRegistrationSetting/create",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 15000,
+			"ResponseBody": {
+				"notifications": [],
+				"hasError": false,
+				"hasFault": false,
+				"hasWarning": false,
+				"hasValidationError": false,
+				"hasValidationWarning": false,
+				"hasValidationInformation": false,
+				"hasSecurityError": false
+			}
+		},
+		{
+			"RequestId": "627a4cb4-3510-489e-9c3f-93daae2385a5",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Academics/TermRegistrationSetting/SaveTermRegistrationSettingAndProgramVersions",
+			"RequestBody": {
+				"payload": {
+					"ProgramVersions": [],
+					"TermRegistrationSetting": {
+						"auditMaximumCredits": 0,
+						"isBillingSummaryShown": false,
+						"isDropAllowed": false,
+						"isFundingShown": false,
+						"isInvoiceShown": false,
+						"isPaymentAllowed": false,
+						"isReservationAllowed": false,
+						"isUnregistrationAllowed": false,
+						"isWaitlistingAllowed": false,
+						"maximumCredits": 0,
+						"minimumCredits": 0,
+						"reservationConfirmMinutes": 0,
+						"reservationExpirationMinutes": 0,
+						"reservationMaximumCredits": 0,
+						"waitlistMaximumCredits": 0,
+						"progamVersion": {
+							"MaxOnlineRegistrationCredits": 0,
+							"MinOnlineRegistrationCredits": 0
+						}
+					}
+				}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 15000,
+			"ResponseBody": {
+				"notifications": [],
+				"hasError": false,
+				"hasFault": false,
+				"hasWarning": false,
+				"hasValidationError": false,
+				"hasValidationWarning": false,
+				"hasValidationInformation": false,
+				"hasSecurityError": false
+			}
+		},
+		{
+			"RequestId": "378d0372-2cf0-4404-a345-d75cf2bda8a0",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Academics/Term/Get",
+			"RequestBody": {
+				"payload": {}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 15000,
+			"ResponseBody": {
+				"notifications": [],
+				"hasError": false,
+				"hasFault": false,
+				"hasWarning": false,
+				"hasValidationError": false,
+				"hasValidationWarning": false,
+				"hasValidationInformation": false,
+				"hasSecurityError": false
+			}
+		},
+		{
+			"RequestId": "92beef7b-15db-46fc-87fd-f9d9ae22380b",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Academics/Term/Save",
+			"RequestBody": {
+				"payload": {}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 15000,
+			"ResponseBody": {
+				"notifications": [],
+				"hasError": false,
+				"hasFault": false,
+				"hasWarning": false,
+				"hasValidationError": false,
+				"hasValidationWarning": false,
+				"hasValidationInformation": false,
+				"hasSecurityError": false
+			}
+		},
+		{
+			"RequestId": "a0f8cbe6-6650-48cb-a410-9dfa93ba8e16",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Academics/TermRelationship/SaveMultipleTermRelationship",
+			"RequestBody": {
+				"payload": {
+					"ParentTermIdList": [],
+					"ChildTermIdList": [],
+					"IsScheduleChangeNotification": false,
+					"Term": {
+						"registration": true,
+						"reporting": false,
+						"financialAid": true,
+						"childTermDatesRule": "1"
+					},
+					"IsParentTerm": false
+				}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 15000,
+			"ResponseBody": {
+				"notifications": [],
+				"hasError": false,
+				"hasFault": false,
+				"hasWarning": false,
+				"hasValidationError": false,
+				"hasValidationWarning": false,
+				"hasValidationInformation": false,
+				"hasSecurityError": false
+			}
+		},
+		{
+			"RequestId": "378d0372-2cg1-4404-a345-d75cf2bda8a0",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Academics/Term/Delete",
+			"RequestBody": {
+				"payload": {}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 15000,
+			"ResponseBody": {
+				"payload": {
+					"deleted": true
+				},
+				"notifications": [],
+				"hasError": false,
+				"hasFault": false,
+				"hasWarning": false,
+				"hasValidationError": false,
+				"hasValidationWarning": false,
+				"hasValidationInformation": false,
+				"hasSecurityError": false
+			}
+		},
+		{
+			"RequestId": "378d0372-3df0-4404-a345-d75cf2bda8a0",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Academics/Term/Get",
+			"RequestBody": {
+				"payload": {}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 15000,
+			"ResponseBody": {
+				"notifications": [],
+				"hasError": false,
+				"hasFault": false,
+				"hasWarning": false,
+				"hasValidationError": false,
+				"hasValidationWarning": false,
+				"hasValidationInformation": false,
+				"hasSecurityError": false
+			}
+		},
+		{
+			"RequestId": "378d0372-2cg1-5515-a345-d75cf2bda8a0",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Academics/Term/Delete",
+			"RequestBody": {
+				"payload": {}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 15000,
+			"ResponseBody": {
+				"payload": {
+					"deleted": true
+				},
+				"notifications": [],
+				"hasError": false,
+				"hasFault": false,
+				"hasWarning": false,
+				"hasValidationError": false,
+				"hasValidationWarning": false,
+				"hasValidationInformation": false,
+				"hasSecurityError": false
+			}
+		},
+		{
+			"RequestId": "faa4d96b-d578-5bcd-9f1e-5fba99412e78",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Common/CampusNexusStudentSetting/SaveCampusNexusStudentSettings",
+			"RequestBody": {
+				"payload": {}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 15000,
+			"ResponseBody": {
+				"notifications": [],
+				"hasError": false,
+				"hasFault": false,
+				"hasWarning": false,
+				"hasValidationError": false,
+				"hasValidationWarning": false,
+				"hasValidationInformation": false,
+				"hasSecurityError": false
+			}
+		}
+	]
+}]

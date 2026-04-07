@@ -1,0 +1,87 @@
+[{
+	"Type": "AdvancedDataFile",
+	"Version": "2.0",
+	"TestDescription": "This API will create a Task for a student in Contact Manager",
+	"Globals": {
+		"DocType": "DocTypeName",
+		"Code": "PCode1",
+		"StudentSsn": "111-33-0066"
+	},
+	"Apis": [
+		
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000000",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": "{\"value\":[]}"
+		},		
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000001",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gStudentSsn}}'",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000002",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/StudentEnrollmentPeriodDetails/CampusNexus.GetStudentEnrollmentPeriodList(studentId={{gStudentId}})?$select=Id",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000003",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Tasks/CampusNexus.GetCurrentTasksForStudents(studentId={{gStudentId}},studentEnrollmentPeriodId={{gEnrollId}},prospectInquiryId=0)?$top=5&$orderby=TaskDueDate desc",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000006",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/TaskResults?$select=Id,Name,Code,AppliesTo&$filter=IsActive eq true and AppliesTo eq 'Task' or AppliesTo eq '*'&$orderby=Name",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000007",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/TaskStatuses?$select=Name,Id,Code&$filter=Code eq 'C'",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000004",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Crm/Task/Get",
+			"RequestBody": {"payload": {}},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {"payload": {}}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000005",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Crm/Task/Save",
+			"RequestBody": {"payload": {
+				"taskStatusDate": "@DateNow"
+			}},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {"payload": {}}
+		}
+	]
+}]

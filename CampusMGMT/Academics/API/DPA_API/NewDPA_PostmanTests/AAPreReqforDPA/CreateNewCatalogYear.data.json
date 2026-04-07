@@ -1,0 +1,79 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "Create New Catalog Year for DPA",
+    "Globals": {
+      "CatalogName": "Audit Catalog Year",
+      "CatalogCode": "AudCat"
+    },
+    "Apis": [
+      {
+        "RequestId": "db0bce70-2376-46f7-8283-7ab4750ea0c3",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/CatalogYears?$filter=Code eq '{{gCatalogCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {}
+      },
+      {
+        "RequestId": "db0bce70-2376-46f7-8283-7ab4750ea0c4",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "dbf3d9b9-1f18-46d9-9eb9-9ebfe44d12c5",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/CatalogYear/Create",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": {
+          "payload": {},
+          "notifications": [],
+          "hasError": false,
+          "hasFault": false,
+          "hasWarning": false,
+          "hasValidationError": false,
+          "hasValidationWarning": false,
+          "hasValidationInformation": false,
+          "hasSecurityError": false
+        }
+      },
+      {
+        "RequestId": "423251a5-5a62-4347-a082-9964936d5605",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/CatalogYear/SaveNew",
+        "RequestBody": {
+          "payload": {
+            "code": "{{gCatalogCode}}",
+            "createdDateTime": "@DateNow()",
+            "effectiveEndDate": "@DateNow(-+180)",
+            "effectiveStartDate": "@DateNow(-170)",
+            "isActive": true,
+            "lastModifiedDateTime": "@DateNow()",
+            "name": "{{gCatalogName}}"
+          }
+        },
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": {
+          "payload": {},
+          "notifications": [],
+          "hasError": false,
+          "hasFault": false,
+          "hasWarning": false,
+          "hasValidationError": false,
+          "hasValidationWarning": false,
+          "hasValidationInformation": false,
+          "hasSecurityError": false
+        }
+      }
+    ]
+  }
+]

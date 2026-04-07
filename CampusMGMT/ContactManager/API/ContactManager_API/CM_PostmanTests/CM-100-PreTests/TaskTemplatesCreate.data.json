@@ -1,0 +1,89 @@
+[{
+	"Type": "AdvancedDataFile",
+	"Version": "2.0",
+	"TestDescription": "This API will create a Task Template (Config-CM-Task Templates)",
+	"Globals": {
+		"Name": "TaskTemplateName",
+		"Code": "TTCode"
+	},
+	"Apis": [{
+			"RequestId": "00000000-0000-0000-0000-000000000000",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000001",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Crm/TaskTemplate/Create",
+			"RequestBody": "{}",
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {
+				"payload": {}
+			}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000007",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/TaskCategories?$select=Id,Name,Code&$orderby=Name",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000008",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/TaskTypes?$select=Id,Name,Code,PostTo,TaskTypeCategory,IsSystemCode&$filter=IsActive  eq true&$orderby=Name",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000002",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Crm/TaskTemplate/SaveNew",
+			"RequestBody": {
+				"payload": {
+					"code": "{{gCode}}",
+					"name": "{{gName}}",
+					"defaultText": "defaultText",
+					"emailSubject": "emailSubject",
+					"isModal": false,
+					"taskTemplateDocumentTypeAttachmentList": [],
+					"taskTemplateDocumentTypeList": [],
+					"taskTemplateLinkedLetterList": [],
+					"taskTemplateOrganizationTypeList": [],
+					"campusGroup":{
+						"code": "",
+						"name": "",
+						"saStmtComments": "",
+						"type": "Z",
+						"campusList":[{
+							"id": -1
+						}]
+					}
+				}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000003",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Crm/TaskTemplate/get",
+			"RequestBody": {
+				"payload": {}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {}
+		}
+	]
+}]

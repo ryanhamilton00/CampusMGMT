@@ -1,0 +1,78 @@
+[{
+	"Type": "AdvancedDataFile",
+	"Version": "2.0",
+	"TestDescription": "Create New Catalog Year for DPA",
+	"Globals": {
+		"CourseName": "AOSED1",
+		"UpdateCatalogName": "@StringRandom(6)",
+		"UpdateCatalogCode": "@StringRandom(6)"
+	},
+	"Apis": [
+
+		{
+			"RequestId": "db0bce70-2376-46f7-8283-7ab4750ea0c5",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Courses?$select=Name,Code,Id&$filter=Name eq '{{gCourseName}}'",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		
+		{
+			"RequestId": "db0bce70-2376-46f7-8283-7ab4750ea0c6",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/CatalogYearCourses?$filter=CourseCode eq '{{gCourseName}}'",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "db0bce70-2376-46f7-8283-7ab4750ea0c4",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/CatalogYears?$filter=Name eq '{{gCatalogYearName}}'",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "90730016-2dd5-452b-95fa-696ed95dbb5e",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Academics/CatalogYear/Get",
+			"RequestBody": "{\"payload\":{}}",
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": {}
+		},
+		{
+			"RequestId": "423251a5-5a62-4347-a082-9964936d5606",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Academics/CatalogYearCourse/SaveNew",
+			"RequestBody": {
+				"payload": {
+					"CatalogYearId": "{{gCatalogId}}",
+					"CourseIdList": []
+				}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": {}
+		},
+		{
+			"RequestId": "423251a5-5a62-4347-a082-9964936d5605",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Academics/CatalogYear/Save",
+			"RequestBody": {
+				"payload": {
+					"code": "{{gUpdateCatalogCode}}",
+					"name": "{{gUpdateCatalogName}}"
+				}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": {}
+		}
+	]
+}]

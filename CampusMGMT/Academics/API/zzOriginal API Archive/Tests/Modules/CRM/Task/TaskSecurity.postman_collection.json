@@ -1,0 +1,104 @@
+{
+	"info": {
+		"_postman_id": "95936a98-0c5a-414e-818e-fe525dc8faae",
+		"name": "TaskSecurity",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"_postman_id": "534b70ed-118a-475b-87b3-5ccb8a378f0c",
+			"name": "ApiPostTest",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "30d084b4-cd53-44c7-8473-a826d17c5739",
+						"type": "text/javascript",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gCmcUtility\"));",
+							"",
+							"// Create auth header from data file first, else use environment variables",
+							"if (cmcUtility.isAuth(data.AuthUser, data.AuthPassword))",
+							"{",
+							"    pm.globals.set('gAuthorizationValue', 'Basic ' + btoa(data.AuthUser + ':' + data.AuthPassword));",
+							"}",
+							"else if (pm.environment.has('envAuthUser') && pm.environment.has('envAuthPassword'))",
+							"{",
+							"    pm.globals.set('gAuthorizationValue', 'Basic ' + btoa(pm.environment.get('envAuthUser') + ':' + pm.environment.get('envAuthPassword')));",
+							"}",
+							"",
+							"// Check request body type, if object convert to string, else leave as string.",
+							"// This allows specifying invalid JSON request body.",
+							"var dataRequestBody = null;",
+							"switch (typeof data.RequestBody) {",
+							"    case 'object':",
+							"         dataRequestBody = JSON.stringify(data.RequestBody);",
+							"         break;",
+							"    case 'string':",
+							"         dataRequestBody = data.RequestBody;",
+							"         break;",
+							"    default:",
+							"         dataRequestBody = data.RequestBody.toString();",
+							"         break;",
+							"}",
+							"",
+							"// Set request fields based on JSON data file contents",
+							"postman.setGlobalVariable('requestBody', dataRequestBody);",
+							"postman.setGlobalVariable('requestUrl', data.RequestUrl);"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "ff39e076-b36d-4081-88eb-9a1d49a0863f",
+						"type": "text/javascript",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gCmcUtility\"));",
+							"",
+							"// Test response",
+							"pm.test(data.TestDescription + \" - should return response status of \" + data.ResponseStatus, () => {",
+							"   pm.expect(pm.response.code).to.equal(data.ResponseStatus);",
+							"});",
+							"pm.test(data.TestDescription + \" - should have response time less than or equal to \" + data.ResponseTimeMs + \" ms\", function() {",
+							"   pm.expect(pm.response.responseTime).to.be.below(data.ResponseTimeMs);",
+							"});",
+							"pm.test(data.TestDescription + \" - should match expected response body\", function() {",
+							"   pm.expect(cmcUtility.verifyResponse(data.ResponseBody, pm.response.json())).to.be.true;",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{gAuthorizationValue}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{{requestBody}}"
+				},
+				"url": {
+					"raw": "{{requestUrl}}",
+					"host": [
+						"{{requestUrl}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

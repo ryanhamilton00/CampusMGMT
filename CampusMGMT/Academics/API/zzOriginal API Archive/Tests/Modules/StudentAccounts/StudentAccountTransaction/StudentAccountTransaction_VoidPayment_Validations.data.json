@@ -1,0 +1,104 @@
+[{
+	"Type": "AdvancedDataFile",
+	"Version": "2.0",
+	"TestDescription": "Enter test description here",
+	"Globals": {},
+	"Apis": [{
+			"RequestId": "075a51d3-78dd-457d-806c-3cfe2815dbfb",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/student-accounting/ledger-payment-transactions/void",
+			"RequestBody": {
+				"StudentAccountTransactionId": 100267,
+				"Note": "ress"
+			},
+			"ResponseStatus": 403,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {
+				"ValidationMessages": [{
+					"Message": "The transaction cannot be voided because it is already voided."
+				}]
+			}
+
+		},
+		{
+			"RequestId": "abc6ed17-55ba-4d28-b9c9-58e0a57d95bd",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/student-accounting/ledger-payment-transactions/void",
+			"RequestBody": {
+				"StudentAccountTransactionId": 100267,
+				"Note": ""
+			},
+			"ResponseStatus": 400,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {
+				"ValidationMessages": [{
+					"Message": "Note is re​quir​ed."
+				}]
+			}
+		},
+		{
+			"RequestId": "11baadad-8174-4476-bb33-d12c8c429526",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/student-accounting/ledger-payment-transactions/void",
+			"RequestBody": {
+				"StudentAccountTransactionId": "",
+				"Note": "test"
+			},
+			"ResponseStatus": 400,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {
+				"ValidationMessages": [{
+					"Message": "Value for StudentAccountTransactionId must be > 0.This property is required."
+				}]
+			}
+		},
+		{
+			"RequestId": "9fcf5928-08fb-4ee1-aa89-b9cd2f240cbb",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/student-accounting/ledger-payment-transactions/void",
+			"RequestBody": {
+				"StudentAccountTransactionId": 10,
+				"Note": "test"
+			},
+			"ResponseStatus": 403,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {
+				"ValidationMessages": [{
+					"Message": "Invalid StudentAccountTransactionId provided.No matching record found."
+				}]
+			}
+		},
+		{
+			"RequestId": "9eeae7d8-8875-4333-89e4-fbe878797096",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/student-accounting/ledger-payment-transactions/void",
+			"RequestBody": {
+				"StudentAccountTransactionId": 1,
+				"Note": "test"
+			},
+			"ResponseStatus": 403,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {
+				"ValidationMessages": [{
+					"Message": "The transaction type for the StudentAccountTransaction record matching the StudentAccountTransactionId provided is not 'P'.The type must be 'P' (Payment) in order to be able to void the transaction."
+				}]
+			}
+		},
+		{
+			"RequestId": "14c68acb-8a4b-43e9-8773-ce51e975f742",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/student-accounting/ledger-payment-transactions/void",
+			"RequestBody": {
+				"StudentAccountTransactionId": 100248,
+				"Note": "test"
+			},
+			"ResponseStatus": 403,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {
+				"ValidationMessages": [{
+					"Message": "The StudentAccountTransactionId specified is a void payment transaction.  This transaction cannot be voided."
+				}]
+			}
+		}
+	]
+}]

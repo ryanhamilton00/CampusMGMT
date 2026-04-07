@@ -1,0 +1,114 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "This API will create 2 Consecutive Indicator Records. 1 will be with an end date in 15 days while the 2nd will have effective date a day after the previous indicators end date and then end in another 15 days.",
+    "Globals": {
+			"StudentSsn": "111-22-0011"
+				},
+    "Apis": [
+      {
+        "RequestId": "9cab1771-a356-46a5-a725-f2fb0ebef42f",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Students/CampusNexus.GetStudentsForSearch(searchText='{{gStudentSsn}}',refines='', campusId=0,advancedSearchCriteriaId=0)?",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "9cab1771-a356-46a5-a725-f2fb0ebef31e",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/StudentIndicatorDetail/Create",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{}"
+      },
+      {
+        "RequestId": "da870dd2-cf7a-41e5-89c3-6fb3d5a1b63b",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Indicators?$filter=IsActive eq true",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "1e7287eb-2e2e-43ce-a755-017581fdcbcd",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/StudentIndicatorDetail/SaveNew",
+        "RequestBody": {
+          "payload": {
+            "effectiveDate": "@DateNow()",
+            "endDate": "@DateNow(+30)"
+          }
+        },
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{}"
+      },
+      {
+        "RequestId": "25913939-2eb8-41d4-b75e-d266c436b4a3",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentIndicatorDetails?$filter=Id eq {{gIndId}}",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "9cab1771-a356-46a5-a725-f2fb0ebef32f",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/StudentIndicatorDetail/Create",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{}"
+      },
+      {
+        "RequestId": "1e7287eb-2e2e-43ce-a755-017581fdcbgg",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/StudentIndicatorDetail/SaveNew",
+        "RequestBody": {
+          "payload": {
+            "effectiveDate": "@DateNow(+31)",
+            "endDate": "@DateNow(+60)"
+          }
+        },
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {},
+        "notifications": []
+      },
+      {
+        "RequestId": "1e7287eb-2e2e-43ce-a755-017581fdcbde",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/StudentIndicatorDetail/Delete",
+        "RequestBody": {},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {
+          "payload": {
+            "deleted": true
+          },
+          "notifications": []
+        }
+      },
+      {
+        "RequestId": "1e7287eb-2e2e-43ce-a755-017581fdcbjj",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/StudentIndicatorDetail/Delete",
+        "RequestBody": {},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {
+          "payload": {
+            "deleted": true
+          },
+          "notifications": []
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,325 @@
+[{
+	"Type": "AdvancedDataFile",
+	"Version": "2.0",
+	"TestDescription": "This API will create an Skill (Config-CS-Skill)",
+	"Globals": {
+		"Name": "EmployerName1",
+		"Code": "ECODE1",
+		"UpdatedName": "ENameUpdate1"
+	},
+	"Apis": [{
+			"RequestId": "00000000-0000-0000-0000-000000000000",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId,FullName",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000001",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/CareerServices/Employer/Create",
+			"RequestBody": "{}",
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {
+				"payload": {}
+			}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000002",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/CareerServices/Employer/SaveNew",
+			"RequestBody": {
+				"payload": {
+					"code": "{{gCode}}",
+					"name": "{{gName}}",
+					"id": -1,
+					"createdDateTime": "@DateNow",
+					"isActive": true,
+					"locationIdList": [],
+					"employerGroupIdList": null,
+					"careerFieldsIdList": null,
+					"softSkillIdList": null
+				}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000003",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/CareerServices/Employer/Get",
+			"RequestBody": {
+				"payload": {}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000004",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/CareerServices/Employer/Save",
+			"RequestBody": {
+				"payload": {
+					"name": "{{gUpdatedName}}"
+				}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {
+				"payload": {
+					"data": {
+						"name": "ENameUpdate1"
+					}
+				}
+			}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000005",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/CareerServices/Employer/SaveEmployerDataChange",
+			"RequestBody": {
+				"payload": {}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000006",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/CareerFields?filter=IsActive eq true",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000007",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Skills/CampusNexus.GetSoftSkillRecords()?IsActive eq true",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000008",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/PropertyEnumValues?&$format=json&$count=true&$filter=TableName eq 'PlEmployer' and ColumnName eq 'EmployerType'",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000009",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/CareerServices/Employer/Save",
+			"RequestBody": {
+				"payload": {
+					"locationIdList": [],
+					"employerGroupIdList": [],
+					"careerFieldsIdList": [],
+					"softSkillIdList": []
+				}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000010",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/CareerServices/Employer/Get",
+			"RequestBody": {
+				"payload": {}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000011",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/CareerServices/EmployerJob/Create",
+			"RequestBody": {
+				"payload": {}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000012",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/EmployerJobs/CampusNexus.GetEmployerJobType(employerId={{gEmployerId}})?orderby=Name",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000013",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/EmployerJobs/CampusNexus.GetEmployerJobTitleByJobCategory(jobCategoryId=0,employerId={{gEmployerId}},jobTitleId=0)?orderby=Name",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000014",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/CareerServices/EmployerJob/SaveNew",
+			"RequestBody": {
+				"payload": {}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000023",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/CareerServices/EmployerContact/Create",
+			"RequestBody": {
+				"payload": {}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000026",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/EmployerContactTypes?%20$orderby=Name&filter=IsActive eq true",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000024",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/CareerServices/EmployerContact/SaveEmployerContact",
+			"RequestBody": {
+				"payload": {
+					"firstName": "Test",
+					"lastName": "Test",
+					"id": -1,
+					"EmployerContactAttributes": null,
+					"EmployerContactJobSkillIdList": null,
+					"EmployerContactSoftSkillIdList": null,
+					"isActive": true,
+					"isPrimary": true
+				}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000019",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Crm/Task/Create",
+			"RequestBody": {
+				"payload": {}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000020",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/TaskTemplates/CampusNexus.GetEmployerTaskTemplatesForUser(taskTemplateId=0, taskSource='plemployer', employerId={{gEmployerId}}, campusId=0)?$select=Id,Name,Code&$expand=TaskType($select=Id,Code,Name)&$format=json&$count=true&$filter=Id eq 0 or TaskType/Code eq 'O' or TaskType/Code eq 'EMAILSTU' or TaskType/Code eq 'EMAILEMP' or TaskType/Code eq 'EMAIL' or TaskType/Code eq 'WEBALERT' or TaskType/Code eq 'IP' or TaskType/Code eq 'OP' or TaskType/Code eq 'M' or TaskType/Code eq 'MSG' or TaskType/Code eq 'L' or TaskType/Code eq 'LML'&$orderby=Name",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000021",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/TaskStatuses?$select=Name,Id,Code&$filter=IsActive eq true&$orderby=Id",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000022",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Crm/Task/SaveNew",
+			"RequestBody": {
+				"payload": {
+					"emailSubject": "Test",
+					"note": "<p>Test</p>\n"
+				}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000016",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/CareerServices/EmployerJob/Delete",
+			"RequestBody": {
+				"payload": {
+					"employerJobNote": "Delete"
+				}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000015",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/CareerServices/Employer/Get",
+			"RequestBody": {
+				"payload": {}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000017",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/CareerServices/Employer/Save",
+			"RequestBody": {
+				"payload": {
+					"locationIdList": [],
+					"employerGroupIdList": [],
+					"careerFieldsIdList": null,
+					"softSkillIdList": null
+				}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000018",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/CareerServices/Employer/Delete",
+			"RequestBody": {
+				"payload": {}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {
+				"payload": {
+					"deleted": true
+				}
+			}
+		}
+	]
+}]

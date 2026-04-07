@@ -1,0 +1,295 @@
+[
+	{
+		"Type": "AdvancedDataFile",
+		"Version": "2.0",
+		"TestDescription": "This API will create an Skill (Config-CS-Skill)",
+		"Globals": {
+			"Name": "ReasonName1",
+			"Code": "RCODE1",
+			"UpdatedName": "ReasonNameUpdate1"
+		},
+		"Apis": [
+			{
+				"RequestId": "00000000-0000-0000-0000-000000000000",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 5000,
+				"ResponseBody": "{\"value\":[]}"
+			},
+			{
+				"RequestId": "00000000-0000-0000-0000-000000000001",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/PlacementStatusReasons/CampusNexus.GetPlacementStatusReasonStatusesList(campusGroupId=1)?orderby=Id",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 5000,
+				"ResponseBody": "{\"value\":[]}"
+			},
+			{
+				"RequestId": "00000000-0000-0000-0000-000000000002",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/CareerServices/PlacementStatusReason/Create",
+				"RequestBody": "{}",
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 5000,
+				"ResponseBody": {
+					"payload": {}
+				}
+			},
+			{
+				"RequestId": "00000000-0000-0000-0000-000000000003",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/CareerServices/PlacementStatusReason/SaveNew",
+				"RequestBody": {
+					"payload": {
+						"code": "{{gCode}}",
+						"name": "{{gName}}",
+						"placementStatusReasonQuestions": null,
+						"id": -1,
+						"createdDateTime": "@DateNow",
+						"isActive": true,
+						"reasonQuestions": [],
+						"extendedProperties": [],
+						"entityState": 0,
+						"ReasonQuestions": null
+					}
+				},
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 5000,
+				"ResponseBody": {}
+			},
+			{
+				"RequestId": "00000000-0000-0000-0000-000000000004",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/PlacementStatusReasons/CampusNexus.GetPlacementStatusReasonList()",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 5000,
+				"ResponseBody": "{\"value\":[]}"
+			},
+			{
+				"RequestId": "00000000-0000-0000-0000-000000000005",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/CareerServices/PlacementStatusReason/Get",
+				"RequestBody": {
+					"payload": {}
+				},
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 5000,
+				"ResponseBody": {}
+			},
+			{
+				"RequestId": "00000000-0000-0000-0000-000000000006",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/CareerServices/PlacementStatusReason/Save",
+				"RequestBody": {
+					"payload": {
+						"name": "{{gUpdatedName}}",
+						"entityState": 3
+					}
+				},
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 5000,
+				"ResponseBody": {
+					"payload": {
+						"data": {
+							"name": "ReasonNameUpdate1"
+						}
+					}
+				}
+			},
+			{
+				"RequestId": "00000000-0000-0000-0000-000000000007",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/PlacementStatusReasons/CampusNexus.GetPlacementStatusReasonList()?$expand=PlacementStatusReasonCampusList($select=Id,Name)&$orderby=Name&$filter=Name eq '{{gUpdatedName}}'",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 5000,
+				"ResponseBody": "{\"value\":[]}"
+			},
+			{
+				"RequestId": "00000000-0000-0000-0000-000000000008",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/PropertyEnumValues?&$format=json&$count=true&$filter=TableName eq 'PlReasonQuestion' and ColumnName eq 'QuestionType'",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 5000,
+				"ResponseBody": "{\"value\":[]}"
+			},
+			{
+				"RequestId": "00000000-0000-0000-0000-000000000009",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/CareerServices/PlacementStatusReasonQuestion/SaveNew",
+				"RequestBody": {
+					"payload": {
+						"Code": "Test1",
+						"Name": "Test1",
+						"QuestionNumber": 1,
+						"Id": -1,
+						"IsActive": true,
+						"PlacementStatusReasonId": "{{gPlacementStatusReasonId}}",
+						"PlacementStatusReasonQuestionResponses": null
+					}
+				},
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 5000,
+				"ResponseBody": {}
+			},
+			{
+				"RequestId": "00000000-0000-0000-0000-000000000010",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/CareerServices/PlacementStatusReasonQuestion/save",
+				"RequestBody": {
+					"payload": {
+						"PlacementStatusReasonId": "{{gPlacementStatusReasonId}}",
+						"PlacementStatusReasonQuestionResponses": [
+							{
+								"Id": -1,
+								"ResponseNumber": 1,
+								"Description": "Yes",
+								"IsFreeTextAllowed": false,
+								"IsFreeTextRequired": false,
+								"ResponseDataType": "X"
+							},
+							{
+								"Id": -1,
+								"ResponseNumber": 2,
+								"Description": "No",
+								"IsFreeTextAllowed": false,
+								"IsFreeTextRequired": false,
+								"ResponseDataType": "X"
+							}
+						]
+					}
+				},
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 5000,
+				"ResponseBody": {}
+			},
+			{
+				"RequestId": "00000000-0000-0000-0000-000000000011",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/CareerServices/PlacementStatusReasonQuestion/SaveNew",
+				"RequestBody": {
+					"payload": {
+						"Code": "Test2",
+						"Name": "Test2",
+						"QuestionNumber": 2,
+						"Id": -1,
+						"IsActive": true,
+						"PlacementStatusReasonId": "{{gPlacementStatusReasonId}}",
+						"PlacementStatusReasonQuestionResponses": null
+					}
+				},
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 5000,
+				"ResponseBody": {}
+			},
+			{
+				"RequestId": "00000000-0000-0000-0000-000000000012",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/CareerServices/PlacementStatusReasonQuestion/save",
+				"RequestBody": {
+					"payload": {
+						"PlacementStatusReasonId": "{{gPlacementStatusReasonId}}",
+						"PlacementStatusReasonQuestionResponses": [
+							{
+								"Id": -1,
+								"ResponseNumber": 1,
+								"Description": "Yes",
+								"IsFreeTextAllowed": false,
+								"IsFreeTextRequired": false,
+								"ResponseDataType": "X"
+							},
+							{
+								"Id": -1,
+								"ResponseNumber": 2,
+								"Description": "No",
+								"IsFreeTextAllowed": false,
+								"IsFreeTextRequired": false,
+								"ResponseDataType": "X"
+							}
+						]
+					}
+				},
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 5000,
+				"ResponseBody": {}
+			},
+			{
+				"RequestId": "00000000-0000-0000-0000-000000000013",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/CareerServices/PlacementStatusReasonQuestion/SaveNew",
+				"RequestBody": {
+					"payload": {
+						"Code": "Test3",
+						"Name": "Test3",
+						"QuestionNumber": 3,
+						"Id": -1,
+						"IsActive": true,
+						"PlacementStatusReasonId": "{{gPlacementStatusReasonId}}",
+						"PlacementStatusReasonQuestionResponses": null
+					}
+				},
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 5000,
+				"ResponseBody": {}
+			},
+			{
+				"RequestId": "00000000-0000-0000-0000-000000000014",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/CareerServices/PlacementStatusReasonQuestion/SaveNew",
+				"RequestBody": {
+					"payload": {
+						"Code": "Test4",
+						"Name": "Test4",
+						"QuestionNumber": 4,
+						"Id": -1,
+						"IsActive": true,
+						"PlacementStatusReasonId": "{{gPlacementStatusReasonId}}",
+						"PlacementStatusReasonQuestionResponses": null
+					}
+				},
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 5000,
+				"ResponseBody": {}
+			},
+			{
+				"RequestId": "00000000-0000-0000-0000-000000000015",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/CareerServices/PlacementStatusReasonQuestion/SaveNew",
+				"RequestBody": {
+					"payload": {
+						"Code": "Test5",
+						"Name": "Test5",
+						"QuestionNumber": 5,
+						"Id": -1,
+						"IsActive": true,
+						"PlacementStatusReasonId": "{{gPlacementStatusReasonId}}",
+						"PlacementStatusReasonQuestionResponses": null
+					}
+				},
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 5000,
+				"ResponseBody": {}
+			},
+			{
+				"RequestId": "00000000-0000-0000-0000-000000000016",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/CareerServices/PlacementStatusReason/Delete",
+				"RequestBody": {
+					"payload": {}
+				},
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 5000,
+				"ResponseBody": {
+					"payload": {
+						"deleted": true
+					}
+				}
+			}
+		]
+	}
+]

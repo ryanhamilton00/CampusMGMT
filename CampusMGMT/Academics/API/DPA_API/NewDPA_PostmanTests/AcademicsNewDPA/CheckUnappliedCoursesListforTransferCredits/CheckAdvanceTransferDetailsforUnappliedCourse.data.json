@@ -1,0 +1,225 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "CheckAdvanceTransferDetailsforUnappliedCourse",
+    "Globals": {
+      "StudentSSN": "222-22-0022",
+      "EnrollmentPVName": "Audit Program Version 01",
+      "CourseCode": "AudCou013",
+      "TermCode": "AudTer01",
+      "TransferStatus": "APPROVED"
+    },
+    "Apis": [
+      {
+        "RequestId": "a89a78ae-ffaa-479a-8c2d-1685e73055c0",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gStudentSSN}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": {}
+      },
+      {
+        "RequestId": "cd47f2e6-1d88-4efd-9ba3-68c3892acbab",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,PersonId,DefaultSyCampusId",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "5f7792d1-4c34-40e7-bedb-a909f2d739df",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Admissions/StudentTransferCredit/Create",
+        "RequestBody": "{}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": {
+          "payload": {},
+          "notifications": [],
+          "hasError": false,
+          "hasFault": false,
+          "hasWarning": false,
+          "hasValidationError": false,
+          "hasValidationWarning": false,
+          "hasValidationInformation": false,
+          "hasSecurityError": false
+        }
+      },
+      {
+        "RequestId": "16994e90-e0be-4749-a1dc-5cf790eefff1",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentEnrollmentPeriodDetails/CampusNexus.GetStudentEnrollmentPeriodList(studentId={{gStudentId}})?$select=Id,ProgramVersionId,ProgramId,ProgramVersionName,CatalogYearId,GradeScaleName&$filter = ProgramVersionName eq '{{gEnrollmentPVName}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "c609cbe2-dc06-41a2-8fe6-7adb2501bf12",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/TransferCreditTypes?$select=Id,Name,Code,IsHighSchool&$top=10&$filter=IsHighSchool eq false and IsActive eq true or Id eq 0",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "ed082657-9838-40b8-88a9-e6977cecb906",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/TransferCreditStatuses?$select=Id,Name,Code&$filter=IsActive eq true and Code eq '{{gTransferStatus}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "a2ed7fb8-3b71-40d3-946e-f2fce4827e0b",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Terms/CampusNexus.GetAllTermsByWhereClause(campusId=10,whereClause='',campusIds='',isGetAllData='false')?&$select=Name,Code,Id,StartDate,EndDate,IsActive&$filter=Code eq '{{gTermCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "6c4303c3-1d65-4bbf-a787-3190d285e75a",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/GradeScales?$filter=Name eq '{{gGradeScaleName}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "5bc3c133-6871-4c84-bc90-b81bb91551a6",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/GradeScaleLetterGrades/CampusNexus.GetGradeScaleLetterGradeList(gradeScaleId={{gGradeScaleId}})?$filter=IsTransferGrade eq true&$select=Id,Code",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "a244cbfe-d96e-4111-993c-8d4117da277d",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Colleges/CampusNexus.GetExternalCollegeList()?$top=5&$orderby=Code",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "d06a83f4-288d-41bb-b4b3-d19f910824b2",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/CollegeCourses?$select=Id, CourseCode, CourseName, CollegeId,ConvertedCredits,ClockHours,MinGradeRequired,CreditAcceptedBeginDate,CreditAcceptEndDate,CourseCreditHours&$format=json&$count=true&$filter=IsActive eq true and CollegeId  eq {{gExternalCollegeId}}&$orderby=CourseCode",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+
+      {
+        "RequestId": "d06a83f4-288d-41bb-b4b3-d19f910824b3",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Courses/CampusNexus.GetAdvancedStudentTransferCreditCampusCourseList(isCollege=true,collegeOrHighSchoolId=0,campusId={{gCampusId}},collegeOrHighSchoolCourseId=0,studentId={{gStudentId}},studentEnrollmentPeriodId={{gStudentEnrollmentPeriodId}},isEdit=false,isCourseIncludeInActive=true,statusId=0)?$filter = Code eq '{{gCourseCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "2c5bc93d-0d60-4d37-aa11-ca5b22848bd6",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/Course/Get",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {}
+      },
+      {
+        "RequestId": "2c5bc93d-0d60-4d37-aa11-ca5b22848bd7",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/CourseLevels?$select=Id,Code,Name&$filter= Id eq {{gCourseLevelId}}",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "be04ebf0-37d6-4474-898a-0fcb757771f3",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Admissions/StudentTransferCredit/SaveStudentTransferCredit",
+        "RequestBody": {
+          "payload": {
+            "studentTransferCreditId": -1,
+            "approvedDate": null,
+            "transferCreditStatusId": "{{gTransferStatusId}}",
+            "isApproved": true,
+            "grade": "{{gTransferGrade}}",
+            "note": "Advance Transfered Course",
+            "studentTransferCreditExternalCourseList": [
+              {
+                "id": -1,
+                "uid": "c2812b46-56fa-4bc6-a6a1-59b4b983a2d8",
+                "collegeCourseClockHours": null,
+                "collegeCourseGrade": "A",
+                "completionDate": "@DateNow(-10)",
+                "collegeCourseStartDate": null,
+                "highSchoolCourseId": null,
+                "highSchoolId": null,
+                "entityState": 0,
+                "collegeCourseClockHoursAttempted": null,
+                "collegeCourseClockHoursEarned": null,
+                "collegeCourseGradePoints": 0
+              }
+            ],
+            "studentTransferCreditInternalCourseList": [
+              {
+                "id": -1,
+                "uid": "cb9e4970-1b5e-4c54-98bc-b917a8b7b2c5",
+                "entityState": 0
+              }
+            ],
+            "collegeCourseClockHoursAttempted": null,
+            "collegeCourseClockHoursEarned": null,
+            "collegeCourseCreditHoursAttempted": "{{gCreditHours}}",
+            "collegeCourseCreditHoursEarned": "{{gCreditHours}}",
+            "collegeCourseGradePoints": 0,
+            "rowVersion": null
+          }
+        },
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 50000,
+        "ResponseBody": {
+          "payload": {},
+          "notifications": [],
+          "hasError": false,
+          "hasFault": false,
+          "hasValidationError": false,
+          "hasSecurityError": false
+        }
+      },
+      {
+        "RequestId": "05febb5e-f716-4402-9b26-6a4adecf5fbc",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentCourseSchedules/CampusNexus.GetStudentCourseSchedule(studentEnrollmentPeriodId={{gStudentEnrollmentPeriodId}},studentId={{gStudentId}},termId=0,status='')?$filter=CourseCode eq '{{gCourseCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": { "value": [] }
+      },
+      {
+        "RequestId": "8a8b0db0-8a03-40ad-baa0-7eae87f4a129",
+        "RequestMethod": "GET",
+        "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId}}/unappliedcourses",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {}
+      }
+    ]
+  }
+]

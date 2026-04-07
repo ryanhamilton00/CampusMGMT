@@ -1,0 +1,90 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "This API will change a student's status",
+    "Globals": {
+		"StudentSsn": "111-22-0011",
+		"SchoolStatusCode": "TestAPI",
+		"SystemStatus": "Attending"
+			},
+    "Apis": [
+	  {
+        "RequestId": "578cad81-409b-42ef-9244-4595db3db3c2",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Students/CampusNexus.GetStudentsForSearch(searchText='{{gStudentSsn}}',refines='', campusId=0,advancedSearchCriteriaId=0)?",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "e1939877-2289-4a54-b34a-67b6db816e2a",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Common/Student/get",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{}"
+      },
+	  {
+        "RequestId": "578cad81-409b-42ef-9244-4595db3db3c3",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentEnrollmentPeriodDetails/CampusNexus.GetStudentEnrollmentPeriodList(studentId={{gStudentId}})",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },	  	  
+	  {
+        "RequestId": "e1939877-2289-4a54-b34a-67b6db816e22",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/StudentEnrollmentPeriod/get",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {}
+      },
+      {
+        "RequestId": "b5ac00bf-f311-4853-a405-64a5f8fd2e97",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/SchoolStatuses?$select=Id,Code,CampusGroupId,Name,NsldsStatus,SystemSchoolStatusId&$filter=Code eq '{{gSchoolStatusCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "1aa6b10c-9a48-4002-ae59-9dba598840dd",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/StudentEnrollmentPeriod/EnrollmentStatusChange",
+        "RequestBody": {
+			"payload": {
+					"EffectiveDate": "@DateNow",
+					"UseEnrollmentGraduationDate": false,
+					"DeletePendingChanges": false,
+					"DeleteCourseAssociation": false,
+					"OverrideStatusChangeDays": false,
+					"IsOfficialWithdrawal": false,
+					"RemoveAttendanceBackToLastAttendedDate": false,
+					"OverrideSapEnrollmentLinking": false}
+	},
+		"ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {
+				"payload": {},
+				"notifications": [{
+					"message": "The enrollment status change process completed successfully."
+				}],
+				"hasError": false,
+				"hasFault": false,
+				"hasWarning": false,
+				"hasValidationError": false,
+				"hasValidationWarning": false,
+				"hasValidationInformation": true,
+				"hasSecurityError": false
+}
+      }
+    ]
+  }
+]

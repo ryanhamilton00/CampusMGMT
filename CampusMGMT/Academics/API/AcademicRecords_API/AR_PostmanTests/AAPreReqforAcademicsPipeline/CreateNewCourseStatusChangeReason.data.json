@@ -1,0 +1,69 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "Create Course Status Change Reason",
+    "Globals": {
+		"ReasonName": "ReaName",
+		"ReasonCode": "ReaCode"
+	},
+    "Apis": [
+      {
+        "RequestId": "d4a094bc-023b-4f53-bc85-e33800328899",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentCourseStatusChangeReasons?$filter=Code eq '{{gReasonCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "d4a094bc-023b-4f53-bc85-e33800328890",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "ca774a3d-6db9-4c4e-a96a-2bcd30725e5f",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/StudentCourseStatusChangeReason/Create",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {}
+      },
+      {
+        "RequestId": "0a2c9c74-25ce-46b7-a594-6bbf429db0b3",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/StudentCourseStatusChangeReason/SaveNew",
+        "RequestBody": {
+          "payload": {
+            "code": "{{gReasonCode}}",
+            "isActive": true,
+            "isForDelete": true,
+            "isForDrop": true,
+            "isForUnregister": true,
+            "isLdaRetainedUnregCourses": true,
+            "name": "{{gReasonName}}",
+            "rowVersion": null,
+            "campusGroup": {
+              "campusList": [
+                {
+                  "id": -1,
+                  "entityState": 0,
+                  "campusGroupId": -1
+                }
+              ]
+            }
+          }
+        },
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {}
+      }
+    ]
+  }
+]

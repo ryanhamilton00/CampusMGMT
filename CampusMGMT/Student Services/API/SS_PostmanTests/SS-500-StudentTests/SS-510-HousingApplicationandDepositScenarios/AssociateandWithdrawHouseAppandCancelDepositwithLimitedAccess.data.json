@@ -1,0 +1,120 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "Associate Housing Deposit to an Application, Withdraw the Housing Application and Cancel the deposit for Limited Access User ",
+    "Globals": {
+				"StudentSsn": "{{gWorkflowStudentSSN}}"
+	},
+    "Apis": [
+      {
+        "RequestId": "da096374-af82-445a-8746-25e712d0c769",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gStudentSsn}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "81437e3b-7da9-4a4b-9ace-d453f366abdd",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/HousingApplications/CampusNexus.GetHousingApplicationStudentDetails(studentId = {{gStudentId}})?$filter = HousingStatusName eq 'Application Submitted'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "9ccd7fc2-58cc-4b44-955f-4bb43a162ed1",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Deposits/CampusNexus.GetDepositsToAssociate(studentId={{gStudentId}})",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "287df444-5193-46ec-93a7-226279324957",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Admissions/Deposit/AssociateDeposit",
+        "RequestBody": {
+							"payload": {
+								"IsAllowedToOverride": false
+							}
+						},
+        "ResponseStatus": 401,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {
+							"payload": null,
+							"notifications": [{
+								"message": "Permission denied - You don't have access to run the Admissions.Deposit.AssociateDeposit command."
+							}]
+						}
+      },
+	  {
+        "RequestId": "3881a24d-822a-400b-bf0f-5ccb24ff3db5",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Deposits/CampusNexus.GetAdmissionsDepositsReceived(studentId={{gStudentId}},studentEnrollmentPeriodId=0)?$filter=Id eq {{gDepositId}} and HousingApplicationName eq '{{gHousingApplicationName}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "2e46ca2c-44de-46de-b1fe-b4845c28f740",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/HousingApplication/WithdrawalHousingApplication",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 401,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {
+							"payload": null,
+							"notifications": [{
+								"message": "Permission denied - You don't have access to run the StudentServices.HousingApplication.WithdrawalHousingApplication command."
+							}]
+						}
+      },
+	   {
+        "RequestId": "3881a24d-822a-400b-bf0f-5ccb24ff3db6",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/HousingApplications/CampusNexus.GetHousingApplicationStudentDetails(studentId = {{gStudentId}})?$filter= Id eq {{gHousingApplicationStudentId}}",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {
+							"value": [{
+								"HousingStatusName": "Application Submitted"
+							}]
+						}
+      },
+	   {
+        "RequestId": "2e46ca2c-44de-46de-b1fe-b4845c28f741",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Admissions/Deposit/CancelDeposit",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 401,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {
+							"payload": null,
+							"notifications": [{
+								"message": "Permission denied - You don't have access to run the Admissions.Deposit.CancelDeposit command."
+							}]
+						}
+      },
+	  {
+        "RequestId": "3881a24d-822a-400b-bf0f-5ccb24ff3db7",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Deposits/CampusNexus.GetAdmissionsDepositsReceived(studentId={{gStudentId}},studentEnrollmentPeriodId=0)?$filter=Id eq {{gDepositId}}",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {
+							"value": [{
+								"Status":"N"
+							}]
+						}
+      }
+    ]
+  }
+]

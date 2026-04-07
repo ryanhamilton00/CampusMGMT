@@ -1,0 +1,83 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "DeleteCatalogandCoursesfromPV",
+    "Globals": {
+      "ProgramCode": "ProCode2"
+    },
+    "Apis": [
+      {
+        "RequestId": "6f967319-0e6f-45c6-a4e0-2f3c982e4e60",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "f516e254-4cd9-40fd-a438-ee46f4b43f2b",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Programs/CampusNexus.GetAllProgramList(isActive=true)?$filter=Code eq '{{gProgramCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "e7e9f999-3f60-4094-80e7-cfb5330e3611",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/ProgramVersions/CampusNexus.GetProgramVersionsByProgramId(programId={{gProgramId}},staffId={{gStaffId}}, campusId=-1)",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "c0209802-d79a-4b68-814d-4d92ad1d5e91",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/ProgramVersions/CampusNexus.GetProgramVersionCatalogList(programVersionId={{gProgramVersionId}},type='p',active=false,isCatalogByProgramVersionStartDate=false,catalogEffectiveStartDate='1900-01-01',catalogfilter=0,catalogYearId=0)",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+	   {
+        "RequestId": "c0209802-d79a-4b68-814d-4d92ad1d5e92",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/ProgramVersions/CampusNexus.GetProgramVersionCourseCategoryList(programVersionId={{gProgramVersionId}},programConcentrationId=0,catalogYearId={{gCatalogYearId}})",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "6fa4702f-fc89-4b8a-ad86-1ef095e02d7c",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/RequiredCourseCategory/Get",
+        "RequestBody": {"payload": {}},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {}
+      },
+      {
+        "RequestId": "31dccdb2-2571-4a26-9f6b-05908ee18c97",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/RequiredCourseCategory/Delete",
+        "RequestBody": {
+						"payload": {
+								"isDeleteFromCatalog": true,
+								"isDeleteFromCatalogOverride": true
+					  }},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {
+						  "payload": {
+							"deleted": true
+						  }
+						}
+      }
+    ]
+  }
+]

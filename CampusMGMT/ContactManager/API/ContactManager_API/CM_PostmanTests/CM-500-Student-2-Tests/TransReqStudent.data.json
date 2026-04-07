@@ -1,0 +1,55 @@
+[{
+	"Type": "AdvancedDataFile",
+	"Version": "2.0",
+	"TestDescription": "This API will Add a Student Transcript for a student in Contact Manager",
+	"Globals": {
+		"StudentSsn": "111-33-0066"
+	},
+	"Apis": [{
+			"RequestId": "00000000-0000-0000-0000-000000000000",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000001",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gStudentSsn}}'",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000008",
+			"TypeDescription": "Add College transcript",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Crm/TranscriptRequest/Create",
+			"RequestBody": {
+				"payload": {
+					
+				}},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {"payload": {}}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000005",
+			"TypeDescription": "Add College transcript",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Crm/TranscriptRequest/SaveNew",
+			"RequestBody": {
+				"payload": {					
+					"sentDate": "@DateNow",				
+					"requestDate": "@DateNow",
+					"transcriptType": "S"
+				}},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {"payload": {}}
+		}
+	]
+}]

@@ -1,0 +1,71 @@
+[{
+	"Type": "AdvancedDataFile",
+	"Version": "2.0",
+	"TestDescription": "This API will create an Agency Affiliation Record for a student in Contact Manager",
+	"Globals": {
+		"StudentSsn": "111-33-0066"
+	},
+	"Apis": [{
+			"RequestId": "00000000-0000-0000-0000-000000000000",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000001",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gStudentSsn}}'",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000002",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Agencies?$select=Id,Code,Name,IsActive&$filter=(IsActive eq true or Id eq 0) and CampusGroup/CampusList/any(c: c/CampusId eq {{gCampusId}})&$orderby=Name",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000003",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/AgencyBranches/CampusNexus.GetAgencyBranchList(agencyId={{gAgencyId}})?$select=Id,Name,City,State&$orderby=Name",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000005",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Common/StudentAgencyBranch/Create",
+			"RequestBody": {"payload": {}},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {"payload": {}}
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000006",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Common/StudentAgencyBranch/SaveNew",
+			"RequestBody": {"payload": {
+				"Id": -1,
+				"location": "",
+				"note": "",
+				"studentFunction": "",
+				"studentId": "{{gStudentId}}",
+				"title": "",
+				"isPrimaryBillingAffiliate": false
+			}},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {"payload": {}}
+		}
+	]
+}]

@@ -1,0 +1,66 @@
+[
+    {
+        "Type": "AdvancedDataFile",
+        "Version": "2.0",
+        "TestDescription": "This API will create an Agency Affiliation Record for a student in Contact Manager - NOTE!: The Staff member must be part of the staff group found in RequestId: 00000000-0000-0000-0000-000000000003",
+      "Globals": {
+        "StudentSsn": "{{gWorkflowStudentSSN}}"
+      },
+        "Apis": [
+            {
+                "RequestId": "00000000-0000-0000-0000-000000000000",
+                "RequestMethod": "GET",
+                "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+                "RequestBody": null,
+                "ResponseStatus": 200,
+                "ResponseTimeMs": 10000,
+                "ResponseBody": "{\"value\":[]}"
+            },
+            {
+                "RequestId": "00000000-0000-0000-0000-000000000001",
+                "RequestMethod": "GET",
+                "RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gStudentSsn}}'",
+                "RequestBody": null,
+                "ResponseStatus": 200,
+                "ResponseTimeMs": 10000,
+                "ResponseBody": "{\"value\":[]}"
+            },
+            {
+                "RequestId": "00000000-0000-0000-0000-000000000002",
+                "RequestMethod": "GET",
+                "RequestUrl": "/ds/campusnexus/StudentEnrollmentPeriods/CampusNexus.GetStudentApplicantOrEnrollment(studentId={{gStudentId}})?$select=Id,ExpectedStartDate,ApplicationReceivedDate,ClockHoursRequired,CreditHoursRequired,EnrollmentNumber&$expand=Campus($select=Id,Name),Program($select=Id,Name,Code),ProgramVersion($select=Id,Name,Code),SchoolStatus($select=Id,Name),Catalog($select=Id,Name),AssignedAdmissionsRep($select=FirstName,LastName,FullName),ApplicantType($select=Name),ProgramVersion($select=Id,Name),ConfiguredStartDate($select=StartDate),EnrollmentStatus($select=Name),GradeScale($select=Name),Shift($select=Name),BillingMethod($select=Name),GradeLevel($select=Name),StartTerm($select=Name),StatusChangeReason($select=Name),EnrollmentAreasOfStudy($select=Id;$expand=AreaOfStudy($select=Id,Name,Code))&$top=5&$orderby=Campus/Name desc&$filter=IsApplicant eq true",
+                "RequestBody": null,
+                "ResponseStatus": 200,
+                "ResponseTimeMs": 10000,
+                "ResponseBody": "{\"value\":[]}"
+            },
+            {
+                "RequestId": "00000000-0000-0000-0000-000000000005",
+                "RequestMethod": "POST",
+                "RequestUrl": "/api/commands/Admissions/Applicant/Get",
+                "RequestBody": {
+                    "payload": {}
+                },
+                "ResponseStatus": 200,
+                "ResponseTimeMs": 5000,
+                "ResponseBody": {
+                    "payload": {}
+                }
+            },
+            {
+                "RequestId": "00000000-0000-0000-0000-000000000006",
+                "RequestMethod": "POST",
+                "RequestUrl": "/api/commands/Admissions/Applicant/Delete",
+                "RequestBody": {
+                    "payload": {
+                    }
+                },
+                "ResponseStatus": 200,
+                "ResponseTimeMs": 25000,
+                "ResponseBody": {
+                  "payload": { "deleted": true }
+                }
+            }
+        ]
+    }
+]

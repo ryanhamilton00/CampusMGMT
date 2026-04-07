@@ -1,0 +1,216 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "Creating a Charge and Adding Payment",
+    "Globals": {
+    },
+    "Apis": [
+      {
+        "RequestId": "f76afda1-d3a9-4d98-a016-3d6df35ad0ec",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gWorkflowStudentSSN}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "737c5814-3617-40ab-ad04-36d81901be6c",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentEnrollmentPeriodDetails/CampusNexus.GetStudentEnrollmentPeriodList(studentId={{gStudentId}})",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "3ffa9b26-2e38-4d21-bcaf-43a134509fa7",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentAcademicYears?$select=Id,Sequence,StartDate,EndDate&$filter=StudentEnrollmentPeriod/Id eq {{gEnrollmentPeriodId}}",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "f4fad53f-b764-4499-9442-63067ff87656",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/BillingTransactionCodes/CampusNexus.GetStudentAccountBillingCode(studentId={{gStudentId}},campusId={{gCampusId}},subsidiaryAccountTypeId=0,billingTransactionCodeId=0)?$orderby=Name,Code",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "edc78e53-57af-446c-ab23-c0c9aed0eea7",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Terms/CampusNexus.GetTermsForCampus(campusId={{gCampusId}},isForRegistrationTermGroup=false,termId=0)?&$select=Name,Code,Id,StartDate,EndDate,IsActive,IsTermOpen&$top=50&$orderby=EndDate desc",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "4391924e-9cf0-46a3-8f01-64cf8d4376ac",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentAccounts/StudentAccountTransaction/PostAccountTransactionCharge",
+        "RequestBody": {
+						"payload": {
+							"TransactionAmount": 2,
+							"StudentAccountClassSectionId": null,
+							"StudentAcademicYearPaymentPeriodId": null,
+							"TransactionDate": "@DateNow",
+							"Reference": "",
+							"IsChargeAdjustment": true,
+							"IgnoreTermRequired": false,
+							"OverrideBilledDate": null,
+							"AllowProcessByAutomation": null,
+							"StudentEnrollmentPeriodFeeId": null,
+							"PaymentDueDate": null
+						}
+					},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 50000,
+        "ResponseBody": {
+							"payload": {
+								"data": {}
+							},
+							"notifications": [],
+							"hasError": false,
+							"hasFault": false,
+							"hasWarning": false,
+							"hasValidationError": false,
+							"hasValidationWarning": false,
+							"hasValidationInformation": false,
+							"hasSecurityError": false
+						}
+      },
+	  {
+        "RequestId": "6a9094e6-c20a-4d37-9a7d-1ab1d527de36",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentAccounts/StudentAccountTransaction/AuthenticateCashierLogin",
+        "RequestBody": {
+							"payload": {
+										"Username": "{{envAuthUser}}",
+										"Password": "{{envAuthPassword}}"
+							}
+						},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 25000,
+        "ResponseBody": {
+							"payload": {
+								"data": {}
+							},
+							"notifications": [],
+							"hasError": false,
+							"hasFault": false,
+							"hasWarning": false,
+							"hasValidationError": false,
+							"hasValidationWarning": false,
+							"hasValidationInformation": false,
+							"hasSecurityError": false
+						}
+      },
+      {
+        "RequestId": "e2495fae-7c9b-4829-842d-62c7b21d8440",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentAccountTransactionPaymentDescriptions/CampusNexus.GetCashPaymentDescriptions(subsidiaryId=0,campusIds='',returnAll=false)?$select=Id,Code,Name,IsEditableWhenPostingTransaction&$format=json&$count=true&$orderby=Code",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "5fed65d5-68ce-43b2-8f79-4c8fc587ee58",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/PropertyEnumValues?&$format=json&$count=true&$filter=TableName eq 'saTrans' and ColumnName eq 'PaymentType' and Code ne 'O' and Code ne 'W'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "f869ebb5-405a-470a-b1cf-c1732d7b5e95",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/BankAccounts/CampusNexus.GetBankAccountNames(campusId={{gCampusId}},bankAccountId=0)?$expand=Bank&$orderby=AccountName",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "7d81e55f-cf17-42ae-a6e6-8e9d623c740a",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/CashDrawerSessions/CampusNexus.GetCashDrawerSessionByCampus(campusId={{gCampusId}},userId={{gUserId}},campusIds='')?$select=Id,Code,Name,Drn&$expand=CashDrawer($select=Id,Code,Name,UsedByUserId)",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "4d767bd7-78ce-4d1f-b8ac-335a0df9383e",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentAccounts/StudentAccountTransaction/PostAccountTransactionPayment",
+        "RequestBody": {
+						"payload": {
+							"TransactionAmount": 3,
+							"StudentAcademicYearPaymentPeriodId": 0,
+							"TransactionDate": "@DateNow",
+							"Reference": "",
+							"IgnoreTermRequired": false,
+							"IsStudentPayment": true,
+							"PaymentMode": 0,
+							"FundSourceId": 0,
+							"ScheduledPaymentId": 0,
+							"PaidByUserId": 0,
+							"StudentCreditCardId": 0,
+							"AuthorizationNumber": "",
+							"CheckNumber": "12345",
+							"CashDrawerSessionId": 0,
+							"ActualSource": "",
+							"IsStudentCreditCardAuthorizeRequired": false,
+							"OpeningBalance": 2,
+							"OverrideDisbursementAssociation": false,
+							"AgencyBranchId": 0,
+							"PayWithExistingCreditCard": true,
+							"IsSaveAndNew": false,
+							"BaseURI": "{{envWebHost}}",
+							"AgencyCreditCardId": 0,
+							"IsApplyPayment": false,
+							"IsPrint": true,
+							"ClassSectionId": null,
+							"ExtendedProperties": [],
+							"StudentBankAccountId": 0,
+							"Drn": null
+						}
+					},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 50000,
+        "ResponseBody": {
+							"payload": {
+								"data": {}
+							}
+						}
+      },
+      {
+        "RequestId": "7d81e55f-cf17-42ae-a6e6-8e9d623c740b",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentAccountTransactions/CampusNexus.GetStudentAccountLedgerTransactions(studentId={{gStudentId}},studentEnrollmentPeriodId={{gEnrollmentPeriodId}},termId=-1,studentAcademicYearPaymentPeriodId=0,isPendingChargeRequired=false,isPendingCheckRequired=true)?$top=2&$orderby=TransactionNumber desc",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": {
+          "value": [
+            {
+              "TransactionPayment": 3.0000
+            },
+            {
+              "TransactionCharge": 2.0000
+            }
+          ]
+        }
+      }
+    ]
+  }
+]

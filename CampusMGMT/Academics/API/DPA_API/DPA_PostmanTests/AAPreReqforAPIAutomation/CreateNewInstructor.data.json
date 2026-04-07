@@ -1,0 +1,79 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "CreateNewInstructorforDPA",
+    "Globals": {
+      "CampusGroupName": "All Campuses",
+      "StaffGroupName": "Instructor",
+      "StaffName": "Instructor",
+      "StaffCode": "test99@test.com"
+    },
+    "Apis": [
+      {
+        "RequestId": "3cea0179-8b9e-4564-a19c-943254b3c04d",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetStaffPasswordRuleProfile()?$filter=(IsActive eq true and Code eq '{{gStaffCode}}' and contains(FullName,'{{gStaffName}}'))",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {}
+      },
+      {
+        "RequestId": "e8a94b99-7cf7-42fb-a6b6-b985f8de37cb",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/CampusGroups?$filter=Type eq 'U' and contains(Name,'{{gCampusGroupName}}')",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "9ef27833-811a-40f6-9964-8425446b9029",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetStaffGroupAssociationList(isLastModifiedRequired=true)?$filter=contains(Name,'{{gStaffGroupName}}')",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "ba1a5a51-04bf-4dfa-8efc-8d4286938931",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Common/Staff/Create",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 25000,
+        "ResponseBody": {}
+
+      },
+      {
+        "RequestId": "7751c3d6-a1fc-4b56-ad61-03cef752197c",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Common/Staff/SaveNew",
+        "RequestBody": {
+          "payload": {
+            "code": "{{gStaffCode}}",
+            "firstName": "DPA",
+            "lastName": "{{gStaffName}}",
+            "mi": "",
+            "domain": "Campusmgmt.com"
+
+          }
+        },
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 50000,
+        "ResponseBody": {}
+      },
+      {
+        "RequestId": "329c4c37-081d-4401-8431-a503984e7fc1",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Common/Staff/Get",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 25000,
+        "ResponseBody": {}
+      }
+    ]
+  }
+]

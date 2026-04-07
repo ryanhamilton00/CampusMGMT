@@ -1,0 +1,406 @@
+[
+	{
+		"Type": "AdvancedDataFile",
+		"Version": "2.0",
+		"TestDescription": "Add Catalog to Program Version",
+		"Globals": {
+			"ProgramCode": "AudPro1",
+			"ProgramVersionCode": "AudPV1",
+			"CatalogCode": "AudCat",
+			"CatalogName": "Audit Catalog Year",
+			"CategoryCode": "AudCatCode",
+			"CategoryName": "Audit Category Name"
+		},
+		"Apis": [
+			{
+				"RequestId": "300bf5f4-90f2-4514-bfbc-5ec6eaf04f43",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 10000,
+				"ResponseBody": "{\"value\":[]}"
+			},
+			{
+				"RequestId": "88f4e7b0-f269-460e-93d7-25e31669a612",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/Common/Staff/Get",
+				"RequestBody": "{\"payload\":{}}",
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 10000,
+				"ResponseBody": {}
+			},
+			{
+				"RequestId": "a2b07a48-ea1d-4255-a75f-dde17fbf8706",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/Programs/CampusNexus.GetAllProgramList(isActive=true)?$filter=(IsActive eq true and Code eq '{{gProgramCode}}')",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 10000,
+				"ResponseBody": "{\"value\":[]}"
+			},
+			{
+				"RequestId": "762563ae-1e53-4e35-a405-daf51df0d20a",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/Academics/Program/Get",
+				"RequestBody": "{\"payload\":{}}",
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 20000,
+				"ResponseBody": {}
+			},
+			{
+				"RequestId": "b5063e31-4a51-4a9d-acb0-d96cdd169572",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/ProgramVersions/CampusNexus.GetProgramVersionsByProgramId(programId={{gProgramId}},staffId={{gStaffId}}, campusId=-1)?$filter=contains(Code,'{{gProgramVersionCode}}')",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 10000,
+				"ResponseBody": "{\"value\":[]}"
+			},
+			{
+				"RequestId": "7b29f225-6184-431e-9af4-cb4b6d37a7e7",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/Academics/ProgramVersion/Get",
+				"RequestBody": "{\"payload\":{}}",
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 10000,
+				"ResponseBody": {}
+			},
+			{
+				"RequestId": "270cd192-e666-4832-ac14-077c1c84b906",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/CatalogYears?$filter=Code eq '{{gCatalogCode}}'",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 10000,
+				"ResponseBody": "{\"value\":[]}"
+			},
+			{
+				"RequestId": "5bd8c13a-3cba-4cc1-96c5-189d84d42521",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/CourseCategories?&$filter=Code eq '{{gCategoryCode}}'",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 10000,
+				"ResponseBody": "{\"value\":[]}"
+			},
+			{
+				"RequestId": "b5063e31-4a51-4a9d-acb0-d96cdd169579",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/ProgramVersions/CampusNexus.GetProgramVersionCourseCategoryList(programVersionId={{gPVId}},programConcentrationId=0,catalogYearId={{gCatalogId}})?$filter=CategoryName eq '{{gCategoryName}}'",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 10000,
+				"ResponseBody": {}
+			},
+			{
+				"RequestId": "9dc1ce51-02d2-47df-a590-c0950fea44f1",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/Academics/RequiredCourseCategory/SaveRequiredCourseCategory",
+				"RequestBody": {
+					"payload": {
+						"RequiredCourseCategoryList": [
+							{
+								"id": -1,
+								"areaOfStudyId": null,
+								"clockHoursRequired": 0,
+								"isCoreCategory": false,
+								"isDroppedFailedCourseRepeated": false,
+								"creditHoursRequired": 6,
+								"minimumGpa": null,
+								"note": "",
+								"numberCoursesRequired": 0,
+								"rowVersion": null,
+								"programVersionId": "{{gProgramVersionId}}",
+								"sequence": 1,
+								"originalState": null,
+								"secureState": null,
+								"extendedProperties": [],
+								"entityState": 0
+							}
+						],
+						"isDegreeAuditChangesOverride": true,
+						"IsDeleteFromCatalog": false,
+						"IsDeleteFromCategory": false,
+						"IsDeleteFroamCatalogOverride": false,
+						"IsDeleteFromCategoryOverride": false,
+						"IsAppliedToCategoryAndCourses": false
+					}
+				},
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 15000,
+				"ResponseBody": {}
+			}
+		]
+	},
+	{
+		"Type": "AdvancedDataFile",
+		"Version": "2.0",
+		"TestDescription": "Add Catalog to Program Version",
+		"Globals": {
+			"ProgramCode": "AudPro1",
+			"ProgramVersionCode": "AudPV1",
+			"CatalogCode": "AudCat",
+			"CatalogName": "Audit Catalog Year",
+			"CategoryCode": "AudCatCode1",
+			"CategoryName": "Audit Category Name1"
+		},
+		"Apis": [
+			{
+				"RequestId": "300bf5f4-90f2-4514-bfbc-5ec6eaf04f43",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 10000,
+				"ResponseBody": "{\"value\":[]}"
+			},
+			{
+				"RequestId": "88f4e7b0-f269-460e-93d7-25e31669a612",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/Common/Staff/Get",
+				"RequestBody": "{\"payload\":{}}",
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 10000,
+				"ResponseBody": {}
+			},
+			{
+				"RequestId": "a2b07a48-ea1d-4255-a75f-dde17fbf8706",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/Programs/CampusNexus.GetAllProgramList(isActive=true)?$filter=(IsActive eq true and Code eq '{{gProgramCode}}')",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 10000,
+				"ResponseBody": "{\"value\":[]}"
+			},
+			{
+				"RequestId": "762563ae-1e53-4e35-a405-daf51df0d20a",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/Academics/Program/Get",
+				"RequestBody": "{\"payload\":{}}",
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 20000,
+				"ResponseBody": {}
+			},
+			{
+				"RequestId": "b5063e31-4a51-4a9d-acb0-d96cdd169572",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/ProgramVersions/CampusNexus.GetProgramVersionsByProgramId(programId={{gProgramId}},staffId={{gStaffId}}, campusId=-1)?$filter=contains(Code,'{{gProgramVersionCode}}')",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 10000,
+				"ResponseBody": "{\"value\":[]}"
+			},
+			{
+				"RequestId": "7b29f225-6184-431e-9af4-cb4b6d37a7e7",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/Academics/ProgramVersion/Get",
+				"RequestBody": "{\"payload\":{}}",
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 10000,
+				"ResponseBody": {}
+			},
+			{
+				"RequestId": "270cd192-e666-4832-ac14-077c1c84b906",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/CatalogYears?$filter=Code eq '{{gCatalogCode}}'",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 10000,
+				"ResponseBody": "{\"value\":[]}"
+			},
+			{
+				"RequestId": "5bd8c13a-3cba-4cc1-96c5-189d84d42521",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/CourseCategories?&$filter=Code eq '{{gCategoryCode}}'",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 10000,
+				"ResponseBody": "{\"value\":[]}"
+			},
+			{
+				"RequestId": "b5063e31-4a51-4a9d-acb0-d96cdd169579",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/ProgramVersions/CampusNexus.GetProgramVersionCourseCategoryList(programVersionId={{gPVId}},programConcentrationId=0,catalogYearId={{gCatalogId}})?$filter=CategoryName eq '{{gCategoryName}}'",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 10000,
+				"ResponseBody": {}
+			},
+			{
+				"RequestId": "9dc1ce51-02d2-47df-a590-c0950fea44f1",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/Academics/RequiredCourseCategory/SaveRequiredCourseCategory",
+				"RequestBody": {
+					"payload": {
+						"RequiredCourseCategoryList": [
+							{
+								"id": -1,
+								"areaOfStudyId": null,
+								"clockHoursRequired": 0,
+								"isCoreCategory": false,
+								"isDroppedFailedCourseRepeated": true,
+								"creditHoursRequired": 3,
+								"minimumGpa": null,
+								"note": "",
+								"numberCoursesRequired": 0,
+								"rowVersion": null,
+								"programVersionId": "{{gProgramVersionId}}",
+								"sequence": 2,
+								"originalState": null,
+								"secureState": null,
+								"extendedProperties": [],
+								"entityState": 0
+							}
+						],
+						"isDegreeAuditChangesOverride": true,
+						"IsDeleteFromCatalog": false,
+						"IsDeleteFromCategory": false,
+						"IsDeleteFroamCatalogOverride": false,
+						"IsDeleteFromCategoryOverride": false,
+						"IsAppliedToCategoryAndCourses": false
+					}
+				},
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 15000,
+				"ResponseBody": {}
+			}
+		]
+	},
+	{
+		"Type": "AdvancedDataFile",
+		"Version": "2.0",
+		"TestDescription": "Add Catalog to Program Version",
+		"Globals": {
+			"ProgramCode": "AudPro2",
+			"ProgramVersionCode": "AudPV11",
+			"CatalogCode": "AudCat",
+			"CatalogName": "Audit Catalog Year",
+			"CategoryCode": "AudCatCode",
+			"CategoryName": "Audit Category Name"
+		},
+		"Apis": [
+			{
+				"RequestId": "300bf5f4-90f2-4514-bfbc-5ec6eaf04f43",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 10000,
+				"ResponseBody": "{\"value\":[]}"
+			},
+			{
+				"RequestId": "88f4e7b0-f269-460e-93d7-25e31669a612",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/Common/Staff/Get",
+				"RequestBody": "{\"payload\":{}}",
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 10000,
+				"ResponseBody": {}
+			},
+			{
+				"RequestId": "a2b07a48-ea1d-4255-a75f-dde17fbf8706",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/Programs/CampusNexus.GetAllProgramList(isActive=true)?$filter=(IsActive eq true and Code eq '{{gProgramCode}}')",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 10000,
+				"ResponseBody": "{\"value\":[]}"
+			},
+			{
+				"RequestId": "762563ae-1e53-4e35-a405-daf51df0d20a",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/Academics/Program/Get",
+				"RequestBody": "{\"payload\":{}}",
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 20000,
+				"ResponseBody": {}
+			},
+			{
+				"RequestId": "b5063e31-4a51-4a9d-acb0-d96cdd169572",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/ProgramVersions/CampusNexus.GetProgramVersionsByProgramId(programId={{gProgramId}},staffId={{gStaffId}}, campusId=-1)?$filter=contains(Code,'{{gProgramVersionCode}}')",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 10000,
+				"ResponseBody": "{\"value\":[]}"
+			},
+			{
+				"RequestId": "7b29f225-6184-431e-9af4-cb4b6d37a7e7",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/Academics/ProgramVersion/Get",
+				"RequestBody": "{\"payload\":{}}",
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 10000,
+				"ResponseBody": {}
+			},
+			{
+				"RequestId": "270cd192-e666-4832-ac14-077c1c84b906",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/CatalogYears?$filter=Code eq '{{gCatalogCode}}'",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 10000,
+				"ResponseBody": "{\"value\":[]}"
+			},
+			{
+				"RequestId": "5bd8c13a-3cba-4cc1-96c5-189d84d42521",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/CourseCategories?&$filter=Code eq '{{gCategoryCode}}'",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 10000,
+				"ResponseBody": "{\"value\":[]}"
+			},
+			{
+				"RequestId": "b5063e31-4a51-4a9d-acb0-d96cdd169579",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/ProgramVersions/CampusNexus.GetProgramVersionCourseCategoryList(programVersionId={{gPVId}},programConcentrationId=0,catalogYearId={{gCatalogId}})?$filter=CategoryName eq '{{gCategoryName}}'",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 10000,
+				"ResponseBody": {}
+			},
+			{
+				"RequestId": "9dc1ce51-02d2-47df-a590-c0950fea44f1",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/Academics/RequiredCourseCategory/SaveRequiredCourseCategory",
+				"RequestBody": {
+					"payload": {
+						"RequiredCourseCategoryList": [
+							{
+								"id": -1,
+								"areaOfStudyId": null,
+								"clockHoursRequired": 0,
+								"isCoreCategory": false,
+								"isDroppedFailedCourseRepeated": true,
+								"creditHoursRequired": 6,
+								"minimumGpa": null,
+								"note": "",
+								"numberCoursesRequired": 0,
+								"rowVersion": null,
+								"programVersionId": "{{gProgramVersionId}}",
+								"sequence": 1,
+								"originalState": null,
+								"secureState": null,
+								"extendedProperties": [],
+								"entityState": 0
+							}
+						],
+						"isDegreeAuditChangesOverride": true,
+						"IsDeleteFromCatalog": false,
+						"IsDeleteFromCategory": false,
+						"IsDeleteFroamCatalogOverride": false,
+						"IsDeleteFromCategoryOverride": false,
+						"IsAppliedToCategoryAndCourses": false
+					}
+				},
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 15000,
+				"ResponseBody": {}
+			}
+		]
+	}
+]
+
+

@@ -1,0 +1,210 @@
+	[
+    {
+      "Type": "AdvancedDataFile",
+      "Version": "2.0",
+      "TestDescription": "AddCoursetoStudent",
+      "Globals": {
+        "StudentSsn": "222-22-0022",
+        "CourseCode": "AudCou011",
+        "PoolName": "EPPool1",
+        "EnrollmentPVName": "Audit Program Version 01"
+      },
+      "Apis": [
+        {
+          "RequestId": "a89a78ae-ffaa-479a-8c2d-1685e73055c0",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gStudentSsn}}'",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{\"value\":[]}"
+        },
+        {
+          "RequestId": "05febb5e-f716-4402-9b26-6a4adecf5fba",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/StudentEnrollmentPeriodDetails/CampusNexus.GetStudentEnrollmentPeriodList(studentId={{gStudentId}})?$filter=ProgramVersionName eq '{{gEnrollmentPVName}}'",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "a8f21199-a1cc-4d92-914b-1c94121830fa",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f97511ae08e",
+          "RequestMethod": "POST",
+          "RequestUrl": "/api/commands/Academics/DegreeProgressAudit/getDegreeProgressAudit",
+          "RequestBody": {
+            "payload": {
+              "degreeProgressAuditRequestor": 1,
+              "isHypothetical": false
+            }
+          },
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 25000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "8a8b0db0-8a03-40ad-baa0-7eae87f4a159",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/StudentEnrollmentDpaCourses?$filter=Id eq {{gCourseListRequirementId}}&$expand=StudentEnrollmentDpaCourseCategory",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "3e4e6f68-a40c-4757-bbdb-514eb9b69dab",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/RequiredCourseElectivePools/CampusNexus.GetRequiredCourseElectivePoolCourseListForCatalog(requiredCourseId={{gRequiredCourseId}},studentEnrollmentPeriodId={{gStudentEnrollmentPeriodId}})?$filter = Code eq '{{gCourseCode}}'",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f97511ae08a",
+          "RequestMethod": "POST",
+          "RequestUrl": "/api/commands/Academics/StudentEnrollmentDpaFulfillment/SaveStudentEnrollmentDpaFulfillment",
+          "RequestBody": {
+            "payload": {
+              "EnrollDegreeAuditCourseId": "{{gCourseListRequirementId}}",
+              "StudentEnrollmentDpaSelectedCourseDetail": {
+                "CourseId": 999999999,
+                "IsSubstituteAllowed": false
+              },
+              "IsSubstituteCourse": true,
+              "StudentEnrollmentSubstitutedCourseDetail": {
+                "Note": ""
+              },
+              "IsPostAsTransfer": false,
+              "StudentTransferCreditDpaFulfillment": {
+                "Id": 0
+              },
+              "StudentEnrollmentDpaFulfillment": {
+                "Id": 0,
+                "StudentCourseId": 0,
+                "Note": ""
+              },
+              "EntityState": 0,
+              "IsUndoEelctive": false
+            }
+          },
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 25000,
+          "ResponseBody": "{}"
+        }
+      ]
+    },
+    {
+      "Type": "AdvancedDataFile",
+      "Version": "2.0",
+      "TestDescription": "AddCoursetoStudent",
+      "Globals": {
+        "StudentSsn": "222-22-0022",
+        "CourseCode": "AudCou027",
+        "PoolName": "EPPool6",
+        "EnrollmentPVName": "Audit Program Version 01"
+      },
+      "Apis": [
+        {
+          "RequestId": "a89a78ae-ffaa-479a-8c2d-1685e73055c0",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gStudentSsn}}'",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{\"value\":[]}"
+        },
+        {
+          "RequestId": "05febb5e-f716-4402-9b26-6a4adecf5fba",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/StudentEnrollmentPeriodDetails/CampusNexus.GetStudentEnrollmentPeriodList(studentId={{gStudentId}})?$filter=ProgramVersionName eq '{{gEnrollmentPVName}}'",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "a8f21199-a1cc-4d92-914b-1c94121830fa",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f97511ae08e",
+          "RequestMethod": "POST",
+          "RequestUrl": "/api/commands/Academics/DegreeProgressAudit/getDegreeProgressAudit",
+          "RequestBody": {
+            "payload": {
+              "degreeProgressAuditRequestor": 1,
+              "isHypothetical": false
+            }
+          },
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 25000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "8a8b0db0-8a03-40ad-baa0-7eae87f4a159",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/StudentEnrollmentDpaCourses?$filter=Id eq {{gCourseListRequirementId}}&$expand=StudentEnrollmentDpaCourseCategory",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "3e4e6f68-a40c-4757-bbdb-514eb9b69dab",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/RequiredCourseElectivePools/CampusNexus.GetRequiredCourseElectivePoolCourseListForCatalog(requiredCourseId={{gRequiredCourseId}},studentEnrollmentPeriodId={{gStudentEnrollmentPeriodId}})?$filter = Code eq '{{gCourseCode}}'",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f97511ae08a",
+          "RequestMethod": "POST",
+          "RequestUrl": "/api/commands/Academics/StudentEnrollmentDpaFulfillment/SaveStudentEnrollmentDpaFulfillment",
+          "RequestBody": {
+            "payload": {
+              "EnrollDegreeAuditCourseId": "{{gCourseListRequirementId}}",
+              "StudentEnrollmentDpaSelectedCourseDetail": {
+                "CourseId": 999999999,
+                "IsSubstituteAllowed": false
+              },
+              "IsSubstituteCourse": true,
+              "StudentEnrollmentSubstitutedCourseDetail": {
+                "Note": ""
+              },
+              "IsPostAsTransfer": false,
+              "StudentTransferCreditDpaFulfillment": {
+                "Id": 0
+              },
+              "StudentEnrollmentDpaFulfillment": {
+                "Id": 0,
+                "StudentCourseId": 0,
+                "Note": ""
+              },
+              "EntityState": 0,
+              "IsUndoEelctive": false
+            }
+          },
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 25000,
+          "ResponseBody": "{}"
+        }
+      ]
+    }
+	]

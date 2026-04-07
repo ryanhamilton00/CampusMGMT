@@ -1,0 +1,105 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "Enter test description here",
+    "Globals": {
+		"ParentTermCode" : "UNIQUEP",
+		"ChildTermCode" : "UNIQUEC"
+	},
+    "Apis": [
+      {
+        "RequestId": "31906644-bc33-41ab-bacd-bb28b22c8459",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Terms?$select=Name,Id,Code&$filter=Code eq '{{gParentTermCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {"value" : []}
+      },
+      {
+        "RequestId": "7ff328d6-67c6-4cda-a9e3-53ec1e81661a",
+        "RequestMethod": "GET",
+        "RequestUrl":  "/ds/campusnexus/Terms?$select=Name,Id,Code&$filter=Code eq '{{gChildTermCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {"value" : []}
+      },
+      {
+        "RequestId": "a580c307-fecf-4b62-9860-c59158a7511e",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": { "value": [] }
+      },
+      {
+        "RequestId": "60410264-e4af-464c-98d9-f1efcd8633fd",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/Term/Get",
+        "RequestBody": {"payload":{}},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {
+			"notifications": [],
+			"hasError": false,
+			"hasFault": false,
+			"hasWarning": false,
+			"hasValidationError": false,
+			"hasValidationWarning": false,
+			"hasValidationInformation": false,
+			"hasSecurityError": false
+		}      
+      },    
+      {
+        "RequestId": "92beef7b-15db-46fc-87fd-f9d9ae22380b",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/Term/Save",
+        "RequestBody": {
+			"payload": {
+				"childTermDatesRule": "1",
+				"financialAid": true,
+				"registration": true,
+				"reporting": false,
+				"studentAccounts": true
+			}
+		},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 25000,
+        "ResponseBody": {
+			"notifications": [],
+			"hasError": false,
+			"hasFault": false,
+			"hasWarning": false,
+			"hasValidationError": false,
+			"hasValidationWarning": false,
+			"hasValidationInformation": false,
+			"hasSecurityError": false
+		}
+      },
+      {
+        "RequestId": "a0f8cbe6-6650-48cb-a410-9dfa93ba8e16",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/TermRelationship/SaveMultipleTermRelationship",
+        "RequestBody": {
+			"payload": {
+				"ParentTermIdList": [],
+				"IsScheduleChangeNotification": false,
+				"Term": {
+					"registration": true,
+					"reporting": false,
+					"financialAid": true,
+					"childTermDatesRule": "1"
+				},
+				"IsParentTerm": false
+			}
+		},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 25000,
+        "ResponseBody": "{\"payload\":{\"data\":{\"validationMessages\":[]}},\"notifications\":[],\"hasError\":false,\"hasFault\":false,\"hasWarning\":false,\"hasValidationError\":false,\"hasValidationWarning\":false,\"hasValidationInformation\":false,\"hasSecurityError\":false}"
+      }
+    ]
+  }
+]

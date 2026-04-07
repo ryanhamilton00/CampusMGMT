@@ -1,0 +1,102 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "Change Student Status to LOA",
+    "Globals": {
+      "StudentSsn": "222-22-0011",
+      "CourseCode": "AudCou008",
+      "EnrollmentPVName": "Audit Program Version 01",
+      "LeaveAbsenceName": "Leave Of Absence"
+    },
+    "Apis": [
+      {
+        "RequestId": "a89a78ae-ffaa-479a-8c2d-1685e73055c0",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gStudentSsn}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "05febb5e-f716-4402-9b26-6a4adecf5fba",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentEnrollmentPeriodDetails/CampusNexus.GetStudentEnrollmentPeriodList(studentId={{gStudentId}})?$filter=ProgramVersionName eq '{{gEnrollmentPVName}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{}"
+      },
+      {
+        "RequestId": "05febb5e-f716-4402-9b26-6a4adecf5fbb",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Students/CampusNexus.GetStudentSummaryInfo(studentId={{gStudentId}})?$expand=SchoolStatus($select=Id,Name)",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{}"
+      },
+      {
+        "RequestId": "afa18136-e1dd-4c80-a59d-a8d569d97635",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/SchoolStatuses/CampusNexus.GetStatusChangeList(currentSchoolStatusId={{gCurrentSchoolStatusId}},studentEnrollmentPeriodId={{gStudentEnrollmentPeriodId}},studentCampusId={{gCampusId}},category='',isPendingAppStatusAssume=null,includeCurrentStatus=null)?$filter = Name eq '{{gLeaveAbsenceName}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{}"
+      },
+      {
+        "RequestId": "a8f21199-a1cc-4d92-914b-1c94121830fa",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentEnrollmentPeriods?$filter=Id eq {{gStudentEnrollmentPeriodId}}&$expand=ProgramVersion($select=ProgramVersionUnitType)&$select=Lda,GraduationDate,ExpectedStartDate,CreditHoursEarned,CreditHoursRequired,ClockHoursEarned,ClockHoursRequired,CampusId",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{}"
+      },
+      {
+        "RequestId": "4b627b73-4c6e-4956-a36f-9f97511ae08a",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/StudentEnrollmentPeriod/EnrollmentStatusChange",
+        "RequestBody": {
+          "payload": {
+            "SchoolStatusChangeReasonId": null,
+            "BeginDate": "{{gBeginDate}}",
+            "ReturnDate": "{{gReturnDate}}",
+            "Note": "Leave",
+            "GraduationDate": "{{gGraduationDate}}",
+            "UseEnrollmentGraduationDate": false,
+            "DeletePendingChanges": false,
+            "DeleteCourseAssociation": false,
+            "OverrideStatusChangeDays": false,
+            "IsOfficialWithdrawal": false,
+            "RemoveAttendanceBackToLastAttendedDate": false,
+            "OverrideSapEnrollmentLinking": false
+          }
+        },
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 25000,
+        "ResponseBody": "{}"
+      },
+      {
+        "RequestId": "4b627b73-4c6e-4956-a36f-9f97511ae08b",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Common/Student/get",
+        "RequestBody": {},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 25000,
+        "ResponseBody": "{}"
+      },
+      {
+        "RequestId": "3e4e6f68-a40c-4757-bbdb-514eb9b69dab",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentCourseSchedules/CampusNexus.GetStudentCourseSchedule(studentEnrollmentPeriodId={{gStudentEnrollmentPeriodId}},studentId={{gStudentId}},termId=0,status='')?$filter= CourseCode eq '{{gCourseCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{}"
+      }
+    ]
+  }
+]

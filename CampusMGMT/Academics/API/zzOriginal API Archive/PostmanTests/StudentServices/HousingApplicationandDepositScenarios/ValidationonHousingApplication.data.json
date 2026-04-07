@@ -1,0 +1,267 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "Validation on Housing Application",
+    "Globals": {
+		    "StudentSsn": "111-22-0033",
+			"HousingBuildingCode": "HouBulC",
+			"BuildingCatCode": "BulCatC",
+			"HousingDateCode": "HouDateC",
+			"HouseAppCode": "HouCode"
+	},
+    "Apis": [
+      {
+        "RequestId": "0f6d4385-59a2-4e71-a08f-ac23f80456fd",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "0f6d4385-59a2-4e71-a08f-ac23f80456fe",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gStudentSsn}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "f1369ec5-d425-4fc9-a65f-37105a15bdc1",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/HousingApplications?$select=Name,Code,Id,IsActive&$filter=CampusGroup/CampusList/any(x:x/CampusId eq {{gCampusId}}) and IsActive eq true and Code eq '{{gHouseAppCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "9db66d40-32ec-4513-9dba-ef98401278a0",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/HousingApplicationQuestions/CampusNexus.GetHousingsApplicationGridQuestions(applicationFormId={{gHousingApplicationId}})",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "f30f50f6-64d2-4571-8226-c0fe96db2cf2",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/HousingApplicationQuestionResponses?$select=Description,HousingApplicationQuestionId,IsFreeTextAllowed,IsFreeTextRequired,ResponseDataType,ResponseNumber,Id&$filter=HousingApplicationQuestion/HousingApplicationId eq {{gHousingApplicationId}}",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "06d1afe6-5c62-407a-98bd-ca0a04941df2",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/HousingApplicationQuestions?$select=Id,HousingApplicationStandardQuestionId&$expand=HousingApplicationStandardQuestion($select=Description,TableName)&$filter=HousingApplicationId eq {{gHousingApplicationId}} and HousingApplicationStandardQuestionId ne null",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "808c1395-a020-4f63-b447-423baf43102d",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentEnrollmentPeriods?$filter=StudentId eq {{gStudentId}}",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "921f84be-c1bf-4465-b142-2a308da0bc44",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/BuildingCategories?$select=Name,Code,Id,IsActive&$format=json&$count=true&$filter=IsActive eq true and CampusGroup/CampusList/any(x:x/CampusId eq {{gCampusId}})&$orderby=Name",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "fbd8bbe2-d106-4189-a469-3e1ac95b7265",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/BuildingCategories?$select=Name,Code,Id,IsActive&$format=json&$count=true&$filter=IsActive eq true and Code eq '{{gBuildingCatCode}}' and CampusGroup/CampusList/any(x:x/CampusId eq {{gCampusId}})",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "fdd712f4-17fe-4351-a357-f4a4eaaa651b",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/HousingBuildings?$select=Name,Code,Id,IsActive&$format=json&$count=true&$filter=IsActive eq true and Code eq '{{gHousingBuildingCode}}' and CampusGroup/CampusList/any(x:x/CampusId eq {{gCampusId}})&$orderby=Name",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "06b71195-c213-4d5f-ba9f-716f2808e554",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/HousingDates?$select=Name,Code,Id,IsActive,StartDate,EndDate&$format=json&$count=true&$filter=CampusGroup/CampusList/any(x:x/CampusId eq {{gCampusId}}) and IsActive eq true and Code eq '{{gHousingDateCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "2e0d6f36-ab29-4830-9907-61f12d3363e6",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/HousingApplicationStudentAnswer/SaveHousingApplicationStudentAnswers",
+        "RequestBody": {
+          "payload": {
+            "StudentId": 0,
+            "HousingApplicationQuestionResponses": []
+          }
+        },
+        "ResponseStatus": 400,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {
+          "payload": null,
+          "notifications": [
+            {
+              "message": "Student Id is invalid."
+            }
+          ]
+        }
+      },
+      {
+        "RequestId": "2e0d6f36-ab29-4830-9907-61f12d3363e7",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/HousingApplicationStudentAnswer/SaveHousingApplicationStudentAnswers",
+        "RequestBody": {
+          "payload": {
+            "StudentId": "{{gStudentId}}",
+            "HousingApplicationId": 0,
+            "HousingApplicationQuestionResponses": []
+          }
+        },
+        "ResponseStatus": 400,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {
+          "payload": null,
+          "notifications": [
+            {
+              "message": "Housing Application Id is invalid."
+            }
+          ]
+        }
+      },
+      {
+        "RequestId": "2e0d6f36-ab29-4830-9907-61f12d3363e8",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/HousingApplicationStudentAnswer/SaveHousingApplicationStudentAnswers",
+        "RequestBody": {
+          "payload": {
+            "StudentId": "{{gStudentId}}",
+            "HousingStartDate": null,
+            "HousingEndDate": null,
+            "HousingApplicationQuestionResponses": []
+          }
+        },
+        "ResponseStatus": 400,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {
+          "payload": null,
+          "notifications": [
+            {
+              "message": "Housing Start Date is required."
+            },
+            {
+              "message": "Housing End Date is required."
+            }
+          ]
+        }
+      },
+      {
+        "RequestId": "2e0d6f36-ab29-4830-9907-61f12d336399",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/HousingApplicationStudentAnswer/SaveHousingApplicationStudentAnswers",
+        "RequestBody": {
+          "payload": {
+            "StudentId": "{{gStudentId}}",
+            "HousingApplicationQuestionResponses": []
+          }
+        },
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {}
+      },
+      {
+        "RequestId": "2e0d6f36-ab29-4830-9907-61f12d3363e9",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/HousingApplicationStudentAnswer/SaveHousingApplicationStudentAnswers",
+        "RequestBody": {
+          "payload": {
+            "StudentId": "{{gStudentId}}",
+            "HousingApplicationQuestionResponses": []
+          }
+        },
+        "ResponseStatus": 400,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {
+          "payload": null,
+          "notifications": [
+            {
+              "message": "The academic year for the housing application conflict with another housing application."
+            }
+          ]
+        }
+      },
+      {
+        "RequestId": "2e0d6f36-ab29-4830-9907-61f12d336310",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/HousingApplicationStudentAnswer/SaveHousingApplicationStudentAnswers",
+        "RequestBody": {
+          "payload": {
+            "StudentId": "{{gStudentId}}",
+            "HousingApplicationQuestionResponses": [],
+            "HousingApplicationQuestions": [
+              {
+                "HousingApplicationStudentAnswer": null
+              }
+            ]
+          }
+        },
+        "ResponseStatus": 400,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {
+          "payload": null,
+          "notifications": [
+            {
+              "message": "HousingApplicationStudentAnswer for HousingApplicationQuestionId 98 is required."
+            }
+          ]
+        }
+      },
+      {
+        "RequestId": "2e0d6f36-ab29-4830-9907-61f12d336311",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/HousingApplicationStudentAnswer/SaveHousingApplicationStudentAnswers",
+        "RequestBody": {
+          "payload": {
+            "StudentId": "{{gStudentId}}",
+            "HousingApplicationQuestionResponses": [],
+            "HousingApplicationQuestions": []
+          }
+        },
+        "ResponseStatus": 400,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {
+          "payload": null,
+          "notifications": [
+            {
+              "message": "HousingApplicationQuestions is required."
+            }
+          ]
+        }
+      }
+    ]
+  }
+]

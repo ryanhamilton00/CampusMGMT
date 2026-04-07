@@ -1,0 +1,309 @@
+{
+	"info": {
+		"_postman_id": "6ee64a7c-ee96-4e29-a3ef-3de37d7e1537",
+		"name": "IVP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"_postman_id": "a601f3ae-4e72-4ab7-a13e-8b87487873ba",
+			"name": "Get Student id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f04a35f0-d96d-4a87-98a8-7ede8df4351e",
+						"type": "text/javascript",
+						"exec": [
+							"// Test to make sure that ",
+							"pm.test(\"Get Student id\", function() {",
+							"    pm.response.to.be.ok;",
+							"})",
+							"",
+							"// If student id is available set it as a global var",
+							"// so it can be used to retrieve data.",
+							"var rb = pm.response.json();",
+							"if(rb.value.length > 0) {",
+							"    pm.globals.set('gStudentId', rb.value[0].Id);",
+							"} ",
+							""
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c4c5c70d-6da2-41a9-82e8-d8bb53e65802",
+						"type": "text/javascript",
+						"exec": [
+							"//console.log(pm.environment.get('envAuthHeaderKey'));",
+							"//console.log(pm.environment.get('envAuthHeaderValue'));",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "{{envAuthHeaderKey}}",
+						"value": "{{envAuthHeaderValue}}"
+					},
+					{
+						"key": "ContentType",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"payload\":{\n    \"degreeProgressAuditRequestor\":1,\n    \"studentId\":0,\n    \"studentEnrollmentPeriodId\":0,\n    \"isHypothetical\":false\n  }\n}"
+				},
+				"url": {
+					"raw": "http://{{envWebHost}}/ds/campusnexus/Students?$select=Id&$top=1",
+					"protocol": "http",
+					"host": [
+						"{{envWebHost}}"
+					],
+					"path": [
+						"ds",
+						"campusnexus",
+						"Students"
+					],
+					"query": [
+						{
+							"key": "$select",
+							"value": "Id"
+						},
+						{
+							"key": "$top",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "401fdabb-704d-4cac-852f-26ba3a5ddc10",
+			"name": "Get Student data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "238bd3ab-7e14-44a0-a72f-5ccb37b0acff",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Get Student data\", function() {",
+							"    pm.response.to.be.ok;",
+							"    // If student id was set, compare it to response value.",
+							"    if(pm.globals.has('gStudentId')) {",
+							"        pm.expect(pm.response.json().payload.data.id).to.be.equal(pm.globals.get('gStudentId'));",
+							"    }",
+							"});",
+							""
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "6de25ced-4406-4f66-b676-5f0d4bb6bb74",
+						"type": "text/javascript",
+						"exec": [
+							"// If we have a student id, use it in the request body. ",
+							"// Else send an empty payload.",
+							"if(pm.globals.has('gStudentId')) {",
+							"    pm.globals.set('getStudentDataRequestBody', '{ \"payload\": { \"id\" : ' + pm.globals.get('gStudentId') + ' }}' );     ",
+							"} else {",
+							"    pm.globals.set('getStudentDataRequestBody', '{ \"payload\": {}}');",
+							"}",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "{{envAuthHeaderKey}}",
+						"value": "{{envAuthHeaderValue}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{{getStudentDataRequestBody}}"
+				},
+				"url": {
+					"raw": "http://{{envWebHost}}/api/commands/Common/Student/get",
+					"protocol": "http",
+					"host": [
+						"{{envWebHost}}"
+					],
+					"path": [
+						"api",
+						"commands",
+						"Common",
+						"Student",
+						"get"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "ac2cce48-6c1d-4de4-a1f1-170fca3a3f29",
+			"name": "Verify Student Campus Link configuration",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c93cae92-aec1-494e-bac8-a31ec5879a04",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Verify Student Campus Link configuration\", function() {",
+							"    pm.response.to.not.have.status(500);",
+							"})",
+							""
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "ffb8e6ab-0cb0-48d1-8b80-5041d9ed219d",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "{{envAuthHeaderKey}}",
+						"value": "{{envAuthHeaderValue}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"payload\":{\n\t\t\"degreeProgressAuditRequestor\":1,\n\t\t\"studentId\":0,\n\t\t\"studentEnrollmentPeriodId\":0,\n\t\t\"isHypothetical\":false\n\t}\n}"
+				},
+				"url": {
+					"raw": "http://{{envWebHost}}/api/commands/Academics/DegreeProgressAudit/getDegreeProgressAudit",
+					"protocol": "http",
+					"host": [
+						"{{envWebHost}}"
+					],
+					"path": [
+						"api",
+						"commands",
+						"Academics",
+						"DegreeProgressAudit",
+						"getDegreeProgressAudit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"_postman_id": "a43b7200-48ca-40dc-b687-8f399eaf2039",
+			"name": "Verify Regulatory Campus Link configuration",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d4bf0018-0fbb-4170-9a73-4ad6399ec91d",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Verify Regulatory Campus Link configuration\", function() {",
+							"    // There is a configuration problem if we get 500 error, and",
+							"    // the error message begins with \"there is no endpoint listening at \"",
+							"    var isFailed = false;",
+							"    if(pm.response.code === 500) {",
+							"        var body = JSON.parse(responseBody);",
+							"        if(body.error && body.error.innererror && body.error.innererror.message){",
+							"            var noEndpointMsg = 'There was no endpoint listening at ';",
+							"            isFailed = body.error.innererror.message.indexOf(noEndpointMsg) === 0;",
+							"        }",
+							"    }",
+							"    pm.expect(isFailed).to.equal(false);",
+							"})",
+							""
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "ffb8e6ab-0cb0-48d1-8b80-5041d9ed219d",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "{{envAuthHeaderKey}}",
+						"value": "{{envAuthHeaderValue}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{envWebHost}}/ds/campusnexus/RegulatoryStudentIsirs/CampusNexus.GetStudentIsirsByAwardYear(studentId=1,%20awardYearCode='2017-18')?%24format=json&%24top=5&%24count=true&=",
+					"protocol": "http",
+					"host": [
+						"{{envWebHost}}"
+					],
+					"path": [
+						"ds",
+						"campusnexus",
+						"RegulatoryStudentIsirs",
+						"CampusNexus.GetStudentIsirsByAwardYear(studentId=1,%20awardYearCode='2017-18')"
+					],
+					"query": [
+						{
+							"key": "%24format",
+							"value": "json"
+						},
+						{
+							"key": "%24top",
+							"value": "5"
+						},
+						{
+							"key": "%24count",
+							"value": "true"
+						},
+						{
+							"key": "",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,193 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "ValidationsonPublishScheduleforActiveTerm",
+    "Globals": {
+      "TermCode": "Ter003"
+    },
+    "Apis": [
+      {
+        "RequestId": "4dc23388-c96d-4707-b342-0ce8b1fdec35",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": { "value": [] }
+      },
+      {
+        "RequestId": "071e5b4b-cad6-40ae-b55c-2f38a14a23c0",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Terms?$select=Id,StartDate,EndDate,Name,IsActive&$filter=Code eq '{{gTermCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": { "value": [] }
+      },
+      {
+        "RequestId": "5e990105-aa7f-4b50-999b-f3dc28c7519a",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Campuses?$filter=Id eq {{gCampusId}}&$select=IsFloatingTermUsed",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {
+          "value": [
+            {
+              "IsFloatingTermUsed": false
+            }
+          ]
+        }
+      },
+      {
+        "RequestId": "98059e63-baf6-40d0-93a9-43df60460be6",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/ClassSections/CampusNexus.GetDailyClassScheduleList(showLevelIndicator=0,instructorId=0,startDate ='',endDate='',campusId={{gCampusId}}, isInProgress=false,departmentIds=[],termId=[{{gTermId}}],courseId = 0)",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": { "value": [] }
+      },
+      {
+        "RequestId": "f8947d1e-bd08-4e2c-9378-6d20476efda6",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Terms/CampusNexus.GetTermRegistrationSettingsForPublishing(campusId={{gCampusId}},termIds=[{{gTermId}}],startDate='',endDate='',courseId=0,instructorId=0,showLevelIndicator=1,isInProgress=false)",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": { "value": [] }
+      },
+      {
+        "RequestId": "045bec59-d09c-43ce-b6df-0a0f1ba493ee",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/TermRegistrationSetting/SaveTermRegistrationSetting",
+        "RequestBody": {
+						  "payload": {
+							"termRegistrationSettings": [
+							  {
+								"classSectionScheduleAvailableDate": null,
+								"classSectionScheduleUnavailableDate": null,
+								"gradesAvailableDate": null,
+								"courseSharingStartDateTime": null,
+								"courseSharingEndDateTime": null,
+								"termEndDate": null
+							  }
+							],
+							"isCRSG": true,
+							"entityState": 2
+						  }
+						},
+        "ResponseStatus": 400,
+        "ResponseTimeMs": 30000,
+        "ResponseBody": {
+          "payload": null,
+          "notifications": [
+            {
+              "message": "Publish Start date/time is required."
+            },
+            {
+              "message": "Publish End date/time is required."
+            }
+          ],
+          "hasError": false,
+          "hasFault": false,
+          "hasWarning": false,
+          "hasValidationError": true,
+          "hasValidationWarning": false,
+          "hasValidationInformation": false,
+          "hasSecurityError": false
+        }
+      },
+	  {
+        "RequestId": "045bec59-d09c-43ce-b6df-0a0f1ba493ef",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/TermRegistrationSetting/SaveTermRegistrationSetting",
+        "RequestBody": {
+						  "payload": {
+							"termRegistrationSettings": [
+							  {
+								"classSectionScheduleAvailableDate": "{{gTermEndDate}}",
+								"classSectionScheduleUnavailableDate": "{{gTermStartDate}}",
+								"gradesAvailableDate": "{{gTermStartDate}}",
+								"courseSharingStartDateTime": "{{gTermEndDate}}",
+								"courseSharingEndDateTime": "{{gTermStartDate}}",
+								"termEndDate": "{{gTermEndDate}}"
+							  }
+							],
+							"isCRSG": true,
+							"entityState": 2
+						  }
+						},
+        "ResponseStatus": 400,
+        "ResponseTimeMs": 30000,
+        "ResponseBody": {
+							"payload": null,
+					"notifications": [
+						{
+							"message": "Publish Start date/time must be less than Publish End date/time."
+						},
+						{
+							"message": "Grades Available date/time must be greater than or equal to Term End date/time."
+						}
+					],
+							"hasError": false,
+							"hasFault": false,
+							"hasWarning": false,
+							"hasValidationError": true,
+							"hasValidationWarning": false,
+							"hasValidationInformation": false,
+							"hasSecurityError": false
+						}
+      },
+	  {
+        "RequestId": "045bec59-d09c-43ce-b6df-0a0f1ba493eg",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/TermRegistrationSetting/SaveTermRegistrationSetting",
+        "RequestBody": {
+						  "payload": {
+							"termRegistrationSettings": [
+							  {
+								"classSectionScheduleAvailableDate": "@DateNow(+60)",
+								"classSectionScheduleUnavailableDate": "@DateNow(+90)",
+								"gradesAvailableDate": "@DateNow(+99)",
+								"courseSharingStartDateTime": "@DateNow(+60)",
+								"courseSharingEndDateTime": "@DateNow(+90)",
+								"termEndDate": "{{gTermEndDate}}"
+							  }
+							],
+							"isCRSG": true,
+							"entityState": 2
+						  }
+						},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 30000,
+      "ResponseBody": {
+                        "payload": {
+                          "data": {
+                            "termRegistrationSettings": null,
+                            "validationMessages": []
+                          }
+                        },
+                        "notifications": [],
+                        "hasError": false,
+                        "hasFault": false,
+                        "hasWarning": false,
+                        "hasValidationError": false,
+                        "hasValidationWarning": false,
+                        "hasValidationInformation": false,
+                        "hasSecurityError": false
+                      }
+      },
+      {
+        "RequestId": "f8947d1e-bd08-4e2c-9378-6d20476efda7",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Terms/CampusNexus.GetTermRegistrationSettingsForPublishing(campusId={{gCampusId}},termIds=[{{gTermId}}],startDate='',endDate='',courseId=0,instructorId=0,showLevelIndicator=1,isInProgress=false)",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": { "value": [] }
+      }
+    ]
+  }
+]

@@ -1,0 +1,138 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "This API will create an Athletic status (Config-SS-AthleticStatus)",
+    "Globals": {
+		"AthleticName": "StsName",
+		"AthleticCode": "StsCode",
+		"UpdatedName": "TestNameUpdate"
+				},
+    "Apis": [
+	{
+        "RequestId": "d3ab99c4-21b9-441a-8625-abc4417c8d6e",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "bb63a141-3279-4d47-8844-c62c1d011c6a",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/AthleticStatus/Create",
+        "RequestBody": "{}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {"payload": {}}
+      },
+      {
+        "RequestId": "f04fda8a-dd82-4875-bae1-d34978ab3378",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/AthleticStatus/SaveNew",
+        "RequestBody": {
+						"payload": {
+							"code": "{{gAthleticCode}}",
+							"name": "{{gAthleticName}}",
+							"isActive": true,
+							"createdDateTime": "@DateNow",
+								"campusGroup": {
+									"campusList": [
+										{
+											"campusGroupId": -1,
+											"entityState": 0,
+											"id": -1
+										}
+													]										
+												}								
+									}
+						},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {}
+      },
+	  {
+        "RequestId": "cf406926-0aa6-4432-844b-10a6c0708270",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/AthleticStatuses?$select Id,Name,Code&$filter= Code eq '{{gAthleticCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+	  {
+        "RequestId": "f04fda8a-dd82-4875-bae1-d34978ab3339",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/AthleticStatus/Save",
+        "RequestBody": {
+						"payload": {
+							"name": "{{gUpdatedName}}"							
+									}
+						},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {
+					"payload":{
+						"data":{
+					"name": "TestNameUpdate"}}
+						}
+      },
+	  {
+        "RequestId": "cf406926-0aa6-4432-844b-10a6c0708269",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/AthleticStatuses?$select Id,Name,Code&$filter= Code eq '{{gAthleticCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+	  {
+        "RequestId": "62e6dabf-86b6-470b-be00-6bfbff3b3egh",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/AthleticStatus/SaveNew",
+        "RequestBody": {
+						"payload": {
+							"code": null,
+							"name": null,
+							"isActive": true,
+								"campusGroup": {
+									"campusList": [
+										
+													]
+							
+												}								
+									}
+						},
+        "ResponseStatus": 400,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {
+					"payload": null,
+					"notifications": [{
+						"message": "The Code field is required."
+					}, {
+						"message": "The Name field is required."
+					}],
+					"hasError": false,
+					"hasFault": false,
+					"hasWarning": false,
+					"hasValidationError": true,
+					"hasValidationWarning": false,
+					"hasValidationInformation": false,
+					"hasSecurityError": false
+				}
+									
+      },
+	  {
+        "RequestId": "f04fda8a-dd82-4875-bae1-d34978ab3389",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/AthleticStatus/Delete",
+        "RequestBody": {},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {"payload": {
+				"deleted": true}}
+      }
+    ]
+  }
+]

@@ -1,0 +1,88 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "Add Registration Lock",
+    "Globals": {
+      "StudentSsn": "111-22-0011",
+      "UnitType": "Credits",
+      "NumberLimit": "2"
+    },
+    "Apis": [
+      
+	  {
+        "RequestId": "a89a78ae-ffaa-479a-8c2d-1685e73055c0",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gStudentSsn}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+	  {
+        "RequestId": "cf4ee9ae-1cb0-4c6c-87f3-cce6af37f74d",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/RegistrationRule/Create",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {
+							"payload": {
+								"data": {}
+							},
+							"notifications": [],
+							"hasError": false,
+							"hasFault": false,
+							"hasWarning": false,
+							"hasValidationError": false,
+							"hasValidationWarning": false,
+							"hasValidationInformation": false,
+							"hasSecurityError": false
+						}
+      },
+      {
+        "RequestId": "d6654415-87d9-43f3-88b7-568fdc8d7afa",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/PropertyEnumValues?$select=Id,Code,ColumnName,TableName,ValueDescription&$filter = ValueDescription eq '{{gUnitType}}' and TableName eq 'AdRegistrationLock'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "5bda7213-dfab-4f16-bbb7-30e6530f071a",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/RegistrationRule/SaveNew",
+        "RequestBody": {
+						"payload": {
+							"isDropCoursesIncludedInNumberLimit": false,
+							"isLoaCoursesIncludedInNumberLimit": false,
+							"numberLimit": "{{gNumberLimit}}",
+							"rowVersion": null,
+							"ruleType": "L",
+							"studentGroupId": null,
+							"termId": null,
+							"termType": "T",
+							"extendedProperties": [],
+							"entityState": 0
+						}
+					},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 25000,
+        "ResponseBody": {
+							"payload": {
+								"data": {}
+							},
+							"notifications": [],
+							"hasError": false,
+							"hasFault": false,
+							"hasWarning": false,
+							"hasValidationError": false,
+							"hasValidationWarning": false,
+							"hasValidationInformation": false,
+							"hasSecurityError": false
+						}
+      }
+    ]
+  }
+]

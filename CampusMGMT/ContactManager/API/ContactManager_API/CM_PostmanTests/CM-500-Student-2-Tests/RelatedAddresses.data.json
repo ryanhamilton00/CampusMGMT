@@ -1,0 +1,105 @@
+[{
+	"Type": "AdvancedDataFile",
+	"Version": "2.0",
+	"TestDescription": "This API will create a Related Address Record for a student in Contact Manager",
+	"Globals": {
+		"FirstName": "FirstName",
+		"LastName": "LastName",
+		"StudentSsn": "111-33-0066"
+	},
+	"Apis": [{
+			"RequestId": "00000000-0000-0000-0000-000000000000",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000001",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gStudentSsn}}'",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000002",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/AddressTypes?$filter=Code eq 'FERPA' and IsActive eq true",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000003",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Titles?&$filter=IsActive eq true&$orderby=Name",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000004",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Countries?&$filter=Code eq 'USA'&$orderby=Name",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000006",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/StudentEnrollmentPeriodDetails/CampusNexus.GetStudentEnrollmentPeriodList(studentId={{gStudentId}})?$select=Id",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000005",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Common/StudentRelationshipAddress/SaveNew",
+			"RequestBody": {
+				"payload": {
+					"id": -1,
+					"studentId": "{{gStudentId}}",
+					"admissionsRegionId": null,
+					"city": "",
+					"countyId": null,
+					"createdDateTime": "@DateNow",
+					"emailAddress": null,
+					"employerName": null,
+					"entityState": 0,
+					"isExcludedCrmIntegration": false,
+					"isPermanentAddress": false,
+					"lastModifiedDateTime": "@DateNow",
+					"mobileNumber": "",
+					"note": null,
+					"otherEmailAddress": null,
+					"otherPhone": "",
+					"phoneNumber": "",
+					"postalCode": "",
+					"referenceConfirmed": null,
+					"referenceConfirmedDate": null,
+					"relationToStudent": null,
+					"secondPhoneNumber": null,
+					"sourceSystem": null,
+					"ssn": null,
+					"state": "",
+					"streetAddress": "",
+					"workPhoneNumber": "",
+					"yearsAtAddress": null,
+					"yearsKnownStudent": null
+				}},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {"payload": {}}
+		}
+	]
+}]

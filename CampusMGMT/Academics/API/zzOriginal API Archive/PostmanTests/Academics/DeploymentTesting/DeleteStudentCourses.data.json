@@ -1,0 +1,67 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "Delete Student Courses",
+    "Globals": {
+    },
+    "Apis": [
+      {
+        "RequestId": "a89a78ae-ffaa-479a-8c2d-1685e73055c0",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gWorkflowStudentSSN}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "6840e085-2777-4157-be87-2af5fb2e567a",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentCourseStatusChangeReasons?$filter=IsForDelete eq true and IsActive eq true",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "fbede456-aea3-4924-87f0-f51bba8cb6f3",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentCourseSchedules/CampusNexus.GetStudentCourseSchedule(studentEnrollmentPeriodId=0,studentId={{gStudentId}},termId=0,status='')",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "85163094-4df0-4da4-8996-921007afd16e",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/StudentCourse/DeleteStudentCourse",
+        "RequestBody": {
+          "payload": {
+            "MinutesAttended": 0,
+            "MinutesAbsent": 0,
+            "AllowDeleteAttendanceHistory": false,
+            "AllowDeletePendingCharges": false,
+			      "AllowedOnlyParent": false,
+            "IsPendingCharges": false,
+            "IsAllowedToOverrideClosedTerm": false,
+            "Action": 1,
+            "IsAllowedToOverrideRegistrationConflict": false,
+            "SkipCoreqCheck": false,
+            "SkipPrereqCheck": false,
+            "FailureMessageType": 0,
+            "IgnoreMultiCourseDependency": false,
+            "AllowOverrideRegistrationPrereqCoreqConflict": false,
+            "Section": "",
+            "TermCode": "",
+            "NotifyStudent": false
+          }
+        },
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {}
+      }
+    ]
+  }
+]

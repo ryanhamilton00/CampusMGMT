@@ -1,0 +1,165 @@
+	[
+    {
+      "Type": "AdvancedDataFile",
+      "Version": "2.0",
+      "TestDescription": "Validation for Invalid ID",
+      "Globals": {
+        "StudentSsn": "222-22-0022",
+        "CourseCode": "AudCou006",
+        "EnrollmentPVName": "Audit Program Version 01"
+      },
+      "Apis": [
+        {
+          "RequestId": "a89a78ae-ffaa-479a-8c2d-1685e73055c0",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gStudentSsn}}'",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{\"value\":[]}"
+        },
+        {
+          "RequestId": "05febb5e-f716-4402-9b26-6a4adecf5fba",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/StudentEnrollmentPeriodDetails/CampusNexus.GetStudentEnrollmentPeriodList(studentId={{gStudentId}})?$filter=ProgramVersionName eq '{{gEnrollmentPVName}}'",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "a8f21199-a1cc-4d92-914b-1c94121830fa",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/Courses?$filter=Code eq '{{gCourseCode}}'",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "a8f21199-a1cc-4d92-914b-1c94121830fb",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/StudentCourseSchedules/CampusNexus.GetStudentCourseSchedule(studentEnrollmentPeriodId={{gStudentEnrollmentPeriodId}},studentId={{gStudentId}},termId=0,status='')?$filter=CourseId eq {{gCourseId}}",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f97511ae08z",
+          "RequestMethod": "PUT",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId}}/movecoursetounapplied",
+          "RequestBody": {},
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": "{true}"
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f97511ae08x",
+          "RequestMethod": "PUT",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId}}/movecoursetounapplied",
+          "RequestBody": {},
+          "ResponseStatus": 400,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": {
+            "errors": [
+              {
+                "errorCode": "StudentCourseIsAlreadyMovedToUnapplied",
+                "errorMessage": "The record for the specified StudentEnrollmentPeriodId and StudentCourseId already exists.",
+                "source": {
+                  "field": "StudentCourseId, StudentEnrollmentPeriodId"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f97511ae08a",
+          "RequestMethod": "PUT",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId}}/movecoursetounapplied",
+          "RequestBody": {},
+          "ResponseStatus": 400,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": {
+            "errors": [
+              {
+                "errorCode": "InvalidKeyValue",
+                "errorMessage": "A valid StudentCourseId is required.",
+                "source": {
+                  "field": "StudentCourseId"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f97511ae08f",
+          "RequestMethod": "PUT",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId}}/movecoursetounapplied",
+          "RequestBody": {},
+          "ResponseStatus": 404,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": {
+            "errors": [
+              {
+                "errorCode": "KeyNotFound",
+                "errorMessage": "The specified StudentCourseId does not exist.",
+                "source": {
+                  "field": "StudentCourseId"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f97511ae08b",
+          "RequestMethod": "PUT",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/9999999/movecoursetounapplied",
+          "RequestBody": {},
+          "ResponseStatus": 404,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": {
+            "errors": [
+              {
+                "errorCode": "KeyNotFound",
+                "errorMessage": "The specified StudentEnrollmentPeriodId does not exist.",
+                "source": {
+                  "field": "StudentEnrollmentPeriodId"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f97511ae08c",
+          "RequestMethod": "PUT",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/-1/movecoursetounapplied",
+          "RequestBody": {
+            "studentCourseId": -1
+          },
+          "ResponseStatus": 400,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": {
+            "errors": [
+              {
+                "errorCode": "InvalidKeyValue",
+                "errorMessage": "A valid StudentEnrollmentPeriodId is required.",
+                "source": {
+                  "field": "StudentEnrollmentPeriodId"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f97511ae08d",
+          "RequestMethod": "POST",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId}}/movecoursetounapplied",
+          "RequestBody": {},
+          "ResponseStatus": 405,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": {}
+        }
+      ]
+    }
+	]

@@ -1,0 +1,87 @@
+	[
+    {
+      "Type": "AdvancedDataFile",
+      "Version": "2.0",
+      "TestDescription": "Check Student Enrollments Validations",
+      "Globals": {
+        "StudentSsn": "222-22-0022"
+      },
+      "Apis": [
+        {
+          "RequestId": "a89a78ae-ffaa-479a-8c2d-1685e73055c0",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gStudentSsn}}'",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{\"value\":[]}"
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f97511ae08e",
+          "RequestMethod": "GET",
+          "RequestUrl": "/api/dpa/v1/students/0/enrollments",
+          "RequestBody": null,
+          "ResponseStatus": 400,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": {
+            "errors": [
+              {
+                "errorCode": "InvalidKeyValue",
+                "errorMessage": "A valid StudentId is required.",
+                "source": {
+                  "field": "StudentId"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f97511ae08f",
+          "RequestMethod": "GET",
+          "RequestUrl": "/api/dpa/v1/students/-1/enrollments",
+          "RequestBody": null,
+          "ResponseStatus": 400,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": {
+            "errors": [
+              {
+                "errorCode": "InvalidKeyValue",
+                "errorMessage": "A valid StudentId is required.",
+                "source": {
+                  "field": "StudentId"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f97511ae08g",
+          "RequestMethod": "GET",
+          "RequestUrl": "/api/dpa/v1/students/9989999/enrollments",
+          "RequestBody": null,
+          "ResponseStatus": 404,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": {
+            "errors": [
+              {
+                "errorCode": "KeyNotFound",
+                "errorMessage": "The specified StudentId does not exist.",
+                "source": {
+                  "field": "StudentId"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f97511ae08h",
+          "RequestMethod": "PUT",
+          "RequestUrl": "/api/dpa/v1/students/{{gStudentId}}/enrollments",
+          "RequestBody": null,
+          "ResponseStatus": 405,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": {}
+        }
+      ]
+    }
+	]

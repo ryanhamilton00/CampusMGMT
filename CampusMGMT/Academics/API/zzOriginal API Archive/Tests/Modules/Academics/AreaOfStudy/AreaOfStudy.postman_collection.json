@@ -1,0 +1,419 @@
+{
+	"info": {
+		"_postman_id": "fb496af5-4c51-479d-b052-b81ae8bede88",
+		"name": "AreaOfStudy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "AreaOfStudy - Create",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "8c955812-7fa5-4104-a9c6-da822cf2ac51",
+						"exec": [
+							"// If environment auth variable is set, then create auth header",
+							"if (pm.environment.has('envAuthUser') && pm.environment.has('envAuthPassword'))",
+							"{",
+							"    pm.globals.set('gAuthorizationValue', 'Basic ' + btoa(pm.environment.get('envAuthUser') + ':' + pm.environment.get('envAuthPassword')));",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "3e932bea-458a-4ea2-9f1d-bab7c2f2750c",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gCmcUtility\"));",
+							"",
+							"// Set the fields of the expected response object, this is used to verify the response body",
+							"var expectedResponse = ",
+							"{",
+							"    \"payload\": {",
+							"        \"data\": {",
+							"            \"campusIdList\": null,",
+							"            \"id\": -1,",
+							"            \"areaOfStudyTypeId\": 0,",
+							"            \"campusGroupId\": null,",
+							"            \"cipCode\": null,",
+							"            \"code\": null,",
+							"            \"creditHoursRequired\": null,",
+							"            \"isActive\": true,",
+							"            \"isExcludedCrmIntegration\": false,",
+							"            \"lastModifiedUserId\": 2,",
+							"            \"minimumGpaRequired\": null,",
+							"            \"name\": null,",
+							"            \"rowVersion\": null,",
+							"            \"campusGroup\": {",
+							"                \"id\": -1,",
+							"                \"code\": \"AS\",",
+							"                \"financialCampusGroup\": false,",
+							"                \"isActive\": true,",
+							"                \"isSystemCode\": true,",
+							"                \"lastModifiedUserId\": 2,",
+							"                \"name\": \"AS\",",
+							"                \"rowVersion\": null,",
+							"                \"saStmtComments\": null,",
+							"                \"saStmtLastCloseDate\": null,",
+							"                \"type\": \"Q\",",
+							"                \"campusList\": [],",
+							"                \"originalState\": \"H4sIAAAAAAAEAL2TS2vDMAyA/0rJfVG63kIaKOslrI9DurGrcZRWENvFUpt5v36LB7tlh4F3kQSSPgk9qo33Khz7ZwyvarjhsWfxZM/KhlO44uLdDJbX2UXkWgKwvqBRnBvS3rHrJdfOwGNRrGBZQIue1EAfSshZiGDOvgkl/TDGcczHVe78eUpcwtt+10bsA1kWZTVmdTXTTnTUTVfBpKsYsqDS0rDOxN8wgzq6ZnPnoU+uwwTYgzIpsA23gQVNoq4b3mihewr0ZKVYn0cl2G2/xImSjHynWPauo57+rcwLo//rscPvj11/AvHuFVP5AwAA\",",
+							"                \"secureState\": \"H4sIAAAAAAAEAD3MQQrCMBAAwK9I7mZTeysqeFbpoSJel5C0C01Ssisxvl6s4ANm9qecsfb+7Ood56frPUumOGKst7q4zSvMkQ9qElk6ALaTC8g6kM2JkxdtU4CdMS00BgaXCWd6o1CKsMasfkNH/6OUokurUx6/sIHH9TKs7ZYiC0brFBw/juQnSpcAAAA=\",",
+							"                \"extendedProperties\": [],",
+							"                \"entityState\": 0",
+							"            },",
+							"            \"originalState\": \"H4sIAAAAAAAEALWSTWvCQBCG/4rsvdlYbyEGRHuQKh60pddldxIH9kNmJo3pr2/dQm+WUsh1Xt7nfQ5Tr4jMeGifYXw1vodDy0IYOxPH03iB2TX4yEt1FrlUWrM9QzBcBLSUOLVS2BT0Y1ku9LzURyA0Hj+MYIo6g1l9Eyr8YQzDUAyLIlF3K8712353zNgHjCwmWlBNfUcnB83OsOyTwxbBvTDQ1tX6dq9zZYZVRL9UQj0o3eToLutvIxsjcMIAE8xM4r4m+DKeVJtXVvB9GvTT1fregVtT2EaBjvJD/W9K//7fzSd/+0r7AAMAAA==\",",
+							"            \"secureState\": \"H4sIAAAAAAAEAD3MQQrCMBAAwK9I7mZTeysqeFbpoSJel5C0C01Ssisxvl6s4ANm9qecsfb+7Ood56frPUumOGKst7q4zSvMkQ9qElk6ALaTC8g6kM2JkxdtU4CdMS00BgaXCWd6o1CKsMasfkNH/6OUokurUx6/sIHH9TKs7ZYiC0brFBw/juQnSpcAAAA=\",",
+							"            \"extendedProperties\": [],",
+							"            \"entityState\": 0",
+							"        }",
+							"    },",
+							"    \"notifications\": [],",
+							"    \"hasError\": false,",
+							"    \"hasFault\": false,",
+							"    \"hasWarning\": false,",
+							"    \"hasValidationError\": false,",
+							"    \"hasValidationWarning\": false,",
+							"    \"hasValidationInformation\": false,",
+							"    \"hasSecurityError\": false",
+							"};",
+							"",
+							"// Tests",
+							"pm.test(\"Verify response status is OK\", function() {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"pm.test(\"Verify response time is below 5000\", function() {",
+							"    pm.expect(pm.response.responseTime).to.be.below(5000);",
+							"});",
+							"pm.test(\"Verify response body matches expected response\", function() {",
+							"    pm.expect(cmcUtility.verifyResponse(expectedResponse,pm.response.json())).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{gAuthorizationValue}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://{{envWebHost}}/api/commands/Academics/AreaOfStudy/Create",
+					"protocol": "https",
+					"host": [
+						"{{envWebHost}}"
+					],
+					"path": [
+						"api",
+						"commands",
+						"Academics",
+						"AreaOfStudy",
+						"Create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AreaOfStudy - CIP Code must be associated with the Major",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "8c955812-7fa5-4104-a9c6-da822cf2ac51",
+						"exec": [
+							"// If environment auth variable is set, then create auth header",
+							"if (pm.environment.has('envAuthUser') && pm.environment.has('envAuthPassword'))",
+							"{",
+							"    pm.globals.set('gAuthorizationValue', 'Basic ' + btoa(pm.environment.get('envAuthUser') + ':' + pm.environment.get('envAuthPassword')));",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "623757f4-ae7e-4b97-9726-f58f45fb6ad7",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gCmcUtility\"));",
+							"",
+							"// Set the fields of the expected response object, this is used to verify the response body",
+							"var expectedResponse = ",
+							"{",
+							"    \"payload\": null,",
+							"    \"notifications\": [",
+							"        {",
+							"        \"message\": \"The CIP Code must be associated with the MAJOR .\",",
+							"        }",
+							"    ],",
+							"    \"hasError\": false,",
+							"    \"hasFault\": false,",
+							"    \"hasWarning\": false,",
+							"    \"hasValidationError\": true,",
+							"    \"hasValidationWarning\": false,",
+							"    \"hasValidationInformation\": false,",
+							"    \"hasSecurityError\": false",
+							"};",
+							"",
+							"// Tests",
+							"pm.test(\"Verify response status is Bad Request\", function() {",
+							"    pm.expect(pm.response.code).to.equal(400);",
+							"});",
+							"pm.test(\"Verify response time is below 5000\", function() {",
+							"    pm.expect(pm.response.responseTime).to.be.below(5000);",
+							"});",
+							"pm.test(\"Verify response body matches expected response\", function() {",
+							"    pm.expect(cmcUtility.verifyResponse(expectedResponse,pm.response.json())).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{gAuthorizationValue}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"payload\": {\r\n\"campusIdList\": [\r\n  5,\r\n  6\r\n],\r\n\"id\": 207,\r\n\"areaOfStudyTypeId\": 2,\r\n\"campusGroupId\": 489018,\r\n\"cipCode\": \"01.01\",\r\n\"code\": \"MI-ACCT \",\r\n\"createdDateTime\": \"2011/12/09 10:42:20\",\r\n\"creditHoursRequired\": 20,\r\n\"isActive\": true,\r\n\"isExcludedCrmIntegration\": false,\r\n\"lastModifiedDateTime\": \"2012/03/06 14:49:10\",\r\n\"lastModifiedUserId\": 19379,\r\n\"minimumGpaRequired\": 2,\r\n\"name\": \"Accounting - Minor\",\r\n\"rowVersion\": \"AAAABhFTobk=\",\r\n\"campusGroup\": {\r\n\"id\": 489018,\r\n\"code\": \"AS~207\",\r\n\"createdDateTime\": \"2011/12/09 10:42:20\",\r\n\"financialCampusGroup\": false,\r\n\"isActive\": true,\r\n\"isSystemCode\": false,\r\n\"lastModifiedDateTime\": \"2012/03/06 14:49:10\",\r\n\"lastModifiedUserId\": 19379,\r\n\"name\": \"AS~207\",\r\n\"rowVersion\": \"AAAAB0fWaw0=\",\r\n\"saStmtComments\": null,\r\n\"saStmtLastCloseDate\": null,\r\n\"type\": \"Q\",\r\n\"campusList\": [\r\n  {\r\n\"id\": 633859,\r\n\"campusGroupId\": 489018,\r\n\"campusId\": 5,\r\n\"createdDateTime\": \"2011/12/09 10:42:42\",\r\n\"isCampusActive\": true,\r\n\"isSystemCode\": false,\r\n\"lastModifiedDateTime\": \"2012/03/06 14:49:10\",\r\n\"lastModifiedUserId\": 19379,\r\n\"rowVersion\": \"AAAAAYkddXQ=\",\r\n\"originalState\": \"H4sIAAAAAAAEALXVXU+DMBQG4L9iuIe2wD4gjGTOxCxuWXS4zMsjlK0RWtIWEX+9jKl3qAtICL048J4nnFCCuZRQb9I7Wu8gK+kmVVoyfgBeR3VBr97yjKuZcdS68BFS8ZHmoKycxVIokWorFjmyMXYQwWhLJYOMvYNmgqM2WBnnBJ99Z1RVZVWOJeTh9CBB+/Vq28aajCsNPKZGGHRw2kK4TAJ0WoP2livm66Y0M8BnXH/1g9/7GeHYcaYjL0BtTtiGdnbt5iwgL0p1K0VZDCZzpx4m02Fkg6FGvT2SgqbJTXOJWE47WMln+SKbjQkxiW1iLyLYd+3mtCZ2X/BSnV/hPNbstcv7LERGgV/E1bKk/XHbWmmaL0QyJC2FTPW2rUDptUhYyv5t3M2sHROPI+L6rucTbLneZEj2o6JysE+HeM6k90bzIKodlarZXLvGDYqO3WvGQdYX8ean4+klSfb3sz8o0c8/jfADtIS7n1UGAAA=\",\r\n\"secureState\": \"H4sIAAAAAAAEAD3MQQrCMBAAwK9I7mZTeysqeFbpoSJel5C0C01Ssisxvl6s4ANm9qecsfb+7Ood56frPUumOGKst7q4zSvMkQ9qElk6ALaTC8g6kM2JkxdtU4CdMS00BgaXCWd6o1CKsMasfkNH/6OUokurUx6/sIHH9TKs7ZYiC0brFBw/juQnSpcAAAA=\",\r\n\"extendedProperties\": [],\r\n\"entityState\": 3\r\n},\r\n  {\r\n\"id\": 633858,\r\n\"campusGroupId\": 489018,\r\n\"campusId\": 6,\r\n\"createdDateTime\": \"2011/12/09 10:42:20\",\r\n\"isCampusActive\": true,\r\n\"isSystemCode\": false,\r\n\"lastModifiedDateTime\": \"2012/03/06 14:49:10\",\r\n\"lastModifiedUserId\": 19379,\r\n\"rowVersion\": \"AAAAAYkddXM=\",\r\n\"originalState\": \"H4sIAAAAAAAEALXVQU+DMBQH8K9iuI+2gNtoGMmciVncssThMo9PKFsjtKQtIn56GVNvqAvIAQ4P/u+XvrQEc6Wg3qT3rN5BVrJNqo3i4gCijuqCXb3lmdAz62hMQRHS8ZHloO2cx0pqmRo7ljlyMHYRwWjLFIeMv4PhUqA2WFvnBMq/M6qqsivXlupw+pCg/Xq1bWNHXGgDImZWGHRw2kK4TAJ0egbtK1ecmqY0s4ByYb76we/9rHDsutPraYDanLAN7ezazVlAXpT6TsmyGEzmTX1MBpINt1y9PYqBYcltc4t4zjpYyWf5IpuDCRkRZ4T9iGDqOdTBtkvcvuKlPq/hPDb8tQv8LGXGQFzkNapk/XHbWhuWL2QyJC2FTPe2rUCbtUx4yv9t3s2w3REeR8Sjnk8Jtj1/MiT7UTM12N4hvjvx++oeZLVjSjena9e4QbOxd8MFqPoi3vx0Pb0kyX49+4MS/fzXCD8AL7luWFYGAAA=\",\r\n\"secureState\": \"H4sIAAAAAAAEAD3MQQrCMBAAwK9I7mZTeysqeFbpoSJel5C0C01Ssisxvl6s4ANm9qecsfb+7Ood56frPUumOGKst7q4zSvMkQ9qElk6ALaTC8g6kM2JkxdtU4CdMS00BgaXCWd6o1CKsMasfkNH/6OUokurUx6/sIHH9TKs7ZYiC0brFBw/juQnSpcAAAA=\",\r\n\"extendedProperties\": [],\r\n\"entityState\": 3\r\n}\r\n],\r\n\"originalState\": \"H4sIAAAAAAAEAMWWwW6cMBCGXyXivtgGlATEIm22ShQ1adSyTXudwpBYwvbK4y2lhz57gTRRVclpt2wUDoA09j+fxv+MnK+shf6meYv9LbQ7vGnIWanvQPebfotH31SraRncO7fNGKPqHhVQqGRlDZnGhZVRLOI8ZoKzEq2EVn4HJ41mkzAFDwqZfNLoui7s4tDYu3GjYJ+vr8pJdiE1OdAVBkXuwZkCxWWds/GbT0uOZOaG0DKATGr3mA/+ni8oktOUi9OcTTrFJOrN6sdZmxo9QA+r92JalT8ifjKbySI4rN8Mr41UPrz6V3gvwIgLsRDRgqcbwbMkyiIexiKeS3wu9XD2g3/WoLY7urBmt/VgfzGmRdB7UTfQEs5lvKRV5eRXXzn/h8vZ3QGwyp4cqmeM+GoluwJy16aWjXwxNw5WjBf8eCOSLEkzwcMknd0/v2N/JLQHGzkijU/SuXTvwFvEV5s4H0x3i5aGye+zIBAeJ2dDm9t+P77hOePNJ+j4ci5lCaVTbm2UQu3oD1It22UwNmTAZiYY7bNuDeFo+RfIMv4dzgDv/6Gq7Pl7QvETuwfY2UgIAAA=\",\r\n\"secureState\": \"H4sIAAAAAAAEAD3MQQrCMBAAwK9I7mZTeysqeFbpoSJel5C0C01Ssisxvl6s4ANm9qecsfb+7Ood56frPUumOGKst7q4zSvMkQ9qElk6ALaTC8g6kM2JkxdtU4CdMS00BgaXCWd6o1CKsMasfkNH/6OUokurUx6/sIHH9TKs7ZYiC0brFBw/juQnSpcAAAA=\",\r\n\"extendedProperties\": [],\r\n\"entityState\": 3\r\n},\r\n\"originalState\": \"H4sIAAAAAAAEALWWbW+bMBDHvwriPdg8qC0oQaJs66I1i9TQam9dMMlp2Ga2GWWffoSu09SJbtTUL4zg7P/9ztydvEqlJP2u+kT7O1K3dFcpLYEfCO/zvqHWA6u5WttHrZsYIVUcKSPKZVBIoUSl3UIw5GMcIA+jPZVAavhBNAiORmFlPyrE8Fuj6zq3C1whD6eNHvqyvd6Psg5wpQkvqJ2sJnBGQ7IpV+j0XI1LLIj1YFrbJAaun/yRf/uzEx+fr9AokoyKky6nWVJJya7a67YcPy6HZgqWEda06kqKtlkMKryIsHdhTAZNJkr6jIlDvba1bKmNXq/8t+xTqI+rZ0W73ThpluWWcbxDimhavhumHNgUYPnLPDOBPc/xfAdHuYfj0I997AZhsABxCfqjaKW6od9aGF6nqGkBjNQzoV2MTRE3Ki00fJ86zXshakr4LK5T8pljvX8o6rakZSbZhmt6kGM3XBCzIrUy5rwmSm9FCRW8WWIOWRk4+Cz3wjiMYg+7vnHn+JP6VlG5WGPzouA8MqXbAgfWsquGvEXRDDVzGqaQn8nkj35Fi0yLQrRcD9ssxxriF9KU70Z0d1SqF0qGKHoWXgInsp/HOozL44dc3H9d/wclevlilPwEXOJQAzkJAAA=\",\r\n\"secureState\": \"H4sIAAAAAAAEAD3MQQrCMBAAwK9I7mZTeysqeFbpoSJel5C0C01Ssisxvl6s4ANm9qecsfb+7Ood56frPUumOGKst7q4zSvMkQ9qElk6ALaTC8g6kM2JkxdtU4CdMS00BgaXCWd6o1CKsMasfkNH/6OUokurUx6/sIHH9TKs7ZYiC0brFBw/juQnSpcAAAA=\",\r\n\"extendedProperties\": [],\r\n\"entityState\": 3\r\n},\r\n\"count\": 1\r\n}"
+				},
+				"url": {
+					"raw": "https://{{envWebHost}}/api/commands/Academics/AreaOfStudy/save",
+					"protocol": "https",
+					"host": [
+						"{{envWebHost}}"
+					],
+					"path": [
+						"api",
+						"commands",
+						"Academics",
+						"AreaOfStudy",
+						"save"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AreaOfStudy -Associated with Requirement Rules",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "8c955812-7fa5-4104-a9c6-da822cf2ac51",
+						"exec": [
+							"// If environment auth variable is set, then create auth header",
+							"if (pm.environment.has('envAuthUser') && pm.environment.has('envAuthPassword'))",
+							"{",
+							"    pm.globals.set('gAuthorizationValue', 'Basic ' + btoa(pm.environment.get('envAuthUser') + ':' + pm.environment.get('envAuthPassword')));",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "0d290402-0e34-492d-a25d-5f15b35c4578",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gCmcUtility\"));",
+							"",
+							"// Set the fields of the expected response object, this is used to verify the response body",
+							"var expectedResponse = ",
+							"{",
+							"    \"payload\": null,",
+							"    \"notifications\": [",
+							"        {",
+							"            \"message\": \"This record is in use within the system and cannot be deleted.\",",
+							"        }",
+							"    ],",
+							"    \"hasError\": false,",
+							"    \"hasFault\": false,",
+							"    \"hasWarning\": false,",
+							"    \"hasValidationError\": true,",
+							"    \"hasValidationWarning\": false,",
+							"    \"hasValidationInformation\": false,",
+							"    \"hasSecurityError\": false",
+							"};",
+							"",
+							"// Tests",
+							"pm.test(\"Verify response status is Bad Request\", function() {",
+							"    pm.expect(pm.response.code).to.equal(400);",
+							"});",
+							"pm.test(\"Verify response time is below 5000\", function() {",
+							"    pm.expect(pm.response.responseTime).to.be.below(5000);",
+							"});",
+							"pm.test(\"Verify response body matches expected response\", function() {",
+							"    pm.expect(cmcUtility.verifyResponse(expectedResponse,pm.response.json())).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{gAuthorizationValue}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"payload\": {\r\n      \"campusIdList\": [\r\n        5,\r\n        6\r\n      ],\r\n      \"id\": 38,\r\n      \"areaOfStudyTypeId\": 2,\r\n      \"campusGroupId\": 4155,\r\n      \"cipCode\": null,\r\n      \"code\": \"ARTED   \",\r\n      \"createdDateTime\": \"2009/10/26 10:33:55\",\r\n      \"creditHoursRequired\": 18.00,\r\n      \"isActive\": true,\r\n      \"isExcludedCrmIntegration\": false,\r\n      \"lastModifiedDateTime\": \"2018/07/05 17:48:48\",\r\n      \"lastModifiedUserId\": 2,\r\n      \"minimumGpaRequired\": 2.000000,\r\n      \"name\": \"Art Education (3)\",\r\n      \"rowVersion\": \"AAAAB4cdZ1k=\",\r\n      \"campusGroup\": {\r\n        \"id\": 4155,\r\n        \"code\": \"AS~38\",\r\n        \"createdDateTime\": \"2009/10/26 10:33:54\",\r\n        \"financialCampusGroup\": false,\r\n        \"isActive\": true,\r\n        \"isSystemCode\": false,\r\n        \"lastModifiedDateTime\": \"2009/10/26 11:00:55\",\r\n        \"lastModifiedUserId\": 53,\r\n        \"name\": \"AS~38\",\r\n        \"rowVersion\": \"AAAAB0fWahI=\",\r\n        \"saStmtComments\": null,\r\n        \"saStmtLastCloseDate\": null,\r\n        \"type\": \"Q\",\r\n        \"campusList\": [\r\n          {\r\n            \"id\": 862653,\r\n            \"campusGroupId\": 4155,\r\n            \"campusId\": 5,\r\n            \"createdDateTime\": \"2018/07/05 17:48:49\",\r\n            \"isCampusActive\": true,\r\n            \"isSystemCode\": false,\r\n            \"lastModifiedDateTime\": \"2018/07/05 17:48:49\",\r\n            \"lastModifiedUserId\": 2,\r\n            \"rowVersion\": \"AAAAB4cdZ1o=\",\r\n            \"originalState\": \"H4sIAAAAAAAEANXVQU+DMBQH8K9iuI9SBtskjGSbiVncssTNxXh7Qtma0Jb0FRE/vYyp8YK6wEUO5fDK//3SpiWcaQ3VJr1j1R6ygm1SNJrLA8hqV+Xs6lVkEqfW0Zg8IATjIxOAtuCxVqhSY8dKENdxhoQ6ZMs0h4y/geFKkiYYrXNCwL8yyrK0y6Gt9OH0ISWP69W2iR1wiQZkzKwobOE0hWiZhOT0DpspVzwwdWlqQcCl+ewHv/ezosnIHfnDkDQ5URPa2rWdswCRF3irVZH3JvOo7/fj6o3U3aMZGJbc1MOOC9bCSj7KF9lch04Gznjg+Ds6DrxJ4F3blHYFL/G8hLPY8Jc277NSGQN5EdfognXHbSs0TCxU0icthQw721aAZq0SnvL/tN3f1Q/IdG8nx+0qu1flnmmsb9W2nQZkI2/OJejqItqsfuZenDxRNf2Dkvz8t4jeAedLd6tOBgAA\",\r\n            \"secureState\": \"H4sIAAAAAAAEAD3MQQrCMBAAwK9I7mZTeysqeFbpoSJel5C0C01Ssisxvl6s4ANm9qecsfb+7Ood56frPUumOGKst7q4zSvMkQ9qElk6ALaTC8g6kM2JkxdtU4CdMS00BgaXCWd6o1CKsMasfkNH/6OUokurUx6/sIHH9TKs7ZYiC0brFBw/juQnSpcAAAA=\",\r\n            \"extendedProperties\": [],\r\n            \"entityState\": 3\r\n          },\r\n          {\r\n            \"id\": 862654,\r\n            \"campusGroupId\": 4155,\r\n            \"campusId\": 6,\r\n            \"createdDateTime\": \"2018/07/05 17:48:49\",\r\n            \"isCampusActive\": true,\r\n            \"isSystemCode\": false,\r\n            \"lastModifiedDateTime\": \"2018/07/05 17:48:49\",\r\n            \"lastModifiedUserId\": 2,\r\n            \"rowVersion\": \"AAAAB4cdZ1s=\",\r\n            \"originalState\": \"H4sIAAAAAAAEANXVQW+CMBQH8K9iuEspAjqCJOqSxUxjMp1ZdnuDok2gJX1ljH36IbplF7YZuIxDObzyf7+0aQlmSkG1Se5ZtYe0YJsEteLiAKLaVTkbvGWpwKlx1Dr3CcHoyDJAM+ORkigTbUYyI7ZljQi1yJYpDil/B82lIE0wGucEn39llGVpliNTqsPpQ0qe1qttEzvkAjWIiBlh0MJpCuEyDsjpHTRTBtzXdWlqgM+F/uwHv/czwolne64TkCYnbEJbu7ZzFpDlBd4pWeS9yRzquv24eiN5nT2KgWbxbT3seMZaWPGlfJXNtuhkaI2HlrujY9+Z+M6NSWlX8BLPSziLNH9t875ImTIQV3G1Klh33LZCzbKFjPukJZBiZ9sKUK9lzBP+n7b7u/oRmert5NhdZQ+y3DOF9a3attOAzHPmXICqrqLN6mfuRPEzxekflOTnv0X4Ado4Kg5OBgAA\",\r\n            \"secureState\": \"H4sIAAAAAAAEAD3MQQrCMBAAwK9I7mZTeysqeFbpoSJel5C0C01Ssisxvl6s4ANm9qecsfb+7Ood56frPUumOGKst7q4zSvMkQ9qElk6ALaTC8g6kM2JkxdtU4CdMS00BgaXCWd6o1CKsMasfkNH/6OUokurUx6/sIHH9TKs7ZYiC0brFBw/juQnSpcAAAA=\",\r\n            \"extendedProperties\": [],\r\n            \"entityState\": 3\r\n          }\r\n        ],\r\n        \"originalState\": \"H4sIAAAAAAAEAMWW206EMBCGX8VwvxRk8UBYknWNZuMpynq4HWFwm9B20+mKeOGzC3iIMam6skYuWsi0/3yZ/p0Qj7WG+qw4wvoKyiWeFWQ0l3cg61m9wI0HUUoaOXNjFhFjlM1RALmCZ1qRKoybKcE2PS9gvsdS1BxK/giGK8k6YXJeFCL+rlFVlVsFrtJ37Uaf3Zwcp53sgEsyIDN0ktiC0wWSaR6zdo67JRs8Mk1o5EDEpXnLB9/nc5KhH4Yx61SSTtKa0w4zUTlacF5Wr0Q0Tp+Cnd5IGsFgvt8MMy5sdPlreCW+5nt34HuDza2Z70VBEIVDd3dnuy/xAZfNwTfmmYBYLOlQq+XCgn2rVIkgV6IuoCTsyzilcWb4va2cv+EyerkGrLQmg+ILH/5byY6BzInKecH/3o1+5HlRGLrD7d5u/Ih9SajX1m/CoC/aKVgr+F/d5kJVV6ipafk2+wHh1nCvueK6Xg2vefa84hrm01FfyhRSI8xECYHS0CdSycuR015Gh/VM0FpnUirC1u5/kKV9W9/5n/+gquzrH4TkGbHVsEBBCAAA\",\r\n        \"secureState\": \"H4sIAAAAAAAEAD3MQQrCMBAAwK9I7mZTeysqeFbpoSJel5C0C01Ssisxvl6s4ANm9qecsfb+7Ood56frPUumOGKst7q4zSvMkQ9qElk6ALaTC8g6kM2JkxdtU4CdMS00BgaXCWd6o1CKsMasfkNH/6OUokurUx6/sIHH9TKs7ZYiC0brFBw/juQnSpcAAAA=\",\r\n        \"extendedProperties\": [],\r\n        \"entityState\": 3\r\n      },\r\n      \"originalState\": \"H4sIAAAAAAAEAM2W32+bMBDH/xXE0/YANiFpUkSQ0jTqojWLlLBq2puHTXoatpl/LKV//Qhd99CKbhQqzbJA5sz3PofvTsQLpUi1zT+y6oYUlm1zbRSIAxFVWpXMueOF0HP31pgyQkhnt4wT7XPIlNQyN34mORphHKIAoz1TQAq4JwakQI2wdh8UIvijcTwe/WPoS3U4vRigL5vrfSPrgdCGiIy5SdyC0xiSNY3R6R43WxyITG2auyQCYR79kb/7c5NwFqNGI2kEWz22oywUI9t8byxtHg5GNuoLtiS8tPpKSVsOBjUOJpPeXFAuJWVPiAQUc9coy1z0euXnso+BPuzuFOtil64uHcfpHW+dIIbRy/qSAm8DpL/N3XIE43MvwN7oLA1wFIbRAKejGAXzQVqld+yHhXrZRswy4KToBBzMfIz7Iq71IjPws+1LfpOyYER04jolXn+s1V1WWMroUvG1MOygmjY4IGZOCt2b85pos5EUcnirpAxmHp56eJIG02g8q6c/PZ8Oif1ZM/X/NNoNCOCWX5XkDSpmVBfMafSF/ERaT/k1vVEZZ0Vt1iS48y583xdvJ483TOkXyoVodja+AEFU1Q21HhfjjH4Nvs//gRK9/DeU/ALhPF4HLgkAAA==\",\r\n      \"secureState\": \"H4sIAAAAAAAEAD3MQQrCMBAAwK9I7mZTeysqeFbpoSJel5C0C01Ssisxvl6s4ANm9qecsfb+7Ood56frPUumOGKst7q4zSvMkQ9qElk6ALaTC8g6kM2JkxdtU4CdMS00BgaXCWd6o1CKsMasfkNH/6OUokurUx6/sIHH9TKs7ZYiC0brFBw/juQnSpcAAAA=\",\r\n      \"extendedProperties\": [],\r\n      \"entityState\": 3\r\n    },\r\n    \"count\": 1\r\n  }"
+				},
+				"url": {
+					"raw": "https://{{envWebHost}}/api/commands/Academics/AreaOfStudy/delete",
+					"protocol": "https",
+					"host": [
+						"{{envWebHost}}"
+					],
+					"path": [
+						"api",
+						"commands",
+						"Academics",
+						"AreaOfStudy",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AreaOfStudy -Associated with Program Version",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "8c955812-7fa5-4104-a9c6-da822cf2ac51",
+						"exec": [
+							"// If environment auth variable is set, then create auth header",
+							"if (pm.environment.has('envAuthUser') && pm.environment.has('envAuthPassword'))",
+							"{",
+							"    pm.globals.set('gAuthorizationValue', 'Basic ' + btoa(pm.environment.get('envAuthUser') + ':' + pm.environment.get('envAuthPassword')));",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "53386e79-d573-465d-b7d4-e2e38cc8f3e7",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gCmcUtility\"));",
+							"",
+							"// Set the fields of the expected response object, this is used to verify the response body",
+							"var expectedResponse = ",
+							"{",
+							"    \"payload\": null,",
+							"    \"notifications\": [",
+							"        {",
+							"            \"message\": \"This record is in use within the system and cannot be deleted.\",",
+							"        }",
+							"    ],",
+							"    \"hasError\": false,",
+							"    \"hasFault\": false,",
+							"    \"hasWarning\": false,",
+							"    \"hasValidationError\": true,",
+							"    \"hasValidationWarning\": false,",
+							"    \"hasValidationInformation\": false,",
+							"    \"hasSecurityError\": false",
+							"};",
+							"",
+							"// Tests",
+							"pm.test(\"Verify response status is Bad Request\", function() {",
+							"    pm.expect(pm.response.code).to.equal(400);",
+							"});",
+							"pm.test(\"Verify response time is below 5000\", function() {",
+							"    pm.expect(pm.response.responseTime).to.be.below(5000);",
+							"});",
+							"pm.test(\"Verify response body matches expected response\", function() {",
+							"    pm.expect(cmcUtility.verifyResponse(expectedResponse,pm.response.json())).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{gAuthorizationValue}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"payload\": {\r\n      \"campusIdList\": [\r\n        5\r\n      ],\r\n      \"id\": 474,\r\n      \"areaOfStudyTypeId\": 3,\r\n      \"campusGroupId\": 532903,\r\n      \"cipCode\": null,\r\n      \"code\": \"CON_NAY \",\r\n      \"createdDateTime\": \"2017/05/10 12:25:42\",\r\n      \"creditHoursRequired\": null,\r\n      \"isActive\": true,\r\n      \"isExcludedCrmIntegration\": false,\r\n      \"lastModifiedDateTime\": \"2017/05/10 12:25:42\",\r\n      \"lastModifiedUserId\": 2,\r\n      \"minimumGpaRequired\": 23.000000,\r\n      \"name\": \"CON_NAY\",\r\n      \"rowVersion\": \"AAAAB0VCoFY=\",\r\n      \"campusGroup\": {\r\n        \"id\": 532903,\r\n        \"code\": \"AS~474\",\r\n        \"createdDateTime\": \"2017/05/10 12:25:41\",\r\n        \"financialCampusGroup\": false,\r\n        \"isActive\": true,\r\n        \"isSystemCode\": false,\r\n        \"lastModifiedDateTime\": \"2017/05/10 12:25:42\",\r\n        \"lastModifiedUserId\": 2,\r\n        \"name\": \"AS~474\",\r\n        \"rowVersion\": \"AAAAB0fWbEU=\",\r\n        \"saStmtComments\": null,\r\n        \"saStmtLastCloseDate\": null,\r\n        \"type\": \"Q\",\r\n        \"campusList\": [\r\n          {\r\n            \"id\": 796529,\r\n            \"campusGroupId\": 532903,\r\n            \"campusId\": 5,\r\n            \"createdDateTime\": \"2017/05/10 12:25:41\",\r\n            \"isCampusActive\": true,\r\n            \"isSystemCode\": false,\r\n            \"lastModifiedDateTime\": \"2017/05/10 12:25:42\",\r\n            \"lastModifiedUserId\": 2,\r\n            \"rowVersion\": \"AAAAB0VCoFg=\",\r\n            \"originalState\": \"H4sIAAAAAAAEAL3VQW+CMBQH8K9iuEtLEQ0ESdRli5nGZDqz6xsUbQIt6Stj7NNPcVt2YZuBrIf28OD/fqFpCWdaQ71J73m9h6zkmxSNFvIAst7VBR+85pnEqXU0pggIwfjIc0A7F7FWqFJjxyonjFKXOJRsuRaQiTcwQknSBKN1SQjEV0ZVVXbl2kofzi865Gm92jaxQyHRgIy5FYUtnKYQLZOQnNeweWQgAnMqTS0IhDSf/eD3flY08cce80PS5ERNaGvXds4C8qLEO63KojeZ5zKfuv3I+kN19mgOhic3p2knct7CSj7KV9kYdSZD6g0dunNYwLxg5Nj+qCt4iZdPOIuNeGnzPiuVcZBXcY0ueXfctkbD84VK+qSlkGFn2wrQrFUiUvFf283ssdv5wHxnPyLXvR0d1lX2oKo913i6WNu2GpCPR3MhQddX0WanMaf7hbo9TP+gJD//MKJ3Weq1dFEGAAA=\",\r\n            \"secureState\": \"H4sIAAAAAAAEAD3MQQrCMBAAwK9I7mZTeysqeFbpoSJel5C0C01Ssisxvl6s4ANm9qecsfb+7Ood56frPUumOGKst7q4zSvMkQ9qElk6ALaTC8g6kM2JkxdtU4CdMS00BgaXCWd6o1CKsMasfkNH/6OUokurUx6/sIHH9TKs7ZYiC0brFBw/juQnSpcAAAA=\",\r\n            \"extendedProperties\": [],\r\n            \"entityState\": 3\r\n          }\r\n        ],\r\n        \"originalState\": \"H4sIAAAAAAAEAMWW206EMBCGX8Vwv5TDrkbCkqzrIcZTlPVwO8KgTWi76XRFvPDZBTzEmFRdWZULIJn2ny/TfyaNJ1pDfVIcYH0B5QJPCjKayxuQ9aye49q9KCWNnVtj5hFjlN2iAHIFz7QiVRg3U4IFnhcy32Mpag4lfwDDlWSdMDnPChF/06iqyq1CV+mbdqPPro4O0052wCUZkBk6SWzB6QLJfh6z9ht3S9Z4ZJrQ2IGIS/OaD77O5ySjMNj0wph1Okknas1qx5mqHC1Az6uXYpqkj8ONYW8mjWAw325eMy5sePlLeCnAwPM3Bt5o4HszP4iCUTT03c3ewLtcNkff2GcKYr6gPa0Wcwv1tVIlglwKuoCSsC/jPk0yw+9s1fwJl9GLFWClNRkUn/jw30p2CGSOVM4L/ldmDNz1sHdLv8c+J9QrmzhBX7JjsBbw34bNmaouUFMz9G32A8L14VbT4rpejq95trzi8nrnfNyXMoXUCDNVQqA09IFU8nLstM3osJ4JWutMS0XY2v0XsrR/qzPA6Teqyj6/IiRP8KkLXkMIAAA=\",\r\n        \"secureState\": \"H4sIAAAAAAAEAD3MQQrCMBAAwK9I7mZTeysqeFbpoSJel5C0C01Ssisxvl6s4ANm9qecsfb+7Ood56frPUumOGKst7q4zSvMkQ9qElk6ALaTC8g6kM2JkxdtU4CdMS00BgaXCWd6o1CKsMasfkNH/6OUokurUx6/sIHH9TKs7ZYiC0brFBw/juQnSpcAAAA=\",\r\n        \"extendedProperties\": [],\r\n        \"entityState\": 3\r\n      },\r\n      \"originalState\": \"H4sIAAAAAAAEANWW226bQBCGX8Xi3iwHu1ERRiK0Ta3GthS7VnNVTWFwRmJ36e5SQp6+mDRRlYi0BPeiewGCWf755rAjwlgpaDb5J2z2UFS4ybVRJA4gml1T4uSWF0IvrBtjyoAxnd4gB21zSpXUMjd2KjnzHMdnrsO2qAgKugNDUrBOWFv3CgE9atR1bde+LdXh+KHLvqwut53slIQ2IFK0orAHpzNEyyxkx3vYbZlQYFrTwoKAhHnwB3/2Z0Wzs1nIOpGoU+x12c8SK4RNvjVV1r08GZo/FiwBXlb6QsmqPBnU3PfeOuPJqExkhk+YBBULy6gKLfZ65eeyD6He7x4UbbJZf13H15PR8bYtYjB71152xPsAs1/mQYie455NnfnUdXauF3jzYObZ3vgCKczIfJSV0lf4vaL28R8Ua6nj1NCPvnx8k7JAEIPScSQaG/xSv79NiyrDLFF8KQweVDfPToiZQ6FHc16CNiuZUU7/U2v9Tv1ZozrZaPLGkq1IEK/4RQk9Pf+YTUyJQzGMzredbo2lXENvlV8/4cZCXcl6j0q/cEhA45vZOQlQzSDAuF3nzj6RH64Xf0HJXv6ZiX4ClO4M3+0IAAA=\",\r\n      \"secureState\": \"H4sIAAAAAAAEAD3MQQrCMBAAwK9I7mZTeysqeFbpoSJel5C0C01Ssisxvl6s4ANm9qecsfb+7Ood56frPUumOGKst7q4zSvMkQ9qElk6ALaTC8g6kM2JkxdtU4CdMS00BgaXCWd6o1CKsMasfkNH/6OUokurUx6/sIHH9TKs7ZYiC0brFBw/juQnSpcAAAA=\",\r\n      \"extendedProperties\": [],\r\n      \"entityState\": 3\r\n    },\r\n    \"count\": 1\r\n  }"
+				},
+				"url": {
+					"raw": "https://{{envWebHost}}/api/commands/Academics/AreaOfStudy/delete",
+					"protocol": "https",
+					"host": [
+						"{{envWebHost}}"
+					],
+					"path": [
+						"api",
+						"commands",
+						"Academics",
+						"AreaOfStudy",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

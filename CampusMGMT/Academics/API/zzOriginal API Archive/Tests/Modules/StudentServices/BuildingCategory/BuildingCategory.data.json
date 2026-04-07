@@ -1,0 +1,190 @@
+[
+  {
+    "Type": "CrudDataFile",
+    "Version": "1.0",
+    "TestDescription": "API CRUD tests for StudentServices Commands-BuildingCategory",
+    "Entity": "StudentServices Commands/BuildingCategory",
+    "Apis": [
+      {
+        "RequestId": "5f928440-007a-4393-a0cf-afd69f40f3e0",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/BuildingCategory/Create",
+        "RequestBody": "{payload:{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {
+          "payload": {
+            "data": {
+              "campusIdList": null,
+              "housingFeatureIdList": [],
+              "id": -1,
+              "campusGroupId": null,
+              "code": null,
+              "isActive": true,
+              "lastModifiedUserId": 2,
+              "name": null,
+              "note": null,
+              "rowVersion": null,
+              "campusGroup": null
+            }
+          }
+        },
+        "ChainSource": [],
+        "Chain": []
+      },
+      {
+        "RequestId": "76f263f2-5e1d-4b69-96bb-8fd47ca2a92b",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/BuildingCategory/SaveNew",
+        "RequestBody": {
+          "payload": {
+            "campusIdList": [ 85 ],
+            "housingFeatureIdList": [ 14 ],
+            "id": -1,
+            "campusGroupId": null,
+            "code": "@StringRandom(5)",
+            "createdDateTime": "2019-04-22 14:02:46",
+            "isActive": true,
+            "lastModifiedDateTime": "2019-04-22 14:02:46",
+            "lastModifiedUserId": 2,
+            "name": "New",
+            "note": "this is the note",
+            "campusGroup": null
+          }
+        },
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {
+          "payload": {
+            "data": {
+              "campusIdList": [ 85 ],
+              "housingFeatureIdList": [ 14 ],
+              "isActive": true,
+              "lastModifiedUserId": 2,
+              "name": "New",
+              "note": "this is the note",
+              "campusGroup": null
+            }
+          }
+        },
+        "ChainSource": [ "response.payload.data.id" , "response.payload.data.code"],
+        "Chain": []
+      },
+      {
+        "RequestId": "9b769da1-500f-4a19-b0e4-35656210a191",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/BuildingCategory/Get",
+        "RequestBody": "{ }",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{}",
+        "ChainSource": [
+          "response.payload.data.id",
+          "response.payload.data.rowVersion"
+        ],
+        "Chain": [
+          {
+            "SourceApiKey": "76f263f2-5e1d-4b69-96bb-8fd47ca2a92b",
+            "SourcePath": "response.payload.data.id",
+            "TargetPath": "request.payload.id"
+          }
+        ]
+      },
+      {
+        "RequestId": "dffb7098-5ab8-41e2-af3c-0392ffee43dc",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/BuildingCategory/Save",
+        "RequestBody": {
+          "payload": {
+			"note"  : "This is updated note"
+          }
+        },
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {
+          "payload": {
+            "data": {
+              "isActive": true,
+              "name": "New",
+              "note": "This is updated note"
+			}
+          }
+        },
+        "ChainSource": [],
+        "Chain": [
+          {
+            "SourceApiKey": "9b769da1-500f-4a19-b0e4-35656210a191",
+            "SourcePath": "response.payload.data",
+            "TargetPath": "request.payload"
+          }
+        ]
+      },
+      {
+        "RequestId": "f7f7676a-c439-4109-b277-e745b82bc4fa",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/BuildingCategory/Get",
+        "RequestBody": "{ }",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{}",
+        "ChainSource": [
+          "response.payload.data",
+          "response.payload.data.rowVersion"
+        ],
+        "Chain": [
+          {
+            "SourceApiKey": "76f263f2-5e1d-4b69-96bb-8fd47ca2a92b",
+            "SourcePath": "response.payload.data.id",
+            "TargetPath": "request.payload.id"
+          }
+        ]
+      },
+      {
+        "RequestId": "5f04c95e-89f3-4dcd-9960-0b17ffc0d449",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/BuildingCategory/Delete",
+        "RequestBody": {
+          "payload": {
+          }
+        },
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {
+          "payload": {
+            "deleted": true
+          }
+        },
+        "ChainSource": [],
+        "Chain": [
+          {
+            "SourceApiKey": "f7f7676a-c439-4109-b277-e745b82bc4fa",
+            "SourcePath": "response.payload.data",
+            "TargetPath": "request.payload"
+          },
+          {
+            "SourceApiKey": "f7f7676a-c439-4109-b277-e745b82bc4fa",
+            "SourcePath": "response.payload.data.rowVersion",
+            "TargetPath": "request.payload.rowVersion"
+          }
+        ]
+      },
+      {
+        "RequestId": "d4129379-0ade-426a-9bef-a632c5138a14",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/BuildingCategory/Get",
+        "RequestBody": "{ }",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{}",
+        "ChainSource": [],
+        "Chain": [
+          {
+            "SourceApiKey": "76f263f2-5e1d-4b69-96bb-8fd47ca2a92b",
+            "SourcePath": "response.payload.data.id",
+            "TargetPath": "request.payload.id"
+          }
+        ]
+      }
+    ]
+  }
+]

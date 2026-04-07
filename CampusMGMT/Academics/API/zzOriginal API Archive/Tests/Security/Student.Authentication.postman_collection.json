@@ -1,0 +1,115 @@
+{
+	"info": {
+		"_postman_id": "f7f0381f-ed95-49e1-bb48-acc8ea6063a8",
+		"name": "Student.Authentication",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "ApiPostTest",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7c5c6131-e1b5-4ba3-b2d8-24891c290b5c",
+						"type": "text/javascript",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gCmcUtility\"));",
+							"",
+							"// Create security header Auth, ApiKey or Cookie based on ",
+							"// data file setting.",
+							"if (cmcUtility.isAuth(data.AuthUser, data.AuthPassword)) {",
+							"    pm.globals.set('gHeaderKey', 'Authorization');",
+							"    pm.globals.set('gHeaderValue', 'Basic ' + btoa(data.AuthUser + ':' + data.AuthPassword));",
+							"} else if(cmcUtility.isApiKey(data.ApiKey)) {",
+							"    pm.globals.set('gHeaderKey', 'ApiKey');",
+							"    pm.globals.set('gHeaderValue', data.ApiKey);",
+							"} else if(cmcUtility.isCookie(data.Cookie)) {",
+							"    pm.globals.set('gHeaderKey', 'Cookie');",
+							"    pm.globals.set('gHeaderValue', data.Cookie);",
+							"} else {",
+							"    pm.globals.set('gHeaderKey', '');",
+							"    pm.globals.set('gHeaderValue', '');",
+							"}",
+							"",
+							"// Check request body type, if object convert to string, else leave as string.",
+							"// This allows specifying invalid JSON request body.",
+							"var dataRequestBody = null;",
+							"switch (typeof data.RequestBody) {",
+							"    case 'object':",
+							"         dataRequestBody = JSON.stringify(data.RequestBody);",
+							"         break;",
+							"    case 'string':",
+							"         dataRequestBody = data.RequestBody;",
+							"         break;",
+							"    default:",
+							"         dataRequestBody = data.RequestBody.toString();",
+							"         break;",
+							"}",
+							"",
+							"// Set request fields based on JSON data file contents",
+							"postman.setGlobalVariable('requestBody', dataRequestBody);",
+							"postman.setGlobalVariable('requestUrl', data.RequestUrl);",
+							"",
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "001756e5-5407-455d-a147-0c349345c0ee",
+						"type": "text/javascript",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gCmcUtility\"));",
+							"",
+							"// Test response",
+							"pm.test(data.TestDescription + \" - should return response status of \" + data.ResponseStatus, () => {",
+							"   pm.expect(pm.response.code).to.equal(data.ResponseStatus);",
+							"});",
+							"pm.test(data.TestDescription + \" - should have response time less than or equal to \" + data.ResponseTimeMs + \" ms\", function() {",
+							"   pm.expect(pm.response.responseTime).to.be.below(data.ResponseTimeMs);",
+							"});",
+							"pm.test(data.TestDescription + \" - should match expected response body\", function() {",
+							"   var responseBody = null;",
+							"   if(pm.response.text().length !== 0) {",
+							"       responseBody = pm.response.json();",
+							"   }",
+							"   pm.expect(cmcUtility.verifyResponse(data.ResponseBody, responseBody)).to.be.true;",
+							"});"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "{{gHeaderKey}}",
+						"value": "{{gHeaderValue}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{{requestBody}}"
+				},
+				"url": {
+					"raw": "{{requestUrl}}",
+					"host": [
+						"{{requestUrl}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

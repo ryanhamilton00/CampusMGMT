@@ -1,0 +1,314 @@
+[
+	{
+		"Type": "AdvancedDataFile",
+		"Version": "2.0",
+		"TestDescription": "AddEPtoCourseCatunderPVCourseFlagOff",
+		"Globals": {
+			"ProgramCode": "DPAPPV",
+			"ProgramVersionCode": "DPAPV1",
+			"CatalogCode": "DPACat",
+			"CategoryCode": "DPACT",
+			"EPName": "PoolName1",
+			"PoolCode": "DPAPC1",
+			"CourseCode": "DPA7"
+		},
+		"Apis": [
+			{
+				"RequestId": "300bf5f4-90f2-4514-bfbc-5ec6eaf04f43",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 10000,
+				"ResponseBody": "{\"value\":[]}"
+			},
+			{
+				"RequestId": "a2b07a48-ea1d-4255-a75f-dde17fbf8706",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/Programs/CampusNexus.GetAllProgramList(isActive=true)?$filter=(IsActive eq true and Code eq '{{gProgramCode}}')",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 10000,
+				"ResponseBody": "{\"value\":[]}"
+			},
+			{
+				"RequestId": "b5063e31-4a51-4a9d-acb0-d96cdd169572",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/ProgramVersions/CampusNexus.GetProgramVersionsByProgramId(programId={{gProgramId}},staffId={{gStaffId}}, campusId=-1)?$filter=contains(Code,'{{gProgramVersionCode}}')",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 10000,
+				"ResponseBody": "{\"value\":[]}"
+			},
+			{
+				"RequestId": "270cd192-e666-4832-ac14-077c1c84b906",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/CatalogYears?$filter=Code eq '{{gCatalogCode}}'",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 10000,
+				"ResponseBody": "{\"value\":[]}"
+			},
+			{
+				"RequestId": "5bd8c13a-3cba-4cc1-96c5-189d84d42521",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/CourseCategories?&$filter=Code eq '{{gCategoryCode}}'",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 10000,
+				"ResponseBody": "{\"value\":[]}"
+			},
+			{
+				"RequestId": "d8899a65-47b3-44ed-88d6-cd0d07202b19",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/ProgramVersions/CampusNexus.GetProgramVersionCourseCategoryList(programVersionId={{gProgramVersionId}},programConcentrationId=0,catalogYearId={{gCatalogId}})",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 10000,
+				"ResponseBody": "{\"value\":[]}"
+			},
+
+			{
+				"RequestId": "19f0bac2-9168-4449-9064-95e0868e5130",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/RequiredCourseElectivePools/CampusNexus.GetElectivePoolCourseList(programVersionId={{gProgramVersionId}},catalogYearId={{gCatalogId}})",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 10000,
+				"ResponseBody": "{\"value\":[]}"
+			},
+			{
+				"RequestId": "620e8c5c-1f80-4a00-acff-a6ac9300abf3",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/Academics/RequiredCourse/SaveNew",
+				"RequestBody": {
+					"payload": {
+						"id": -1,
+						"areaOfStudyId": null,
+						"displayOrder": 1,
+						"clockHours": "0.00",
+						"courseId": 999999999,
+						"creditHours": "0.00",
+						"electiveClockHours": "0.00",
+						"electiveCreditHours": "0.00",
+						"electivePoolName": "{{gEPName}}",
+						"isAdvisementRequired": false,
+						"isDropExcluded": false,
+						"isSubstituteAllowed": false,
+						"maxNumberRepeats": 999,
+						"minimumGpa": null,
+						"minGPA": null,
+						"programElectivePoolId": null,
+						"rowVersion": null,
+						"skillMinimumGpa": null,
+						"courseAttributeIdList": [],
+						"originalState": null,
+						"secureState": null,
+						"extendedProperties": [],
+						"entityState": 0,
+						"requiredCourseElectivePoolEntityList": [
+							{
+								"courseIdList": null,
+								"isPoolDelete": false,
+								"isAllCourseDelete": false,
+								"isCallFromCourseGroup": false,
+								"id": -1,
+								"courseId": null,
+								"displayOrder": 1,
+								"entityState": 0
+							}
+						],
+						"note": ""
+					}
+				},
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 25000,
+				"ResponseBody": {}
+			},
+			{
+				"RequestId": "afa18136-e1dd-4c80-a59d-a8d569d97635",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/Courses?$filter=Code eq '{{gCourseCode}}'",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 15000,
+				"ResponseBody": "{}"
+			},
+			{
+				"RequestId": "620e8c5c-1f80-4a00-acff-a6ac9300a321",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/Academics/RequiredCourseElectivePool/SavePoolCourse",
+				"RequestBody": {
+					"payload": {
+						"RequiredCourseElectivePoolEntityList": [
+							{
+								"entityState": 0,
+								"id": -1,
+								"displayOrder": null
+							}
+						]
+					}
+				},
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 25000,
+				"ResponseBody": {}
+			}
+		]
+	},
+	{
+		"Type": "AdvancedDataFile",
+		"Version": "2.0",
+		"TestDescription": "AddEPtoCourseCatunderPVCourseFlagOff",
+		"Globals": {
+			"ProgramCode": "DPAPPV",
+			"ProgramVersionCode": "DPAPV1",
+			"CatalogCode": "DPACat",
+			"CategoryCode": "DPACT",
+			"EPName": "PoolName2",
+			"PoolCode": "DPAPC2",
+			"CourseCode": "DPA8"
+		},
+		"Apis": [
+			{
+				"RequestId": "300bf5f4-90f2-4514-bfbc-5ec6eaf04f43",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 10000,
+				"ResponseBody": "{\"value\":[]}"
+			},
+			{
+				"RequestId": "a2b07a48-ea1d-4255-a75f-dde17fbf8706",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/Programs/CampusNexus.GetAllProgramList(isActive=true)?$filter=(IsActive eq true and Code eq '{{gProgramCode}}')",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 10000,
+				"ResponseBody": "{\"value\":[]}"
+			},
+			{
+				"RequestId": "b5063e31-4a51-4a9d-acb0-d96cdd169572",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/ProgramVersions/CampusNexus.GetProgramVersionsByProgramId(programId={{gProgramId}},staffId={{gStaffId}}, campusId=-1)?$filter=contains(Code,'{{gProgramVersionCode}}')",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 10000,
+				"ResponseBody": "{\"value\":[]}"
+			},
+			{
+				"RequestId": "270cd192-e666-4832-ac14-077c1c84b906",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/CatalogYears?$filter=Code eq '{{gCatalogCode}}'",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 10000,
+				"ResponseBody": "{\"value\":[]}"
+			},
+			{
+				"RequestId": "5bd8c13a-3cba-4cc1-96c5-189d84d42521",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/CourseCategories?&$filter=Code eq '{{gCategoryCode}}'",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 10000,
+				"ResponseBody": "{\"value\":[]}"
+			},
+			{
+				"RequestId": "d8899a65-47b3-44ed-88d6-cd0d07202b19",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/ProgramVersions/CampusNexus.GetProgramVersionCourseCategoryList(programVersionId={{gProgramVersionId}},programConcentrationId=0,catalogYearId={{gCatalogId}})",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 10000,
+				"ResponseBody": "{\"value\":[]}"
+			},
+
+			{
+				"RequestId": "19f0bac2-9168-4449-9064-95e0868e5130",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/RequiredCourseElectivePools/CampusNexus.GetElectivePoolCourseList(programVersionId={{gProgramVersionId}},catalogYearId={{gCatalogId}})",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 10000,
+				"ResponseBody": "{\"value\":[]}"
+			},
+			{
+				"RequestId": "620e8c5c-1f80-4a00-acff-a6ac9300abf3",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/Academics/RequiredCourse/SaveNew",
+				"RequestBody": {
+					"payload": {
+						"id": -1,
+						"areaOfStudyId": null,
+						"displayOrder": 1,
+						"clockHours": "0.00",
+						"courseId": 999999999,
+						"creditHours": "0.00",
+						"electiveClockHours": "0.00",
+						"electiveCreditHours": "0.00",
+						"electivePoolName": "{{gEPName}}",
+						"isAdvisementRequired": false,
+						"isDropExcluded": false,
+						"isSubstituteAllowed": false,
+						"maxNumberRepeats": 999,
+						"minimumGpa": null,
+						"minGPA": null,
+						"programElectivePoolId": null,
+						"rowVersion": null,
+						"skillMinimumGpa": null,
+						"courseAttributeIdList": [],
+						"originalState": null,
+						"secureState": null,
+						"extendedProperties": [],
+						"entityState": 0,
+						"requiredCourseElectivePoolEntityList": [
+							{
+								"courseIdList": null,
+								"isPoolDelete": false,
+								"isAllCourseDelete": false,
+								"isCallFromCourseGroup": false,
+								"id": -1,
+								"courseId": null,
+								"displayOrder": 1,
+								"entityState": 0
+							}
+						],
+						"note": ""
+					}
+				},
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 25000,
+				"ResponseBody": {}
+			},
+			{
+				"RequestId": "afa18136-e1dd-4c80-a59d-a8d569d97635",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/Courses?$filter=Code eq '{{gCourseCode}}'",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 15000,
+				"ResponseBody": "{}"
+			},
+			{
+				"RequestId": "620e8c5c-1f80-4a00-acff-a6ac9300a321",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/Academics/RequiredCourseElectivePool/SavePoolCourse",
+				"RequestBody": {
+					"payload": {
+						"RequiredCourseElectivePoolEntityList": [
+							{
+								"entityState": 0,
+								"id": -1,
+								"displayOrder": null
+							}
+						]
+					}
+				},
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 25000,
+				"ResponseBody": {}
+			}
+		]
+	}
+]

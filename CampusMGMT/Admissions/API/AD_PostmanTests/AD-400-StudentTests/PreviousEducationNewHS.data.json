@@ -1,0 +1,77 @@
+[
+    {
+        "Type": "AdvancedDataFile",
+        "Version": "2.0",
+        "TestDescription": "This API will create an Agency Affiliation Record for a student in Contact Manager - NOTE!: The Staff member must be part of the staff group found in RequestId: 00000000-0000-0000-0000-000000000003",
+      "Globals": {
+        "StudentSsn": "{{gWorkflowStudentSSN}}"
+      },
+        "Apis": [
+            {
+                "RequestId": "00000000-0000-0000-0000-000000000000",
+                "RequestMethod": "GET",
+                "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+                "RequestBody": null,
+                "ResponseStatus": 200,
+                "ResponseTimeMs": 10000,
+                "ResponseBody": "{\"value\":[]}"
+            },
+            {
+                "RequestId": "00000000-0000-0000-0000-000000000001",
+                "RequestMethod": "GET",
+                "RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gStudentSsn}}'",
+                "RequestBody": null,
+                "ResponseStatus": 200,
+                "ResponseTimeMs": 10000,
+                "ResponseBody": "{\"value\":[]}"
+            },
+            {
+                "RequestId": "00000000-0000-0000-0000-000000000002",
+                "RequestMethod": "GET",
+                "RequestUrl": "/ds/campusnexus/HighSchools?$select=Id,Name,Code,City,State&$expand=HighSchoolCountry($select=Id,Name)&$top=5&$orderby=Name&$filter=(IsActive eq true or Id eq 0)",
+                "RequestBody": null,
+                "ResponseStatus": 200,
+                "ResponseTimeMs": 10000,
+                "ResponseBody": "{\"value\":[]}"
+            },
+			{
+                "RequestId": "00000000-0000-0000-0000-000000000004",
+                "RequestMethod": "GET",
+                "RequestUrl": "/ds/campusnexus/PreviousEducationGradeLevels?$select=Id,Name,Code&$filter=IsActive eq true or Id eq 0&$orderby=Name",
+                "RequestBody": null,
+                "ResponseStatus": 200,
+                "ResponseTimeMs": 10000,
+                "ResponseBody": "{\"value\":[]}"
+            },
+            {
+                "RequestId": "00000000-0000-0000-0000-000000000005",
+                "RequestMethod": "POST",
+                "RequestUrl": "/api/commands/Admissions/StudentPreviousEducation/Create",
+                "RequestBody": {
+                    "payload": {}
+                },
+                "ResponseStatus": 200,
+                "ResponseTimeMs": 5000,
+                "ResponseBody": {
+                    "payload": {}
+                }
+            },
+            {
+                "RequestId": "00000000-0000-0000-0000-000000000006",
+                "RequestMethod": "POST",
+                "RequestUrl": "/api/commands/Admissions/StudentPreviousEducation/SaveNew",
+                "RequestBody": {
+                    "payload": {
+						"graduationDate": "@DateNow()",
+						"hsGradYear": "2024"
+                    }
+                },
+                "ResponseStatus": 200,
+                "ResponseTimeMs": 5000,
+                "ResponseBody": {
+                    "payload": {}
+                }
+            }
+        ]
+    }
+]

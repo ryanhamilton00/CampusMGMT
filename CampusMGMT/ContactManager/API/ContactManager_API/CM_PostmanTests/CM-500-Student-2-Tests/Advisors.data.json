@@ -1,0 +1,75 @@
+[{
+	"Type": "AdvancedDataFile",
+	"Version": "2.0",
+	"TestDescription": "This API will create an Agency Affiliation Record for a student in Contact Manager - NOTE!: The Staff member must be part of the staff group found in RequestId: 00000000-0000-0000-0000-000000000003",
+	"Globals": {
+		"StudentSsn": "111-33-0066"
+	},
+	"Apis": [{
+			"RequestId": "00000000-0000-0000-0000-000000000000",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 12000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000001",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gStudentSsn}}'",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 12000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000002",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/StaffGroups?$select=Id,Name,AdvisorModule&$filter=IsActive eq true and AdvisorModule eq 'OTH'&$orderby=Name",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 12000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000003",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetAdvisorListByModule(staffGroupId={{gStaffGrpId}},campusId={{gCampusId}})?$select=Id,Code,StaffName&$count=true",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 12000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000004",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/StudentEnrollmentPeriodDetails/CampusNexus.GetStudentEnrollmentPeriodList(studentId={{gStudentId}})?$select=Id",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 12000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000005",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Common/StudentAdvisor/Create",
+			"RequestBody": { "payload": {} },
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 12000,
+			"ResponseBody": { "payload": {} }
+		},
+		{
+			"RequestId": "00000000-0000-0000-0000-000000000006",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Common/StudentAdvisor/SaveNew",
+			"RequestBody": {
+				"payload": {
+				}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 12000,
+			"ResponseBody": { "payload": {} }
+		}
+	]
+}]

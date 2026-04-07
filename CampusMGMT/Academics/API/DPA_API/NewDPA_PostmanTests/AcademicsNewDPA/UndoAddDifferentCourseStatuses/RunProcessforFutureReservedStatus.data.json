@@ -1,0 +1,60 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "Run the Process to move the Student from Waitlist to Reserved",
+    "Globals": {
+      "ProcessName": "Process Registration Wait List"
+    },
+    "Apis": [
+      {
+        "RequestId": "a89a78ae-ffaa-479a-8c2d-1685e73055c0",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/ScheduledJobs/CampusNexus.GetScheduledJobs()?$filter=(Name eq '{{gProcessName}}') and (JobCategory eq 'ADMIN' )",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {
+                          "value": [
+                            {
+                              "Name": "Process Registration Wait List",
+                              "OperationName": "exec dbo.sproc_Student_Enrollment_Registration_Courses_Reservations_Expire;exec dbo.sproc_StudentEnrollment_Waitlist_CheckClassForSeats"
+                            }
+                          ]
+                        }
+      },
+      {
+        "RequestId": "4b627b73-4c6e-4956-a36f-9f97511ae08a",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/BackgroundProcessing/Job/TriggerRecurringJob",
+        "RequestBody": "{}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {
+          "payload": {
+            "data": {
+              "validationMessages": []
+            }
+          },
+          "notifications": [],
+          "hasError": false,
+          "hasFault": false,
+          "hasWarning": false,
+          "hasValidationError": false,
+          "hasValidationWarning": false,
+          "hasValidationInformation": false,
+          "hasSecurityError": false
+        }
+      },
+      {
+        "RequestId": "a89a78ae-ffaa-479a-8c2d-1685e73055c1",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/ScheduledJobHistories?$expand=ScheduledJob($select=Name,JobType)&$format=json&$top=5&$orderby=TriggeredDateTime desc&$count=true&$filter=ScheduledJob/JobCategory eq 'ADMIN' and ScheduledJobId eq {{gProcessId}}",
+        "RequestBody": "{}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 25000,
+        "ResponseBody": {}
+      }
+    ]
+  }
+]

@@ -1,0 +1,83 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "Create new Course Prefix",
+    "Globals": {
+      "CoursePrefixName": "General Education",
+      "CoursePrefixCode": "GENED1"
+    },
+    "Apis": [
+      {
+        "RequestId": "9ae1205a-3194-4827-a121-a4b69e4fb0bb",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "5bd8c13a-3cba-4cc1-96c5-189d84d42522",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/CoursePrefixCodes?$filter=Code eq '{{gCoursePrefixCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": {}
+      },
+      {
+        "RequestId": "55135c87-7e11-4186-9cf0-c118ff125e0e",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/CoursePrefixCode/Create",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {
+          "payload": {},
+          "notifications": [],
+          "hasError": false,
+          "hasFault": false,
+          "hasWarning": false,
+          "hasValidationError": false,
+          "hasValidationWarning": false,
+          "hasValidationInformation": false,
+          "hasSecurityError": false
+        }
+      },
+      {
+        "RequestId": "2adf5788-78d0-4c99-9cde-b992f8ed8a10",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/CoursePrefixCode/SaveNew",
+        "RequestBody": {
+          "payload": {
+            "id": -1,
+            "campusGroupId": null,
+            "code": "{{gCoursePrefixCode}}",
+            "createdDateTime": "@DateNow()",
+            "isActive": true,
+            "lastModifiedDateTime": "@DateNow()",
+            "name": "{{gCoursePrefixName}}",
+            "rowVersion": null,
+            "campusGroup": null,
+            "extendedProperties": [],
+            "entityState": 0
+          }
+        },
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {
+          "payload": {},
+          "notifications": [],
+          "hasError": false,
+          "hasFault": false,
+          "hasWarning": false,
+          "hasValidationError": false,
+          "hasValidationWarning": false,
+          "hasValidationInformation": false,
+          "hasSecurityError": false
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,71 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "PublishingScheduleforUsersDefaultTerm",
+    "Globals": {
+      "TermName": "QST Sumer Term APR to JULY 2021",
+      "CampusName": "Campus Management School of Arts"
+    },
+    "Apis": [
+      {
+        "RequestId": "4dc23388-c96d-4707-b342-0ce8b1fdec35",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Campuses/CampusNexus.GetAllCampuses()?$select=Id&$filter = Name eq '{{gCampusName}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": { "value": [] }
+      },
+      {
+        "RequestId": "071e5b4b-cad6-40ae-b55c-2f38a14a23c0",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Terms?$select=Id,StartDate,EndDate,Name,IsActive&$filter=Name eq '{{gTermName}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": { "value": [] }
+      },
+      {
+        "RequestId": "045bec59-d09c-43ce-b6df-0a0f1ba493ee",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Common/Staff/setDefaultSetting",
+        "RequestBody": {
+						"payload": {
+							"CampusId": "{{gCampusId}}",
+							"TermId": "{{gTermId}}",
+							"AwardYearId": "0",
+							"ModuleId": null,
+							"ShowDefaultOnStartup": false
+						}
+					},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 30000,
+        "ResponseBody": {
+							"payload": {
+								"data": {
+									"validationMessages": []
+								}
+							},
+							"notifications": [],
+							"hasError": false,
+							"hasFault": false,
+							"hasWarning": false,
+							"hasValidationError": false,
+							"hasValidationWarning": false,
+							"hasValidationInformation": false,
+							"hasSecurityError": false
+						}
+      },
+      {
+        "RequestId": "cd47f2e6-1d88-4efd-9ba3-68c3892acbab",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": { "value": [] }
+      }
+    ]
+  }
+]

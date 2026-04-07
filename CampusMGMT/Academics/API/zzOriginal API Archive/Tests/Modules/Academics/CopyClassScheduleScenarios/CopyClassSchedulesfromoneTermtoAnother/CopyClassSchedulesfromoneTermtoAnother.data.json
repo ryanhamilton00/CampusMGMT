@@ -1,0 +1,128 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "CopyClassSchedulesfromoneTermtoAnotherwithExtendedProperty",
+    "Globals": {
+      "FromTermCode": "Ter002",
+      "ToTermCode": "Ter003",
+      "CourseCode": "Cou002",
+      "SectionCode": ""
+    },
+    "Apis": [
+      {
+        "RequestId": "466a92f5-30ab-403b-a80b-7a9c6e3c96d1",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": { "value": [] }
+      },
+      {
+        "RequestId": "c94dee06-a1e5-4802-ae12-b1352813980b",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Terms/CampusNexus.GetParentTerm(campusId={{gCampusId}},studentId=0,studentGroupId=0)?$select=Name,Code,Id&$filter = Code eq '{{gFromTermCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": { "value": [] }
+      },
+      {
+        "RequestId": "c94dee06-a1e5-4802-ae12-b1352813980c",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Terms/CampusNexus.GetParentTerm(campusId={{gCampusId}},studentId=0,studentGroupId=0)?$select=Name,Code,Id&$filter = Code eq '{{gToTermCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": { "value": [] }
+      },
+      {
+        "RequestId": "3982a4fc-f8a0-468c-8508-9a0d2b503cc5",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Courses/CampusNexus.GetCourseListByCampus(campusId={{gCampusId}})?&$filter=(contains(Code,'{{gCourseCode}}'))",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": { "value": [] }
+      },
+      {
+        "RequestId": "c2ce858f-4a99-4760-a40c-f8fc037f2860",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/ClassSections/CampusNexus.GetDailyClassScheduleList(showLevelIndicator=0,termId=[{{gFromTermId}}],courseId={{gCourseId}},instructorId=0,startDate ='',endDate='',campusId={{gCampusId}}, isInProgress=false)?$filter = SectionCode eq '{{gSectionCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": { "value": [] }
+      },
+      {
+        "RequestId": "939aa1ed-86fe-476c-b912-a0d6b002e133",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/ClassSection/Get",
+        "RequestBody": {},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {}
+      },
+      {
+        "RequestId": "d762d899-70bf-46f2-92b1-2b48854d5fd0",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/ClassSection/CopyClassSchedule",
+        "RequestBody": {
+          "payload": {
+            "IsCopyAttendanceRules": true,
+            "IsCopyBookList": true,
+            "IsCopyCourseFeeSchedule": true,
+            "IsCopyCourseSharingCampuses": true,
+            "IsCopyDays": true,
+            "IsCopyDocuments": true,
+            "IsCopyGradeBook": true,
+            "IsCopyHideFaculty": true,
+            "IsCopyHideLocation": true,
+            "IsCopyInstructor": true,
+            "IsCopyLmsVendor": true,
+            "IsCopyMaxCourseSections": true,
+            "IsCopyRooms": true,
+            "IsCopySecondaryInstructor": true,
+            "IsCopyTimes": true,
+            "IsCopyWaitList": true,
+            "IsInstructorAttributes": true,
+            "IsOnlyValidation": false,
+            "IsVariableCredits": true,
+            "NewSectionCode": "",
+            "isValidationMessageDisplayed": false,
+            "CourseId": 0,
+            "Id": 0,
+            "ExtendedPropertyList": [
+              {
+                "IsExtendedProperty": true,
+                "Name": "{{gExtPropName}}"
+              }
+            ]
+          }
+        },
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {}
+      },
+      {
+        "RequestId": "939aa1ed-86fe-476c-b912-a0d6b002e134",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/ClassSections/CampusNexus.GetDailyClassScheduleList(showLevelIndicator=0,termId=[{{gToTermId}}],courseId={{gCourseId}},instructorId=0,startDate ='',endDate='',campusId={{gCampusId}}, isInProgress=false)?$filter = SectionCode eq '{{gSectionCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": { "value": [] }
+      },
+      {
+        "RequestId": "939aa1ed-86fe-476c-b912-a0d6b002e135",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/ClassSection/Get",
+        "RequestBody": {},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {}
+      }
+    ]
+  }
+]

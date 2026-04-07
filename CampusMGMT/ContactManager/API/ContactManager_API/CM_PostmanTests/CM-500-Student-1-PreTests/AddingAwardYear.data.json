@@ -1,0 +1,443 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "Adding Award Year",
+    "Globals": {
+      "AwardYear": "2023-24",
+      "AidType": "Grant",
+      "AwardStatus": "Approved",
+	    "StudentSsn": "111-33-0066"
+    },
+    "Apis": [
+      {
+        "RequestId": "a89a78ae-ffaa-479a-8c2d-1685e73055c0",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gStudentSsn}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "05febb5e-f716-4402-9b26-6a4adecf5fba",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentEnrollmentPeriodDetails/CampusNexus.GetStudentEnrollmentPeriodList(studentId={{gStudentId}})",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "aacb2188-c484-4b38-a5a6-6b0e2322a983",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/FinancialAid/StudentAcademicYear/Create",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": {
+          "payload": {
+          },
+          "notifications": [],
+          "hasError": false,
+          "hasFault": false,
+          "hasWarning": false,
+          "hasValidationError": false,
+          "hasValidationWarning": false,
+          "hasValidationInformation": false,
+          "hasSecurityError": false
+        }
+      },
+      {
+        "RequestId": "129045be-6533-4712-8c82-42aed8482c40",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/AwardYears?$select=AwardYearIdentifier,Code,Name,IsActive&$filter=IsActive eq true and Name eq '{{gAwardYear}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "129045be-6533-4712-8c82-42aed8482c41",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/AcademicYears?$select=Id,Code,Name,IsActive,DefaultMonthsinAcademicYear,DefaultWeeksInAcademicYear,DefaultWeeksNonEnrollment,DefaultTermsInAcademicYear&$format=json&$count=true&$filter=IsActive eq true&$orderby=Code",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "441b15d5-598e-4d11-9f65-d27943a6074f",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/PropertyEnumValues?$filter=TableName eq 'FaStudentAY' and (ColumnName eq 'HousingStatusCodeAF200809')",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "441b15d5-598e-4d11-9f65-d27943a6074g",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/PropertyEnumValues?$filter=TableName eq 'FaStudentAY' and (ColumnName eq 'HPPALevel')",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "52f4da0e-4199-4d56-b200-e574e0ce81a7",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentAcademicYears/CampusNexus.GetNextAcademicYearSequence(studentEnrollmentPeriodId={{gStudentEnrollmentPeriodId}})",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "377255cc-48d3-4127-a7de-802c49ea6335",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/GradeLevels?$select=Id,Code,Name,IsActive&$filter=IsActive eq true&$orderby=Code",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "1cf633a9-5bb8-4305-884e-5e5b1274e84f",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/PackagingStatuses/CampusNexus.GetPackageStatusForAcademicYear(campusId={{gCampusId}},packagingStatusId=0,isAwardYearUsed=false)?$select=Id,Code,Name&$orderby=Code",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "4259db6c-25f6-419f-9565-d6087a3c1710",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/FinancialAid/StudentAcademicYear/SaveNew",
+        "RequestBody": {
+          "payload": {
+            "acYrNote": null,
+            "autoAwardEvaluationType": null,
+            "autoAwardRequestProcess": null,
+            "costOfAttendance": 0,
+            "counselingType": null,
+            "booksSupplies": 0,
+            "creditHoursExpectedToComplete": 0,
+            "creditHoursInAcademicYear": 10,
+            "dependencyStatus": "(undetermined)",
+            "endDate": "@DateNow(+20)",
+            "id": -1,
+            "monthsIncademicYear": 0,
+            "institutionalCharges": 100,
+            "otherCostAmount1": 0,
+            "otherCostAmount2": 0,
+            "otherCostAmount3": 0,
+            "otherCostAmount4": 0,
+            "otherCostAmount5": 0,
+            "otherCostAmount6": 0,
+            "otherCostAmount7": 0,
+            "otherCostAmount8": 0,
+            "plusCreditDecisionStatus": null,
+            "roomBoard": 0,
+            "secondAwardYearPackagingStatusId": null,
+            "startDate": "@DateNow(-10)",
+            "termsToPackageDirectLoan": "X",
+            "travel": 0,
+            "tuition": 100,
+            "weeksEnrolledInAcademicYear": 10,
+            "weeksInAcademicYear": 20,
+            "weeksNonEnrollment": 0
+          }
+        },
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 50000,
+        "ResponseBody": {
+          "payload": {
+          },
+          "notifications": [],
+          "hasError": false,
+          "hasFault": false,
+          "hasWarning": false,
+          "hasValidationError": false,
+          "hasValidationWarning": false,
+          "hasValidationInformation": false,
+          "hasSecurityError": false
+        }
+      },
+      {
+        "RequestId": "4259db6c-25f6-419f-9565-d6087a3c1711",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/FinancialAid/StudentAcademicYear/Get",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": {
+          "payload": {
+          },
+          "notifications": [],
+          "hasError": false,
+          "hasFault": false,
+          "hasWarning": false,
+          "hasValidationError": false,
+          "hasValidationWarning": false,
+          "hasValidationInformation": false,
+          "hasSecurityError": false
+        }
+      },
+      {
+        "RequestId": "4259db6c-25f6-419f-9565-d6087a3c1712",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/FinancialAid/StudentAcademicYear/Save",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": {
+          "payload": {
+          },
+          "notifications": [],
+          "hasError": false,
+          "hasFault": false,
+          "hasWarning": false,
+          "hasValidationError": false,
+          "hasValidationWarning": false,
+          "hasValidationInformation": false,
+          "hasSecurityError": false
+        }
+      },
+      {
+        "RequestId": "d4de725f-676b-43ba-b208-78ced85196dd",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentAwardPackagingSummariesCustom/CampusNexus.GetStudentAcademicYearData(studentAcademicYearId = {{gStudentAcademicYearId}},studentId={{gStudentId}},studentEnrollmentPeriodId={{gStudentEnrollmentPeriodId}},awardYear='{{gAwardYear}}',isDoNotDisplayRBSGridSet=false)?$expand=StudentAwardDetailList($filter=StudentAcademicYearId eq {{gStudentAcademicYearId}})",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "d4de725f-676b-43ba-b208-78ced85196cd",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/PackagingMethods?$select=Id,Code,Name&$filter=(ModelUsedFor eq '0' or ModelUsedFor eq '0') and IsActive eq true and CampusGroup/CampusList/any(x: x/Campus/Id eq {{gCampusId}}) and GradeLevelLow le 1 and GradeLevelHigh ge 0 &$orderby=Code",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "60940ea8-536e-428b-9999-a53c6da4b778",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/financialaid/StudentAcademicYear/UpdateStudentAcademicYearPackagingMethod",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": {
+          "payload": {},
+          "notifications": [],
+          "hasError": false,
+          "hasFault": false,
+          "hasWarning": false,
+          "hasValidationError": false,
+          "hasValidationWarning": false,
+          "hasValidationInformation": false,
+          "hasSecurityError": false
+        }
+      },
+      {
+        "RequestId": "d4de725f-676b-43ba-b208-78ced85196ce",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/PropertyEnumValues?$select=Id,Code,ValueDescription&$filter=TableName eq 'FaStudentAY' and ColumnName eq 'AidType' and ValueDescription eq '{{gAidType}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "124bbf81-b763-4131-9ac1-bebc74851003",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/FundSources/CampusNexus.GetFundSource(isAdministrator=true,syCampusId={{gCampusId}},typeofAid='{{gTypeofAid}}',acadYearsequence={{gAwardYearSequence}},studentId={{gStudentId}},awardYear='{{gAwardYear}}',isDoNotDisplayRBSGridSet = false)?$select=Id,Code,Name,FundSourceType,IsScheduledDisbRequired",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "dda51271-caa3-4f8a-a870-52a876ef8c88",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StaffGroupFundSourcePermissions/CampusNexus.GetAwardStatus(fundSourceId={{gFundSourceId}},campusId={{gCampusId}},studentId={{gStudentId}},awardYear='{{gAwardYear}}',studentAwardId=0)?$select=Code,ValueDescription&$filter=ValueDescription eq '{{gAwardStatus}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "60940ea8-536e-428b-9999-a53c6da4b779",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/financialaid/StudentAward/ProceedAward",
+        "RequestBody": {
+          "payload": {
+            "StudentAwardId": 0,
+            "GrossAmount": 10,
+            "CostOfAttendence": "100.00",
+            "CurrentNeedBaseAmount": "100.00",
+            "DisbursementScheduleId": 0,
+            "RoundDisbs": false,
+            "AllowCrossOverPell": false,
+            "IsEligibleForDirLoan": false,
+            "NeedBasedGrossAmount": "0.00",
+            "NonNeedBasedGrossAmount": "0.00",
+            "CurrentNonNeedBaseAmount": "0.00",
+            "IsFsaIneligibilityCode": false,
+            "IsLoanExist": false,
+            "IsNeedBased": true,
+            "IsUpdateDependencyStatus": false,
+            "IsEnrollStatus": false,
+            "IsAdJustAmount": false,
+            "IsAdditionalEligibility": false,
+            "PackagedEfc": "0.00",
+            "EFCOffSet": "0.00"
+          }
+        },
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 50000,
+        "ResponseBody": {
+          "payload": {},
+          "notifications": [],
+          "hasError": false,
+          "hasFault": false,
+          "hasWarning": false,
+          "hasValidationError": false,
+          "hasValidationWarning": false,
+          "hasValidationInformation": false,
+          "hasSecurityError": false
+        }
+      },
+      {
+        "RequestId": "e66459e7-de70-42be-be3d-4b486dbec1b1",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/FinancialAid/StudentAward/Create",
+        "RequestBody": {},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": {
+          "payload": {},
+          "notifications": [],
+          "hasError": false,
+          "hasFault": false,
+          "hasWarning": false,
+          "hasValidationError": false,
+          "hasValidationWarning": false,
+          "hasValidationInformation": false,
+          "hasSecurityError": false
+        }
+      },
+      {
+        "RequestId": "dda51271-caa3-4f8a-a870-52a876ef8c99",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentAcademicYears/CampusNexus.GetDisbursementSchedule(studentAcademicYearId={{gStudentAcademicYearId}},fundSourceId={{gFundSourceId}},applyAYSequenceFilter=false)?$select=FundSourceGrpID,Description",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "e66459e7-de70-42be-be3d-4b486dbec1b2",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/FinancialAid/StudentAward/CreateNewAwardDefaultValues",
+        "RequestBody": {
+          "payload": {
+            "GrossAmount": 10,
+            "IsirTransactionId": "",
+            "CostOfAttendance": "100.00",
+            "Efc": "0.00",
+            "NeedBasedAmountPackaged": "0.00",
+            "NonNeedBasedAmountPackaged": "100.00",
+            "IsAdditionalEligibility": false
+          }
+        },
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 50000,
+        "ResponseBody": {
+          "payload": {},
+          "notifications": [],
+          "hasError": false,
+          "hasFault": false,
+          "hasWarning": false,
+          "hasValidationError": false,
+          "hasValidationWarning": false,
+          "hasValidationInformation": false,
+          "hasSecurityError": false
+        }
+      },
+      {
+        "RequestId": "e66459e7-de70-42be-be3d-4b486dbec1b3",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/FinancialAid/ScheduledDisbursement/CalculateGrant",
+        "RequestBody": {
+          "payload": {
+            "ScheduledDisbursements": [
+              {
+                "createdDateTime": "@DateNow()",
+                "disbursementPercentage": 50,
+                "grossAmount": 5
+              },
+              {
+                "Id": -1,
+                "DisbursementNumber": 2,
+                "ScheduledDate": "{{gScheduledDate}}",
+                "GrossAmount": 5,
+                "Status": "{{gStatus}}",
+                "StudentAcademicYearId": "{{gStudentAcademicYearId}}",
+                "AcademicYearSequence": "{{gstudentAcademicYearSequence}}",
+                "TermId": null,
+                "disbursementPercentage": 50,
+                "StudentAcademicYearPaymentPeriodId": "",
+                "PaymentPeriodNumber": null,
+                "createdDateTime": "@DateNow()",
+                "lastModifiedDateTime": "@DateNow()",
+                "termStartDate": null,
+                "PaymentPeriodSequence": null,
+                "NetAmount": 0,
+                "entityState": 0,
+                "DisbursedDate": null,
+                "PeriodEndDate": null
+              }
+            ],
+            "AmountToPackage": 10
+          }
+        },
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": {
+          "payload": {},
+          "notifications": [],
+          "hasError": false,
+          "hasFault": false,
+          "hasWarning": false,
+          "hasValidationError": false,
+          "hasValidationWarning": false,
+          "hasValidationInformation": false,
+          "hasSecurityError": false
+        }
+      },
+      {
+        "RequestId": "1393c5dd-8c55-4207-a3a2-5310e3b9229c",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/FinancialAid/StudentAward/SaveNew",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 50000,
+        "ResponseBody": {
+          "payload": {},
+          "notifications": [],
+          "hasError": false,
+          "hasFault": false,
+          "hasWarning": false,
+          "hasValidationError": false,
+          "hasValidationWarning": false,
+          "hasValidationInformation": false,
+          "hasSecurityError": false
+        }
+      }
+    ]
+  }
+]

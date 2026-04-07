@@ -1,0 +1,61 @@
+[
+    {
+        "Type": "AdvancedDataFile",
+        "Version": "2.0",
+        "TestDescription": "This API will create an Agency Type Record (Config-AD-Agency Types)",
+        "Globals": {
+            "Name": "ProspectVendor",
+            "Code": "AdProVen"
+        },
+        "Apis": [
+            {
+                "RequestId": "00000000-0000-0000-0000-000000000000",
+                "RequestMethod": "GET",
+                "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+                "RequestBody": null,
+                "ResponseStatus": 200,
+                "ResponseTimeMs": 5000,
+                "ResponseBody": "{\"value\":[]}"
+            },
+            {
+                "RequestId": "00000000-0000-0000-0000-000000000001",
+                "RequestMethod": "GET",
+                "RequestUrl": "/ds/campusnexus/LeadVendors?/CampusNexus.GetLeadVendorList(isActive=true,organizationId=0,organizationType='VENDOR')?$filter= Code eq '{{gCode}}'",
+                "RequestBody": null,
+                "ResponseStatus": 200,
+                "ResponseTimeMs": 5000,
+                "ResponseBody": "{\"value\":[]}"
+            },
+            {
+                "RequestId": "00000000-0000-0000-0000-000000000002",
+                "RequestMethod": "POST",
+                "RequestUrl": "/api/commands/Admissions/LeadVendor/Get",
+                "RequestBody": "{}",
+                "ResponseStatus": 200,
+                "ResponseTimeMs": 5000,
+                "ResponseBody": {
+                    "payload": {}
+                }
+            },
+            {
+                "RequestId": "00000000-0000-0000-0000-000000000003",
+                "RequestMethod": "POST",
+                "RequestUrl": "/api/commands/Admissions/LeadVendor/DeleteLeadVendor",
+                "RequestBody": {
+                    "payload": {
+						"LeadSourceId": 0,
+						"IsDisable": false,
+						"IsStatus": false,
+						"ParentSyOrganizationId": 0,
+						"Note": null
+						}
+                },
+                "ResponseStatus": 200,
+                "ResponseTimeMs": 5000,
+                "ResponseBody": {
+                    "payload": {}
+                }
+            }
+        ]
+    }
+]

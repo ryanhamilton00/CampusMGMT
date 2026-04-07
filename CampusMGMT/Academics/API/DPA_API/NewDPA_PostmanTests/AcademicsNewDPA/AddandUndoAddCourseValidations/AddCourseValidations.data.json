@@ -1,0 +1,260 @@
+	[
+    {
+      "Type": "AdvancedDataFile",
+      "Version": "2.0",
+      "TestDescription": "Validations on add course",
+      "Globals": {
+        "StudentSsn": "222-22-0022",
+        "CourseCode": "AudCou013",
+        "EnrollmentPVName": "Audit Program Version 01",
+        "CatalogCode": "AudCat",
+        "CategoryCode": "AudCatCode",
+        "AllowRetakeDup": "false"
+      },
+      "Apis": [
+        {
+          "RequestId": "a89a78ae-ffaa-479a-8c2d-1685e73055c0",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gStudentSsn}}'",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{\"value\":[]}"
+        },
+        {
+          "RequestId": "05febb5e-f716-4402-9b26-6a4adecf5fba",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/StudentEnrollmentPeriodDetails/CampusNexus.GetStudentEnrollmentPeriodList(studentId={{gStudentId}})?$filter=ProgramVersionName eq '{{gEnrollmentPVName}}'",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "a8f21199-a1cc-4d92-914b-1c94121830fa",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/Courses?$filter=Code eq '{{gCourseCode}}'",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "2c5bc93d-0d60-4d37-aa11-ca5b22848bd6",
+          "RequestMethod": "POST",
+          "RequestUrl": "/api/commands/Academics/Course/Get",
+          "RequestBody": "{\"payload\":{}}",
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": {}
+        },
+        {
+          "RequestId": "a8f21199-a1cc-4d92-914b-1c94121830fb",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/ProgramVersions/CampusNexus.GetProgramVersionCatalogList(programVersionId={{gProgramVersionId}},type='p',active=false,isCatalogByProgramVersionStartDate=false,catalogEffectiveStartDate='1900-01-01',catalogfilter=0,catalogYearId=0)?$filter=contains(CatalogCode,'{{gCatalogCode}}')",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "a8f21199-a1cc-4d92-914b-1c94121830fc",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/ProgramVersions/CampusNexus.GetProgramVersionCourseCategoryList(programVersionId={{gProgramVersionId}},programConcentrationId=0,catalogYearId={{gCatalogYearId}})?$filter=contains(CategoryCode,'{{gCategoryCode}}')",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "05febb5e-f716-4402-9b26-6a4adecf5fbd",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/StudentCourseSchedules/CampusNexus.GetStudentCourseSchedule(studentEnrollmentPeriodId={{gStudentEnrollmentPeriodId}},studentId={{gStudentId}},termId=0,status='')?$filter = CourseId eq {{gCourseId}}",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": { "value": [] }
+        },
+        {
+          "RequestId": "a8f21199-a1cc-4d92-914b-1c94121830fd",
+          "RequestMethod": "GET",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId}}/coursecategories",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f9751145631",
+          "RequestMethod": "PUT",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/-1/addcourserequirement",
+          "RequestBody": {},
+          "ResponseStatus": 400,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": {
+            "errors": [
+              {
+                "errorCode": "InvalidKeyValue",
+                "errorMessage": "A valid StudentEnrollmentPeriodId is required.",
+                "source": {
+                  "field": "StudentEnrollmentPeriodId"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f9751145632",
+          "RequestMethod": "PUT",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/999999/addcourserequirement",
+          "RequestBody": {},
+          "ResponseStatus": 404,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": {
+            "errors": [
+              {
+                "errorCode": "KeyNotFound",
+                "errorMessage": "The specified StudentEnrollmentPeriodId does not exist.",
+                "source": {
+                  "field": "StudentEnrollmentPeriodId"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f9751145633",
+          "RequestMethod": "PUT",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId}}/addcourserequirement",
+          "RequestBody": {},
+          "ResponseStatus": 400,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": {
+            "errors": [
+              {
+                "errorCode": "InvalidKeyValue",
+                "errorMessage": "A valid CourseId is required.",
+                "source": {
+                  "field": "CourseId"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f9751145634",
+          "RequestMethod": "PUT",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId}}/addcourserequirement",
+          "RequestBody": {},
+          "ResponseStatus": 404,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": {
+            "errors": [
+              {
+                "errorCode": "KeyNotFound",
+                "errorMessage": "The specified CourseId does not exist.",
+                "source": {
+                  "field": "CourseId"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f9751145635",
+          "RequestMethod": "PUT",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId}}/addcourserequirement",
+          "RequestBody": {},
+          "ResponseStatus": 400,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": {
+            "errors": [
+              {
+                "errorCode": "InvalidKeyValue",
+                "errorMessage": "A valid StudentEnrollmentDpaCourseCategoryId is required.",
+                "source": {
+                  "field": "StudentEnrollmentDpaCourseCategoryId"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f9751145636",
+          "RequestMethod": "PUT",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId}}/addcourserequirement",
+          "RequestBody": {},
+          "ResponseStatus": 404,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": {
+            "errors": [
+              {
+                "errorCode": "KeyNotFound",
+                "errorMessage": "The specified StudentEnrollmentDpaCourseCategoryId does not exist.",
+                "source": {
+                  "field": "StudentEnrollmentDpaCourseCategoryId"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f9751145637",
+          "RequestMethod": "PUT",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId}}/addcourserequirement",
+          "RequestBody": {},
+          "ResponseStatus": 400,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": {
+            "errors": [
+              {
+                "errorCode": "InvalidKeyValue",
+                "errorMessage": "A valid Credits is required.",
+                "source": {
+                  "field": "Credits"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f9751145638",
+          "RequestMethod": "PUT",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId}}/addcourserequirement",
+          "RequestBody": {},
+          "ResponseStatus": 400,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": {
+            "errors": [
+              {
+                "errorCode": "InvalidRange",
+                "errorMessage": "Credits must be between 1 and 55.",
+                "source": {
+                  "field": "Credits"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f9751145639",
+          "RequestMethod": "PUT",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId}}/addcourserequirement",
+          "RequestBody": {},
+          "ResponseStatus": 400,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": {
+            "errors": [
+              {
+                "errorCode": "InvalidKeyValue",
+                "errorMessage": "A valid Hours is required.",
+                "source": {
+                  "field": "Hours"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+	]

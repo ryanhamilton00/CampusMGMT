@@ -1,0 +1,103 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "AcceptWaitListStudents",
+    "Globals": {
+      "StudentSsn": "111-22-0033",
+      "CourseCode": "Cou005",
+      "TermCode": "Ter005",
+      "Status": "264",
+      "StaffName": "Staff, Automated01"
+    },
+    "Apis": [
+      
+	  {
+        "RequestId": "a89a78ae-ffaa-479a-8c2d-1685e73055c0",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gStudentSsn}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {"value":[]}
+      },
+	  {
+        "RequestId": "05febb5e-f716-4402-9b26-6a4adecf5fba",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetStaffPasswordRuleProfile()?$filter=contains(FullName,'{{gStaffName}}')",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {"value":[]}
+      },
+      {
+        "RequestId": "512b38ec-c1b5-49ce-84f1-c6c5ca8eae54",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": { "value": [] }
+      },
+	  {
+        "RequestId": "ce13a41d-b333-4b30-8747-8de558136ba5",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Terms?$select=Id&$filter=Code eq '{{gTermCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {"value":[]}
+      },
+	  {
+        "RequestId": "afa18136-e1dd-4c80-a59d-a8d569d97635",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Courses?$filter=Code eq '{{gCourseCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {"value":[]}
+      },
+	  {
+        "RequestId": "e829c243-f829-4960-8420-84c0553f7e02",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/ClassSections/CampusNexus.GetDailyClassScheduleList(showLevelIndicator=0,instructorId={{gInstructorId}},startDate ='',endDate='',campusId={{gCampusID}}, isInProgress=false,termId=[{{gTermId}}],courseId = {{gCourseId}})",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {"value":[]}
+      },      
+      {
+        "RequestId": "a1afd645-4c28-4c15-9012-54144d2d2fc7",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentCoursePendingRegistrations/CampusNexus.GetStudentCourseRegistrationPendingStudents(status={{gStatus}},classSectionId={{gClassSectionId}},termId={{gTermId}},campusId={{gCampusId}})",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {"value":[]}
+      },
+      {
+        "RequestId": "7a994da9-91ec-48ea-9e45-cfbf1c28056e",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/ClassSection/AcceptWaitListStudents",
+        "RequestBody": {
+          "payload": {
+            "IsAllowedOverrideRegistrationLockConflict": true,
+            "IsAllowedOverrideMaxAttemptsCourse": true,
+            "IsAllowedOverrideRetake": true,
+            "IsDateTimeConflictAllowed": true,
+            "IsAllowedOverrideMaxRegistrationForClass": true,
+            "IsAllowedOverridePrereqCoregConflict": true,
+            "IsAllowedOverrideAddDrop": true,
+            "IsStudentRegistrationHoldOverrideAllowed": true,
+            "IsSendMessage": true,
+            "IsTransferStudent": false,
+            "TransferStudentClassSectionId": 0
+          }
+						},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 25000,
+        "ResponseBody": "{}"
+      }
+    ]
+  }
+]

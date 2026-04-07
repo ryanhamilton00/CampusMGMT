@@ -1,0 +1,95 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "DeleteAcademicandAwardYear",
+    "Globals": {
+      "AwardYear": "2021-22",
+      "StudentSSN": "111-33-2211"
+    },
+    "Apis": [
+      {
+        "RequestId": "82d14f3c-36c4-4d13-9e3d-2f6dbd9887c0",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gStudentSSN}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {"value": []}
+      },
+      {
+        "RequestId": "e6861d34-be9f-4308-9f24-b0492b335650",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentEnrollmentPeriodDetails/CampusNexus.GetStudentEnrollmentPeriodList(studentId={{gStudentId}})?$select=Id&$orderby=ProgramVersionName desc",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {"value": []}
+      },
+	  {
+        "RequestId": "3d7b6e6c-86dd-4e5f-88a1-e6986541acc4",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/AwardYears?$select=AwardYearIdentifier,Code,Name,IsActive&$filter=IsActive eq true and Name eq '{{gAwardYear}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {"value": []}
+      },
+      {
+        "RequestId": "15dd6368-f7ff-4bf8-b688-e661b71e6d16",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentAcademicYears?$select=Id,StartDate,EndDate,Sequence&$filter=StudentEnrollmentPeriodId eq {{gEnrollmentId}}&$orderby=Sequence desc",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {"value": []}
+      },
+      
+      {
+        "RequestId": "66fd81e6-e87b-407e-beff-8c2994477045",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentAwardPackagingSummariesCustom/CampusNexus.GetStudentAcademicYearData(studentAcademicYearId = {{gStudentAcademicYearId}},studentId={{gStudentId}},studentEnrollmentPeriodId={{gStudentEnrollmentPeriodId}},awardYear='{{gAwardYear}}',isDoNotDisplayRBSGridSet=false)?$expand=StudentAwardDetailList($filter=StudentAcademicYearId eq {{gStudentAcademicYearId}})",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {"value": []}
+      },
+      {
+        "RequestId": "8c128f0f-9e6f-42fb-809a-1c7a5702a039",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/FinancialAid/StudentAward/Get",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {}
+      },
+      {
+        "RequestId": "cae1ec1f-3657-4328-a668-a93238dba3c5",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/financialaid/StudentAward/Delete",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {}
+      },
+      {
+        "RequestId": "5c945e59-c78d-440e-90e3-cc88dc2a3d75",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/FinancialAid/StudentAcademicYear/Get",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {}
+      },
+      {
+        "RequestId": "4438cad7-2b6b-4feb-ae4b-40d7901cc543",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/FinancialAid/StudentAcademicYear/Delete",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {}
+      }
+    ]
+  }
+]

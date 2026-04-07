@@ -1,0 +1,148 @@
+{
+	"info": {
+		"_postman_id": "dd7ab719-4ad6-4ccc-80dc-48f33bd441b7",
+		"name": "GradeLetter_SaveNew",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/api/commands/Academics/GradeScaleLetterGrade/saveNew - post",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "4cad5b19-b943-47f2-ae6e-ddf1bac214e8",
+						"exec": [
+							"// If environment auth variable is set, then create auth header",
+							"if (pm.environment.has('envAuthUser') && pm.environment.has('envAuthPassword'))",
+							"{",
+							"    pm.globals.set('gAuthorizationValue', 'Basic ' + btoa(pm.environment.get('envAuthUser') + ':' + pm.environment.get('envAuthPassword')));",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "03222ea9-f136-4293-8c1c-a74ade9253b1",
+						"exec": [
+							"// Load CMC utility code",
+							"eval(postman.getGlobalVariable(\"gCmcUtility\"));",
+							"",
+							"// Set the fields of the expected response object, this is used to verify the response body",
+							"var expectedResponse = ",
+							"{",
+							"    \"hasError\" : \"Type: boolean\",",
+							"    \"hasFault\" : \"Type: boolean\",",
+							"    \"hasSecurityError\" : \"Type: boolean\",",
+							"    \"hasValidationError\" : \"Type: boolean\",",
+							"    \"hasValidationInformation\" : \"Type: boolean\",",
+							"    \"hasValidationWarning\" : \"Type: boolean\",",
+							"    \"hasWarning\" : \"Type: boolean\",",
+							"    \"payload\" : {",
+							"        \"data\" : {",
+							"            \"isContinueWithoutReplacementGradeRequired\" : \"Type: boolean\",",
+							"            \"isContinueWithoutReplacementGradeConfirmed\" : \"Type: boolean\",",
+							"            \"isDefaultGradeChangeRequired\" : \"Type: boolean\",",
+							"            \"isDefaultGradeChangeConfirmed\" : \"Type: boolean\",",
+							"            \"id\" : \"Type: number\",",
+							"            \"code\" : \"Type: string\",",
+							"            \"createdDateTime\" : \"Type: string\",",
+							"            \"gradeScaleId\" : \"Type: number\",",
+							"            \"incompleteGradeExpirationDays\" : \"Type: number\",",
+							"            \"isActive\" : \"Type: boolean\",",
+							"            \"isAfterLdwGrade\" : \"Type: boolean\",",
+							"            \"isAuditGrade\" : \"Type: boolean\",",
+							"            \"isCountedAsCreditEarned\" : \"Type: boolean\",",
+							"            \"isCountedAsCreditsAttempted\" : \"Type: boolean\",",
+							"            \"isDefaultDropGrade\" : \"Type: boolean\",",
+							"            \"isDropGrade\" : \"Type: boolean\",",
+							"            \"isIncludedInGpaCalculation\" : \"Type: boolean\",",
+							"            \"isIncludedInSapCalculation\" : \"Type: boolean\",",
+							"            \"isIncompleteGrade\" : \"Type: boolean\",",
+							"            \"isPassFail\" : \"Type: boolean\",",
+							"            \"isTransferGrade\" : \"Type: boolean\",",
+							"            \"lastModifiedDateTime\" : \"Type: string\",",
+							"            \"lastModifiedUserId\" : \"Type: number\",",
+							"            \"lowerRange\" : \"Type: number\",",
+							"            \"name\" : \"Type: string\",",
+							"            \"points\" : \"Type: number\",",
+							"            \"replacementGradeScaleLetterGradesId\" : \"Type: number\",",
+							"            \"rowVersion\" : \"Type: string\",",
+							"            \"upperRange\" : \"Type: number\",",
+							"            \"originalState\" : \"Type: string\",",
+							"            \"secureState\" : \"Type: string\",",
+							"            \"extendedProperties\" : {",
+							"                \"name\" : \"Type: string\",",
+							"                \"value\" : {},",
+							"                \"propertyType\" : {},",
+							"                \"ownerType\" : {},",
+							"                \"trackable\" : \"Type: boolean\",",
+							"                \"originalState\" : \"Type: System.Byt\",",
+							"                \"secureState\" : \"Type: System.Byt\",",
+							"                \"modifiedProperties\" : \"Type: System.Col\",",
+							"                \"originalValues\" : \"Type: System.Col\"",
+							"            },",
+							"            \"modifiedProperties\" : \"Type: string\",",
+							"            \"originalValues\" : \"Type: string\",",
+							"            \"entityState\" : \"Type: string\"",
+							"        },",
+							"        \"count\" : \"Type: number\"",
+							"    }",
+							"",
+							"};",
+							"",
+							"// Tests",
+							"pm.test(\"Verify response status is OK\", function() {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"});",
+							"pm.test(\"Verify response time is below 5000\", function() {",
+							"    pm.expect(pm.response.responseTime).to.be.below(5000);",
+							"});",
+							"pm.test(\"Verify response body matches expected response\", function() {",
+							"    pm.expect(cmcUtility.verifyResponse(expectedResponse,pm.response.json())).to.be.true;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{gAuthorizationValue}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"payload\" : {\r\n        \"isContinueWithoutReplacementGradeRequired\" : \"Type: boolean\",\r\n        \"isContinueWithoutReplacementGradeConfirmed\" : \"Type: boolean\",\r\n        \"isDefaultGradeChangeRequired\" : \"Type: boolean\",\r\n        \"isDefaultGradeChangeConfirmed\" : \"Type: boolean\",\r\n        \"id\" : \"Type: number\",\r\n        \"code\" : \"Type: string\",\r\n        \"createdDateTime\" : \"Type: string\",\r\n        \"gradeScaleId\" : \"Type: number\",\r\n        \"incompleteGradeExpirationDays\" : \"Type: number\",\r\n        \"isActive\" : \"Type: boolean\",\r\n        \"isAfterLdwGrade\" : \"Type: boolean\",\r\n        \"isAuditGrade\" : \"Type: boolean\",\r\n        \"isCountedAsCreditEarned\" : \"Type: boolean\",\r\n        \"isCountedAsCreditsAttempted\" : \"Type: boolean\",\r\n        \"isDefaultDropGrade\" : \"Type: boolean\",\r\n        \"isDropGrade\" : \"Type: boolean\",\r\n        \"isIncludedInGpaCalculation\" : \"Type: boolean\",\r\n        \"isIncludedInSapCalculation\" : \"Type: boolean\",\r\n        \"isIncompleteGrade\" : \"Type: boolean\",\r\n        \"isPassFail\" : \"Type: boolean\",\r\n        \"isTransferGrade\" : \"Type: boolean\",\r\n        \"lastModifiedDateTime\" : \"Type: string\",\r\n        \"lastModifiedUserId\" : \"Type: number\",\r\n        \"lowerRange\" : \"Type: number\",\r\n        \"name\" : \"Type: string\",\r\n        \"points\" : \"Type: number\",\r\n        \"replacementGradeScaleLetterGradesId\" : \"Type: number\",\r\n        \"rowVersion\" : \"Type: string\",\r\n        \"upperRange\" : \"Type: number\",\r\n        \"originalState\" : \"Type: string\",\r\n        \"secureState\" : \"Type: string\",\r\n        \"extendedProperties\" : {\r\n            \"name\" : \"Type: string\",\r\n            \"value\" : {},\r\n            \"propertyType\" : {},\r\n            \"ownerType\" : {},\r\n            \"trackable\" : \"Type: boolean\",\r\n            \"originalState\" : \"Type: System.Byt\",\r\n            \"secureState\" : \"Type: System.Byt\",\r\n            \"modifiedProperties\" : \"Type: System.Col\",\r\n            \"originalValues\" : \"Type: System.Col\"\r\n        },\r\n        \"modifiedProperties\" : \"Type: string\",\r\n        \"originalValues\" : \"Type: string\",\r\n        \"entityState\" : \"Type: string\"\r\n    }\r\n\r\n}"
+				},
+				"url": {
+					"raw": "https://{{envWebHost}}/api/commands/Academics/GradeScaleLetterGrade/saveNew",
+					"protocol": "https",
+					"host": [
+						"{{envWebHost}}"
+					],
+					"path": [
+						"api",
+						"commands",
+						"Academics",
+						"GradeScaleLetterGrade",
+						"saveNew"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,69 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "Check Validations for Unapplied Course List",
+    "Globals": {
+      "StudentSsn": "222-22-0022",
+      "EnrollmentPVName": "Audit Program Version 01"
+    },
+    "Apis": [
+      {
+        "RequestId": "a89a78ae-ffaa-479a-8c2d-1685e73055c0",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gStudentSsn}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": { "value": [] }
+      },
+      {
+        "RequestId": "05febb5e-f716-4402-9b26-6a4adecf5fba",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentEnrollmentPeriodDetails/CampusNexus.GetStudentEnrollmentPeriodList(studentId={{gStudentId}})?$select=Id,ProgramVersionId,ProgramId,ProgramVersionName,CatalogYearId&$filter = ProgramVersionName eq '{{gEnrollmentPVName}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": { "value": [] }
+      },
+      {
+        "RequestId": "8a8b0db0-8a03-40ad-baa0-7eae87f4a129",
+        "RequestMethod": "GET",
+        "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/-1/unappliedcourses",
+        "RequestBody": null,
+        "ResponseStatus": 400,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {
+          "errors": [
+            {
+              "errorCode": "InvalidKeyValue",
+              "errorMessage": "A valid StudentEnrollmentPeriodId is required.",
+              "source": {
+                "field": "StudentEnrollmentPeriodId"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "RequestId": "8a8b0db0-8a03-40ad-baa0-7eae87f4a130",
+        "RequestMethod": "GET",
+        "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/9999999/unappliedcourses",
+        "RequestBody": null,
+        "ResponseStatus": 404,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {
+          "errors": [
+            {
+              "errorCode": "KeyNotFound",
+              "errorMessage": "The specified StudentEnrollmentPeriodId does not exist.",
+              "source": {
+                "field": "StudentEnrollmentPeriodId"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+]

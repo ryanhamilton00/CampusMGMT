@@ -1,0 +1,93 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "Create New Class Schedule",
+    "Globals": {
+      "CourseCode": "Cou005",
+      "StaffName": "Staff, Automated01",
+      "TermCode": "Ter004"
+    },
+    "Apis": [
+      {
+        "RequestId": "c9d586b1-402a-447a-a35a-54190019d8e1",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/ClassSection/Create",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {}
+      },
+      {
+        "RequestId": "4dc23388-c96d-4707-b342-0ce8b1fdec35",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": { "value": [] }
+      },
+      {
+        "RequestId": "e821fd1b-88cb-452b-badb-c7809783323b",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Courses?$select=Id,Name,Code,IsActive,EnrollStatusCredits,EnrollStatusHours,IsDependent,CreditHours,ClockHours,AllowOverride,MatchOverrideCredits,MinimumCredits,MaximumCredits&$filter=Code eq '{{gCourseCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {"value":[]}
+      },
+	  {
+        "RequestId": "f7079642-0f2c-4f40-be06-8bc23704f27c",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Courses?$select=DefaultPassFailSetting&$filter=Id eq {{gCourseId}}",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {"value":[]}
+      },
+      {
+        "RequestId": "6ebd2250-4332-4b78-89d0-8610a5ce9937",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetStaffPasswordRuleProfile()?$filter=contains(FullName,'{{gStaffName}}')",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {"value":[]}
+      },
+      {
+        "RequestId": "9bd2bfa4-2970-4fec-9ce1-945618337363",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/DeliveryMethods",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {"value":[]}
+      },
+      {
+        "RequestId": "608fc6a6-7590-4e19-9f75-b690ae1d73f3",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Terms?$select=Id,StartDate,EndDate&$filter=Code eq '{{gTermCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {"value":[]}
+      },
+      {
+        "RequestId": "755d52e0-c307-4df5-a894-8d7a1ea8c841",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/ClassSection/SaveNew",
+        "RequestBody": {
+							"payload": {
+									"maximumStudents": "2",
+									"isWaitListingAllowed": true,
+									"waitListMaximumSeats": 2,
+									"passFailSetting": 1
+							}
+						},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {}
+      }
+    ]
+  }
+]

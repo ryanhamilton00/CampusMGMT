@@ -1,0 +1,152 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "This API will create a Fee Schedule for a specified course",
+    "Globals": {
+		"CourseCode": "Cou001",
+		"FeeCode": "FeeCode1",
+		"FeeName": "FeeName1"
+	},
+    "Apis": [
+	{
+        "RequestId": "30a0390f-0980-42bf-ae89-f8d8dab41094",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Courses?$select=Id,Name,Code&$filter=Code eq '{{gCourseCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "1a2b1d23-da92-4268-a9b5-029f22839cd8",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/CourseFeeSchedule/SaveNew",
+        "RequestBody": {
+          "payload": {
+            "code": "{{gFeeCode}}",
+            "name": "{{gFeeName}}",
+            "effectiveDate": "@DateNow(+7)",
+            "isactive": true,
+            "isDefault": true,
+            "id": -1
+          }
+        },
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 25000,
+        "ResponseBody": {}
+      },
+      {
+        "RequestId": "30a0390f-0980-42bf-ae89-f8d8dab41104",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/CourseFeeSchedules?$filter=Code eq '{{gFeeCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "5ac9b659-15a8-4858-8412-896dfea4fd36",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/CourseFee/SaveNew",
+        "RequestBody": {
+          "payload": {
+            "amount": 250,
+            "auditCourseAmount": 100,
+            "effectiveDate": "@DateNow(+7)",
+            "id": -1,
+            "sequence": 1,
+            "billingTransactionCodeId": 1
+          }
+        },
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 25000,
+        "ResponseBody": {}
+      },
+      {
+        "RequestId": "30a0390f-0980-42bf-ae89-f8d8dab41083",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/CourseFees?$filter=CourseFeeScheduleId eq {{gCourseFeeSchedId}}",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{}"
+      }
+    ]
+  },
+   {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "Enter test description here",
+    "Globals": {
+		"CourseCode": "Cou001",
+		"FeeCode": "FeeCode2",
+		"FeeName": "FeeName2"
+	},
+    "Apis": [
+	{
+        "RequestId": "30a0390f-0980-42bf-ae89-f8d8dab41094",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Courses?$select=Id,Name,Code&$filter=Code eq '{{gCourseCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "1a2b1d23-da92-4268-a9b5-029f22839cd8",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/CourseFeeSchedule/SaveNew",
+        "RequestBody": {
+          "payload": {
+            "code": "{{gFeeCode}}",
+            "name": "{{gFeeName}}",
+            "effectiveDate": "@DateNow(+7)",
+            "isactive": true,
+            "isDefault": false,
+            "id": -1
+          }
+        },
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 25000,
+        "ResponseBody": {}
+      },
+      {
+        "RequestId": "30a0390f-0980-42bf-ae89-f8d8dab41104",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/CourseFeeSchedules?$filter=Code eq '{{gFeeCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "5ac9b659-15a8-4858-8412-896dfea4fd36",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/CourseFee/SaveNew",
+        "RequestBody": {
+          "payload": {
+            "amount": 500,
+            "auditCourseAmount": 200,
+            "effectiveDate": "@DateNow(+7)",
+            "id": -1,
+            "sequence": 1,
+            "billingTransactionCodeId": 1
+          }
+        },
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 25000,
+        "ResponseBody": {}
+      },
+      {
+        "RequestId": "30a0390f-0980-42bf-ae89-f8d8dab41083",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/CourseFees?$filter=CourseFeeScheduleId eq {{gCourseFeeSchedId}}",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{}"
+      }
+    ]
+  }
+]

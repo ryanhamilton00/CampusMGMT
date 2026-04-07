@@ -1,0 +1,76 @@
+[{
+	"Type": "AdvancedDataFile",
+	"Version": "2.0",
+	"TestDescription": "API Automation for fetching Student ID and Validations",
+	"Globals": {
+		"EmailAddress1": "pankaj@gmail.com",
+		"EmailAddress2": "pankaj2@gmail.com",
+		"EmailAddress3": "nitinrameshp@campusmgmt.com"
+	},
+	"Apis": [{
+			"RequestId": "40f1b086-78b6-4a46-87d4-1697884b3ccc",
+			"RequestMethod": "GET",
+			"RequestUrl": "/api/student-info/students/find-student-id/?$filter=EmailAddress eq '{{gEmailAddress1}}'",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {
+				"StudentId": 580885,
+				"FirstName": "Pankaj",
+				"LastName": "Singh",
+				"ValidationMessages": []
+			}
+		},
+		{
+			"RequestId": "35e8906d-dd46-46bc-87d6-7a05df9a4c2c",
+			"RequestMethod": "GET",
+			"RequestUrl": "/api/student-info/students/find-student-id/?$filter=EmailAddress eq '{{gEmailAddress2}}'",
+			"RequestBody": null,
+			"ResponseStatus": 403,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {
+				"StudentId": 0,
+				"FirstName": null,
+				"LastName": null,
+				"ValidationMessages": [{
+					"Message": "No students found for criteria specified.",
+					"MessageType": 0
+				}]
+			}
+		},
+		{
+			"RequestId": "49ef3d7e-a0f3-457b-bbdd-7f1531417579",
+			"RequestMethod": "GET",
+			"RequestUrl": "/api/student-info/students/find-student-id/?$filter=EmailAddress eq '{{gEmailAddress3}}'",
+			"RequestBody": null,
+			"ResponseStatus": 403,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {
+				"StudentId": 0,
+				"FirstName": null,
+				"LastName": null,
+				"ValidationMessages": [{
+					"Message": "Multiple students found that match filter criteria.",
+					"MessageType": 2
+				}]
+			}
+		},
+		{
+			"RequestId": "a0d89262-e31b-4191-b645-3d8ecd36857f",
+			"RequestMethod": "GET",
+			"RequestUrl": "/api/student-info/students/find-student-id/?$filter=EmailAddreess eq '{{gEmailAddress3}}'",
+			"RequestBody": null,
+			"ResponseStatus": 400,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {
+				"StudentId": 0,
+				"FirstName": null,
+				"LastName": null,
+				"ValidationMessages": [{
+					"Message": "Incorrect/Invalid filter criteria specified.  Query was not able to be executed.",
+					"MessageType": 0
+				}]
+			}
+		}
+	]
+}]

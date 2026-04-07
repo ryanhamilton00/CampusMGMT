@@ -1,0 +1,90 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "Enter test description here",
+    "Globals": {
+      "CampusName": "CampusNexus College",
+      "TermCode": "01CLTerm",
+      "CourseCode": "1CLCourse"
+    },
+    "Apis": [
+      {
+        "RequestId": "a8f21199-a1cc-4d92-914b-1c94121830fa",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 50000,
+        "ResponseBody": { "value": [] }
+      },
+      {
+        "RequestId": "0b3f834a-9371-49e5-9dff-ad67a8a9abd8",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Terms/CampusNexus.GetTermsByCampusForSearch(campusId={{gCampusId}})?$select=TermCodeAndName,TermName,TermCode,Id,TermStartDate,TermEndDate,IsActive,IsTermOpen&$format=json&$top=50&$filter=TermCode eq '{{gTermCode}}'&$count=true",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": { "value": [] }
+      },
+      {
+        "RequestId": "698b5e51-e77d-499a-ba79-b63b57672fa3",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/ClassSections/CampusNexus.GetDailyClassScheduleMainList(campusId={{gCampusId}},termIds=[{{gTermId}}],courseId=0,instructorId=0,classSectionStartDateFrom='',classSectionStartDateTo='',courseOffering=1,isInProgress=false,departmentIds=[])?$format=json&$top=50&$orderby=CourseCode,StartDate desc,TermCodeAndName&$filter=CourseCode eq '{{gCourseCode}}'&$count=true",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": { "value": [] }
+      },
+      {
+        "RequestId": "b558a3ce-5992-4f3e-9c38-1773266edab0",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/ClassSections?$select=SectionName,SectionCode,CourseCode&$expand=Course($select=Name)&$filter=Id eq {{gSectionId}}",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": { "value": [] }
+      },
+      {
+        "RequestId": "a466beaa-1223-4b61-b656-70e390b86934",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/ClassSectionTerms?$select=TermCode&$filter=ClassSectionId eq {{gSectionId}}",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": { "value": [] }
+      },
+      {
+        "RequestId": "0d7b22f2-bde4-4d03-9f07-7f779ebc7877",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/ClassSections/CampusNexus.GetClassSectionMeetingScheduleByTermId(termId={{gTermId}},classSectionId={{gSectionId}})?&$format=json&$top=10000&$orderby=CourseCode&$count=true&$filter=Id ne {{gSectionId}} and CampusId eq {{gCampusId}}",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": { "value": [] }
+      },
+      {
+        "RequestId": "a466beaa-1223-4b61-b656-70e390b86935",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/ClassSections?$filter={{gfilterUrlForClassSectionId}}",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": { "value": [] }
+      },
+      {
+        "RequestId": "3e28ed08-7f14-406d-9acf-0abcf902f217",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/CrossListClassSection/SaveCrossListClassSection",
+        "RequestBody": {
+          "payload": {
+            "entityState": 2
+          }
+        },
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{}"
+      }
+    ]
+  }
+]

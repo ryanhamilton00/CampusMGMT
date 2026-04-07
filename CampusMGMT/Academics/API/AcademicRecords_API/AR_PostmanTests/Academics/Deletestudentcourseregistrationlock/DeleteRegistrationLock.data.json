@@ -1,0 +1,70 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "Delete Registration Lock",
+    "Globals": {
+      "StudentSsn": "111-22-0011"
+    },
+    "Apis": [
+      {
+        "RequestId": "a89a78ae-ffaa-479a-8c2d-1685e73055c0",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gStudentSsn}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+	  {
+        "RequestId": "42a1b414-dcf4-4790-a88b-36b40b78c4ca",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/RegistrationRules/CampusNexus.GetRegistrationLocksDetails(studentId={{gStudentId}},studentGroupId=null)",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "d1d9677a-db82-4030-b74b-e9ce97cb31c5",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/RegistrationRule/Get",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {
+							"payload": {},
+							"notifications": [],
+							"hasError": false,
+							"hasFault": false,
+							"hasWarning": false,
+							"hasValidationError": false,
+							"hasValidationWarning": false,
+							"hasValidationInformation": false,
+							"hasSecurityError": false
+						}
+      },
+      {
+        "RequestId": "afedb6fa-ead1-434a-82c1-c4106ebae678",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/RegistrationRule/Delete",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 25000,
+        "ResponseBody": {
+						              "payload": {
+							            "deleted": true
+						              },
+						              "notifications": [],
+						              "hasError": false,
+						              "hasFault": false,
+						              "hasWarning": false,
+						              "hasValidationError": false,
+						              "hasValidationWarning": false,
+						              "hasValidationInformation": false,
+						              "hasSecurityError": false
+						            }
+      }
+    ]
+  }
+]

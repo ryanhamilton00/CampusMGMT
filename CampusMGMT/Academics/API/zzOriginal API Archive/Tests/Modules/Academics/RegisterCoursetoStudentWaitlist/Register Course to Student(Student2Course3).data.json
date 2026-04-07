@@ -1,0 +1,229 @@
+[
+	{
+		"Type": "AdvancedDataFile",
+		"Version": "2.0",
+		"TestDescription": "Enter test description here",
+		"Globals": {
+			"StudentSsn": "111-22-0022",
+			"CourseCode": "Cou003",
+			"TermCode": "Ter001",
+			"ProgramName": "V1Name",
+			"SettingName": "Student Registration"
+		},
+		"Apis": [
+			{
+				"RequestId": "61cfa462-5e93-417b-956a-cff809cfcae6",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/CampusNexusStudentSettings?$filter=contains(ShortDisplayText,'{{gSettingName}}')",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 15000,
+				"ResponseBody": {
+					"value": []
+				}
+			},
+			{
+				"RequestId": "faa4d96b-e578-4bce-9f0e-5fba88412e78",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/Common/CampusNexusStudentSetting/Get",
+				"RequestBody": {},
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 15000,
+				"ResponseBody": {}
+			},
+			{
+				"RequestId": "faa4d96b-d578-5bcd-9f1e-5fba88412e78",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/Common/CampusNexusStudentSetting/SaveCampusNexusStudentSettings",
+				"RequestBody": {
+					"payload": {
+						"campusNexusStudentSettingList": [
+							{
+								"settingName": "adRegisterCourseFilter",
+								"settingValue": "3"
+							}
+						]
+					}
+				},
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 15000,
+				"ResponseBody": {}
+			},
+			{
+				"RequestId": "a89a78ae-ffaa-479a-8c2d-1685e73055c0",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gStudentSsn}}'",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 15000,
+				"ResponseBody": {
+					"value": []
+				}
+			},
+			{
+				"RequestId": "05febb5e-f716-4402-9b26-6a4adecf5fba",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/StudentEnrollmentPeriodDetails/CampusNexus.GetStudentEnrollmentPeriodList(studentId={{gStudentId}})?$select=Id,ProgramVersionId,ProgramId,ProgramVersionName&$filter = ProgramVersionName eq '{{gProgramName}}'",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 15000,
+				"ResponseBody": {
+					"value": []
+				}
+			},
+			{
+				"RequestId": "afa18136-e1dd-4c80-a59d-a8d569d97635",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/Courses?$filter=Code eq '{{gCourseCode}}'",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 15000,
+				"ResponseBody": {
+					"value": []
+				}
+			},
+			{
+				"RequestId": "a8f21199-a1cc-4d92-914b-1c94121830fa",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/Campuses/CampusNexus.GetStudentCourseRegistrationCampusList(studentEnrollmentPeriodId={{gStudentEnrollmentPeriodId}},courseId=0,studentCourseId=0)?$select=Id",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 15000,
+				"ResponseBody": {
+					"value": []
+				}
+			},
+			{
+				"RequestId": "8a8b0db0-8a03-40ad-baa0-7eae87f4a159",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/Terms?$select=Id&$filter=Code eq '{{gTermCode}}'",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 15000,
+				"ResponseBody": {
+					"value": []
+				}
+			},
+			{
+				"RequestId": "3294a6bf-ba6c-48aa-819a-59aadf0303d2",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/StudentCourseSchedules/CampusNexus.GetStudentCourseSchedule(studentEnrollmentPeriodId={{gStudentEnrollmentPeriodId}},studentId={{gStudentId}},termId=0,status='')?$filter = CourseId eq {{gCourseId}}",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 15000,
+				"ResponseBody": {
+					"value": []
+				}
+			},
+			{
+				"RequestId": "4489a281-ef1b-4a73-ab00-7548125daeab",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/Academics/StudentCourse/get",
+				"RequestBody": "{}",
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 15000,
+				"ResponseBody": {}
+			},
+			{
+				"RequestId": "fd8edc3b-6dd0-492e-a603-43598ac9c214",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/ClassSections/CampusNexus.GetCrossRefAndCourseSharingList(campusId={{gCampusId}},termId={{gTermId}},courseIds= '{{gCourseId}}',isCrossReferenceCourse=false,studentId={{gStudentId}},crossRefCourseId=0)",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 15000,
+				"ResponseBody": {
+					"value": []
+				}
+			},
+			{
+				"RequestId": "fd8edc3b-6dd0-492e-a603-43598ac9c215",
+				"RequestMethod": "GET",
+				"RequestUrl": "/ds/campusnexus/ClassSections?$filter=Id eq {{gClassSectionId}}&$select=PassFailSetting",
+				"RequestBody": null,
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 15000,
+				"ResponseBody": { "value": [] }
+			},
+			{
+				"RequestId": "4394abfd-6ea4-4a1a-83e1-182a292129ac",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/Academics/StudentCourse/savestudentcourse",
+				"RequestBody": {
+					"payload": {
+						"AcademicYearId": 0,
+						"Comments": "",
+						"Action": 2,
+						"AllowOverrideRegistrationHold": false,
+						"IsAllowedToOverrideRetakeAttempts": false,
+						"IsAllowedToAuditCourse": false,
+						"IsAllowedCourse": false,
+						"IsAllowedToOverrideLockedTermSequence": false,
+						"IsAllowedMaxClassSizeRegisterOverride": false,
+						"IsAllowedToWaitListStudent": true,
+						"IsAllowedPostCourseStartDateRegistration": true,
+						"isRetakeValidationDisplayed": false,
+						"IsSubstituteCourse": false,
+						"SubstituteCourseId": 0,
+						"IsAudit": false,
+						"StudentCourseFeeScheduleId": null,
+						"IsCrossReferencedCourse": true,
+						"IsCrsg": true,
+						"Description": "",
+						"IsRetakeOverride": false,
+						"RetakeID": 0,
+						"ParentTermId": 0,
+						"ReturnCode": 0,
+						"UseFeeSchedule": false,
+						"RetakeFee": "O",
+						"ClassCount": 0,
+						"IsAllowStudentAcademicYearPaymentPeriod": false,
+						"IsAllowedRegisterAsAuditClass": false,
+						"IsAllowedDateTimeConflict": false,
+						"Status": "F",
+						"AllowClassSection": false,
+						"IsAllowedToOverrideRegistrationConflict": false,
+						"AllowOverrideRegistrationPrereqCoreqConflict": false,
+						"SkipPrereqCheck": false,
+						"SkipCoreqCheck": false,
+						"IgnoreMultiCourseDependency": false,
+						"IsReservedStatus": false,
+						"IsAllowedToOverrideStudentIntoCourse": false,
+						"IsAllowedToWaitlistAvailableStudentIntoCourse": false,
+						"IsAllowedToWaitlistStudentIntoCourse": false,
+						"IsRegistrationRetake": false,
+						"IsAddDropPeriodClassSectionAllowed": false,
+						"IsAllowedToOverrideClosedTerm": false,
+						"IsAllowedToOverrideRegistrationGroup": false,
+						"IsOverlapWithParentTermAllowed": false,
+						"IsAllowedToWaitListForDifferentSection": false,
+						"IsAllowedToOverrideCourseStatus": false,
+						"IsWaitlistStudentNotified": true
+					}
+				},
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 25000,
+				"ResponseBody": {
+					"payload": {
+						"data": {
+							"entity": {
+								"status": "F"
+							}
+						}
+					}
+				}
+			},
+			{
+				"RequestId": "faa4d96b-d578-5bcd-9f1e-5fba99412e78",
+				"RequestMethod": "POST",
+				"RequestUrl": "/api/commands/Common/CampusNexusStudentSetting/SaveCampusNexusStudentSettings",
+				"RequestBody": {
+					"payload": {}
+				},
+				"ResponseStatus": 200,
+				"ResponseTimeMs": 15000,
+				"ResponseBody": {}
+			}
+
+		]
+	}
+]

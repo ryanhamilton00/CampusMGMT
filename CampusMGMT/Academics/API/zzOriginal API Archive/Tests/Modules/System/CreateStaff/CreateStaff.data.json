@@ -1,0 +1,134 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "Enter test description here",
+    "Globals": {
+		"CampusGroupCode" : "ALL",
+		"StaffGroupCode" : "ADMIN",
+		"StaffCode" : "@StringRandom(5)"
+	},
+    "Apis": [
+      {
+        "RequestId": "e8a94b99-7cf7-42fb-a6b6-b985f8de37cb",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/CampusGroups/CampusNexus.GetCampusGroupsForStaffUser(campusGroupId=1)?$filter=Code eq '{{gCampusGroupCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "9ef27833-811a-40f6-9964-8425446b9029",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetStaffGroupAssociationList(isLastModifiedRequired=false)?$filter=Code eq '{{gStaffGroupCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "ba1a5a51-04bf-4dfa-8efc-8d4286938931",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Common/Staff/Create",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody":{
+				"payload": {},
+				"notifications": [],
+				"hasError": false,
+				"hasFault": false,
+				"hasWarning": false,
+				"hasValidationError": false,
+				"hasValidationWarning": false,
+				"hasValidationInformation": false,
+				"hasSecurityError": false
+			}
+
+      },
+      {
+        "RequestId": "7751c3d6-a1fc-4b56-ad61-03cef752197c",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Common/Staff/SaveNew",
+        "RequestBody": {
+			"payload": {
+				"code": "{{gStaffCode}}@Campusmgmt.com",				
+				"firstName": "@StringRandom(2,FirstName_)", 
+				"lastName": "@StringRandom(2,LastName_)",
+				"mi": "",				        				
+				"domain": "Campusmgmt.com"
+				
+			}
+		},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {
+				"payload": {},
+				"notifications": [],
+				"hasError": false,
+				"hasFault": false,
+				"hasWarning": false,
+				"hasValidationError": false,
+				"hasValidationWarning": false,
+				"hasValidationInformation": false,
+				"hasSecurityError": false
+			}
+      },
+	  {
+        "RequestId": "7751c3d6-a1fc-4b56-ad61-03cef752197d",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Common/Staff/SaveNew",
+        "RequestBody": {
+			"payload": {
+				"code": "APIuser1@Campusmgmt.com",
+			
+				"firstName": "API1",
+				"lastName": "User1",
+				"mi": "",
+				"staffName": "API1 User1",        
+				"parsedCode": "API1user1",
+				"domain": "Campusmgmt.com"
+				
+			}
+		},
+        "ResponseStatus": 400,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {
+			"payload": null,
+			"notifications": [
+				{            
+					"message": "Code already exists."
+				}
+			],
+			"hasError": false,
+			"hasFault": false,
+			"hasWarning": false,
+			"hasValidationError": true,
+			"hasValidationWarning": false,
+			"hasValidationInformation": false,
+			"hasSecurityError": false
+		}
+      },
+      {
+        "RequestId": "329c4c37-081d-4401-8431-a503984e7fc1",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Common/Staff/Get",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {
+				"payload": {},
+				"notifications": [],
+				"hasError": false,
+				"hasFault": false,
+				"hasWarning": false,
+				"hasValidationError": false,
+				"hasValidationWarning": false,
+				"hasValidationInformation": false,
+				"hasSecurityError": false
+			}
+      }
+    ]
+  }
+]

@@ -1,0 +1,69 @@
+[{
+	"Type": "AdvancedDataFile",
+	"Version": "2.0",
+	"TestDescription": "This API will test Validations for DPA Life Cycle",
+	"Globals": {
+	},
+	"Apis": [{
+			"RequestId": "300bf5f4-90f2-4514-bfbc-5ec6eaf04f43",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "578cad81-409b-42ef-9244-4595db3db3c1",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gWorkflowStudentSSN}}'",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": "{\"value\":[]}"
+      },
+		{
+			"RequestId": "9d76df34-2ecc-4a49-a3f1-6afc85558420",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/StudentEnrollmentPeriodDetails/CampusNexus.GetStudentEnrollmentPeriodList(studentId={{gStudentId}})",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 15000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "20f44385-f6a8-4fdd-9077-7ee13ca3da17",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/ProgramVersions?$expand=Program($select=Id,Code,Name)&$filter=Name eq '{{gProgramVersionName}}'",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 15000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "270cd192-e666-4832-ac14-077c1c84b906",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/ProgramVersions/CampusNexus.GetProgramVersionCatalogList(programVersionId={{gProgramVersionId}},type='p',active=false,isCatalogByProgramVersionStartDate=false,catalogEffectiveStartDate='1900-01-01',catalogfilter=0,catalogYearId=0)?",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 15000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "ec4de091-c7d0-4541-b2f0-82d37760274a",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Academics/DegreeProgressAudit/getDegreeProgressAudit",
+			"RequestBody": {
+				"payload": {
+					"degreeProgressAuditRequestor": 1,
+					"studentId": "{{gStudentId}}",
+					"studentEnrollmentPeriodId": "{{gEnrollmentId}}",
+					"isHypothetical": false
+				}
+			},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 10000,
+			"ResponseBody": {}
+		}
+	]
+}]

@@ -1,0 +1,90 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "CancelClassSchedwithGeneralPolicyOnStaffPolicyOff",
+    "Globals": {
+      "TermCode": "Ter001",
+      "CourseCode": "Cou001",
+      "SectionCode": "003"
+    },
+    "Apis": [
+      {
+        "RequestId": "4dc23388-c96d-4707-b342-0ce8b1fdec35",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": { "value": [] }
+      },
+      {
+        "RequestId": "071e5b4b-cad6-40ae-b55c-2f38a14a23c0",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Terms?$select=Id,StartDate,EndDate,Name,IsActive&$filter=Code eq '{{gTermCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": { "value": [] }
+      },
+      {
+        "RequestId": "071e5b4b-cad6-40ae-b55c-2f38a14a23c1",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Courses?$select=Id,Name,Code,IsActive,EnrollStatusCredits,EnrollStatusHours,IsDependent,CreditHours,ClockHours,AllowOverride,MatchOverrideCredits,MinimumCredits,MaximumCredits&$filter=Code eq '{{gCourseCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": { "value": [] }
+      },
+      {
+        "RequestId": "98059e63-baf6-40d0-93a9-43df60460be6",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/ClassSections/CampusNexus.GetDailyClassScheduleMainList(campusId={{gCampusId}},termIds=[{{gTermId}}],courseId={{gCourseId}},instructorId=0,classSectionStartDateFrom='',classSectionStartDateTo='',courseOffering=1,isInProgress=false,departmentIds=[],isFutureTerm=false)?$filter = SectionCode eq '{{gSectionCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": { "value": [] }
+      },
+      {
+        "RequestId": "f8947d1e-bd08-4e2c-9378-6d20476efda6",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/ClassSectionCancelReasons?$expand=CampusGroup($select=Id;$expand=CampusList($select=Id;$expand=Campus($select=Id,Name)))&$format=json&$count=true&$filter=CampusGroup/CampusList/any(l:l/CampusId eq {{gCampusId}})  and IsActive eq true",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": { "value": [] }
+      },
+      {
+        "RequestId": "045bec59-d09c-43ce-b6df-0a0f1ba493ee",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/ClassSection/CancelClassSection",
+        "RequestBody": {
+          "payload": {
+            "UnregisterStudentCourseDetailsList": [],
+            "StudentGroupId": 0,
+            "StudentGroupName": "",
+            "CourseStatusChangeReasonId": 0
+          }
+        },
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {}
+      },
+      {
+        "RequestId": "f8947d1e-bd08-4e2c-9378-6d20476efda7",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/ClassSections/CampusNexus.GetDailyClassScheduleMainList(campusId={{gCampusId}},termIds=[{{gTermId}}],courseId={{gCourseId}},instructorId=0,classSectionStartDateFrom='',classSectionStartDateTo='',courseOffering=1,isInProgress=false,departmentIds=[],isFutureTerm=false)?$filter = SectionCode eq '{{gSectionCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {
+          "value": [
+            {
+              "IsCancel": true
+            }
+          ]
+        }
+      }
+    ]
+  }
+]

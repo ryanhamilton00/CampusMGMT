@@ -1,0 +1,64 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "RemoveParentChildTermRelationship",
+    "Globals": {
+		      "ParentTermCode": "Par001"
+	},
+    "Apis": [
+      {
+        "RequestId": "7881b048-a016-4a9f-b5c8-8a6ab5d05c93",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Terms?$select=Id,Code,Name,StartDate,EndDate,IsActive&$filter=Code eq '{{gParentTermCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "c51d5edc-706f-42d0-872b-4cee495d51ff",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/Term/Get",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {
+							"notifications": [],
+							"hasError": false,
+							"hasFault": false,
+							"hasWarning": false,
+							"hasValidationError": false,
+							"hasValidationWarning": false,
+							"hasValidationInformation": false,
+							"hasSecurityError": false
+						}
+      },
+      {
+        "RequestId": "08d69a58-b2a0-4dad-88bf-668ea1219b9a",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/TermRelationship/SaveMultipleTermRelationship",
+        "RequestBody": {
+							"payload": {
+								"ParentTermIdList": [],
+								"ChildTermIdList": [],
+								"IsScheduleChangeNotification": false,
+								"IsParentTerm": false
+							}
+						},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {
+							"notifications": [],
+							"hasError": false,
+							"hasFault": false,
+							"hasWarning": false,
+							"hasValidationError": false,
+							"hasValidationWarning": false,
+							"hasValidationInformation": false,
+							"hasSecurityError": false
+						}
+      }
+    ]
+  }
+]

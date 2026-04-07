@@ -1,0 +1,76 @@
+[
+    {
+        "Type": "AdvancedDataFile",
+        "Version": "2.0",
+        "TestDescription": "This API will create an Agency Affiliation Record for a student in Contact Manager - NOTE!: The Staff member must be part of the staff group found in RequestId: 00000000-0000-0000-0000-000000000003",
+      "Globals": {
+        "StudentSsn": "{{gWorkflowStudentSSN}}"
+      },
+        "Apis": [
+            {
+                "RequestId": "00000000-0000-0000-0000-000000000000",
+                "RequestMethod": "GET",
+                "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+                "RequestBody": null,
+                "ResponseStatus": 200,
+                "ResponseTimeMs": 10000,
+                "ResponseBody": "{\"value\":[]}"
+            },
+            {
+                "RequestId": "00000000-0000-0000-0000-000000000001",
+                "RequestMethod": "GET",
+                "RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gStudentSsn}}'",
+                "RequestBody": null,
+                "ResponseStatus": 200,
+                "ResponseTimeMs": 10000,
+                "ResponseBody": "{\"value\":[]}"
+            },
+            {
+                "RequestId": "00000000-0000-0000-0000-000000000003",
+                "RequestMethod": "GET",
+                "RequestUrl": "/ds/campusnexus/StudentEnrollmentPeriods?$filter=StudentId eq {{gStudentId}}",
+                "RequestBody": null,
+                "ResponseStatus": 200,
+                "ResponseTimeMs": 10000,
+                "ResponseBody": "{\"value\":[]}"
+            },
+          {
+            "RequestId": "00000000-0000-0000-0000-000000000002",
+            "RequestMethod": "GET",
+            "RequestUrl": "/ds/campusnexus/StudentDepositDetails/CampusNexus.GetStudentDepositDetails(studentId={{gStudentId}},getHousingDeposits=0)?&$orderby=DepositReceivedDate desc,ReceiptNumber&$count=true&$filter=StudentEnrollmentPeriodId eq {{gEnrollId}}",
+            "RequestBody": null,
+            "ResponseStatus": 200,
+            "ResponseTimeMs": 10000,
+            "ResponseBody": "{\"value\":[]}"
+          },
+            {
+                "RequestId": "00000000-0000-0000-0000-000000000005",
+                "RequestMethod": "POST",
+                "RequestUrl": "/api/commands/Admissions/Deposit/Get",
+                "RequestBody": {
+                    "payload": {}
+                },
+                "ResponseStatus": 200,
+                "ResponseTimeMs": 5000,
+                "ResponseBody": {
+                    "payload": {}
+                }
+            },
+          {
+            "RequestId": "00000000-0000-0000-0000-000000000007",
+            "RequestMethod": "POST",
+            "RequestUrl": "/api/commands/Admissions/Deposit/CancelDeposit",
+            "RequestBody": {
+              "payload": {
+                "amount": 0.0000
+              }
+            },
+            "ResponseStatus": 200,
+            "ResponseTimeMs": 5000,
+            "ResponseBody": {
+              "payload": {}
+            }
+          }
+        ]
+    }
+]

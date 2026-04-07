@@ -1,0 +1,10 @@
+
+if not defined TestLocation (set TestLocation=.)
+
+set CollectionFileName=%TestLocation%\DeleteRegularandSubstituteCoursefromStudent.postman_collection.json
+set DataFileName=%TestLocation%\DeleteRegularandSubstituteCourse2fromStudent.data.json
+set EnvironmentFilePath=%TestLocation%\..\..\..\..\..\..\Environment\TeamClean-StudentAPIEnvironment.postman_environment.json
+set HtmlResultsFile=DeleteRegularandSubstituteCourse2fromStudent-Html.html
+set JunitResultsFile=DeleteRegularandSubstituteCourse2fromStudent-Junit.xml
+
+newman run "%CollectionFileName%" -d "%DataFileName%" -e "%EnvironmentFilePath%"  -k -r junit,html --reporter-html-export "%HtmlResultsFile%" --reporter-junit-export "%JunitResultsFile%"

@@ -1,0 +1,617 @@
+	[
+    {
+      "Type": "AdvancedDataFile",
+      "Version": "2.0",
+      "TestDescription": "Add and Undo Add course where future course does not exists in the student course",
+      "Globals": {
+        "StudentSsn": "222-22-0022",
+        "CourseCode": "AudCou022",
+        "EnrollmentPVName": "Audit Program Version 01",
+        "CatalogCode": "AudCat",
+        "CategoryCode": "AudCatCode3",
+        "AllowRetakeDup": "false"
+      },
+      "Apis": [
+        {
+          "RequestId": "a89a78ae-ffaa-479a-8c2d-1685e73055c0",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gStudentSsn}}'",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{\"value\":[]}"
+        },
+        {
+          "RequestId": "05febb5e-f716-4402-9b26-6a4adecf5fba",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/StudentEnrollmentPeriodDetails/CampusNexus.GetStudentEnrollmentPeriodList(studentId={{gStudentId}})?$filter=ProgramVersionName eq '{{gEnrollmentPVName}}'",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "05febb5e-f716-4402-9b26-6a4adecf5faa",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/StudentEnrollmentAreaOfStudyLists/CampusNexus.GetSavedProgramVersionAreaOfStudyConfig(studentenrollmentperiodid={{gStudentEnrollmentPeriodId}})",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "a8f21199-a1cc-4d92-914b-1c94121830fa",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/Courses?$filter=Code eq '{{gCourseCode}}'",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "2c5bc93d-0d60-4d37-aa11-ca5b22848bd6",
+          "RequestMethod": "POST",
+          "RequestUrl": "/api/commands/Academics/Course/Get",
+          "RequestBody": "{\"payload\":{}}",
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": {}
+        },
+        {
+          "RequestId": "a8f21199-a1cc-4d92-914b-1c94121830fb",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/AreasOfStudy/CampusNexus.GetAreaOfStudyAssociatedCatalogList(areaOfStudyId={{gAreaofStudy}},type='A',isActive=false,catalogYearId=-1,isCatalogByProgramVersionStartDate=false,catalogEffectiveStartDate='1900-01-01',catalogfilter=0)?$filter=contains(CatalogYearCode,'{{gCatalogCode}}')",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "a8f21199-a1cc-4d92-914b-1c94121830fc",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/AreasOfStudy/CampusNexus.GetAreaOfStudyCourseCategoryList(programVersionId=0,areaOfStudyId={{gAreaofStudy}},catalogYearId={{gCatalogYearId}})?$filter=contains(CourseCategoryCode,'{{gCategoryCode}}')",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "05febb5e-f716-4402-9b26-6a4adecf5fbd",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/StudentCourseSchedules/CampusNexus.GetStudentCourseSchedule(studentEnrollmentPeriodId={{gStudentEnrollmentPeriodId}},studentId={{gStudentId}},termId=0,status='')?$filter = CourseId eq {{gCourseId}}",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": { "value": [] }
+        },
+        {
+          "RequestId": "a8f21199-a1cc-4d92-914b-1c94121830fd",
+          "RequestMethod": "GET",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId}}/coursecategories",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f97511ae08z",
+          "RequestMethod": "PUT",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId}}/addcourserequirement",
+          "RequestBody": {},
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": {}
+        },
+        {
+          "RequestId": "a8f21199-a1cc-4d92-914b-1c94121830ff",
+          "RequestMethod": "GET",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId}}/requiredcourses",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f97511ae08e",
+          "RequestMethod": "PUT",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId}}/removecourserequirement",
+          "RequestBody": {},
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": {}
+        }
+      ]
+    },
+    {
+      "Type": "AdvancedDataFile",
+      "Version": "2.0",
+      "TestDescription": "Add and Undo Add course where future course exists in the student course and repeat is allowed",
+      "Globals": {
+        "StudentSsn": "222-22-0022",
+        "CourseCode": "AudCou019",
+        "EnrollmentPVName": "Audit Program Version 01",
+        "CatalogCode": "AudCat",
+        "CategoryCode": "AudCatCode4",
+        "AllowRetakeDup": "false"
+      },
+      "Apis": [
+        {
+          "RequestId": "a89a78ae-ffaa-479a-8c2d-1685e73055c0",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gStudentSsn}}'",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{\"value\":[]}"
+        },
+        {
+          "RequestId": "05febb5e-f716-4402-9b26-6a4adecf5fba",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/StudentEnrollmentPeriodDetails/CampusNexus.GetStudentEnrollmentPeriodList(studentId={{gStudentId}})?$filter=ProgramVersionName eq '{{gEnrollmentPVName}}'",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "05febb5e-f716-4402-9b26-6a4adecf5faa",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/StudentEnrollmentAreaOfStudyLists/CampusNexus.GetSavedProgramVersionAreaOfStudyConfig(studentenrollmentperiodid={{gStudentEnrollmentPeriodId}})",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "a8f21199-a1cc-4d92-914b-1c94121830fa",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/Courses?$filter=Code eq '{{gCourseCode}}'",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "2c5bc93d-0d60-4d37-aa11-ca5b22848bd6",
+          "RequestMethod": "POST",
+          "RequestUrl": "/api/commands/Academics/Course/Get",
+          "RequestBody": "{\"payload\":{}}",
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": {}
+        },
+        {
+          "RequestId": "a8f21199-a1cc-4d92-914b-1c94121830fb",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/AreasOfStudy/CampusNexus.GetAreaOfStudyAssociatedCatalogList(areaOfStudyId={{gAreaofStudy}},type='A',isActive=false,catalogYearId=-1,isCatalogByProgramVersionStartDate=false,catalogEffectiveStartDate='1900-01-01',catalogfilter=0)?$filter=contains(CatalogYearCode,'{{gCatalogCode}}')",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "a8f21199-a1cc-4d92-914b-1c94121830fc",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/AreasOfStudy/CampusNexus.GetAreaOfStudyCourseCategoryList(programVersionId=0,areaOfStudyId={{gAreaofStudy}},catalogYearId={{gCatalogYearId}})?$filter=contains(CourseCategoryCode,'{{gCategoryCode}}')",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "05febb5e-f716-4402-9b26-6a4adecf5fbd",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/StudentCourseSchedules/CampusNexus.GetStudentCourseSchedule(studentEnrollmentPeriodId={{gStudentEnrollmentPeriodId}},studentId={{gStudentId}},termId=0,status='')?$filter = CourseId eq {{gCourseId}}",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": { "value": [] }
+        },
+        {
+          "RequestId": "a8f21199-a1cc-4d92-914b-1c94121830fd",
+          "RequestMethod": "GET",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId}}/coursecategories",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f97511ae08z",
+          "RequestMethod": "PUT",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId}}/addcourserequirement",
+          "RequestBody": {},
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": {}
+        },
+        {
+          "RequestId": "a8f21199-a1cc-4d92-914b-1c94121830ff",
+          "RequestMethod": "GET",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId}}/requiredcourses",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f97511ae08e",
+          "RequestMethod": "PUT",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId}}/removecourserequirement",
+          "RequestBody": {},
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": {}
+        }
+      ]
+    },
+    {
+      "Type": "AdvancedDataFile",
+      "Version": "2.0",
+      "TestDescription": "Add and Undo Add course where future course exists in the student course but repeat is not allowed, however retake is allowed and allowRetakeDupsEvenIfFutureStateExists is true",
+      "Globals": {
+        "StudentSsn": "222-22-0022",
+        "CourseCode": "AudCou017",
+        "EnrollmentPVName": "Audit Program Version 01",
+        "CatalogCode": "AudCat",
+        "CategoryCode": "AudCatCode3",
+        "AllowRetakeDup": "true"
+      },
+      "Apis": [
+        {
+          "RequestId": "a89a78ae-ffaa-479a-8c2d-1685e73055c0",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gStudentSsn}}'",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{\"value\":[]}"
+        },
+        {
+          "RequestId": "05febb5e-f716-4402-9b26-6a4adecf5fba",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/StudentEnrollmentPeriodDetails/CampusNexus.GetStudentEnrollmentPeriodList(studentId={{gStudentId}})?$filter=ProgramVersionName eq '{{gEnrollmentPVName}}'",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "05febb5e-f716-4402-9b26-6a4adecf5faa",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/StudentEnrollmentAreaOfStudyLists/CampusNexus.GetSavedProgramVersionAreaOfStudyConfig(studentenrollmentperiodid={{gStudentEnrollmentPeriodId}})",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "a8f21199-a1cc-4d92-914b-1c94121830fa",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/Courses?$filter=Code eq '{{gCourseCode}}'",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "2c5bc93d-0d60-4d37-aa11-ca5b22848bd6",
+          "RequestMethod": "POST",
+          "RequestUrl": "/api/commands/Academics/Course/Get",
+          "RequestBody": "{\"payload\":{}}",
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": {}
+        },
+        {
+          "RequestId": "a8f21199-a1cc-4d92-914b-1c94121830fb",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/AreasOfStudy/CampusNexus.GetAreaOfStudyAssociatedCatalogList(areaOfStudyId={{gAreaofStudy}},type='A',isActive=false,catalogYearId=-1,isCatalogByProgramVersionStartDate=false,catalogEffectiveStartDate='1900-01-01',catalogfilter=0)?$filter=contains(CatalogYearCode,'{{gCatalogCode}}')",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "a8f21199-a1cc-4d92-914b-1c94121830fc",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/AreasOfStudy/CampusNexus.GetAreaOfStudyCourseCategoryList(programVersionId=0,areaOfStudyId={{gAreaofStudy}},catalogYearId={{gCatalogYearId}})?$filter=contains(CourseCategoryCode,'{{gCategoryCode}}')",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "05febb5e-f716-4402-9b26-6a4adecf5fbd",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/StudentCourseSchedules/CampusNexus.GetStudentCourseSchedule(studentEnrollmentPeriodId={{gStudentEnrollmentPeriodId}},studentId={{gStudentId}},termId=0,status='')?$filter = CourseId eq {{gCourseId}}",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": { "value": [] }
+        },
+        {
+          "RequestId": "a8f21199-a1cc-4d92-914b-1c94121830fd",
+          "RequestMethod": "GET",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId}}/coursecategories",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f97511ae08z",
+          "RequestMethod": "PUT",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId}}/addcourserequirement",
+          "RequestBody": {},
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": {}
+        },
+        {
+          "RequestId": "a8f21199-a1cc-4d92-914b-1c94121830ff",
+          "RequestMethod": "GET",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId}}/requiredcourses",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f97511ae08e",
+          "RequestMethod": "PUT",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId}}/removecourserequirement",
+          "RequestBody": {},
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": {}
+        }
+      ]
+    },
+    {
+      "Type": "AdvancedDataFile",
+      "Version": "2.0",
+      "TestDescription": "Course is not added where future course exists in the student course but repeat is not allowed, however retake is allowed and allowRetakeDupsEvenIfFutureStateExists is false",
+      "Globals": {
+        "StudentSsn": "222-22-0022",
+        "CourseCode": "AudCou017",
+        "EnrollmentPVName": "Audit Program Version 01",
+        "CatalogCode": "AudCat",
+        "CategoryCode": "AudCatCode3",
+        "AllowRetakeDup": "false"
+      },
+      "Apis": [
+        {
+          "RequestId": "a89a78ae-ffaa-479a-8c2d-1685e73055c0",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gStudentSsn}}'",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{\"value\":[]}"
+        },
+        {
+          "RequestId": "05febb5e-f716-4402-9b26-6a4adecf5fba",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/StudentEnrollmentPeriodDetails/CampusNexus.GetStudentEnrollmentPeriodList(studentId={{gStudentId}})?$filter=ProgramVersionName eq '{{gEnrollmentPVName}}'",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "05febb5e-f716-4402-9b26-6a4adecf5faa",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/StudentEnrollmentAreaOfStudyLists/CampusNexus.GetSavedProgramVersionAreaOfStudyConfig(studentenrollmentperiodid={{gStudentEnrollmentPeriodId}})",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "a8f21199-a1cc-4d92-914b-1c94121830fa",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/Courses?$filter=Code eq '{{gCourseCode}}'",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "2c5bc93d-0d60-4d37-aa11-ca5b22848bd6",
+          "RequestMethod": "POST",
+          "RequestUrl": "/api/commands/Academics/Course/Get",
+          "RequestBody": "{\"payload\":{}}",
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": {}
+        },
+        {
+          "RequestId": "a8f21199-a1cc-4d92-914b-1c94121830fb",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/AreasOfStudy/CampusNexus.GetAreaOfStudyAssociatedCatalogList(areaOfStudyId={{gAreaofStudy}},type='A',isActive=false,catalogYearId=-1,isCatalogByProgramVersionStartDate=false,catalogEffectiveStartDate='1900-01-01',catalogfilter=0)?$filter=contains(CatalogYearCode,'{{gCatalogCode}}')",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "a8f21199-a1cc-4d92-914b-1c94121830fc",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/AreasOfStudy/CampusNexus.GetAreaOfStudyCourseCategoryList(programVersionId=0,areaOfStudyId={{gAreaofStudy}},catalogYearId={{gCatalogYearId}})?$filter=contains(CourseCategoryCode,'{{gCategoryCode}}')",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "05febb5e-f716-4402-9b26-6a4adecf5fbd",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/StudentCourseSchedules/CampusNexus.GetStudentCourseSchedule(studentEnrollmentPeriodId={{gStudentEnrollmentPeriodId}},studentId={{gStudentId}},termId=0,status='')?$filter = CourseId eq {{gCourseId}}",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": { "value": [] }
+        },
+        {
+          "RequestId": "a8f21199-a1cc-4d92-914b-1c94121830fd",
+          "RequestMethod": "GET",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId}}/coursecategories",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f97511ae08z",
+          "RequestMethod": "PUT",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId}}/addcourserequirement",
+          "RequestBody": {},
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": {}
+        },
+        {
+          "RequestId": "a8f21199-a1cc-4d92-914b-1c94121830ff",
+          "RequestMethod": "GET",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId}}/requiredcourses",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f97511ae08e",
+          "RequestMethod": "PUT",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId}}/removecourserequirement",
+          "RequestBody": {},
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": {}
+        }
+      ]
+    },
+    {
+      "Type": "AdvancedDataFile",
+      "Version": "2.0",
+      "TestDescription": "Course is not added where future course exists in the student course when retake and repeat is not allowed",
+      "Globals": {
+        "StudentSsn": "222-22-0022",
+        "CourseCode": "AudCou018",
+        "EnrollmentPVName": "Audit Program Version 01",
+        "CatalogCode": "AudCat",
+        "CategoryCode": "AudCatCode3",
+        "AllowRetakeDup": "false"
+      },
+      "Apis": [
+        {
+          "RequestId": "a89a78ae-ffaa-479a-8c2d-1685e73055c0",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/Students?$filter=Ssn eq '{{gStudentSsn}}'",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{\"value\":[]}"
+        },
+        {
+          "RequestId": "05febb5e-f716-4402-9b26-6a4adecf5fba",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/StudentEnrollmentPeriodDetails/CampusNexus.GetStudentEnrollmentPeriodList(studentId={{gStudentId}})?$filter=ProgramVersionName eq '{{gEnrollmentPVName}}'",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "05febb5e-f716-4402-9b26-6a4adecf5faa",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/StudentEnrollmentAreaOfStudyLists/CampusNexus.GetSavedProgramVersionAreaOfStudyConfig(studentenrollmentperiodid={{gStudentEnrollmentPeriodId}})",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "a8f21199-a1cc-4d92-914b-1c94121830fa",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/Courses?$filter=Code eq '{{gCourseCode}}'",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "2c5bc93d-0d60-4d37-aa11-ca5b22848bd6",
+          "RequestMethod": "POST",
+          "RequestUrl": "/api/commands/Academics/Course/Get",
+          "RequestBody": "{\"payload\":{}}",
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": {}
+        },
+        {
+          "RequestId": "a8f21199-a1cc-4d92-914b-1c94121830fb",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/AreasOfStudy/CampusNexus.GetAreaOfStudyAssociatedCatalogList(areaOfStudyId={{gAreaofStudy}},type='A',isActive=false,catalogYearId=-1,isCatalogByProgramVersionStartDate=false,catalogEffectiveStartDate='1900-01-01',catalogfilter=0)?$filter=contains(CatalogYearCode,'{{gCatalogCode}}')",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "a8f21199-a1cc-4d92-914b-1c94121830fc",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/AreasOfStudy/CampusNexus.GetAreaOfStudyCourseCategoryList(programVersionId=0,areaOfStudyId={{gAreaofStudy}},catalogYearId={{gCatalogYearId}})?$filter=contains(CourseCategoryCode,'{{gCategoryCode}}')",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "05febb5e-f716-4402-9b26-6a4adecf5fbd",
+          "RequestMethod": "GET",
+          "RequestUrl": "/ds/campusnexus/StudentCourseSchedules/CampusNexus.GetStudentCourseSchedule(studentEnrollmentPeriodId={{gStudentEnrollmentPeriodId}},studentId={{gStudentId}},termId=0,status='')?$filter = CourseId eq {{gCourseId}}",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": { "value": [] }
+        },
+        {
+          "RequestId": "a8f21199-a1cc-4d92-914b-1c94121830fd",
+          "RequestMethod": "GET",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId}}/coursecategories",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f97511ae08z",
+          "RequestMethod": "PUT",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId}}/addcourserequirement",
+          "RequestBody": {},
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": {}
+        },
+        {
+          "RequestId": "a8f21199-a1cc-4d92-914b-1c94121830ff",
+          "RequestMethod": "GET",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId}}/requiredcourses",
+          "RequestBody": null,
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 15000,
+          "ResponseBody": "{}"
+        },
+        {
+          "RequestId": "4b627b73-4c6e-4956-a36f-9f97511ae08e",
+          "RequestMethod": "PUT",
+          "RequestUrl": "/api/dpa/v1/studentenrollmentperiods/{{gStudentEnrollmentPeriodId}}/removecourserequirement",
+          "RequestBody": {},
+          "ResponseStatus": 200,
+          "ResponseTimeMs": 5000,
+          "ResponseBody": {}
+        }
+      ]
+    }
+	]

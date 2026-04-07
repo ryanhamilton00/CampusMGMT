@@ -1,0 +1,71 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "AssociateAcademicCalendartoPV",
+    "Globals": {
+      "ProgramVersionCode": "AudPV1"
+    },
+    "Apis": [
+      {
+        "RequestId": "5e6cdb10-fcaa-4d32-afcb-5fdc46b5fff3",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/ProgramVersions?$filter= Code eq '{{gProgramVersionCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "f5c39314-b86c-4843-a7fa-83edb8d7a784",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/FinancialAid/FaProgramSetup/Get",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 25000,
+        "ResponseBody": {
+          "payload": {},
+          "notifications": [],
+          "hasError": false,
+          "hasFault": false,
+          "hasWarning": false,
+          "hasValidationError": false,
+          "hasValidationWarning": false,
+          "hasValidationInformation": false,
+          "hasSecurityError": false
+        }
+      },
+      {
+        "RequestId": "3f6432ea-0105-4898-80fc-19cb8a22ace9",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/PropertyEnumValues?$select=Code,ValueDescription&$format=json&$count=true&$filter=ColumnName eq 'DefAcademicCalendar' and Code ne '5'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "6a89f726-5cec-415f-8867-ef7b2b4d90c8",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/FinancialAid/FaProgramSetup/Save",
+        "RequestBody": {
+          "payload": {
+            "programVersionDetail": {
+              "termsInAcademicYear": 23
+            }
+          }
+        },
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 25000,
+        "ResponseBody": {
+          "payload": {},
+          "notifications": [],
+          "hasError": false,
+          "hasFault": false,
+          "hasValidationError": false,
+          "hasSecurityError": false
+        }
+      }
+    ]
+  }
+]

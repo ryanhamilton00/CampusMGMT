@@ -1,0 +1,136 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "Test Required Field for Child Term irrespective of Student Registration Settings value",
+    "Globals": {
+      "TermCode": "UNIQUEC"
+    },
+    "Apis": [
+      {
+        "RequestId": "6ef294fa-f4c8-40bb-98ee-d8d627fab928",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Terms?$filter=Code eq '{{gTermCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {
+          "value": []
+        }
+      },
+      {
+        "RequestId": "aa694ffb-e3a7-4c30-b180-263ab69121de",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Terms/CampusNexus.GetParentTerms(termId={{gTermId}},isActive=true,onlyImmediateParents=true)",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {
+          "value": []
+        }
+      },
+      {
+        "RequestId": "5e1a35c2-1b9b-47b9-9be8-e7971b8b4a4c",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Campuses/CampusNexus.GetCampusListByStaff()?$select=Name,Id,Code",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {
+          "value": []
+        }
+      },
+      {
+        "RequestId": "8f91c0c1-bb1e-4617-a8de-d4d5312645de",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Terms?$expand=TermRegistrationSettings($filter=CampusId eq {{gCampusId}})&$filter=(contains(tolower(Code),'{{gTermCode}}'))",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {
+          "value": []
+        }
+      },
+      {
+        "RequestId": "f4e961b5-753e-443d-a585-3e15dce8a8ef",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/TermRegistrationSetting/Get",
+        "RequestBody": {},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {
+	"notifications": [],
+	"hasError": false,
+	"hasFault": false,
+	"hasWarning": false,
+	"hasValidationError": false,
+	"hasValidationWarning": false,
+	"hasValidationInformation": false,
+	"hasSecurityError": false
+}
+      },
+      {
+        "RequestId": "378d0372-2cf0-4404-a896-d75cf2bda8a0",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/TermRegistrationSetting/create",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 15000,
+        "ResponseBody": {
+          "notifications": [],
+          "hasError": false,
+          "hasFault": false,
+          "hasWarning": false,
+          "hasValidationError": false,
+          "hasValidationWarning": false,
+          "hasValidationInformation": false,
+          "hasSecurityError": false
+        }
+      },
+      {
+        "RequestId": "627a4cb4-3510-489e-9c3f-93daae2385a5",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/TermRegistrationSetting/SaveTermRegistrationSettingAndProgramVersions",
+        "RequestBody": {
+          "payload": {
+
+            "ProgramVersions": [],
+            "TermRegistrationSetting": {
+              "maximumCredits": 0,
+              "minimumCredits": 0,
+              "isBillingSummaryShown": false,
+              "isDropAllowed": false,
+              "isFundingShown": false,
+              "isInvoiceShown": false,
+              "isPaymentAllowed": false,
+              "isReservationAllowed": false,
+              "isUnregistrationAllowed": false,
+              "isWaitlistingAllowed": false,
+              "waitlistMaximumCredits": 0,
+              "auditMaximumCredits": 0,
+              "reservationConfirmMinutes": 0,
+              "reservationExpirationMinutes": 0,
+              "reservationMaximumCredits": 0,
+              "progamVersion": {
+                "MaxOnlineRegistrationCredits": 0,
+                "MinOnlineRegistrationCredits": 0
+              }
+            }
+          }
+        },
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 25000,
+        "ResponseBody": {
+          "notifications": [],
+          "hasError": false,
+          "hasFault": false,
+          "hasWarning": false,
+          "hasValidationError": false,
+          "hasValidationWarning": false,
+          "hasValidationInformation": false,
+          "hasSecurityError": false
+        }
+      }
+    ]
+  }
+]

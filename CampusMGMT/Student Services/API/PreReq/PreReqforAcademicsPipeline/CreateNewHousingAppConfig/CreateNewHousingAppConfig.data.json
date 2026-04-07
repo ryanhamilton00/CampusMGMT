@@ -1,0 +1,103 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "Create New Housing Application under Configuration",
+    "Globals": {
+		"HouseAppName": "HousAppName",
+		"HouseAppCode": "HouCode"
+	},
+    "Apis": [
+      {
+        "RequestId": "788b269a-c314-437e-8c6f-480ad764267b",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "b85b8137-61da-448e-bf58-fee028e72247",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/HousingApplication/Create",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {}
+      },
+      {
+        "RequestId": "b5d0151c-cc3f-40c7-9df0-f091bfbfe965",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/HousingApplication/SaveNew",
+        "RequestBody": {
+						"payload": {
+							"code": "{{gHouseAppCode}}",
+							"name": "{{gHouseAppName}}",
+							"isActive": true
+						}
+					},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {}
+      },
+      {
+        "RequestId": "891c2994-4a59-4a8e-ada7-3bda2fcae206",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/HousingApplication/Get",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {}
+      },
+      {
+        "RequestId": "926f73ea-db30-43e9-8009-f908714797b8",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/HousingApplications/CampusNexus.GetHousingApplicationQuestionForEntity(housingApplicationId={{gHousingApplicationId}})?$filter = Name eq 'Housing Period'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "cdde0a1d-da0c-4f35-96d3-04653a76c143",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/HousingApplicationQuestion/save",
+        "RequestBody": {
+							"payload": {
+								"IsActive": true,
+								"IsRequired": true,
+								"HousingApplicationQuestionResponses": []
+							}
+						},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {}
+      },
+	  {
+        "RequestId": "926f73ea-db30-43e9-8009-f908714797b9",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/HousingApplications/CampusNexus.GetHousingApplicationQuestionForEntity(housingApplicationId={{gHousingApplicationId}})?$filter = Name eq 'Enrollment'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "cdde0a1d-da0c-4f35-96d3-04653a76c144",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/HousingApplicationQuestion/save",
+        "RequestBody": {
+							"payload": {
+								"IsActive": false,
+								"IsRequired": true,
+								"HousingApplicationQuestionResponses": []
+							}
+						},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {}
+      }
+    ]
+  }
+]

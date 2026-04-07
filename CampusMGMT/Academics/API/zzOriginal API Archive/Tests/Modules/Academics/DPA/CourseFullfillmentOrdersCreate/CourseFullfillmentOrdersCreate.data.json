@@ -1,0 +1,70 @@
+[{
+	"Type": "AdvancedDataFile",
+	"Version": "2.0",
+	"TestDescription": "This API will create a Course Fillment Order: Config - Academics - Course Fullfillment Orders",
+	"Globals": {
+		"CFOName": "DPACFO",
+		"CFOCode": "DPACFO"
+	},
+	"Apis": [{
+			"RequestId": "d3ab99c4-21b9-441a-8625-abc4417c8d6e",
+			"TypeDescription": "Get Campus info by User",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "d3ab99c4-21b9-441a-8625-abc4417c8d7d",
+			"TypeDescription": "Get Questions",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/CourseFulfillmentOrderDetails/CampusNexus.GetCourseFulfillmentOrderById(courseFulfillmentOrderId=-1)?$select = Id,Name,Order",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		},
+		{
+			"RequestId": "bb63a141-3279-4d47-8844-c62c1d011c6a",
+			"TypeDescription": "Create CourseFulfillmentOrder",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Academics/CourseFulfillmentOrderDetail/Create",
+			"RequestBody": "{}",
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {}
+		},
+		{
+			"RequestId": "f04fda8a-dd82-4875-bae1-d34978ab3378",
+			"TypeDescription": "Save CourseFulfillmentOrderDetail",
+			"RequestMethod": "POST",
+			"RequestUrl": "/api/commands/Academics/CourseFulfillmentOrderDetail/SaveNew",
+			"RequestBody": {
+					"payload": {
+							"code": "{{gCFOCode}}",
+							"name": "{{gCFOName}}",
+							"createdDateTime": "@DateNow",
+							"fulfillmentOrderDetail": null,
+							"isActive": true,
+							"extendedProperties": [],
+							"entityState": 0
+								}
+							},
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": {}
+		},
+		{
+			"RequestId": "cf406926-0aa6-4432-844b-10a6c0708270",
+			"TypeDescription": "Get Created CourseFulfillmentOrderDetail",
+			"RequestMethod": "GET",
+			"RequestUrl": "/ds/campusnexus/CourseFulfillmentOrderDetails?$filter= Code eq '{{gCFOCode}}'",
+			"RequestBody": null,
+			"ResponseStatus": 200,
+			"ResponseTimeMs": 5000,
+			"ResponseBody": "{\"value\":[]}"
+		}
+	]
+}]

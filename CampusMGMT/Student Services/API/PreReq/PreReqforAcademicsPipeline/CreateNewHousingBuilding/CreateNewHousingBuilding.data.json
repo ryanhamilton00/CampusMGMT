@@ -1,0 +1,137 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "Enter test description here",
+    "Globals": {
+			"HousingBuildingName": "HouBulName",
+			"HousingBuildingCode": "HouBulC",
+			"BuildingCatCode": "BulCatC",
+			"RoomCategoryCode": "RoomCatC"
+	},
+    "Apis": [
+      {
+        "RequestId": "7d19f7b3-9596-425e-bd69-29a9adae3e7b",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "dea29aa6-5141-4c6b-9828-15c90f352d65",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/HousingBuilding/Create",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {}
+      },
+      {
+        "RequestId": "7645827d-04b1-4196-9454-a55d08ecaf87",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/BuildingCategories/CampusNexus.GetBuildingCategoryList()?$expand=BuildingCategory&$format=json&$count=true&$filter=BuildingCategory/IsActive eq true and BuildingCategoryCampusList/any(l:l/Id eq {{gCampusId}}) and BuildingCategory/Code eq '{{gBuildingCatCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "6d2dec17-b84a-4cc4-9d79-c1e331abdfaa",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/PropertyEnumValues?$select=Id,Code,ValueDescription&$format=json&$count=true&$filter=TableName eq 'HsBuilding' and ColumnName eq 'Gender'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "a8f8f8b6-43fa-40ef-9097-554ae8a2600f",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/HousingBuilding/SaveNew",
+        "RequestBody": {
+						"payload": {
+							"code": "{{gHousingBuildingCode}}",
+							"name": "{{gHousingBuildingName}}",
+							"campusIdList": [],
+							"housingFeatureIdList": []						
+							}
+					},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {}
+      },
+      {
+        "RequestId": "2361ca92-830d-43f3-bd11-dc3cbba1f897",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/HousingBuilding/Get",
+        "RequestBody": "{\"payload\":{}}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {}
+      },
+      {
+        "RequestId": "bc26c10b-9ddc-4260-b373-d0f554335f6e",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/HousingRoom/Create",
+        "RequestBody": "{}",
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {}
+      },
+      {
+        "RequestId": "e7555082-4042-45cb-af7b-429502b9eec5",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/RoomCategories/CampusNexus.GetRoomCategoryList()?$expand=RoomCategory,RoomCategoryCampusList,RoomCategoryHousingFeatureList&$filter=RoomCategory/Code eq '{{gRoomCategoryCode}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "9c0c7c2d-78f0-4727-8b26-86e2387400a6",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/PropertyEnumValues?$select=Id,Code,ValueDescription&$format=json&$count=true&$filter=TableName eq 'HsBuildingRooms' and ColumnName eq 'Frequency'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "a427ba1e-660b-4ec3-a8af-bee705805fca",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/BillingTransactionCodes/CampusNexus.GetRoomSuitesBillingTransactionCodes(billingTransactionCodeId=0)?$select=Id,Name,Code&$format=json&$count=true",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "f28a7faa-a07c-4d49-9ed3-b7ff5a9e82cc",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/StudentServices/HousingRoom/SaveNew",
+        "RequestBody": {
+							"payload": {
+								"roomFee": 1,
+								"roomNumber": "1",
+								"housingAmenitiesRooms": [],
+								"housingFeatureIdList": []
+							}
+						},
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {}
+      },
+      {
+        "RequestId": "b7bb2152-b4c5-48cb-8b71-d74e49f987f5",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/HousingSuiteCategories/CampusNexus.GetHousingBuildingRoomList(buildingId={{gHousingBuildingId}})",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      }
+    ]
+  }
+]

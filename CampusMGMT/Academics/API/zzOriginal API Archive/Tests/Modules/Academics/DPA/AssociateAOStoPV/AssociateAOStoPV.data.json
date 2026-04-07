@@ -1,0 +1,77 @@
+[
+  {
+    "Type": "AdvancedDataFile",
+    "Version": "2.0",
+    "TestDescription": "Associate AOS to PV",
+    "Globals": {
+      "AOSName": "DPAAOSName",
+      "ProgramVersionName": "DPAPVUsingAOS",
+      "CatalogName": "DPACatalogYear"
+    },
+    "Apis": [
+      {
+        "RequestId": "300bf5f4-90f2-4514-bfbc-5ec6eaf04f43",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/Staff/CampusNexus.GetCurrentLoggedInUserStaff?$select=Id,DefaultSyCampusId,PersonId,CampusGroupId",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "a2b07a48-ea1d-4255-a75f-dde17fbf8706",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/StudentEnrollmentPeriods/CampusNexus.GetProgramVersionListForBatchCatalogAssignment(campusId={{gCampusId}})?$filter=Name eq '{{gProgramVersionName}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "270cd192-e666-4832-ac14-077c1c84b906",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/CatalogYears?$filter=Name eq '{{gCatalogName}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 10000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "0ca3bca8-56d7-4762-b6c2-8c0930a6b63b",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/AreasOfStudy/CampusNexus.GetAvailableAreaOfStudyList(programVersionId={{gProgramVersionId}},campusId={{gCampusId}}, catalogYearId={{gCatalogYearId}})?$filter=AreaOfStudyName eq '{{gAOSName}}'",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      },
+      {
+        "RequestId": "9f8f1cf8-4203-4f6d-8c7c-6a22659279c5",
+        "RequestMethod": "POST",
+        "RequestUrl": "/api/commands/Academics/StudentAreaOfStudy/SaveProgramVersionAreaOfStudy",
+        "RequestBody": {
+          "payload": {
+            "ProgramVersionAreaOfStudyConfigList": [
+              {
+                "adProgramVersionId": "{{gProgramVersionId}}",
+                "mode": 1
+              }
+            ]
+          }
+        },
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": {}
+      },
+      {
+        "RequestId": "f4d8f6b6-96af-46a5-af9e-984435a25c86",
+        "RequestMethod": "GET",
+        "RequestUrl": "/ds/campusnexus/AreasOfStudy/CampusNexus.GetAssociatedAreaOfStudyByProgramVersionList(programVersionId={{gProgramVersionId}})",
+        "RequestBody": null,
+        "ResponseStatus": 200,
+        "ResponseTimeMs": 5000,
+        "ResponseBody": "{\"value\":[]}"
+      }
+    ]
+  }
+]
